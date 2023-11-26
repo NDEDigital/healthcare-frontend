@@ -1,0 +1,51 @@
+section{
+        font-family: "Amazon Ember",Arial,sans-serif;
+}
+.product-name{
+     font-size: 1.4rem;
+}
+.cart-detail{
+    background-color: #EAEDED;
+}
+.price{
+     font-size: 1.2rem;
+}
+p{
+    margin-bottom: 0;
+    font-size: 1rem;
+}
+hr{
+    margin-top: 0;
+}
+.full-detail{
+   
+    width: 80%;
+}
+.product-img{
+     width: 15rem;
+}
+.product-detail{
+     width: 63%;
+     line-height: 2.1em;
+}
+.product-foot{
+     color: #007185;
+}
+.subtotal{
+    background-color: white;
+}
+.subtotal-parent{
+    width: 20%;
+}
+.cart-product{
+     background-color: white;
+}
+.subtotal-title{
+     font-size: 1.5rem;
+}
+button{
+    font-size: 1rem;
+}
+.cursor{
+     cursor: pointer;
+}

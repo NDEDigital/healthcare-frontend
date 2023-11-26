@@ -1,0 +1,22 @@
+.foot{
+     background-color: #222831;
+     color: white;
+     /* color: black; */
+
+}
+p{
+    margin: 0;
+    font-size: 12px;
+}
+.qrCode{
+    height: 8rem; 
+}
+.playStoreIcond{
+     height: 4rem;
+}
+.payment-img{
+     width: 25rem;
+}
+.icons{
+   font-size: 2rem;
+}

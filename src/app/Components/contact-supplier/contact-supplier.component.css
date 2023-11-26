@@ -1,0 +1,42 @@
+.container {
+  border: 1px solid #cbd0d4;
+}
+.content-main {
+  background: var(--background-color);
+}
+
+.supplier_photo img {
+  width: 2rem;
+  height: 2rem;
+  /* align-self: start; */
+  border: 1px solid var(--color-gray);
+  border-radius: 50%;
+}
+.trade_photo img {
+  width: 1.5rem;
+  height: 1.5rem;
+}
+.product_image {
+}
+.product_image img {
+  width: 60px;
+  height: 60px;
+  /* transform: scale(1.1); */
+  border: 1px solid var(--border-color);
+}
+.quantity_input {
+  height: 2rem;
+  width: 5rem;
+}
+.upload-btn ,.upload{
+  color: var(--color-primary);
+  background: transparent;
+  font-weight: 500;
+}
+.send-btn {
+  color: white;
+  background: var(--color-primary);
+}
+#text_area {
+  resize: none;
+}

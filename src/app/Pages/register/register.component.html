@@ -1,0 +1,396 @@
+<div class="head">
+  <a routerLink=""><img src="assets/images/Logo/final-logo-6.png" alt="" /></a>
+</div>
+<div class="container mt-5 mb-5 rounded" [ngStyle]="getContainerWidth()">
+  <h2 class="register_title">Register</h2>
+  <hr />
+  <form [formGroup]="userForm">
+    <div class="form-group checkbox-group mt-5 mx-auto">
+      <label><span class="text-danger">*</span>Select Your trade Role</label>
+      <label for="buyerTrade">
+        <input
+          type="radio"
+          id="buyerTrade"
+          formControlName="trade"
+          value="Buyer"
+        />
+        Buyer
+      </label>
+      <label for="sellerTrade">
+        <input
+          type="radio"
+          id="sellerTrade"
+          formControlName="trade"
+          value="Seller"
+        />
+        Seller
+      </label>
+      <!-- <label for="bothTrade">
+        <input
+          type="radio"
+          id="bothTrade"
+          formControlName="trade"
+          value="Both"
+          required
+        />
+        Both
+      </label> -->
+      <!-- <span class="text-danger" *ngIf="isFieldInvalid('trade')"
+        >Select Trade</span
+      > -->
+      <div
+        class="form_content mt-1"
+        [ngClass]="{
+          'd-flex':
+            userForm.get('trade')?.value === 'Seller' ||
+            userForm.get('trade')?.value === 'Both'
+        }"
+      >
+        <div class="allUser">
+          <div class="form-group">
+            <label for="fullName"
+              ><span class="text-danger">*</span>Full Name</label
+            >
+            <input
+              type="text"
+              id="fullName"
+              formControlName="fullName"
+              [class.error]="isFieldInvalid('fullName')"
+            />
+            <span class="text-danger" *ngIf="isFieldInvalid('fullName')"
+              >Name is required</span
+            >
+          </div>
+
+          <div class="form-group">
+            <label for="phone"><span class="text-danger">*</span>Phone</label>
+            <input
+              type="text"
+              id="phone"
+              formControlName="phone"
+              [class.error]="isFieldInvalid('phone')"
+            />
+            <div class="text-danger" *ngIf="isFieldInvalid('phone')">
+              <span>{{ getPhoneNumberErrorMessage() }}</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email"><span class="text-danger">*</span>Email</label>
+            <input
+              type="email"
+              id="email"
+              formControlName="email"
+              [class.error]="isFieldInvalid('email')"
+            />
+            <span class="text-danger" *ngIf="isFieldInvalid('fullName')"
+              >Email is required.</span
+            >
+            <div class="form-group">
+              <label for="password"
+                ><span class="text-danger">*</span>Password</label
+              >
+              <input
+                type="password"
+                id="password"
+                formControlName="password"
+                [class.error]="isFieldInvalid('password')"
+              />
+              <div class="text-danger" *ngIf="isFieldInvalid('password')">
+                <span>{{ getPasswordErrorMessage() }}</span>
+              </div>
+            </div>
+
+            <div class="form-group">
+              <label for="confirm-password"
+                ><span class="text-danger">*</span>Confirm Password</label
+              >
+              <input
+                type="password"
+                id="confirm-password"
+                formControlName="confirmPassword"
+              />
+              <div
+                *ngIf="
+                  userForm
+                    .get('confirmPassword')
+                    ?.hasError('passwordMismatch') &&
+                  userForm.get('confirmPassword')?.dirty
+                "
+                class="text-danger"
+              >
+                Password and Confirm Password must match.
+              </div>
+            </div>
+            <div class="text-danger" *ngIf="isFieldInvalid('email')">
+              <span>{{ getPhoneNumberErrorMessage() }}</span>
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="address">Address</label>
+            <textarea
+              type="address"
+              id="address"
+              formControlName="address"
+            ></textarea>
+          </div>
+        </div>
+        <!-- seller & both only -->
+        <div
+          class="sellerNbothOnly"
+          *ngIf="
+            userForm.get('trade')?.value === 'Seller' ||
+            userForm.get('trade')?.value === 'Both'
+          "
+        >
+          <div class="form-group">
+            <label for="companyName">Company Name</label>
+            <input type="text" id="companyName" formControlName="companyName" />
+          </div>
+          <div class="form-group">
+            <label for="website">Website</label>
+            <input type="text" id="website" formControlName="website" />
+          </div>
+          <div class="form-group">
+            <label for="productCategory">Product Category</label>
+            <select
+              name="productCategory"
+              id="productCategory"
+              formControlName="productCategory"
+            >
+              <option class="d-none" value="Nothing Selected" disabled>
+                Nothing Selected
+              </option>
+              <option value="Steel material">Steel material</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="yearsInBusiness">Years in Business</label>
+            <input
+              type="text"
+              id="yearsInBusiness"
+              formControlName="yearsInBusiness"
+            />
+          </div>
+          <div class="form-group">
+            <label for="businessRegNum">Business Registration Number</label>
+            <input
+              type="text"
+              id="businessRegNum"
+              formControlName="businessRegNum"
+            />
+          </div>
+          <div class="form-group">
+            <label for="taxIdNum">Tax Identification Number</label>
+            <input type="text" id="taxIdNum" formControlName="taxIdNum" />
+          </div>
+          <div class="form-group">
+            <label for="prefPaymentMethod">Preferred Payment Method</label>
+            <select
+              name="prefPaymentMethod"
+              id="prefPaymentMethod"
+              formControlName="prefPaymentMethod"
+            >
+              <option class="d-none" value="Nothing Selected" disabled>
+                Nothing Selected
+              </option>
+              <option value="credit card">Credit Card</option>
+              <option value="cash">Cash</option>
+            </select>
+          </div>
+        </div>
+      </div>
+      <!-- seller & both only end -->
+    </div>
+    <!-- <div
+      class="pass_container"
+      [ngClass]="{
+        'row d-fle justify-content-evenly  px-2':
+          userForm.get('trade')?.value === 'Seller' ||
+          userForm.get('trade')?.value === 'Both'
+      }"
+    > -->
+
+    <!-- </div> -->
+
+    <button
+      type="submit"
+      class="button mt-3"
+      id="sign-in-button"
+      (click)="onRegisterClick()"
+      [ngClass]="{
+        'w-75 mx-auto':
+          userForm.get('trade')?.value === 'Seller' ||
+          userForm.get('trade')?.value === 'Both'
+      }"
+    >
+      Register
+    </button>
+  </form>
+</div>
+<!-- [disabled]="userForm.invalid" -->
+
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#userExistModal"
+  #userExistModalBTN
+>
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="userExistModal"
+  tabindex="-1"
+  aria-labelledby="userExistModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content border border-danger">
+      <div class="modal-header fs-5 fw-bold text-danger">
+        <h1 class="modal-title fs-5" id="userExistModalLabel">
+          {{ alertMsg }}
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Please login or use another phone number to register!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<section>
+  <!-- <app-otp-modal (dataChanged)="handleDataChange($event)"></app-otp-modal> -->
+  <!-- Button trigger modal -->
+  <button
+    #otpModalBtn
+    type="button"
+    class="btn btn-primary d-none"
+    data-bs-toggle="modal"
+    data-bs-target="#OTPModal"
+    (click)="initializeTimer()"
+  ></button>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="OTPModal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="OTPModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content text-center">
+        <div
+          class="modal-header d-grid align-items-center justify-content-center py-1 border-bottom-0"
+        >
+          <span class="fs-3 color-primary">
+            <i class="bi bi-shield-lock-fill"></i
+          ></span>
+          <h1 class="modal-title fs-4" id="OTPModalLabel">
+            Verify Your Account
+          </h1>
+        </div>
+        <div class="modal-body">
+          <p class="text-muted">
+            Enter OTP Sent to your mobile number
+            <span>{{ phoneNumber }}</span>
+          </p>
+
+          <!-- <input
+            [(ngModel)]="otpValue"
+            class="otpInput form-control w-50 mx-auto"
+            type="number"
+            min="0"
+            max="999999"
+            pattern="[0-9]*"
+            (input)="onInput($event)"
+            (keyup.enter)="verifyOTP()"
+            [class.error]="error"
+            [class.error]="wrongOTP"
+            required
+          /> -->
+          <input
+            [(ngModel)]="otpValue"
+            class="otpInput form-control w-50 mx-auto"
+            type="text"
+            pattern="^[0-9]{6}$"
+            maxlength="6"
+            oninput="this.value = this.value.replace(/[^0-9]/g, '')"
+            (keyup.enter)="verifyOTP()"
+            [class.error]="error || wrongOTP"
+            required
+          />
+          <span class="text-danger" *ngIf="error && !wrongOTP">
+            OTP is Required and should be 6 digits
+          </span>
+          <span class="text-danger" *ngIf="wrongOTP && !error">
+            Incorrect OTP. Please try again or
+            <button
+              type="button"
+              class="resend_btn fw-bold"
+              [class.active]="enableResendBTN"
+              [disabled]="remainingTime > 0"
+              (click)="resendOTP()"
+            >
+              RESEND
+            </button>
+          </span>
+          <div class="my-2">
+            <button
+              type="button"
+              class="btn verify_btn form-control w-50"
+              (click)="verifyOTP()"
+              [disabled]="otpValue === null"
+            >
+              Verify
+            </button>
+            <div class="d-grid mt-2">
+              <!-- Resend OTP in <span>{{ remainingTime | date : "mm:ss" }}</span> -->
+              <span>
+                Resend OTP in
+                <span class="timer text-success">{{
+                  secondsToMinutesAndSeconds(remainingTime)
+                }}</span>
+              </span>
+
+              <button
+                type="button"
+                class="resend_btn fw-bold"
+                [class.active]="enableResendBTN"
+                [disabled]="remainingTime > 0"
+                (click)="resendOTP()"
+              >
+                RESEND
+              </button>
+              <button
+                #closeOTPModal
+                type="button"
+                class="btn btn-secondary d-none"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+<section #capcha_container id="capcha_container"></section>

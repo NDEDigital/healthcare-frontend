@@ -1,0 +1,45 @@
+.banner_container {
+  padding: 1% 6%;
+  /* height: 350px; */
+  height: 30rem;
+}
+.carousel-item img {
+  width: 100%;
+  height: 29rem;
+}
+.carousel-button {
+  color: #444;
+  /* box-shadow: 1px 1px 2px 4px rgba(87, 87, 87, 0.1); */
+
+  background-color: #fff;
+  width: 2.5rem;
+  height: 6rem;
+  /* margin: 6.5rem 0; */
+  opacity: 1;
+  border: 1px solid #0000001a;
+  border-radius: 7%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.carousel-indicators [data-bs-target] {
+  background-color: #ffffff;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  border: 3px solid var(--color-primary);
+}
+.carousel-indicators .active {
+  opacity: 1;
+}
+
+@media (max-width: 998px) {
+  .banner_container {
+    height: 17rem;
+  }
+}
+@media (max-width: 568px) {
+  .banner_container {
+    height:15rem;
+  }
+}

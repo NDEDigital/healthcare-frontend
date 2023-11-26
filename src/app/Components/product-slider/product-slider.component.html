@@ -1,0 +1,298 @@
+<div
+  class="modal fade"
+  id="productDetailsModal"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-dialog-scrollable">
+    <div class="modal-content">
+      <div class="d-flex flex-column align-items-end p-2">
+        <!-- <h5 class="modal-title" id="exampleModalLabel">Modal Title</h5>  -->
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <!-- <div class="modal-body"> -->
+      <div class="d-flex p-3" style="height: 80%; overflow-y: auto">
+        <div class="">
+          <img
+            class="detail-img"
+            src="/assets/images/{{ splitProductKey(modalGroup) }}.jpg"
+            alt=""
+          />
+        </div>
+        <div class="ps-4">
+          <h3 class="title prime-color fw-bold">
+            {{ modalTitle }}
+          </h3>
+          <p class="type second-color">Steel</p>
+          <h6>
+            <span class="fw-bold second-color">Price:</span>
+            <span class="prime-color fw-bold"
+              ><span class="h3 fw-bold"> ৳</span> 50,000</span
+            >
+          </h6>
+          <p>
+            <span class="fw-bold second-color">Available Quantity:</span>
+            <span class="prime-color fw-bold"> {{ modalQuantity }} </span>
+          </p>
+          <div>
+            <h5 class="">Dimensions</h5>
+            <div class="d-flex justify-content-around">
+              <p><span class="fw-bold second-color"> Height:</span> 2 mm</p>
+              <p class="ps-1">
+                <span class="fw-bold second-color">Width:</span> 2 mm
+              </p>
+              <p class="ps-1">
+                <span class="fw-bold second-color">Length:</span> 2 mm
+              </p>
+            </div>
+          </div>
+          <div>
+            <div class="d-flex justify-content-between">
+              <p><span class="fw-bold second-color"> Weight:</span> 2 Ton</p>
+              <p class="ps-1">
+                <span class="fw-bold second-color">Grade:</span> 2
+              </p>
+              <p class="ps-1">
+                <span class="fw-bold second-color">Finish:</span> 2
+              </p>
+            </div>
+          </div>
+          <div>
+            <h5 class="">Specification</h5>
+            <p>{{ modalSpec }}</p>
+          </div>
+        </div>
+        <!-- </div> -->
+      </div>
+      <div class="modal-footer"></div>
+    </div>
+  </div>
+</div>
+
+<!-- =============================================== -->
+<section class="slider_container mx-auto px-3 py-2 rounded border border-1">
+  <section
+    class="product_slider bg-white rounded d-flex mx-auto my-3 px-3 py-1 align-items-center"
+    *ngFor="let product of products3 | keyvalue; let i = index"
+  >
+    <!-- (mouseenter)="onMouseEnter(i)"
+(mouseleave)="onMouseLeave(i)" -->
+    <div class="product_header rounded">
+      <img
+        class="mt-1"
+        src="/assets/images/{{ splitProductKey(product.key) }}.jpg"
+        alt=""
+      />
+      <p class="fs-4 fw-bold">{{ splitProductKey(product.key) }}</p>
+    </div>
+    <div class="container-fluid">
+      <div class="slider_wrap mx-auto d-flex align-items-center">
+        <div
+          class="slider_main text-nowrap"
+          #Items
+          [ngClass]="{ 'slider_main--extended': product.value.length > 5 }"
+        >
+          <!-- <div class="item mx-2" #Item *ngFor="let value of product.value">
+          <div class="my-auto">
+            <p class="product-title">Product Name: {{ value[0] }}</p>
+            <p class="quantity">
+              Available Qty: <span class="fw-bold"> {{ value[1] }}</span>
+            </p>
+          </div>
+        </div> -->
+
+          <div
+            class="item mx-2 rounded-3 border border-1"
+            #Item
+            *ngFor="let value of product.value"
+            (click)="navigateToData(value)"
+          >
+            <div class="my-3 text-start p-1 ms-1">
+              <!-- <p class="product-title">Product Name: {{ value[0] }}</p>
+            <p class="quantity">
+              Available Qty: <span class="fw-bold"> {{ value[1] }}</span>
+            </p> -->
+              <p class="product-title text-wrap">
+                Product Name:
+                <span class="fs-6 text-secondary"
+                  >{{
+                    value.goodsName.length > 15
+                      ? (value.goodsName | slice : 0 : 15) + "..."
+                      : value.goodsName
+                  }}
+                </span>
+                <span class="company_name color-primary">
+                  ({{
+                    value.companyName.length > 20
+                      ? (value.companyName | slice : 0 : 20) + "..."
+                      : value.companyName
+                  }})</span
+                >
+              </p>
+              <p class="specification text-wrap">
+                <span class="fw-bold">Specification: </span
+                ><span class="text-muted fs-6"
+                  >{{
+                    value.specification.length > 10
+                      ? (value.specification | slice : 0 : 10) + "..."
+                      : value.specification
+                  }}
+                </span>
+              </p>
+              <p class="quantity">
+                <span class="fw-bold">Available Qty:</span>
+                <span
+                  class="fs-6"
+                  [class.text-muted]="value.approveSalesQty >= 1"
+                  [class.text-danger]="value.approveSalesQty < 1"
+                >
+                  {{ value.approveSalesQty }}</span
+                >
+              </p>
+              <!-- <div class="d-flex flex-column flex-md-row    justify-content-between"
+            >
+             <button class="btn btn-warning">Add to Truck</button>
+             <button class="btn btn-success"
+              data-bs-toggle="modal"
+              data-bs-target="#productDetailsModal"
+              (click)="
+                dataClick(
+                  value.goodsName,
+                  value.specification,
+                  value.approveSalesQty,
+                  product.key
+                )
+              "
+             >View Detail</button> 
+            </div> -->
+            </div>
+          </div>
+        </div>
+        <div
+          class="mx-3"
+          [ngClass]="{ 'remove-btn': product.value.length < 4 }"
+        >
+          <button
+            class="carousel-control-prev carousel-button"
+            type="button"
+            (click)="prev(i)"
+          >
+            <i class="fa-solid fa-chevron-left"></i>
+          </button>
+          <button
+            class="carousel-control-next carousel-button"
+            type="button"
+            (click)="next(i)"
+          >
+            <i class="fa-solid fa-chevron-right"> </i>
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+</section>
+<!-- <h1 class="mx-auto text-warning text-center">TEST</h1> -->
+
+<!-- <section
+  class="product_slider bg-white rounded d-flex px-5 py-2 align-items-center"
+  *ngFor="let product of products | keyvalue; let i = index"
+>
+  <div
+    id="carousel{{ i }}"
+    class="carousel carousel-dark slide d-flex justify-content-around"
+    data-bs-ride="carousel"
+  >
+    <div class="product_header rounded">
+      <img src="/assets/images/{{ product.key }}.jpg" alt="" />
+      <p class="fs-4 fw-bold">{{ product.key }}</p>
+    </div>
+
+    <div class="carousel-inner ms-5 rounded border">
+   
+      <div
+        class="carousel-item active d-flex"
+        data-bs-interval="5000"
+        #Item
+        *ngFor="let value of product.value"
+      >
+        <div class="my-auto item">
+          <p class="product-title">Product Name: {{ value[0] }}</p>
+          <p class="quantity">
+            Available Qty: <span class="fw-bold"> {{ value[1] }}</span>
+          </p>
+        </div>
+      </div>
+      <button
+        class="carousel-control-prev carousel-button"
+        type="button"
+        [attr.data-bs-target]="'#carousel' + i"
+        data-bs-slide="prev"
+      >
+        <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Previous</span>
+      </button>
+      <button
+        class="carousel-control-next carousel-button"
+        type="button"
+        [attr.data-bs-target]="'#carousel' + i"
+        data-bs-slide="next"
+      >
+        <span class="carousel-control-next-icon" aria-hidden="true"></span>
+        <span class="visually-hidden">Next</span>
+      </button>
+    </div>
+  </div>
+</section> -->
+<!-- <h1 class="text-center text-danger">TEST CHUNK</h1> -->
+
+<!-- <div
+  id="carousel{{ i }}"
+  class="carousel carousel-dark slide d-flex justify-content-around"
+  data-bs-ride="carousel"
+>
+  <div class="product_header rounded">
+    <img src="/assets/images/{{ product.key }}.jpg" alt="" />
+    <p class="fs-4 fw-bold">{{ product.key }}</p>
+  </div>
+  <div class="carousel-inner for_img ms-5 rounded border">
+    <div
+      class="carousel-item"
+      *ngFor="let chunk of product.value | chunk : 4; let j = index"
+    >
+      <div class="d-flex">
+        <div *ngFor="let value of chunk" class="flex-fill">
+          <div class="my-auto item">
+            <p class="product-title">Product Name: {{ value[0] }}</p>
+            <p class="quantity">
+              Available Qty: <span class="fw-bold">{{ value[1] }}</span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  <button
+    class="carousel-control-prev carousel-button"
+    type="button"
+    [data-bs-target]="'#carousel' + i"
+    data-bs-slide="prev"
+  >
+    <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Previous</span>
+  </button>
+  <button
+    class="carousel-control-next carousel-button"
+    type="button"
+    [data-bs-target]="'#carousel' + i"
+    data-bs-slide="next"
+  >
+    <span class="carousel-control-next-icon" aria-hidden="true"></span>
+    <span class="visually-hidden">Next</span>
+  </button>
+</div> -->

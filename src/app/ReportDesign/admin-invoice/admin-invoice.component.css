@@ -1,0 +1,100 @@
+/* ===================  Invoice design  =================== */
+
+.invoice {
+  width: 100%;
+  max-width: 800px;
+  margin: auto;
+  border: 1px solid #ddd;
+  padding: 20px;
+  box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
+  margin-top: 2rem;
+}
+
+.invoiceText {
+  font-style: italic;
+}
+
+.header {
+  text-align: center;
+  margin-bottom: 20px;
+  color: white;
+  background-color: #3a98b9;
+}
+
+.content {
+  border-top: 1px solid #ddd;
+  padding-top: 20px;
+}
+
+.info p {
+  margin: 5px 0;
+}
+
+.items {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 20px;
+}
+
+.items th,
+.items td {
+  border: 1px solid #ddd;
+  padding: 8px;
+  text-align: center;
+}
+
+.total {
+  margin-top: 20px;
+  text-align: right;
+}
+.info strong ,.seller_info strong{
+  font-size: .95rem;
+  font-weight: 500;
+  color: rgb(100, 100, 100);
+  padding-right: .5rem;
+}
+
+.feild_data{
+  font-size: .2rem !important;
+}
+
+.info .date_title {
+  font-size: 0.85rem;
+}
+
+/* by marufa */
+
+.table_header{
+  background-color: #dee9ee;
+  color: #3b3a3a;
+}
+.buyer_information {
+  /* width: 34%; */
+  background-color: aliceblue;
+}
+.seller_info{
+  width: 100%;
+}
+
+
+.totalPrice_col{
+  width: 86%;
+  font-weight: 500;
+  padding: 0 1rem;
+}
+.col-4 span {
+  padding: 0;
+}
+/* table th {
+  border: none !important;
+
+} */
+/* .items td {
+
+  border-bottom:#af1717 !important ;
+} */
+/* .items tr {
+  border: #e07070 !important;
+  border-bottom: #636363 !important;
+  border-top: #636363 !important;
+} */

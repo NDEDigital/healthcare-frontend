@@ -1,0 +1,26 @@
+body {
+  background: white;
+}
+.detail-img{
+     height: 12rem;
+}
+.title{
+    margin-bottom: 0;
+}
+.prime-color{
+  color: var(--color-primary);
+}
+.type{
+  margin-bottom: 1px;
+}
+.second-color{
+    color: var(--color-gray);
+}
+
+.detail-img {
+  transition: transform 0.3s ease-in-out;
+}
+
+.detail-img:hover {
+  transform: scale(1.3);
+}

@@ -1,0 +1,85 @@
+<!-- Button trigger modal -->
+<button
+  #otpModalBtn
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#OTPModal"
+  (click)="initializeTimer()"
+>
+  Launch static backdrop modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="OTPModal"
+  data-bs-backdrop="static"
+  data-bs-keyboard="false"
+  tabindex="-1"
+  aria-labelledby="OTPModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered">
+    <div class="modal-content text-center">
+      <div
+        class="modal-header d-grid align-items-center justify-content-center py-1 border-bottom-0"
+      >
+        <span class="fs-3 color-primary">
+          <i class="bi bi-shield-lock-fill"></i
+        ></span>
+        <h1 class="modal-title fs-4" id="OTPModalLabel">Verify Your Account</h1>
+      </div>
+      <div class="modal-body">
+        <p class="text-muted">
+          Enter OTP Sent to your mobile number <span>*******1968</span>
+        </p>
+
+        <input
+          [(ngModel)]="otpValue"
+          class="otpInput form-control w-50 mx-auto"
+          type="number"
+          min="0"
+          max="999999"
+          pattern="[0-9]*"
+          (input)="onInput($event)"
+          (keyup.enter)="verifyOTP()"
+          [class.error]="error"
+          required
+        />
+        <span class="text-danger" *ngIf="error">
+          OTP is Required and should be 6 digits
+        </span>
+        <div class="my-2">
+          <button
+            type="button"
+            class="btn verify_btn form-control w-50"
+            (click)="verifyOTP()"
+            [disabled]="otpValue === null"
+          >
+            Verify
+          </button>
+          <div class="d-grid mt-2">
+            <!-- Resend OTP in <span>{{ remainingTime | date : "mm:ss" }}</span> -->
+            <span>
+              Resend OTP in
+              <span class="timer text-success">{{
+                secondsToMinutesAndSeconds(remainingTime)
+              }}</span>
+            </span>
+
+            <button
+              type="button"
+              class="resend_btn fw-bold"
+              [class.active]="enableResendBTN"
+              [disabled]="remainingTime > 0"
+              (click)="resendOTP()"
+            >
+              RESEND
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

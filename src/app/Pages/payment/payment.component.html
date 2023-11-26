@@ -1,0 +1,204 @@
+<app-payment-header> </app-payment-header>
+
+<div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="staticBackdropLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        ...
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary">Understood</button>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+
+<div class="payment_body">
+  <div class="container">
+    <div class="row">
+      <div class="payment_header">Select payment Method</div>
+    </div>
+    <div class="row">
+           <!-- 1st col of payment -->
+      <!-- payment options -->
+      <div class="col-12 d-block col-sm-8	">
+        <div class="payment_options">
+          <!-- Bkash -->
+          <div
+            class="card payment_card Bkash"
+            (click)="selectedPaymentType('Bkash')"
+          >
+            <div class="image_div">
+              <img
+                src="../../../assets/images/Social Icon/bkash.png"
+                class="card-img-top payment_method_img"
+                alt=""
+              />
+            </div>
+            <div class="card-body">
+              <p class="card-text">Bkash</p>
+            </div>
+          </div>
+          <!-- Nagad -->
+          <div
+            class="card payment_card Nagad"
+            (click)="selectedPaymentType('Nagad')"
+          >
+            <div class="image_div">
+              <img
+                src="../../../assets/images/Social Icon/nagad.png"
+                class="card-img-top payment_method_img"
+                alt=""
+              />
+            </div>
+
+            <div class="card-body">
+              <p class="card-text">Nagad</p>
+            </div>
+          </div>
+          <!-- Rocket -->
+          <div
+            class="card payment_card Rocket"
+            (click)="selectedPaymentType('Rocket')"
+          >
+            <div class="image_div">
+              <img
+                src="../../../assets/images/Social Icon/rocket.png"
+                class="card-img-top payment_method_img"
+                alt=""
+              />
+            </div>
+
+            <div class="card-body">
+              <p class="card-text">Rocket</p>
+            </div>
+          </div>
+          <!-- Card -->
+          <div
+            class="card payment_card Card"
+            (click)="selectedPaymentType('Card')"
+          >
+            <div class="image_div">
+              <img
+                src="../../../assets/images/Social Icon/credit-card.png"
+                class="card-img-top payment_method_img"
+                alt=""
+              />
+            </div>
+
+            <div class="card-body">
+              <p class="card-text">Card</p>
+            </div>
+          </div>
+          <!-- installment -->
+          <div
+            class="card payment_card Installment"
+            (click)="selectedPaymentType('Installment')"
+          >
+            <div class="image_div">
+              <img
+                src="../../../assets/images/Social Icon/installment.png"
+                class="card-img-top payment_method_img"
+                alt=""
+              />
+            </div>
+
+            <div class="card-body">
+              <p class="card-text">installment</p>
+            </div>
+          </div>
+          <!-- Cash On -->
+          <div
+            class="card payment_card CashOn"
+            (click)="selectedPaymentType('CashOn')"
+          >
+         
+            <div class="image_div">
+              <img
+                src="../../../assets/images/Social Icon/cashOnDelivery.png"
+                class="card-img-top payment_method_img"
+                alt=""
+              />
+            </div>
+
+            <div class="card-body">
+              <p class="card-text">Cash On delivery</p>
+            </div>
+          </div>
+
+        </div>
+    <!-- this div will be visible if any payment method are selected -->
+
+        <div class="payment_information mt-2">
+          <div class="pay_confirm_div" *ngIf="payment_method !== ''">
+
+           <!-- this div only for cards -->
+            <div class="container card_details_div" *ngIf="isCard">
+              <div class="row ">
+                <div class="col  ">
+                  <label for="exampleInputEmail1" class="form-label">Card number</label>
+                  <input type="email" class="form-control"  placeholder="Card number">
+                </div>
+                <div class="col ">
+                  <label for="exampleInputEmail1" class="form-label">Name on card</label>
+                  <input type="email" class="form-control"   placeholder="Name on card" >
+                </div>
+              </div>
+                 <!-- 2nd row  of card_details_div div-->
+              <div class="row mt-3">
+                <div class="col ">
+                  <label for="exampleInputEmail1" class="form-label">Expiration date</label>
+                  <input type="email" class="form-control"   placeholder="MM/YY">
+                </div>
+                <div class="col  ">
+                  <label for="exampleInputEmail1" class="form-label">CVV</label>
+                  <input type="email" class="form-control"    placeholder="CVV">
+                </div>
+              </div>
+            </div>
+              <!--   cards div end-->
+
+            <div 
+          
+            class="description" *ngIf="!isCard" >
+              {{ subTotal_text }}
+            </div>
+            <!-- button for all payment method -->
+            <div class="button_div">
+              <!-- <button type="button" class="btn btn-outline-success pay_button"> -->
+                <button   
+                (click) = "confirmOrder()" type="button" class="btn   pay_button">
+                 {{button_text}}
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <!-- 2nd col of payment -->
+      <!-- order summary -->
+      <div class="col-12 d-flex justify-content-center align-items-center 	col-sm-3">
+        <div class="order_summary">
+          <p class="To_pay">To Pay</p>
+          <p class="Total_amount">
+            {{ totalAmount
+            }}<img
+              class="taKa_icon"
+              src="../../../assets/images/takaIcon.png"
+            />
+          </p>
+
+          <p class="subTotal_text">
+            Subtotal ({{ totalItems }} Items And shiping fee included)
+          </p>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

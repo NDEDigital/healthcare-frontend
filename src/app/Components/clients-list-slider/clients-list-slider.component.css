@@ -1,0 +1,30 @@
+.clientList_container {
+  margin: 1% 6%;
+  background: #eceff2a4;
+  /* box-shadow: 0 0 0.35rem var(--color-gray); */
+  box-shadow: 0 0 0.35rem #ffffff;
+  border: 1px solid #d9d9d9;
+  width: 80%;
+}
+.slider_wrap {
+  position: relative;
+  overflow: hidden;
+  height: 100px;
+}
+
+.slider_main {
+  position: absolute;
+  width: 202%;
+}
+.item {
+  width: 200px;
+  display: inline-flex;
+  position: relative;
+  height: 50px;
+  margin: 5px;
+  /* border: 1px solid rgb(149, 149, 149); */
+  background: #eceff2a4;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+}

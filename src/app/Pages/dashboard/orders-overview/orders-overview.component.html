@@ -1,0 +1,489 @@
+<!-- <section>
+  <div class="header">
+    <a routerLink=""
+      ><img src="assets/images/Logo/final-logo-6.png" alt="" class="logo-img"
+    /></a>
+  </div>
+</section> -->
+
+<section class="container bg-white border rounded">
+  <div class="body_title mt-1" *ngIf="ordersOverviewHeader">
+    <h3>Orders Overview</h3>
+  </div>
+
+  <!-- <div class="d-flex gap-3 subdivision-nav mt-3" *ngIf="navMenu"> -->
+  <div class="d-flex gap-3 subdivision-nav mt-3">
+    <!-- *ngFor="let counts of countsList" -->
+    <p
+      class=""
+      (click)="allProduct()"
+      [class.active-navv]="activeNavvItem === 'All'"
+    >
+      All <span> ({{ AllCount }})</span>
+    </p>
+    <span>|</span>
+    <p
+      (click)="pendingProduct()"
+      [class.active-navv]="activeNavvItem === 'Pending'"
+    >
+      Pending <span> ({{ PendingCount }})</span>
+    </p>
+    <span>|</span>
+    <p
+      (click)="processingProduct()"
+      [class.active-navv]="activeNavvItem === 'Processing'"
+    >
+      Processing <span> ({{ ProcessingCount }})</span>
+    </p>
+    <span>|</span>
+    <p
+      (click)="readyToShipProduct()"
+      [class.active-navv]="activeNavvItem === 'Ready to Ship'"
+    >
+      Ready To Ship <span> ({{ ReadyToShipCount }})</span>
+    </p>
+    <span>|</span>
+    <p
+      (click)="shippedProduct()"
+      [class.active-navv]="activeNavvItem === 'Shipped'"
+    >
+      Shipped <span> ({{ ShippedCount }})</span>
+    </p>
+    <span>|</span>
+    <p
+      (click)="deliveredProduct()"
+      [class.active-navv]="activeNavvItem === 'Delivered'"
+    >
+      Delivered <span> ({{ DeliveredCount }})</span>
+    </p>
+    <span>|</span>
+    <p
+      (click)="cancelledProduct()"
+      [class.active-navv]="activeNavvItem === 'Cancelled'"
+    >
+      Cancelled <span> ({{ CancelledCount }})</span>
+    </p>
+
+    <!-- by maruyfa -->
+    <span>|</span>
+    <p
+      (click)="ToReturnProduct()"
+      [class.active-navv]="activeNavvItem === 'ToReturn'"
+    >
+      To Return <span> ({{ ToReturnCount }})</span>
+    </p>
+    <span>|</span>
+    <p
+      (click)="ReturnedProduct()"
+      [class.active-navv]="activeNavvItem === 'Returned'"
+    >
+      Returned <span> ({{ ReturnedCount }})</span>
+    </p>
+  </div>
+  <div
+    class="search-box mt-2 mb-3 d-flex justify-content-between rounded-2"
+    *ngIf="searchNav && !returnProduct"
+  >
+    <div class="d-flex flex-wrap p-2 gap-2">
+      <input
+        type="text"
+        placeholder="Order Number"
+        [(ngModel)]="searchOrderNumber"
+        class="order-number rounded-2 p-1"
+      />
+      <!-- <input
+        type="date"
+        placeholder="Order Date"
+        [(ngModel)]="searchOrderDate"
+        class="order-number rounded-2 p-1"
+      /> -->
+      <input
+        type="text"
+        placeholder="Payment Method"
+        [(ngModel)]="searchPaymentMethod"
+        class="order-number rounded-2 p-1"
+      />
+      <!-- <input
+        type="text"
+        placeholder="Retail Price"
+        [(ngModel)]="searchRetailPrice"
+        class="order-number rounded-2 p-1"
+      /> -->
+      <input
+        type="text"
+        placeholder="Status"
+        [(ngModel)]="searchStatus"
+        class="order-number rounded-2 p-1"
+      />
+    </div>
+
+    <!-- <button class="m-2 p-2 rounded" (click)="searchIndividuals()">
+      Search
+    </button> -->
+    <button class="m-2 p-2 rounded" (click)="clearSearch()">Clear All</button>
+  </div>
+</section>
+
+<!-- all product table design -->
+<section class="container tableContainer mt-3 bg-white rounded p-3">
+  <!-- *ngIf="showTable" -->
+  <div class="table-responsive productTable p-0 m-0 bg-white border">
+    <table class="table table-striped table-design p-0 m-0 bg-white">
+      <thead class="table-header bg-light p-0 m-0">
+        <tr class="">
+          <th
+            scope="col"
+            [class.hiddenCheckbox]="
+              activeNavvItem == 'All' ||
+              activeNavvItem == 'Delivered' ||
+              activeNavvItem == 'Cancelled' ||
+              activeNavvItem == 'Returned'
+            "
+          >
+            <input
+              [(ngModel)]="selectAll"
+              (change)="toggleSelectAll()"
+              type="checkbox"
+              id="selectAllCheckbox"
+              name=""
+              value=""
+            />
+          </th>
+          <th scope="col" *ngIf="!returnProduct">Document</th>
+          <th scope="col" *ngIf="!returnProduct">Order No.</th>
+          <th scope="col" *ngIf="!returnProduct">Order Date</th>
+          <th scope="col" *ngIf="!returnProduct">Address</th>
+          <th scope="col" *ngIf="!returnProduct">Payment Method</th>
+          <th scope="col" *ngIf="!returnProduct">Total Price</th>
+          <th scope="col" *ngIf="!returnProduct">NumberOfItem</th>
+          <th scope="col" *ngIf="!returnProduct">Status</th>
+          <!-- return part -->
+          <th scope="col" *ngIf="returnProduct">Order No.</th>
+          <th scope="col" *ngIf="returnProduct">Group Name</th>
+          <th scope="col" *ngIf="returnProduct">Product Name</th>
+          <th scope="col" *ngIf="returnProduct">Apply Date</th>
+          <th scope="col" *ngIf="returnProduct">Price</th>
+          <th scope="col" *ngIf="returnProduct">Return type</th>
+          <th scope="col" *ngIf="returnProduct">Remarks</th>
+          <th scope="col" *ngIf="returnProduct">Delivery Date</th>
+          <th
+            scope="col"
+            *ngIf="!hideActionColumn"
+            [class.hiddenActionBtn]="activeNavvItem == 'All'"
+          >
+            Actions
+          </th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let orderInfo of filterdata">
+          <td
+            *ngIf="!returnProduct"
+            scope="col"
+            [class.hiddenCheckbox]="
+              activeNavvItem == 'All' ||
+              activeNavvItem == 'Delivered' ||
+              activeNavvItem == 'Cancelled' ||
+              activeNavvItem == 'Returned'
+            "
+          >
+            <input
+              type="checkbox"
+              class="individual_checkbox"
+              id = "{{ orderInfo.orderMasterId}}"
+              name = "selectedOrders"
+              [(ngModel)] = "orderInfo.selected"
+              (change) = "checkboxChanged(orderInfo)"
+            />
+          </td>
+
+          <!-- for return -->
+          <td *ngIf="activeNavvItem == 'ToReturn'" scope="col">
+            <input
+              type="checkbox"
+              class="individual_checkbox"
+              id="{{ orderInfo.detailsId }}"
+              name="selectedOrders"
+              [(ngModel)]="orderInfo.selected"
+              (change)="checkboxChanged(orderInfo)"
+            />
+          </td>
+
+          <!-- for invoice -->
+          <td
+            scope="col"
+            id="{{ orderInfo.orderMasterId }}"
+            *ngIf="!returnProduct"
+          >
+            <p
+              class="invoice-tag"
+              (click)="setOrderId(orderInfo.orderMasterId)"
+            >
+              Invoice
+            </p>
+          </td>
+
+          <td scope="col" class="d-none" *ngIf="!returnProduct">
+            {{ orderInfo.orderMasterId }}
+          </td>
+          <td scope="col" *ngIf="!returnProduct">{{ orderInfo.orderNo }}</td>
+          <td scope="col" *ngIf="!returnProduct">{{ orderInfo.orderDate }}</td>
+          <td scope="col" *ngIf="!returnProduct">{{ orderInfo.address }}</td>
+          <td scope="col" *ngIf="!returnProduct">
+            {{ orderInfo.paymentMethod }}
+          </td>
+          <td scope="col" *ngIf="!returnProduct">
+            {{ orderInfo.totalPrice }} Taka
+          </td>
+          <td scope="col" *ngIf="!returnProduct">
+            {{ orderInfo.numberofItem }}
+          </td>
+          <td scope="col" *ngIf="!returnProduct">{{ orderInfo.status }}</td>
+          <!-- return part -->
+
+          <td scope="col" *ngIf="returnProduct">{{ orderInfo.orderNo }}</td>
+          <td scope="col" *ngIf="returnProduct">{{ orderInfo.groupName }}</td>
+          <td scope="col" *ngIf="returnProduct">{{ orderInfo.goodsName}}</td>
+          <td scope="col" *ngIf="returnProduct">
+            {{ orderInfo.applyDate.split("T")[0] }}
+          </td>
+          <td scope="col" *ngIf="returnProduct">{{ orderInfo.price }}</td>
+          <td scope="col" *ngIf="returnProduct">{{ orderInfo.returnType }}</td>
+          <td scope="col" *ngIf="returnProduct">{{ orderInfo.remarks }}</td>
+          <td scope="col" *ngIf="returnProduct">
+            {{ orderInfo.deliveryDate.split("T")[0] }}
+          </td>
+          <td
+            scope="col"
+            *ngIf="!hideActionColumn"
+            [class.hiddenActionBtn]="activeNavvItem == 'All'"
+          >
+            <div class="h-100 d-flex gap-2 justify-content-center">
+              <ng-container *ngIf="orderInfo.status === 'Pending'">
+                <div
+                  id="{{ orderInfo.orderMasterId }}"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="setID(orderInfo.orderMasterId, 'Processing')"
+                >
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/check-solid.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+
+                <!-- <a class="text-white" href="">Cancel</a> -->
+
+                <div
+                  id="{{ orderInfo.orderMasterId }}"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="setID(orderInfo.orderMasterId, 'Cancelled')"
+                >
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/xmark-solid.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+              </ng-container>
+              <ng-container *ngIf="orderInfo.status === 'Processing'">
+                <div
+                  id="{{ orderInfo.orderMasterId }}"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="setID(orderInfo.orderMasterId, 'Ready to Ship')"
+
+                >
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/check-solid.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+
+                <!-- <a class="text-white" href="">Cancel</a> -->
+
+                <div
+                  id="{{ orderInfo.orderMasterId }}"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="setID(orderInfo.orderMasterId, 'Cancelled')"
+                >
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/xmark-solid.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+              </ng-container>
+              <ng-container *ngIf="orderInfo.status === 'Ready to Ship'">
+                <div
+                  id="{{ orderInfo.orderMasterId }}"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="setID(orderInfo.orderMasterId, 'Shipped')"
+                >
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/check-solid.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+                <div
+                  id="{{ orderInfo.orderMasterId }}"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="setID(orderInfo.orderMasterId, 'Cancelled')"
+                >
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/xmark-solid.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+              </ng-container>
+              <ng-container *ngIf="orderInfo.status === 'Shipped'">
+                <div
+                  id="{{ orderInfo.orderMasterId }}"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="setID(orderInfo.orderMasterId, 'Delivered')"
+                >
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/check-solid.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+
+                <div
+                  id="{{ orderInfo.orderMasterId }}"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="setID(orderInfo.orderMasterId, 'Cancelled')"
+                >
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/xmark-solid.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+              </ng-container>
+              <ng-container *ngIf="orderInfo.status === 'Delivered'">
+                <div>
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/info-circle.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+              </ng-container>
+              <ng-container
+                *ngIf="
+                  orderInfo.status === 'Cancelled' ||
+                  activeNavvItem === 'Returned'
+                "
+              >
+                <div>
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/info-circle.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+              </ng-container>
+
+              <!-- for return -->
+
+              <ng-container *ngIf="activeNavvItem === 'ToReturn'">
+                <div
+                  id="{{ orderInfo.detailsId }}"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="setID(orderInfo.detailsId, 'Returned')"
+                >
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/check-solid.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+
+                <!-- <a class="text-white" href="">Cancel</a> -->
+
+                <div
+                  id="{{ orderInfo.detailsId }}"
+                  data-bs-toggle="modal" data-bs-target="#exampleModal"
+                  (click)="setID(orderInfo.detailsId, 'Return Cancelled')"
+                >
+                  <img
+                    src="../../../../assets/images/seller-Order-icon/xmark-solid.svg"
+                    alt=""
+                    style="width: 1.2rem"
+                  />
+                </div>
+              </ng-container>
+            </div>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+  <div class="text-danger text-center" *ngIf="filterdata.length <= 0">
+    <h3>No Data Found</h3>
+  </div>
+  <div class="d-flex justify-content-between" *ngIf="filterdata.length > 0">
+    <div>
+      <app-pagination
+        [inputdata]="data"
+        (myData)="handlePaginationData($event)"
+      >
+      </app-pagination>
+    </div>
+    <div class="d-flex gap-2 m-3">
+      <button
+      (click)="Approval('Approved' )"
+        data-bs-toggle="modal" data-bs-target="#exampleModal"
+        class="btn btn-success btn-sm"
+        *ngIf="
+          activeNavvItem === 'Pending' ||
+          activeNavvItem === 'Processing' ||
+          activeNavvItem === 'Ready to Ship' ||
+          activeNavvItem === 'Shipped' ||
+          activeNavvItem === 'ToReturn'
+        "
+      >
+        Approve
+      </button>
+      <button
+        (click)="Approval('Rejected' )"
+        data-bs-toggle="modal" data-bs-target="#exampleModal"
+        class="btn btn-danger btn-sm"
+        *ngIf="
+          activeNavvItem === 'Pending' ||
+          activeNavvItem === 'Processing' ||
+          activeNavvItem === 'Ready to Ship' ||
+          activeNavvItem === 'Shipped' ||
+          activeNavvItem === 'ToReturn'
+        "
+      >
+        Reject
+      </button>
+    </div>
+  </div>
+
+
+
+
+<!-- Modal -->
+<div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Massage </h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+      {{ModalText}}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal" (click)="popUpClose()">Close</button>
+        <button type="button" class="btn btn-Approved"  data-bs-dismiss="modal" *ngIf="checked" (click)="statusCheck()">Save changes</button>
+      </div>
+    </div>
+  </div>
+</div>
+</section>

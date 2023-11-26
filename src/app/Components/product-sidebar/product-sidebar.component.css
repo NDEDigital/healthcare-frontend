@@ -1,0 +1,28 @@
+.side{
+       width: 100%;
+       background-color: white;
+       /* border-radius: 7px; */
+       /* padding-left: 20px; */
+       padding-top: 20px;
+       margin-top: 16px;
+       /* margin-left: 100px; */
+}
+.parent{
+    font-size: 1.5rem;
+    font-weight: 600;
+}
+.products{
+      margin-right: 5px;
+}
+p{
+     font-size: 1.2rem;
+     margin: 0;
+     margin-bottom: 3px;
+}
+a{
+   text-decoration: none;  
+}
+label{
+       font-size: 15px;
+       margin-left: 5px;
+}

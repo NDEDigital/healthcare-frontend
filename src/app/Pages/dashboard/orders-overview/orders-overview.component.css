@@ -1,0 +1,114 @@
+/* :root {
+  --primaryCC: #3a98b9;
+  --seconadry: #8ac7dd;
+} */
+
+/* ================= All product table design ================== */
+.logo-img {
+  width: 15%;
+}
+
+.header {
+  background-color: #3a98b9;
+}
+ 
+.modal-header {
+  background-color:  #4592a0;
+  color: white;
+}
+
+.modal-header .btn-close {
+  background-color: snow;
+}
+.btn-Approved {
+  background-color:  #4592a0;
+  color: white;
+}
+/* .table-design th td {
+  text-align: center;
+} */
+
+.table-design td,
+.table-design th {
+  text-align: center;
+  /* border: 2px solid #6ac0df; */
+  /* box-sizing: border-box; */
+}
+
+.table-design a {
+  text-decoration: none;
+  color: #3a98b9;
+}
+
+.subdivision-nav p {
+  /* color: #3a98b9; */
+  font-size: larger;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.search-box {
+  height: 3%;
+  background-color: #8ac7dd;
+}
+
+/* .readyToshipBtn {
+  padding: 0.3rem;
+  background-color: rgb(111, 180, 111);
+  border-radius: 5%;
+}
+
+.cancelBtn {
+  padding: 0.2rem 1.8rem;
+  background-color: rgb(230, 129, 129);
+  border-radius: 5%;
+}
+
+.btn-cell button {
+  display: inline-block;
+  vertical-align: middle;
+} */
+
+.invoice-tag {
+  color: #3a98b9;
+  cursor: pointer;
+}
+
+/* table design */
+
+.productTable {
+  height: 25rem;
+  /* border: 2px solid #6ac0df; */
+}
+
+.table-header {
+  position: sticky;
+  top: 0;
+  z-index: 1;
+  /* border: 1px solid red; */
+}
+
+.tableContainer {
+  /* border: 1px solid #3a98b9; */
+}
+
+.active-navv {
+  /* border-bottom: 3px solid var(--color-primary);
+  border-radius: 4px; */
+  /* padding: 0.1rem 0.2rem; */
+  /* color: white; */
+
+  /* text-decoration: underline; */
+
+  border-bottom: 2px solid #3a98b9;
+  color: #3a98b9;
+}
+
+/* CSS to hide checkboxes and their containers when activeNavvItem is 'All' */
+.hiddenCheckbox {
+  display: none;
+}
+
+.hiddenActionBtn {
+  display: none !important;
+}

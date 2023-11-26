@@ -1,0 +1,207 @@
+<section class="checkoutPage_container">
+  <app-sub-header [headerTitle]="'Checkout'"></app-sub-header>
+  <div class="row">
+    <div class="col-7">
+      <div
+        class="container w-75 px-5 py-3 mt-5 rounded text-start"
+        [class.border-highlight]="editMode"
+      >
+        <div class="d-flex justify-content-between me-3">
+          <h5 class="fs-6">
+            <span class="text-muted">Deliver to: </span>{{ userName }}
+          </h5>
+          <div class="edit_btn" (click)="editInfo()">
+            <i class="fa-solid fa-pen-to-square fs-5"></i>
+          </div>
+        </div>
+        <form [formGroup]="checkoutForm">
+          <div class="form-group row py-1">
+            <label class="col-3 text-end" for="phone">Phone:</label>
+            <div class="col-5 p-0">
+              <input
+                type="text"
+                class="w-100 rounded p-2"
+                formControlName="phone"
+                [class.editable]="editMode"
+                [class.error]="isFieldInvalid('phone')"
+              />
+              <div class="text-danger" *ngIf="isFieldInvalid('phone')">
+                <span>Please insert a valid phone number!</span>
+              </div>
+            </div>
+            <!-- <button
+              *ngIf="editMode !== 'phone'"
+              type="button"
+              class="col-1 bg-white text-primary"
+              (click)="editInfo('phone')"
+            >
+              edit
+            </button> -->
+            <!-- <button
+              *ngIf="editMode"
+              type="button"
+              class="col-1 bg-white text-primary"
+              (click)="saveInfo('phone')"
+            >
+              Save
+            </button> -->
+          </div>
+
+          <div class="form-group row py-2">
+            <label class="col-3 text-end" for="email">Email:</label>
+            <input
+              class="col-5 rounded py-1"
+              type="email"
+              formControlName="email"
+            />
+          </div>
+          <div class="form-group row py-2">
+            <label class="col-3 text-end" for="address">Address:</label>
+            <div class="col-5 p-0">
+              <textarea
+                type="text"
+                class="w-100 rounded p-1"
+                formControlName="address"
+                [class.editable]="editMode"
+                [class.error]="isFieldInvalid('address')"
+              ></textarea>
+              <div class="text-danger" *ngIf="isFieldInvalid('address')">
+                <span>Please insert a valid address!</span>
+              </div>
+            </div>
+
+            <!-- <button
+              *ngIf="editMode !== 'address'"
+              type="button"
+              class="col-1 bg-white text-primary"
+              (click)="editInfo('address')"
+            >
+              edit
+            </button> -->
+            <!-- <button
+              *ngIf="editMode"
+              type="button"
+              class="col-1 bg-white text-primary"
+              (click)="saveInfo('address')"
+            >
+              Save
+            </button> -->
+          </div>
+          <div class="d-flex flex-column align-items-end">
+            <button
+              *ngIf="editMode"
+              type="button"
+              class="btn save_btn"
+              (click)="saveInfo()"
+            >
+              Submit
+            </button>
+          </div>
+        </form>
+      </div>
+
+      <div class="container w-75 px-5 py-3 mt-5 rounded text-start">
+        <div
+          class="product row align-items-center py-2"
+          *ngFor="let entry of cartDataDetail | keyvalue"
+        >
+          <div class="d-flex justify-content-between border-top border-1">
+            <h5 class="fs-6">
+              <span class="text-muted">Company: </span>
+              {{ entry.value.companyName }}
+            </h5>
+          </div>
+          <div class="col-2">
+            <img
+              class="rounded border border-1"
+              [src]="
+                entry.value.imagePath
+                  ? entry.value.imagePath.substring(
+                      entry.value.imagePath.indexOf('assets')
+                    )
+                  : '../../../assets/images/' + entry.value.groupName + '.jpg'
+              "
+              alt=""
+            />
+          </div>
+          <div class="col-5">
+            <label class="text-end" for="name">{{
+              entry.value.goodsName
+            }}</label>
+            <p class="text-muted py-1">{{ entry.value.specification }}</p>
+          </div>
+          <div class="col-3">
+            <p class="text-muted fw-semibold">
+              Qty:
+              <span>
+                {{
+                  cartDataQt.get(
+                    entry.value.groupCode + "&" + entry.value.goodsID
+                  )
+                }}</span
+              >
+            </p>
+          </div>
+          <div class="col-2">
+            <p class="text-muted fw-semibold">
+              <span class="fs-3">৳</span>: <span> {{ entry.value.price }}</span>
+            </p>
+          </div>
+        </div>
+
+        <div
+          class="d-flex align-items-center justify-content-end text-muted me-3"
+        >
+          <P class="mt-2">{{ cartDataDetail.size }} Item(s).</P>
+          <P class="fw-semibold">
+            <span> Subtotal: </span>
+            <span class="color-primary">
+              <span class="fs-3">৳</span> {{ totalPrice }}</span
+            >
+          </P>
+        </div>
+      </div>
+    </div>
+    <div class="col-4 mx-5">
+      <div class="container w-75 px-5 py-2 mt-5 rounded text-start fs-6">
+        <div class="border-bottom">
+          <h5 class="fs-6 border-bottom py-1">
+            <!-- <span class="text-muted">Deliver to: </span> -->
+            Order Summary
+          </h5>
+          <div class="row">
+            <div class="row">
+              <h6 class="col-5 mt-2">Items Total</h6>
+              <div class="col-5 text-end">
+                <span class="fs-3">৳</span> {{ totalPrice }}
+              </div>
+            </div>
+            <div class="row">
+              <h6 class="col-5 mt-2">Delivery Fee</h6>
+              <div class="col-5 text-end">
+                <span class="fs-3">৳</span> {{ deliveryFee }}
+              </div>
+            </div>
+            <div class="row">
+              <h6 class="col-5 mt-2">Total Payment</h6>
+              <div class="col-5 text-end">
+                <span class="fs-3">৳</span> {{ totalPrice + deliveryFee }}
+              </div>
+            </div>
+          </div>
+        </div>
+        <span
+          class="vat-info d-flex text-muted justify-content-end mt-1 fst-italic"
+        >
+          VAT included, where applicable
+        </span>
+        <button
+          class="btn bg_primary text-white fw-semibold my-2 w-100"
+          (click)="payment()"
+        >
+          Place Order
+        </button>
+      </div>
+    </div>
+  </div>
+</section>

@@ -1,0 +1,12 @@
+body {
+  background: white;
+}
+.products {
+  cursor: pointer;
+}
+
+@media (max-width: 746px) {
+  .product_sidebar_container {
+    display: none;
+  }
+}

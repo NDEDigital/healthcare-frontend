@@ -1,0 +1,12 @@
+<div class="profile_header_container d-flex align-items-center">
+  <div class="logo_container">
+    <a *ngIf="isbuyer" routerLink=""
+      ><img src="assets/images/Logo/final-logo-6.png" alt="logo"
+    /></a>
+    <a *ngIf="!isbuyer"
+      ><img src="assets/images/Logo/final-logo-6.png" alt="logo"
+    /></a>
+  </div>
+  <div class="delimeter ms-5 fs-4">|</div>
+  <div class="header_title ms-5 fs-5">{{ headerTitle }}</div>
+</div>

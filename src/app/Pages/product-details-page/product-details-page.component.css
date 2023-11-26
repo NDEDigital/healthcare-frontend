@@ -1,0 +1,278 @@
+.productDetailsBody {
+  background-color: aliceblue;
+  padding: 0% 11%;
+}
+
+.ratingsdiv,
+.Specifications,
+.qsn,
+.qsnAnsDiv,
+.review,
+.productDetailsData {
+  padding: 1rem 2rem;
+}
+.productDetailsCol {
+  padding: 0 0.2rem;
+}
+section {
+  background-color: #fff;
+}
+a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+a:hover {
+  text-decoration: underline;
+  /* color: #777776; */
+}
+ul li {
+  list-style-type: circle !important; /* or any other default style you want */
+}
+
+ul.special-list {
+  list-style-type: circle !important;
+}
+.container ul {
+  list-style-type: circle;
+}
+ .productDetailsData .list-group-item {
+  list-style-type: circle;
+}
+
+/* product */
+.singleImage img {
+  width: 28rem;
+  height: 24rem;
+  /* border: .1rem solid #777776; */
+}
+.imageSlider {
+  display: flex;
+  justify-content: center;
+}
+.imageSlider img {
+  width: 6.3rem;
+  margin: 0.3rem 0.7rem;
+
+  border: 0.1rem solid #bdbdbc;
+}
+
+.carousel {
+  width: 100%;
+}
+.carousel-control-prev,
+.carousel-control-next {
+  width: 5%;
+}
+.carousel-control-next-icon,
+.carousel-control-prev-icon {
+  color: #777776;
+  background-color: #777776;
+  height: 4rem;
+}
+/* .col-4,.col-5 ,.col-3{
+  border: 1px solid #333;
+  padding: 0;
+ } */
+.productName {
+  font-size: 2rem;
+}
+.star {
+  margin-right: 0.5rem;
+}
+.test .my-div {
+  width: 1rem !important;
+}
+.star i {
+  width: 1.2rem;
+  color: var(--color-primary);
+}
+
+.vertical-line {
+  margin: 0 1rem;
+  margin-top: 0.43rem;
+  width: 0.1rem; /* Adjust the width of the vertical line as needed */
+  height: 1rem; /* Make the line span the full height of its container */
+  background-color: var(--color-primary);
+}
+
+.ratingCount,
+.qsnAns {
+  color: var(--color-primary);
+  font-size: 1rem;
+}
+
+.price {
+  font-size: 2rem;
+}
+.taKa_icon {
+  width: 2rem;
+  margin-bottom: 1rem;
+}
+.buyNow button {
+  padding: 1rem 2rem;
+  width: 12rem;
+  margin-right: 1rem;
+  font-size: 1.5rem;
+  color: #fff;
+  cursor: pointer;
+}
+
+.buyNowButton {
+  background-color: var(--color-primary);
+}
+.buyNow .buyNowButton:hover {
+  background-color: #2386aa;
+}
+.AddToCartButton {
+  background-color: rgb(214, 178, 60);
+}
+.buyNow .AddToCartButton:hover {
+  background-color: #b39329;
+}
+/* product end */
+
+/* product details */
+.productDetailsTitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+  background-color: rgb(235, 239, 241);
+  padding: 1rem 1.5rem;
+  /* margin-bottom: 1rem; */
+}
+.specificationsName {
+  color: #777776;
+}
+
+/* rating and review */
+.ratingStarSingleReview {
+  width: 1.2rem;
+}
+.ratingRatio {
+  font-size: 3rem;
+}
+.reviewPart {
+  width: 99%;
+}
+.reviewEdit {
+  cursor: pointer;
+}
+.reviewEdit a:hover {
+  color: var(--color-primary);
+}
+/* .bigStar{
+  width: 4rem !important;
+} */
+.innerTitle {
+  font-size: 1.5rem;
+  font-weight: 500;
+
+  padding: 1rem 1.5rem;
+  border-bottom: 1px solid #ebebe7;
+  border-top: 1px solid #ebebe7;
+}
+.ratingText {
+  color: #41413f;
+}
+.ratingColorDiv {
+  height: 1.1rem;
+  background-color: #efefe9;
+  margin-right: 0.7rem;
+}
+.reviewImage img {
+  width: 7rem;
+  height: 5rem;
+}
+.colordiv {
+  background-color: #ffce5b;
+}
+/* qsn */
+.qsnAnsIcon {
+  background-color: var(--color-primary);
+  color: #fff;
+  width: 2rem;
+  text-align: center;
+  border-radius: 10%;
+}
+.qsnAnsDiv p {
+  padding: 0 !important;
+}
+.ansDiv,
+.qsndiv {
+  margin: 1rem 0;
+}
+.ansIcon {
+  background-color: #777776;
+}
+.buyerQsn {
+}
+.buyerName,
+.sellerName,
+.ratingBy {
+  font-size: 1rem;
+  color: rgb(95, 95, 95);
+}
+
+.card {
+  /* display: flex;
+  justify-content: center; */
+  text-align: center;
+}
+.card .cardImage {
+  width: 10rem;
+  height: 6rem;
+}
+.card .price {
+  font-size: 1rem;
+}
+.card .taKa_icon {
+  width: 1rem;
+  height: 1rem;
+  margin-bottom: 0.3rem !important;
+}
+
+.disabled {
+  pointer-events: none; /* Disable pointer events on the element */
+  opacity: 0.5; /* Optionally reduce opacity to visually indicate the element is disabled */
+  /* Add other styles as needed */
+}
+
+.ratings {
+  display: flex;
+  justify-content: flex-start;
+  gap: 1rem;
+  color: #ccc;
+}
+
+.ratings input[type="radio"] {
+  display: none;
+}
+
+.ratings label {
+  cursor: pointer;
+  font-size: 1.5rem;
+}
+.ratings p {
+  font-size: 1rem;
+  opacity: 0;
+}
+.ratings .active,
+.ratings p.active {
+  color: #ffd700;
+  opacity: 1;
+}
+
+.review-bg {
+  background-color: var(--color-primary);
+}
+.quantity-txt{
+   width: 40px;
+   height: 30px;
+   font-size: 15px;
+}
+/* sidebar  */
+.right-sidebar {
+  width: 120px;
+}
+.go-truck {
+  font-size: 10px;
+}

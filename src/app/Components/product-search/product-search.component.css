@@ -1,0 +1,48 @@
+.card-img{
+   width: 30%;
+  
+}
+.product-img{
+   height: 11rem;
+}
+.brief-des{
+   width: 65%;
+}
+
+.tk{
+   font-size: 25px;
+}
+.suplier-btn{
+  background-color: #0590c1;   
+  color: white;
+  font-weight: 600;
+  font-size: 1rem;
+}
+.search-product{
+     background-color: #dce7eb;
+}
+.product-card{
+    background-color: white;
+     border: 1px solid #e4e4e4;
+     border-radius: 5px;
+}
+
+
+.product-card:hover h6 {
+  
+  color: #0082b2;
+}
+
+.compare-btn{
+   font-weight: 600;
+   font-size: 1rem;
+}
+.h6-clamp {
+  display: -webkit-box;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+  -webkit-line-clamp: 2; /* Number of lines to show */
+  line-height: 1.2; /* Adjust line height to control the space between lines */
+}
+
+

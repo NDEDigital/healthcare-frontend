@@ -1,0 +1,123 @@
+/* You can add global styles to this file, and also import other style files */
+@import url("https://fonts.googleapis.com/css2?family=Kumbh+Sans:wght@400;700&family=Poppins:wght@300;400;500;600&display=swap");
+@import "~bootstrap-icons/font/bootstrap-icons.css";
+:root {
+  /* --color-primary: #3a98b9; */
+  /* --color-primary: #8ea4ac; */
+  --color-primary: #7b9eab;
+  --color-gray: #6b6e71;
+  --text-black: #5b5a5a;
+  --background-color: #f5f5f5;
+  --border-color: #dee2e6;
+  /* --border-color: #bbc3cb; */
+  --slider-pos-cnt: 0;
+}
+*,
+*::before,
+*::after {
+  margin: 0;
+  padding: 0;
+  outline: 0;
+  box-sizing: border-box;
+  text-decoration: none;
+  list-style: none;
+  border: none;
+}
+body {
+  font-family: "Poppins", sans-serif;
+  /* background: var(--background-color) !important; */
+}
+.color-primary {
+  color: var(--color-primary) !important;
+}
+.bg_primary {
+  background: var(--color-primary) !important;
+}
+.error {
+  border-color: red !important;
+}
+
+/* Common Classes */
+.body_title h3 {
+  color: var(--color-primary);
+  font-weight: 800;
+  /* text-shadow: 1px 1px 1px rgb(26, 27, 30); */
+}
+.logo_container img {
+  height: 4rem;
+  width: 15.4rem;
+}
+.approval_container {
+  height: 66.84vh;
+  width: 78.6vw;
+  overflow: scroll;
+}
+.product_col {
+  display: flex;
+  text-align: center;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+}
+.checkbox_col {
+  width: 8rem !important;
+  /* background: #cbc8fa7b; */
+  justify-content: start;
+}
+.image_col {
+  width: 15.5rem !important;
+
+  /* background: #bfdfeb; */
+}
+.text-col {
+  width: 20rem !important;
+  /* background: #bfc4eb; */
+}
+.approval_container-row {
+  width: max-content;
+  border-bottom: 1px solid #dee2e6;
+}
+/* product detailsModal */
+.detail-img {
+  height: 12rem;
+  width: 15rem;
+}
+.title {
+  margin-bottom: 0;
+}
+.prime-color {
+  color: var(--color-primary);
+}
+.type {
+  margin-bottom: 1px;
+}
+.second-color {
+  color: var(--color-gray);
+}
+.detail-img {
+  transition: transform 0.3s ease-in-out;
+}
+.detail-img:hover {
+  transform: scale(1.1);
+}
+/* Media Queries */
+@media (max-width: 1700px) {
+  html {
+    font-size: 85%;
+  }
+}
+@media (max-width: 998px) {
+  html {
+    font-size: 65%;
+  }
+}
+@media (max-width: 768px) {
+  html {
+    font-size: 55%;
+  }
+}
+@media (max-width: 576px) {
+  html {
+    font-size: 45%;
+  }
+}

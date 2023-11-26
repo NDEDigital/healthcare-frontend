@@ -1,0 +1,72 @@
+<div class="admin_order_pagination mt-2 d-flex">
+  <nav aria-label="Page navigation example">
+    <ul class="pagination">
+      <li class="page-item">
+        <a
+          class="page-link"
+          aria-label="Previous"
+          [ngClass]="{ select_Icon: selectedIconIndex === 'start' }"
+          (click)="updateIndices('start')"
+        >
+          <i class="fa-solid fa-angles-left order_pagination_icon"></i>
+        </a>
+      </li>
+      <li class="page-item">
+        <a
+          class="page-link"
+          aria-label="Previous"
+          [ngClass]="{ select_Icon: selectedIconIndex === 'prev' }"
+          (click)="go_Prev_Next_Page('prev')"
+        >
+          <i class="fa-solid fa-chevron-left order_pagination_icon"></i>
+        </a>
+      </li>
+
+      <ng-container *ngFor="let row of inputdata; let i = index">
+        <li class="page-item">
+          <a
+            class="page-link"
+            [ngClass]="{ page_selected: selectedPageIndex === i + 1 }"
+            id="{{ i }}"
+            (click)="changePageNumber(i + 1)"
+            >{{ row }}</a
+          >
+        </li>
+      </ng-container>
+
+      <li class="page-item">
+        <a
+          class="page-link"
+          aria-label="Next"
+          [ngClass]="{ select_Icon: selectedIconIndex === 'next' }"
+          (click)="go_Prev_Next_Page('next')"
+        >
+          <i class="fa-solid fa-angle-right order_pagination_icon"></i>
+        </a>
+      </li>
+      <li class="page-item">
+        <a
+          class="page-link"
+          aria-label="Next"
+          [ngClass]="{ select_Icon: selectedIconIndex === 'end' }"
+          (click)="updateIndices('end')"
+        >
+          <!-- <span aria-hidden="true">&raquo;</span> --><i
+            class="fa-solid fa-angles-right order_pagination_icon"
+          ></i>
+        </a>
+      </li>
+    </ul>
+  </nav>
+
+  <select
+    class="form-select row_select"
+    [(ngModel)]="selectedValue"
+    (change)="changePageNumber(1)"
+    aria-label="Default select example"
+  >
+    <option value="10" selected>10</option>
+    <option value="20">20</option>
+    <option value="30">30</option>
+  </select>
+</div>

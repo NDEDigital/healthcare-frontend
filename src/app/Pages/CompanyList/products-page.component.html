@@ -1,0 +1,28 @@
+<body>
+  <app-header (dataUpdated)="handleDataUpdated()"></app-header>
+  <app-nav-belt (dataUpdated)="handleDataUpdated()"></app-nav-belt>
+  <div class="d-flex mx-5 px-5">
+    <div class="product_sidebar_container">
+      <app-product-sidebar></app-product-sidebar>
+    </div>
+
+    <div class="products ms-5 ps-5">
+      <div class="row">
+        <div
+          [ngClass]="
+            companyList.length <= 2
+              ? 'col-lg-6 col-md-6 col-sm-12'
+              : 'col-lg-4 col-md-6 col-sm-6'
+          "
+          *ngFor="let company of companyList"
+        >
+          <app-card
+            [title]="company.companyName"
+            (click)="productCardClick(company.companyCode)"
+          ></app-card>
+        </div>
+      </div>
+    </div>
+  </div>
+  <app-footer></app-footer>
+</body>

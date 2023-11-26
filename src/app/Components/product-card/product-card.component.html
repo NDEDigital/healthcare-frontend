@@ -1,0 +1,97 @@
+<section class="border rounded border border-1 product product py-1 px-3">
+  <div class="ms-2 mt-2 d-flex flex-column">
+    <div class="text-center" (click)="goToDetail()">
+      <!-- <img class="rounded" src="assets/images/hc1.jpg" alt="" /> -->
+      <img
+        class="card_image rounded"
+        [src]="imageSRC.substring(imageSRC.indexOf('assets'))"
+        alt=""
+      />
+    </div>
+    <!-- <div class="mx-5 px-3"> -->
+    <div
+      class="d-flex justify-content-between align-items-center text-truncate-container"
+    >
+      <h6 class="product-title" (click)="goToDetail()">
+        {{ title }}
+      </h6>
+      <div class="btns d-flex text-end">
+        <button
+          class="text-danger btn"
+          (click)="isUnderOrderProccess(index, 'delete')"
+        >
+          <i class="fa-solid fa-trash-can"></i>
+        </button>
+        <button
+          class="text-primary btn"
+          (click)="isUnderOrderProccess(index, 'edit')"
+        >
+          <i class="fa-solid fa-pen-to-square"></i>
+        </button>
+      </div>
+    </div>
+    <div class="quantity text-muted">
+      Quantity:<span class="fw-bolder ms-1">{{ quantity }}</span>
+    </div>
+    <!-- </div> -->
+  </div>
+</section>
+
+<!-- error modal -->
+<!-- Button trigger modal -->
+<button
+  #errorModal
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#errorModal"
+>
+  Launch error modal
+</button>
+<button
+  #deleteModal
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#deleteModal"
+>
+  Launch delete modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="errorModal"
+  tabindex="-1"
+  aria-labelledby="errorModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5 text-danger" id="errorModalLabel">
+          404 Error!
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Modification or deletion is not allowed while there are active orders.
+      </div>
+      <div class="modal-footer">
+        <button
+          type="button"
+          class="btn btn-secondary text-white"
+          data-bs-dismiss="modal"
+        >
+          Close
+        </button>
+        <!-- <button type="button" class="btn btn-primary">Save changes</button> -->
+      </div>
+    </div>
+  </div>
+</div>

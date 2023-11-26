@@ -1,0 +1,242 @@
+<section class="add_product_container">
+  <div class="head">
+    <a><img src="assets/images/Logo/final-logo-6.png" alt="" /></a>
+  </div>
+
+  <form
+    [formGroup]="productForm"
+    ngNativeValidate
+    class="container form_container mt-5 rounded"
+    id="add_product-form"
+  >
+    <h1 class="title text-center">{{ headerTitle }}</h1>
+    <hr />
+    <div class="row">
+      <div class="col-5">
+        <div class="mb-3">
+          <label for="productName" class="form-label"
+            ><span class="text-danger">*</span>Product Name</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            id=""
+            formControlName="productName"
+            required
+          />
+        </div>
+        <div class="mb-3">
+          <label for="productDescription" class="form-label">
+            <span class="text-danger">*</span> Product Description</label
+          >
+          <textarea
+            class="form-control"
+            name="productDescription"
+            id=""
+            formControlName="productDescription"
+            required
+          ></textarea>
+        </div>
+
+        <div class="mb-3">
+          <label for="image" class="form-label">
+            <span class="text-danger">*</span>Image
+          </label>
+          <input
+            type="file"
+            class="form-control"
+            #imageInput
+            (change)="onImageChange($event)"
+            formControlName="image"
+            accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
+            required
+            [class.border-danger]="imageSizeExceeded"
+          />
+          <div class="text-danger mt-1" *ngIf="imageSizeExceeded">
+            File size exceeds the maximum limit of 4MB.
+          </div>
+          <div class="" id="image-preview">
+            <img
+              [src]="imagePreview"
+              alt="Preview"
+              class="img-thumbnail mt-2"
+              style="max-width: 40%"
+            />
+          </div>
+        </div>
+      </div>
+      <div class="col-7">
+        <div class="mb-3">
+          <label for="material" class="form-label"
+            ><span class="text-danger">*</span>Material Type</label
+          >
+          <select
+            name="material"
+            id=""
+            class="form-select bg-light text-muted mx-1"
+            formControlName="material"
+            required
+          >
+            <option
+              *ngFor="let entry of products | keyvalue"
+              [ngValue]="entry.key"
+              [value]="entry.value + '%' + entry.key"
+              [selected]="entry.value === selectedMaterial"
+            >
+              {{ entry.key }}
+            </option>
+          </select>
+        </div>
+        <div class="mb-3">
+          <!-- <label for="dimensions" class="form-label"
+            ><span class="text-danger">*</span>Dimensions</label
+          > -->
+          <div class="row d-flex">
+            <div class="col-9 d-flex justify-content-around">
+              <div>
+                <label for="Height" class="form-label"
+                  ><span class="text-danger">*</span>Height</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="height"
+                  required
+                />
+              </div>
+              <div>
+                <label for="Width" class="form-label"
+                  ><span class="text-danger">*</span>Width</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="width"
+                  required
+                />
+              </div>
+              <div>
+                <label for="Length" class="form-label"
+                  ><span class="text-danger">*</span>Length</label
+                >
+                <input
+                  type="text"
+                  class="form-control"
+                  formControlName="length"
+                  required
+                />
+              </div>
+            </div>
+            <div class="col-3">
+              <div>
+                <label for="Length" class="form-label"
+                  ><span class="text-danger">*</span>Unit</label
+                >
+                <select
+                  class="form-select bg-light text-muted mx-1"
+                  name="dimensionUnit"
+                  id="dimensionUnit"
+                  formControlName="dimensionUnit"
+                  required
+                >
+                  <option value="mm">mm</option>
+                  <option value="cm">cm</option>
+                </select>
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-between">
+          <div class="col-6 mb-3">
+            <label for="weight" class="form-label"
+              ><span class="text-danger">*</span>Weight</label
+            >
+            <div class="d-flex">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="weight"
+                required
+              />
+              <select
+                class="form-select bg-light text-muted mx-1"
+                name="weightUnit"
+                id="weightUnit"
+                required
+                formControlName="weightUnit"
+              >
+                <option value="Ton">Ton</option>
+                <option value="Kg">Kg</option>
+              </select>
+            </div>
+          </div>
+          <div class="col-3 mb-3">
+            <label for="price" class="form-label"
+              ><span class="text-danger">*</span>Price</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              formControlName="price"
+              required
+            />
+          </div>
+          <div class="col-3 mb-3">
+            <label for="finish" class="form-label"
+              ><span class="text-danger">*</span>Finish</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              formControlName="finish"
+              required
+            />
+          </div>
+        </div>
+        <div class="row d-flex justify-content-between">
+          <div class="col-7 mb-3">
+            <label for="quantity" class="form-label"
+              ><span class="text-danger">*</span>Quantity</label
+            >
+            <div class="d-flex">
+              <input
+                type="text"
+                class="form-control"
+                formControlName="quantity"
+                required
+              />
+
+              <select
+                class="form-select bg-light text-muted mx-1"
+                name="quantityUnit"
+                id="quantityUnit"
+                formControlName="quantityUnit"
+              >
+                <option value="Ton">Ton</option>
+                <option value="Kg">Kg</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="col-4 mb-3">
+            <label for="grade" class="form-label"
+              ><span class="text-danger">*</span>Grade</label
+            >
+            <input
+              type="text"
+              class="form-control"
+              formControlName="grade"
+              required
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+    <butTon type="submit" class="btn submit_btn" (click)="onSubmit()">
+      {{ submitBtnTitle }}
+    </butTon>
+  </form>
+</section>
+
+
+

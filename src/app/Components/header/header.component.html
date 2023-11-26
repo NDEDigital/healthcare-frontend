@@ -1,0 +1,609 @@
+<div
+  class="modal"
+  id="changePasswordModal"
+  tabindex="-1"
+  aria-labelledby="changePasswordModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <!-- Modal header -->
+      <div class="modal-header">
+        <h5 class="modal-title" id="changePasswordModalLabel">
+          Change Password
+        </h5>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <!-- Modal body -->
+      <div class="modal-body">
+        <!-- Add your password change form inputs here -->
+        <!-- For example: -->
+        <form [formGroup]="pForm">
+          <div class="mb-3">
+            <label for="currentPassword" class="form-label"
+              >Current Password</label
+            >
+            <input
+              type="password"
+              formControlName="currentPassword"
+              class="form-control"
+              id="currentPassword"
+              [ngClass]="{
+                'border-danger':
+                  isFieldInvalid('currentPassword') || errorMessage
+              }"
+            />
+            <div
+              class="text-danger"
+              *ngIf="isFieldInvalid('currentPassword'); else dbError"
+            >
+              <span>{{ getPasswordErrorMessage("currentPassword") }}</span>
+            </div>
+            <ng-template #dbError>
+              <span
+                *ngIf="errorMessage"
+                class="error-message text-danger border-danger"
+              >
+                {{ errorMessage }}
+              </span>
+            </ng-template>
+          </div>
+          <div class="mb-3">
+            <label for="newPassword" class="form-label">New Password</label>
+            <input
+              type="password"
+              formControlName="newPassword"
+              class="form-control"
+              id="newPassword"
+            />
+            <div class="text-danger" *ngIf="isFieldInvalid('newPassword')">
+              <span>{{ getPasswordErrorMessage("newPassword") }}</span>
+            </div>
+          </div>
+          <div class="mb-3">
+            <label for="confirmPassword" class="form-label"
+              >Confirm Password</label
+            >
+            <input
+              type="password"
+              formControlName="confirmPassword"
+              class="form-control"
+              id="confirmPassword"
+            />
+            <!-- <div class="text-danger" *ngIf="isFieldInvalid('confirmPassword')">
+              <span>{{ getPasswordErrorMessage('confirmPassword') }}</span>
+            </div> -->
+            <div
+              *ngIf="
+                pForm.get('confirmPassword')?.hasError('passwordMismatch') &&
+                pForm.get('confirmPassword')?.dirty
+              "
+              class="text-danger"
+            >
+              Password and Confirm Password must match.
+            </div>
+          </div>
+        </form>
+      </div>
+      <!-- Modal footer -->
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" (click)="formSubmit()">
+          Save Changes
+        </button>
+        <button
+          type="button"
+          class="btn btn-secondary"
+          data-bs-dismiss="modal"
+          #closeButton
+          (click)="closebtn()"
+        >
+          Close
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+<!-- --------Modal End----------- -->
+
+<div class="header_container container-fluid sticky-top px-4 py-1">
+  <!-- <div class="d-flex flex-column justify-content-around border border-danger"> -->
+  <div class="row justify-content-around laptop-menu m-0">
+    <div class="logo_container col-3 d-flex justify-content-between  ">
+      <!-- <a href="" -->
+      <a routerLink=""
+        ><img src="assets/images/Logo/final-logo-6.png" alt="logo"
+      /></a>
+
+      <!-- <div class="categories dropdown mt-2 ms-4  " *ngIf="isCategoriesVisible">
+        <button
+          class="cat_btn btn text-white dropdown-toggle "
+          type="button"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <span
+            ><i
+              class="fa-solid fa-ellipsis-vertical"
+              style="margin-right: 2.5px"
+            ></i
+            ><i class="fa-solid fa-bars"></i
+          ></span>
+          <span class="fw-semibold"> Categories</span>
+        </button>
+        <ul class="dropdown-menu">
+          <li
+            *ngFor="let product of products | keyvalue"
+            (click)="setSelectData(product.key, product.value)"
+          >
+            <a
+              class="dropdown-item"
+              [class.active]="product.key === activeEntry"
+              >{{ product.key }}</a
+            >
+          </li>
+        </ul>
+      </div> -->
+
+
+    <!-- admin -->
+    <div class="dropdown  mt-3   ms-2"  *ngIf="isCategoriesVisible">
+      <button
+        class="dropdown-toggle catergoriesButton   "
+        type="button"
+        id="dropdownMenuButton1"
+        data-bs-toggle="dropdown"
+        aria-expanded="false"
+      >
+      <span
+      ><i
+        class="fa-solid fa-ellipsis-vertical"
+        style="margin-right: 2.5px"
+      ></i
+      ><i class="fa-solid fa-bars"></i
+    ></span>
+    <span class="fw-semibold"> Categories</span>
+      </button>
+
+        <ul class="dropdown-menu">
+          <li
+            *ngFor="let product of products | keyvalue"
+            (click)="setSelectData(product.key, product.value)"
+          >
+            <a
+              class="dropdown-item"
+              [class.active]="product.key === activeEntry"
+              >{{ product.key }}</a
+            >
+          </li>
+        </ul>
+      </div>
+
+      <!-- admin -->
+    </div>
+
+    <div class="searchbar_container col-4">
+      <div id="search_bar" class="d-flex justify-content-center bg-white w-100">
+        <input
+          class="w-100 ms-3"
+          type="search"
+          id="search_product"
+          [(ngModel)]="searchQuery"
+          (keyup.enter)="onSearch()"
+          placeholder="Search for categories, products and more.."
+        />
+
+        <div class="d-flex">
+          <button
+            class="search_button text-center p-2"
+            id="search_button"
+            (click)="onSearch()"
+          >
+            <i class="fa-solid fa-magnifying-glass"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+    <div class="col-3 d-flex align-items-center justify-content-between">
+      <ul
+        class="d-flex justify-content-around justify-content-md-between  align-items-center p-0 mb-0"
+         style ="width:100%;"  >
+        <li class="nav-item login" *ngIf="!isLoggedIn">
+          <!-- <div class="login"> -->
+          <a routerLink="/login">
+            <div class="nav-title login-title">Login</div>
+          </a>
+          <!-- login-popup -->
+          <div class="login-popup bg-white p-1 px-4">
+            <div class="popup-item d-flex justify-content-between">
+              <p class="mt-2 fs-small">New Customer?</p>
+              <a href="/register" class="color-primary ms-1 mt-1">Sign Up</a>
+            </div>
+            <div class="delimiter-horizontal"></div>
+
+            <div class="popup-item mt-1" *ngIf="isBuyer">
+              <a href="/buyerOrder" class="d-flex">
+                <i
+                  class="fa-brands fa-first-order menu_nav_icon fs-6 me-2 mt-1"
+                ></i>
+                <p>Order</p></a
+              >
+            </div>
+            <div class="delimiter-horizontal"></div>
+            <div class="popup-item mt-1">
+              <a href="#" class="d-flex">
+                <i class="fa-solid fa-heart menu_nav_icon fs-6 me-2 mt-1"></i>
+                <p>WishList</p></a
+              >
+            </div>
+          </div>
+          <!-- </div> -->
+        </li>
+        <li class="nav-item profile" *ngIf="isLoggedIn">
+          <a>
+            <div class="nav-title">
+              <i class="fa-solid fa-circle-user fs-4 mt-1"></i>
+            </div>
+
+            <div class="profile-popup p-2">
+              <div class="popup-item mt-1">
+                <a routerLink="/userProfile" class="d-flex">
+                  <i class="fa-solid fa-circle-user fs-6 me-2 mt-1"></i>
+                  <p>My Profile</p></a>
+              </div>
+              <div class="delimiter-horizontal"></div>
+              <div *ngIf="!isBuyer">
+                <div class="popup-item mt-1">
+                  <a routerLink="/dashboard" class="d-flex">
+                    <!-- <i class="fa-brands fa-windows fs-6 me-2 mt-1"></i> -->
+                    <i class="bi bi-grid-fill fs-6 me-2"></i>
+                    <p>Dashboard</p></a
+                  >
+                </div>
+                <div class="delimiter-horizontal"></div>
+              </div>
+              <div class="popup-item mt-1">
+                <a
+                  data-bs-toggle="modal"
+                  class="d-flex"
+                  data-bs-target="#changePasswordModal"
+                >
+                  <i class="fa-solid fa-unlock-keyhole fs-6 me-2 mt-1"></i>
+                  <p>Change Password</p>
+                </a>
+              </div>
+
+              <div class="delimiter-horizontal"></div>
+              <div class="popup-item mt-1" *ngIf="isBuyer">
+                <a href="/buyerOrder" class="d-flex">
+                  <i
+                    class="fa-brands fa-first-order menu_nav_icon fs-6 me-2 mt-1"
+                  ></i>
+                  <p>Order</p></a
+                >
+              </div>
+              <div class="delimiter-horizontal"></div>
+              <div class="popup-item mt-1">
+                <a href="#" class="d-flex">
+                  <i class="fa-solid fa-heart menu_nav_icon fs-6 me-2 mt-1"></i>
+                  <p>WishList</p></a
+                >
+              </div>
+              <div class="delimiter-horizontal"></div>
+              <button
+                class="logout-btn rounded-pill px-4 py-1 text-white fw-bold mt-2"
+                (click)="logout()"
+              >
+                Logout
+              </button>
+            </div>
+            <ng-template #logoutButton> </ng-template>
+          </a>
+        </li>
+        <li class="nav-item">
+          <div class="nav-title">
+            <a class="nav-link text-center" routerLink="/becomeASeller"
+              >Become a Seller</a
+            >
+          </div>
+        </li>
+        <li class="nav-item more text-light">
+          <div class="nav-title">
+            More <i class="fa-solid fa-chevron-down"></i>
+          </div>
+          <!-- More Popup -->
+          <div class="more-popup bg-white p-1 px-4">
+            <div class="popup-item mt-1">
+              <a href="#" class="d-flex">
+                <i class="fa-solid fa-bell menu_nav_icon fs-6 mt-1 me-2"></i>
+                <p>Notification Preferences</p></a
+              >
+            </div>
+            <div class="delimiter-horizontal"></div>
+            <div class="popup-item">
+              <a href="#" class="d-flex">
+                <i class="fa-brands fa-servicestack fs-6 mt-1 me-2"></i>
+                <p>24 X 7 Customer Care</p></a
+              >
+            </div>
+            <div class="delimiter-horizontal"></div>
+            <div class="popup-item">
+              <a href="#" class="d-flex">
+                <i class="fa-solid fa-rectangle-ad fs-6 mt-1 me-2"></i>
+                <p>Advertise</p></a
+              >
+            </div>
+            <div class="delimiter-horizontal"></div>
+            <div class="popup-item">
+              <a href="#" class="d-flex">
+                <i class="fa-solid fa-down-long fs-6 mt-1 me-2"></i>
+                <p>Download App</p></a
+              >
+            </div>
+          </div>
+        </li>
+        <li class="nav-item" *ngIf="isBuyer || !isLoggedIn">
+          <div class="nav-title" routerLink="/cartView">
+            <!-- <i class="fa-solid fa-bag-shopping"></i>  -->
+            <!-- <i class="fa-solid fa-truck-pickup fs-5"></i> -->
+            <!-- <i class="fa-solid fa-cart-flatbed fs-5"></i>
+              Loader -->
+            <!-- <svg xmlns="http://www.w3.org/2000/svg" width="2.5rem"  fill="white" class="bi bi-truck-flatbed" viewBox="0 0 16 16">
+              <path d="M11.5 4a.5.5 0 0 1 .5.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-4 0 1 1 0 0 1-1-1v-1h11V4.5a.5.5 0 0 1 .5-.5zM3 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm1.732 0h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4a2 2 0 0 1 1.732 1z"/>
+            </svg> -->
+            <img class="cart-img" src="assets/images/cart-icon.png" alt="" />
+            <span class="count text-white">{{ cartCountLocal }}</span>
+          </div>
+        </li>
+      </ul>
+    </div>
+  </div>
+
+  <!-- categories -->
+  <!-- <div class="categories p-0 m-0 border border-1" *ngIf="isCategoriesVisible">
+    <div class="categories_details border border-danger">
+      <span
+        ><i class="fa-solid fa-ellipsis-vertical" style="margin-right: 2px"></i
+        ><i class="fa-solid fa-bars"></i
+      ></span>
+      <span> Categories</span>
+      <span><i class="fa-solid fa-angle-down"></i></span>
+    </div>
+    <div class="categories-popUp rounded">
+      <ul class="list-group">
+        <li class="list-group-item" *ngFor="let product of products | keyvalue">{{product.key}}</li>
+      </ul>
+    </div>
+  </div> -->
+  <!-- <div class="categories dropdown" *ngIf="isCategoriesVisible">
+    <button
+      class="cat_btn btn text-white dropdown-toggle"
+      type="button"
+      data-bs-toggle="dropdown"
+      aria-expanded="false"
+    >
+      <span
+        ><i
+          class="fa-solid fa-ellipsis-vertical"
+          style="margin-right: 2.5px"
+        ></i
+        ><i class="fa-solid fa-bars"></i
+      ></span>
+      <span class="fw-semibold"> Categories</span>
+    </button>
+    <ul class="dropdown-menu">
+      <li
+        *ngFor="let product of products | keyvalue"
+        (click)="setSelectData(product.key, product.value)"
+      >
+        <a class="dropdown-item" [class.active]="product.key === activeEntry">{{
+          product.key
+        }}</a>
+      </li>
+    </ul>
+  </div> -->
+  <!-- Mobile menu -->
+  <div class="mobile-menu">
+    <div class="row mobile-menu-header p-0 m-0">
+      <!-- (click)="openSidebar()" -->
+      <div class="mobile_bar bg- col-4" id="sidebar-menu">
+        <i class="fa-solid fa-bars" (click)="openSidebar()"></i>
+        <!-- =========== SIDE NAV ============= -->
+        <!-- sideBar outer box -->
+        <div
+          class="sidebar-outbox"
+          [class.active]="isSidebarOutBoxActive"
+          (click)="removeSideNavActiveClass()"
+        ></div>
+        <div id="side_nav_container" [class.active]="isSideNavActive" class="">
+          <span
+            id="sidebar-cross-btn"
+            (click)="removeSideNavActiveClass()"
+            class="p-2"
+          >
+            <i class="fa-regular fa-circle-xmark"></i>
+          </span>
+          <!--  -->
+          <div class="sidebar__menu-items mt-1 p-1">
+            <ul class="nav_menu p-0">
+              <li class="nav-item login" *ngIf="!isLoggedIn">
+                <a routerLink="/login">
+                  <div class="nav-title login-title">Login</div></a
+                >
+              </li>
+              <li class="nav-item" *ngIf="isLoggedIn">
+                <!-- <div class="nav-title d-flex">
+                    <i class="fa-solid fa-circle-user fs-4 mt-1"></i>
+                    <p>My Profile</p>
+                  </div> -->
+
+                <div class="">
+                  <div class="popup-item mt-1">
+                    <a routerLink="/userProfile" class="d-flex">
+                      <i class="fa-solid fa-circle-user fs-6 me-2 mt-1"></i>
+                      <p>My Profile</p></a
+                    >
+                  </div>
+                  <div class="delimiter-horizontal"></div>
+                  <div *ngIf="!isBuyer">
+                    <div class="popup-item mt-1">
+                      <a routerLink="/dashboard" class="d-flex">
+                        <!-- <i class="fa-brands fa-windows fs-6 me-2 mt-1"></i> -->
+                        <i class="bi bi-grid-fill fs-6 me-2"></i>
+                        <p>Dashboard</p></a
+                      >
+                    </div>
+                    <div class="delimiter-horizontal"></div>
+                  </div>
+                  <div class="popup-item mt-1">
+                    <a
+                      data-bs-toggle="modal"
+                      class="d-flex"
+                      data-bs-target="#changePasswordModal"
+                    >
+                      <i class="fa-solid fa-unlock-keyhole fs-6 me-2 mt-1"></i>
+                      <p>Change Password</p>
+                    </a>
+                  </div>
+                  <div class="delimiter-horizontal"></div>
+                  <button
+                    class="logout-btn rounded-pill px-4 py-1 text-white fw-bold mt-2"
+                    (click)="logout()"
+                  >
+                    Logout
+                  </button>
+                </div>
+                <ng-template #logoutButton> </ng-template>
+              </li>
+            </ul>
+          </div>
+        </div>
+        <!-- =========== END OF Side NAV ============= -->
+      </div>
+
+      <div class="col-4 logo_container d-flex">
+        <img src="assets/images/Logo/final-logo-6.png" alt="logo" />
+
+        <!-- <div class="dropdown mt-3 ms-5 ps-4" *ngIf="isCategoriesVisible">
+          <button
+            class="dropdown-toggle catergoriesButton"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span
+              ><i
+                class="fa-solid fa-ellipsis-vertical"
+                style="margin-right: 2.5px"
+              ></i
+              ><i class="fa-solid fa-bars"></i
+            ></span>
+            <span class="fw-semibold"> Categories</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li
+              *ngFor="let product of products | keyvalue"
+              (click)="setSelectData(product.key, product.value)"
+            >
+              <a
+                class="dropdown-item"
+                [class.active]="product.key === activeEntry"
+                >{{ product.key }}</a
+              >
+            </li>
+          </ul>
+        </div> -->
+      </div>
+
+      <div class="bag col-4    " *ngIf="isBuyer">
+        <!-- <i class="fa-solid fa-bag-shopping"></i> -->
+        <span class="cart_icon">
+          <!-- <svg xmlns="http://www.w3.org/2000/svg" width="2.5rem" fill="white" class="bi bi-truck-flatbed" viewBox="0 0 16 16">
+              <path d="M11.5 4a.5.5 0 0 1 .5.5V5h1.02a1.5 1.5 0 0 1 1.17.563l1.481 1.85a1.5 1.5 0 0 1 .329.938V10.5a1.5 1.5 0 0 1-1.5 1.5H14a2 2 0 1 1-4 0H5a2 2 0 1 1-4 0 1 1 0 0 1-1-1v-1h11V4.5a.5.5 0 0 1 .5-.5zM3 11a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm9 0a1 1 0 1 0 0 2 1 1 0 0 0 0-2zm1.732 0h.768a.5.5 0 0 0 .5-.5V8.35a.5.5 0 0 0-.11-.312l-1.48-1.85A.5.5 0 0 0 13.02 6H12v4a2 2 0 0 1 1.732 1z"/>
+            </svg> -->
+          <img class="cart-img" src="assets/images/cart-icon.png" alt="" />
+          <span class="count-phone text-white">{{ cartCount }}</span>
+        </span>
+      </div>
+    </div>
+    <!-- --------------- searchBar --------------- -->
+    <!-- <div class="d-flex justify-content-center w-100"> -->
+    <div class="  d-flex  justify-content-center">
+      <div class="searchbar_container     d-flex align-items-center justify-content-between" >
+
+        <!-- // category -->
+        <div class="dropdown   me-4 " *ngIf="isCategoriesVisible">
+          <button
+            class="dropdown-toggle catergoriesButton"
+            type="button"
+            id="dropdownMenuButton1"
+            data-bs-toggle="dropdown"
+            aria-expanded="false"
+          >
+            <span
+              ><i
+                class="fa-solid fa-ellipsis-vertical"
+                style="margin-right: 2.5px"
+              ></i
+              ><i class="fa-solid fa-bars"></i
+            ></span>
+            <span class="fw-semibold"> Categories</span>
+          </button>
+          <ul class="dropdown-menu">
+            <li
+              *ngFor="let product of products | keyvalue"
+              (click)="setSelectData(product.key, product.value)"
+            >
+              <a
+                class="dropdown-item"
+                [class.active]="product.key === activeEntry"
+                >{{ product.key }}</a
+              >
+            </li>
+          </ul>
+        </div>
+
+        <!--  category end-->
+        <div
+          id="search_bar"
+          class="d-flex justify-content-center rounded rounded-pill bg-white col w-75"
+        >
+          <input
+            class="w-100 ms-3"
+            type="search"
+            id="search_product"
+            placeholder="Search for categories, products and more.."
+          />
+          <div class="d-flex rounded rounded-pill">
+            <button
+              class="search_button text-center rounded rounded-pill p-2"
+              id="search_button"
+              onclick=""
+            >
+              <i class="fa-solid fa-magnifying-glass"></i>
+            </button>
+          </div>
+        </div>
+        <!-- </div> -->
+      </div>
+    </div>
+
+
+    <!-- <div class="row nav_menu-container">
+        <ul class="nav_menu-mobile p-0">
+          <li class="nav-item-mobile">
+            <i class="fa-solid fa-circle-user"></i>
+          </li>
+          <li class="nav-item">
+            More <i class="fa-solid fa-chevron-down"></i>
+          </li>
+          <li class="nav-item"><i class="fa-solid fa-bag-shopping"></i></li>
+        </ul>
+      </div> -->
+  </div>
+</div>

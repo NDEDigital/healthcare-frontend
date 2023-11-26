@@ -1,0 +1,323 @@
+.admin_order_header {
+  display: flex;
+  justify-content: space-between;
+  background-color: #fff;
+  margin-top: 0.5rem;
+}
+.order_search_div {
+  margin-top: 1rem;
+  background-color: #fff;
+  padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  /* width: 30%; */
+}
+.check_All {
+  margin-right: 0.2rem;
+}
+.search_by_all {
+  display: flex;
+  width: 50%;
+}
+.search-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 18.5rem; /* Adjust the maximum width as needed */
+  margin-right: 0.7rem;
+  height: 2rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.36rem;
+  border-radius: 0.3rem;
+  /* background-color: #f1eeee; */
+  background-color: rgb(229, 241, 247) !important;
+}
+.search_Name_list a:hover {
+  background-color: rgb(229, 241, 247);
+  cursor: pointer;
+}
+.search-icon {
+  position: absolute;
+  right: 0.5rem;
+  padding-top: 0.45rem;
+  font-size: 1rem;
+  /* color: #555; */
+  color: var(--color-primary);
+}
+.search_by_date {
+  display: flex;
+  /* width: 40%; */
+  align-items: center;
+  /* justify-content: end; */
+}
+.search_by_date input {
+  margin: 0 1rem;
+  padding: 0.18rem;
+  width: 25%;
+  /* border-radius: 0.5rem; */
+  border: none !important;
+  border-bottom: 0.1rem solid #97c3d1 !important;
+  outline: none !important;
+  /* background-color: #ebf1f3 !important; */
+}
+
+.search_by_date input:focus {
+  border: none;
+  box-shadow: none !important;
+}
+
+.search_by_date input[type="date"]::-webkit-calendar-picker-indicator {
+  /* display: none; */
+  filter: invert(1);
+}
+
+/* Add a custom icon using a background image */
+.search_by_date input[type="date"] {
+  background: #fff url("../../../assets/images/calendar.png") no-repeat center
+    right 0.5rem;
+  background-size: 1rem 1rem; /* Set the size of the custom icon */
+}
+
+.select_date_type {
+  width: 25%;
+  height: 2rem;
+  border: 0.1rem solid #97c3d1;
+  padding: 0 0.4rem !important;
+}
+.select_date_type:focus {
+  box-shadow: none !important;
+}
+.select_date_type option:hover {
+  background-color: rgb(229, 241, 247) !important;
+}
+.select_date_type option {
+  cursor: pointer !important;
+}
+
+/* product status div */
+
+.order_status {
+  background-color: #fff;
+  padding: 0.8rem;
+  /* margin-top: 2rem; */
+  border-radius: 0.5rem;
+}
+.order_status_button {
+  color: rgb(75, 74, 74);
+  margin-right: 1.3rem;
+  background-color: #fff;
+  font-size: 1.1rem;
+  font-weight: 500;
+}
+.selected_button {
+  border: 0.2rem solid var(--color-primary);
+  padding: 0.2rem 0.35rem;
+  color: var(--color-primary);
+}
+.selected_button_pending {
+  border: 0.2rem solid hsl(40.98deg 94.3% 45.79%);
+  padding: 0.2rem 0.35rem;
+  color: hsl(40.98deg 94.3% 45.79%);
+}
+.selected_button_shipped {
+  border: 0.2rem solid rgb(86, 148, 89);
+  padding: 0.2rem 0.35rem;
+  color: rgb(13 104 18);
+}
+
+.selected_button_cancelled {
+  /* overflow: scroll;
+  margin-top: 1rem; */
+  border: 0.2rem solid rgb(231, 99, 99);
+  padding: 0.2rem 0.35rem;
+  color: rgb(197, 38, 38);
+}
+.date_order_search {
+  color: var(--color-primary);
+}
+
+/* **********Data Table ***********/
+.Admin_order_container {
+  margin-top: 1rem;
+  height: 57vh;
+
+  overflow: scroll;
+}
+.Admin_order_container_row {
+  width: max-content;
+  border-bottom: 1px solid #ececec;
+  font-size: 1.07rem;
+  /* height: 4.4rem; */
+  cursor: pointer;
+}
+.relativeDiv {
+  position: relative;
+  width: max-content;
+  height: 15rem;
+
+  overflow: scroll;
+}
+.Admin_order_container_row a {
+  color: var(--color-primary);
+  text-decoration: none;
+}
+
+.approval_container_HederRow {
+  background-color: rgb(229, 241, 247) !important;
+  color: #302f2f;
+
+  font-size: 1.1rem;
+}
+
+.order_details_HederRow {
+  background-color: rgb(243, 231, 217) !important;
+  color: #302f2f;
+  font-weight: 500;
+  font-size: 1.1rem;
+}
+.details_row {
+  background-color: rgb(255, 250, 245) !important;
+}
+
+.rotate-icon {
+  transition: transform 0.3s ease; /* Adjust the transition duration as needed */
+}
+
+.rotate {
+  transform: rotate(180deg); /* Rotate by 180 degrees (or the desired amount) */
+}
+.Admin_order_container_row .col-1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+.order_col {
+  width: 10.23rem !important;
+  padding: 0.6rem 0;
+}
+.details_col {
+  width: 12.3rem !important;
+  padding: 0.6rem 0;
+}
+.checkbox_col {
+  width: 5rem !important;
+  padding: 0.6rem 0;
+}
+.order_col_big {
+  width: 16rem !important;
+  padding: 0.6rem 0;
+}
+
+.Container_button {
+  padding: 0.2rem 1.1rem;
+  border-radius: 1rem;
+}
+
+.approval_icon img {
+  width: 2rem;
+  height: 2rem;
+  padding: 0.3rem;
+}
+.order_Pending_status {
+  background-color: hsl(39, 85%, 92%);
+  color: hsl(34, 95%, 47%);
+}
+.order_cancelled_status {
+  background-color: rgb(248, 233, 233);
+  color: rgb(192, 4, 4);
+}
+.order_returned_status {
+  background-color: rgb(248, 233, 233);
+  color: rgb(192, 4, 4);
+}
+
+.order_shipped_status {
+  background-color: rgb(210, 241, 210);
+  color: green;
+}
+
+/* pagination */
+
+.page-link {
+  color: var(--color-primary);
+  cursor: pointer;
+}
+.order_pagination_icon {
+  font-size: 0.7rem;
+  color: var(--color-primary);
+}
+.page_selected {
+  background-color: #3a98b9;
+  color: #fff;
+}
+.select_Icon {
+  border: 1px solid #3a98b9;
+  margin-right: 0.1rem;
+}
+
+.per_page_order_select {
+  width: 11%;
+  height: 2.4rem;
+  margin-left: 0.3rem;
+}
+.per_page_order_select:hover {
+  background-color: rgb(229, 241, 247) !important;
+}
+.per_page_order_select:focus {
+  box-shadow: none !important;
+}
+.leaveClass {
+  width: 100%;
+  height: 1rem;
+  background-color: #97c3d1;
+}
+.modal-header {
+  background-color:  #4592a0;
+  color: white;
+}
+
+.modal-header .btn-close {
+  background-color: snow;
+}
+.btn-Approved {
+  background-color:  #4592a0;
+  color: white;
+}
+.btn-cancel{
+  background-color: #302f2f;
+  color: #fff;
+}
+
+@media (min-width: 1900px) {
+  .order_col {
+    width: 12.405rem !important;
+  }
+  .checkbox_col {
+    width: 7rem !important;
+  }
+  .order_col_big {
+    width: 20rem !important;
+  }
+  .details_col {
+    width: 15.8rem !important;
+  }
+}
+
+@media (min-width: 2500px) {
+  .order_col {
+    width: 18.405rem !important;
+  }
+  .checkbox_col {
+    width: 9rem !important;
+  }
+  .order_col_big {
+    width: 22rem !important;
+  }
+  .details_col {
+    width: 22.3rem !important;
+  }
+}

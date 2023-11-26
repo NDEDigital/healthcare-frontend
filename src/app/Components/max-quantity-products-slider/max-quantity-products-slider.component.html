@@ -1,0 +1,56 @@
+<section class="product_slider bg-white mx-5 rounded p-2">
+  <div class="container-fluid">
+    <div class="slider_wrap mx-auto">
+      <div class="slider_main" #Items>
+        <div class="item" #Item>
+          <img src="/assets/images/hp12.jpg" alt="" />
+          <p>1</p>
+        </div>
+        <div class="item" #Item>
+          <img src="/assets/images/hc1.jpg" alt="" />
+          <p>2</p>
+        </div>
+        <div class="item" #Item>
+          <img src="/assets/images/Channel.jpg" alt="" />
+          <p>3</p>
+        </div>
+        <div class="item" #Item>
+          <img src="/assets/images/hc1.jpg" alt="" />
+          <p>4</p>
+        </div>
+        <div class="item" #Item>
+          <img src="/assets/images/Allen Bolt.jpg" alt="" />
+          <p>5</p>
+        </div>
+        <div class="item" #Item>
+          <img src="/assets/images/Channel.jpg" alt="" />
+          <p>6</p>
+        </div>
+        <div class="item" #Item>
+          <img src="/assets/images/hp12.jpg" alt="" />
+          <p>7</p>
+        </div>
+        <div class="item" #Item>
+          <img src="/assets/images/hc1.jpg" alt="" />
+          <p>8</p>
+        </div>
+      </div>
+
+      <div class="btn-area">
+        <button class="slider-btn" (click)="next()">
+          <!-- 
+        (mouseenter)="stopAutoSlide()"
+        (mouseleave)="startAutoSlide()" -->
+          <i class="fa-solid fa-chevron-left"></i>
+        </button>
+        <button class="slider-btn">
+          <i class="fa-solid fa-chevron-right" (click)="prev()">
+            <!-- (mouseenter)="stopAutoSlide()"
+            (mouseleave)="startAutoSlide()" -->
+          </i>
+        </button>
+      </div>
+    </div>
+  </div>
+</section>
+<hr />

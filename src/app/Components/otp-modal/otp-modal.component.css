@@ -1,0 +1,31 @@
+.otpInput::-webkit-inner-spin-button,
+.otpInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+.otpInput:focus,
+.verify_btn:focus {
+  border: 1px solid var(--color-primary);
+  box-shadow: 0 0 0.2rem var(--color-primary);
+}
+.error {
+  border: 1px solid red;
+  box-shadow: 0 0 0.2rem red;
+}
+.resend_btn {
+  background: transparent;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+.resend_btn.active {
+  background: transparent;
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+.verify_btn {
+  background: var(--color-primary);
+  color: #ffff;
+}
+.timer {
+  font-weight: 500;
+}

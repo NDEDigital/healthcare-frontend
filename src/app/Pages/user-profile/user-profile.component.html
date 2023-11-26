@@ -1,0 +1,284 @@
+<section class="user_profile_container">
+  <app-sub-header [headerTitle]="'My profile'"></app-sub-header>
+  <div class="background_photo"></div>
+  <form
+    [formGroup]="updateUserForm"
+    class="detail_conatiner mx-auto bg-white rounded"
+    *ngIf="user$ | async; user"
+  >
+    <div class="profile_details p-2 rounded d-flex">
+      <div class="profile_photo">
+        <!-- <i class="fa-regular fa-circle-user"></i> -->
+        <i class="fa-solid fa-circle-user"></i>
+      </div>
+      <div class="user_info header_user-info p-2">
+        <p class="info_field fs-3">
+          <span class="text-muted" hidden>Full Name:</span> {{ user.fullName }}
+        </p>
+        <p class="info_field">
+          <span class="text-muted" hidden>Country/Region:</span>
+          {{ user.counteryRegion }}
+        </p>
+        <p class="info_field">
+          <span class="text-muted me-2">Phone Number:</span>
+          {{ user.phoneNumber }}
+        </p>
+      </div>
+    </div>
+    <div
+      class="profile_details p-2 pb-2 rounded"
+      [class.border-highlight]="editMode1 === 'contact'"
+    >
+      <div class="details_title d-flex justify-content-between ms-5 me-3">
+        <h5 class="">Contact Information</h5>
+        <div #editBTN class="edit_btn" (click)="toggleEditMode('contact')">
+          <i class="fa-solid fa-pen-to-square fs-5"></i>
+        </div>
+      </div>
+      <div class="user_info">
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Email:</span>
+          <input
+            formControlName="email"
+            #emailInput
+            [class.editable]="editMode1 === 'contact'"
+            [readonly]="editMode1 !== 'contact'"
+            type="text"
+            class="col-8 rounded p-2"
+            [value]="user.email"
+            [class.p-2]="editMode1 === 'contact'"
+            (focus)="onInputFocus(emailInput)"
+            (blur)="onInputBlur(emailInput)"
+          />
+        </p>
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Address:</span>
+          <!-- <input
+            formControlName="address"
+            #address
+            [class.editable]="editMode1 === 'contact'"
+            [readonly]="editMode1 !== 'contact'"
+            class="col-8 rounded p-2"
+            [value]="user.address"
+            [class.p-2]="editMode1 === 'contact'"
+            (focus)="onInputFocus(address)"
+            (blur)="onInputBlur(emailInput)"
+          /> -->
+          <textarea
+            formControlName="address"
+            #address
+            [class.editable]="editMode1 === 'contact'"
+            [readonly]="editMode1 !== 'contact'"
+            class="col-8 rounded address"
+            [value]="user.address"
+            [class.p-2]="editMode1 === 'contact'"
+            (focus)="onInputFocus(address)"
+            (blur)="onInputBlur(address)"
+          ></textarea>
+        </p>
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Alternative Phone:</span>
+          <input
+            #phoneInput
+            [class.editable]="editMode1 === 'contact'"
+            type="text"
+            class="col-8 rounded"
+            [readonly]="editMode1 !== 'contact'"
+            value="None"
+            [class.p-2]="editMode1 === 'contact'"
+            (focus)="onInputFocus(phoneInput)"
+            (blur)="onInputBlur(phoneInput)"
+          />
+        </p>
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Social Links:</span>
+          <input
+            #socialInput
+            [class.editable]="editMode1 === 'contact'"
+            type="text"
+            class="col-8 rounded"
+            [readonly]="editMode1 !== 'contact'"
+            value="None"
+            [class.p-2]="editMode1 === 'contact'"
+            (focus)="onInputFocus(socialInput)"
+            (blur)="onInputBlur(socialInput)"
+          />
+        </p>
+        <div
+          class="d-flex flex-column align-items-end"
+          *ngIf="editMode1 === 'contact'"
+        >
+          <button class="update-btn rounded-2" (click)="updateUser('contact')">
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+    <div
+      class="profile_details rounded p-2 pb-4 bg-"
+      [class.border-highlight]="editMode2 === 'companyInfo'"
+    >
+      <div class="details_title d-flex justify-content-between ms-5 me-3">
+        <h5 class="">Company Information</h5>
+        <div #editBTN class="edit_btn" (click)="toggleEditMode('companyInfo')">
+          <i class="fa-solid fa-pen-to-square fs-5"></i>
+        </div>
+      </div>
+      <div class="user_info">
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Company Name:</span>
+          <input
+            formControlName="companyName"
+            #companyName
+            [class.editable]="editMode2 === 'companyInfo'"
+            [readonly]="editMode2 !== 'companyInfo'"
+            type="text"
+            class="col-8 rounded"
+            [value]="user.companyName"
+            [class.p-2]="editMode2 === 'companyInfo'"
+            (focus)="onInputFocus(companyName)"
+            (blur)="onInputBlur(companyName)"
+          />
+        </p>
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Website:</span>
+          <input
+            formControlName="website"
+            #website
+            [class.editable]="editMode2 === 'companyInfo'"
+            [readonly]="editMode2 !== 'companyInfo'"
+            type="text"
+            class="col-8 rounded"
+            value="{{ user.website }}"
+            [class.p-2]="editMode2 === 'companyInfo'"
+            (focus)="onInputFocus(website)"
+            (blur)="onInputBlur(website)"
+          />
+        </p>
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Product Category:</span>
+          <input
+            type="text"
+            class="col-8"
+            value="{{ user.productCategory }}"
+            readonly
+          />
+          <!-- <input
+            #productCategory
+            [class.editable]="editMode2 === 'companyInfo'"
+            [readonly]="editMode2 !== 'companyInfo'"
+            type="text"
+           class="col-8  rounded"
+            value="{{ user.productCategory }}"
+            [class.p-2]="editMode2 === 'companyInfo'"
+            (focus)="onInputFocus(productCategory)"
+            (blur)="onInputBlur(productCategory)"
+          /> -->
+        </p>
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Years In Business:</span>
+          <input
+            formControlName="yearsInBusiness"
+            #yearsInBusiness
+            [class.editable]="editMode2 === 'companyInfo'"
+            [readonly]="editMode2 !== 'companyInfo'"
+            type="text"
+            class="col-8 rounded"
+            value="{{ user.yearsInBusiness }}"
+            [class.p-2]="editMode2 === 'companyInfo'"
+            (focus)="onInputFocus(yearsInBusiness)"
+            (blur)="onInputBlur(yearsInBusiness)"
+          />
+        </p>
+
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Tax ID Number:</span>
+          <input
+            formControlName="taxIdNum"
+            #taxIDNumber
+            [class.editable]="editMode2 === 'companyInfo'"
+            [readonly]="editMode2 !== 'companyInfo'"
+            type="text"
+            class="col-8 rounded"
+            value="{{ user.taxIDNumber }}"
+            [class.p-2]="editMode2 === 'companyInfo'"
+            (focus)="onInputFocus(taxIDNumber)"
+            (blur)="onInputBlur(taxIDNumber)"
+          />
+        </p>
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end"
+            >Business Registration Number:</span
+          >
+          <input
+            formControlName="businessRegNum"
+            #businessRegistrationNumber
+            [class.editable]="editMode2 === 'companyInfo'"
+            [readonly]="editMode2 !== 'companyInfo'"
+            type="text"
+            class="col-8 rounded"
+            value="{{ user.businessRegistrationNumber }}"
+            [class.p-2]="editMode2 === 'companyInfo'"
+            (focus)="onInputFocus(businessRegistrationNumber)"
+            (blur)="onInputBlur(businessRegistrationNumber)"
+          />
+        </p>
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end"
+            >Preferred Payment Method:</span
+          >
+          <input
+            type="text"
+            class="col-8"
+            readonly
+            value="{{ user.preferredPaymentMethod }}"
+          />
+          <!-- <input
+            #preferredPaymentMethod
+            [class.editable]="editMode2 === 'companyInfo'"
+            [readonly]="editMode2 !== 'companyInfo'"
+            type="text"
+           class="col-8  rounded"
+           [class.p-2]="editMode2 === 'companyInfo'"
+            value="{{ user.preferredPaymentMethod }}"
+            (focus)="onInputFocus(preferredPaymentMethod)"
+            (blur)="onInputBlur(preferredPaymentMethod)"
+          />
+        </p> -->
+        </p>
+
+        <div
+          class="d-flex flex-column align-items-end"
+          *ngIf="editMode2 === 'companyInfo'"
+        >
+          <button
+            class="update-btn rounded-2"
+            (click)="updateUser('companyInfo')"
+          >
+            Update
+          </button>
+        </div>
+      </div>
+    </div>
+  </form>
+</section>
+
+<!-- <div class="text-center fs-5" *ngIf="user$ | async as user">
+  <h2>User Details</h2>
+  <hr />
+  <p>User ID: {{ user.userID }}</p>
+  <p>User ID: {{ user.userCode }}</p>
+  <p>Country/Region: {{ user.counteryRegion }}</p>
+  <p>Is Buyer: {{ user.isBuyer }}</p>
+  <p>Is Seller: {{ user.isSeller }}</p>
+  <p>Full Name: {{ user.fullName }}</p>
+  <p>Phone Number: {{ user.phoneNumber }}</p>
+  <p>Email: {{ user.email }}</p>
+  <p>CompanyName: {{ user.companyName }}</p>
+  <p>Website: {{ user.website }}</p>
+  <p>Product Category: {{ user.productCategory }}</p>
+  <p>Years In Business: {{ user.yearsInBusiness }}</p>
+  <p>Business Registration Number: {{ user.businessRegistrationNumber }}</p>
+  <p>Tax ID Number: {{ user.taxIDNumber }}</p>
+  <p>Preferred Payment Method: {{ user.preferredPaymentMethod }}</p>
+</div> -->

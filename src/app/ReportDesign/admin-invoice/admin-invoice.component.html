@@ -1,0 +1,129 @@
+<!-- Invoice design  -->
+<section>
+  <div class="invoice">
+    <div class="header py-2">
+      <h3 class="invoiceText">Invoice</h3>
+    </div>
+    <div class="content border-top-0 p-0">
+      <div class="info">
+        <div class="d-flex justify-content-center border-bottom border-top">
+          <div class="row p-0" style="width: 100%">
+            <div class="col-8 p-0">
+              <div class="row"><h6 class="fst-italic">Bill To:</h6></div>
+              <div class="div d-flex d-flex">
+                <span><strong>Name: </strong></span>
+                <span class="field_data">{{ invoice.buyerName }}</span>
+              </div>
+              <div class="div d-flex" *ngIf="invoice.buyerCompanyName">
+                <span><strong>Company: </strong></span>
+                <span class="field_data">{{ invoice.buyerCompanyName }}</span>
+              </div>
+              <div class="div d-flex">
+                <span><strong>Address:</strong></span>
+                <span class="field_data">{{ invoice.buyerAddress }}</span>
+              </div>
+              <div class="div d-flex">
+                <span><strong>Phone: </strong></span>
+                <span class="field_data">{{ invoice.buyerPhone }}</span>
+              </div>
+            </div>
+            <div class="col-4 text-end p-0">
+              <div class="div d-flex justify-content-end">
+                <span><strong>Invoice No: </strong></span>
+                <span class="field_data"> {{ invoice.orderNo }} </span>
+              </div>
+              <!-- <div class="div d-flex">
+                <span><strong>Order No: </strong></span>
+                <span> {{ invoice.orderNo }} </span>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="row d-flex mt-3 justify-content-center">
+        <ng-container
+          *ngFor="let seller of invoice.sellerDetailsList; let i = index"
+        >
+          <div class="row py-2 seller_info">
+            <!-- 1st seller information col -->
+            <div class="col-8 p-0">
+              <div class="row"><h6 class="fst-italic">Bill From:</h6></div>
+              <div class="div d-flex">
+                <span><strong>Name: </strong></span>
+                <span class="field_data">{{ seller.sellerName }}</span>
+              </div>
+
+              <div class="div d-flex" *ngIf="seller.sellerCompanyName">
+                <span><strong>Company: </strong></span>
+                <span class="field_data">{{ seller.sellerCompanyName }}</span>
+              </div>
+              <div class="div d-flex">
+                <span><strong>Address: </strong></span>
+                <span class="field_data">{{ seller.sellerAddress }}</span>
+              </div>
+            </div>
+            <!-- 1st seller information col -->
+            <div class="col-4 text-end p-0">
+              <div class="div d-flex justify-content-end">
+                <span><strong>Delivery Date: </strong></span>
+                <span class="field_data">{{
+                  seller.deliveryDate.split(" ")[0]
+                }}</span>
+              </div>
+              <div class="div d-flex justify-content-end">
+                <span><strong>Phone: </strong></span>
+                <span class="field_data">{{ seller.sellerPhone }}</span>
+              </div>
+            </div>
+          </div>
+
+          <div class="table-responsive">
+            <table class="items table">
+              <tr class="table_header">
+                <th>Porduct Name</th>
+                <th>Description</th>
+                <th>Quantity</th>
+                <th>Price</th>
+                <th>Sub Total</th>
+              </tr>
+              <ng-container  *ngFor="
+              let product of invoice.productDetailsList;
+              
+            ">
+              <tr
+                 *ngIf="product.sellerCode==invoice.sellerDetailsList[i].sellerCode"
+              >
+                <td>{{ product.productName }}</td>
+                <td>{{ product.specification }}</td>
+                <td>{{ product.quantity }}</td>
+                <td>{{ product.price }}Tk</td>
+
+                <td>{{ product.subTotalPrice }}Tk</td>
+              </tr>
+            </ng-container>
+            </table>
+          </div>
+        </ng-container>
+        <!-- <div class="total">
+          <p>
+            <strong>Total:</strong>
+            {{ invoice.totalPrice }}Tk
+          </p>
+        </div> -->
+        <div class="table-responsive" *ngIf="invoice.productDetailsList">
+          <table class="items table">
+            <tr>
+              <td class="totalPrice_col">Delivery charge</td>
+              <td>{{ invoice.productDetailsList[0].deliveryCharge }}Tk</td>
+            </tr>
+            <tr>
+              <td class="totalPrice_col">Total</td>
+              <td>{{ invoice.totalPrice }}Tk</td>
+            </tr>
+          </table>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

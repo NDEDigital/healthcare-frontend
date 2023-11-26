@@ -1,0 +1,81 @@
+.slider_wrap {
+  position: relative;
+  overflow: hidden;
+  height: 310px;
+  /* background: green; */
+  margin: 0 1.1rem;
+  /* width: 85.5%; */
+}
+
+.slider_main {
+  position: absolute;
+  width: 202%;
+  /* animation: slide-animation 0.8s ease-in; */
+  /* Add animation property */
+}
+
+@keyframes slide-animation {
+  0% {
+    transform: translateX(0%);
+  }
+  100% {
+    transform: translateX(-5%);
+  }
+}
+
+/* .slider-animation-reset {
+  animation: none !important; 
+} */
+.item {
+  width: 350px;
+  display: inline-flex;
+  position: relative;
+  height: 300px;
+  margin: 5px;
+  border: 5px solid gold;
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+}
+.item img {
+  height: 200px;
+  /* transition: transform 0.5s ease; */
+}
+
+.text {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+}
+p {
+  position: absolute;
+  /* top: 50%; */
+  left: 50%;
+  bottom: 0;
+  transform: translate(-50%, -50%);
+  font-size: 2rem;
+  font-weight: 500;
+}
+.btn-area {
+  position: absolute;
+  bottom: 0;
+  left: 48%;
+  display: flex;
+  justify-content: space-between;
+  width: 7%;
+}
+.slider-btn {
+  font-size: 2rem;
+  font-weight: 500;
+  border-radius: 50%;
+  padding: 2px 15px;
+  /* background: #dbf2f9; */
+  background: rgb(235, 250, 251);
+  opacity: 0.6;
+  transition: 0.4s ease-in-out;
+}
+.slider-btn:hover {
+  /* background:; */
+  opacity: 1;
+}

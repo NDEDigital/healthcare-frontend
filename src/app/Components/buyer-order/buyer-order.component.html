@@ -1,0 +1,503 @@
+<app-sub-header [headerTitle]="'My Orders'"></app-sub-header>
+
+<section class="container body-design">
+  <!-- <div class="fs-2 mb-3">My Orders</div> -->
+
+  <div class="d-flex flex-row fs-5 header-nav mt-5">
+    <div class="px-4">
+      <button
+        class="px-3"
+        [class.active-button]="activeNav === 'All'"
+        (click)="btnClick('All')"
+      >
+        All
+        <!-- <span *ngIf="allCount">({{ allCount }})</span> -->
+      </button>
+    </div>
+    <!-- <div class="px-4">
+      <button
+        class="px-3"
+        [class.active-button]="activeNav === 'Processing'"
+        (click)="btnClick('Processing')"
+      >
+        Processing
+      </button>
+    </div> -->
+    <div class="px-4">
+      <button
+        class="px-3"
+        [class.active-button]="activeNav === 'Ready to Ship'"
+        (click)="btnClick('Ready to Ship')"
+      >
+        To Ship
+        <span *ngIf="toShipCount">({{ toShipCount }})</span>
+      </button>
+    </div>
+    <div class="px-4">
+      <button
+        class="px-3"
+        [class.active-button]="activeNav === 'Shipped'"
+        (click)="btnClick('Shipped')"
+      >
+        To Deliver
+        <span *ngIf="toDeliverCount">({{ toDeliverCount }})</span>
+      </button>
+    </div>
+
+    <!-- review Btn -->
+    <div class="px-4">
+      <button
+        class="px-3"
+        [class.active-button]="activeNav === 'Delivered'"
+        (click)="btnClick('Delivered')"
+      >
+        To Review
+        <span *ngIf="toReviewCount">({{ toReviewCount }})</span>
+      </button>
+    </div>
+
+    <!-- return Btn -->
+    <div class="px-4">
+      <button
+        class="px-3"
+        [class.active-button]="activeNav === 'to Return'"
+        (click)="btnClick('to Return')"
+      >
+        To Return
+        <span *ngIf="ToReturnCount">({{ ToReturnCount }})</span>
+      </button>
+    </div>
+    <div class="px-4">
+      <button
+        class="px-3"
+        [class.active-button]="activeNav === 'Returned'"
+        (click)="btnClick('Returned')"
+      >
+        Returned
+        <span *ngIf="ReturnedCount">({{ ReturnedCount }})</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="w-auto nav-line"></div>
+
+  <div *ngIf="loading" class="text-center mt-5">
+    <h5>Loading products...</h5>
+  </div>
+  <div *ngIf="!loading && buyerOrder.length < 1">
+    <h3 class="text-danger text-center mt-5">No Product Found</h3>
+  </div>
+  <div *ngIf="!loading && buyerOrder.length > 0" class="mt-5">
+    <div *ngFor="let order of buyerOrder">
+      <div
+        class="border-none bg-white order-card mt-2 border border-1"
+        *ngIf="order.orderDetailsList.length > 0"
+      >
+        <div class="d-flex justify-content-between p-3 border-bottom bg-light">
+          <div class="">
+            <p class="fs-6 m-0 p-0">
+              Order:
+              <span class="fs-6 fw-semibold order-number"
+                ><a
+                  routerLink="/buyerOrderDetails"
+                  (click)="orderDetails(order)"
+                  ># {{ order.orderNo }}</a
+                ></span
+              >
+            </p>
+            <p class="m-0 p-0">
+              Placed on <span class="fw-semibold">{{ order.orderDate }}</span>
+            </p>
+          </div>
+          <div><Button class="pay-now-btn fst-italic">Manage</Button></div>
+        </div>
+
+        <div class="row mt-3" *ngFor="let detail of order.orderDetailsList">
+          <div
+            class="col-2 d-flex justify-content-center"
+            (click)="goToDetail(detail)"
+          >
+            <img
+              [src]="
+                detail.imagePath
+                  ? detail.imagePath.substring(
+                      detail.imagePath.indexOf('assets')
+                    )
+                  : '../../../assets/images/' + detail.groupName + '.jpg'
+              "
+              class="w-50 h-75"
+              alt=""
+            />
+          </div>
+          <div class="col-3" (click)="goToDetail(detail)">
+            {{ detail.goodsName }}
+          </div>
+          <div class="col-3 col-lg-2 col-sm-2">
+            <span class="qty-design">Qty: {{ detail.quantity }}</span>
+          </div>
+          <div class="col-2 col-lg-3 col-sm-3">
+            <button
+              class="p-2 p-lg-1 p-sm-1 process-btn"
+              [ngClass]="{
+                'gray-bg':
+                  detail.status === 'Pending' || detail.status === 'Processing',
+                'yellow-bg': detail.status === 'Ready to Ship',
+                'green-bg':
+                  detail.status === 'Delivered' || detail.status === 'Shipped',
+                'red-bg': detail.status === 'Cancelled'
+              }"
+            >
+              {{ detail.status }}
+            </button>
+          </div>
+          <div class="col-2 text-success fw-semibold">
+            <p
+              [ngClass]="{
+                'gray-p':
+                  detail.status === 'Pending' || detail.status === 'Processing',
+                'yellow-p': detail.status === 'Ready to Ship',
+                'green-p':
+                  detail.status === 'Delivered' || detail.status === 'Shipped',
+                'red-p': detail.status === 'Cancelled'
+              }"
+            >
+              <span *ngIf="activeNav !== 'Delivered'">
+                {{ getStatusDescription(detail.status) }}</span
+              >
+              <span class="color-primary" *ngIf="activeNav === 'Delivered'">
+                <button
+                  class="p-2 p-lg-1 p-sm-1 process-btn review-bg"
+                  #reviewBTN
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                  (click)="setDetail(detail)"
+                >
+                  Add a review
+                </button>
+                <button
+                  type="button"
+                  class="p-2 p-lg-1 p-sm-1 process-btn return-button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  (click)="toReturn(detail, order.orderNo)"
+                >
+                  To return
+                </button>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="buyerOrder.length == 0" class="text-danger text-center">
+      <h3>No Order are made yet!</h3>
+    </div>
+
+    <!-- pag -->
+
+    <app-pagination
+      *ngIf="activeNav === 'All' && buyerOrder.length > 0"
+      [inputdata]="data"
+      (myData)="handlePaginationData($event)"
+    >
+    </app-pagination>
+  </div>
+</section>
+
+<section class="">
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">
+            Add a Review
+          </h1>
+
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="reviewForm">
+            <div class="mb-3">
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label"
+                  >Ratings</label
+                >
+                <!-- Rating Design -->
+                <div class="ratings">
+                  <div class="text-center">
+                    <input
+                      type="radio"
+                      class="star"
+                      id="star1"
+                      name="rating"
+                      value="1"
+                      formControlName="rating"
+                    />
+                    <label [class.active]="rating >= 1" for="star1"
+                      >&#9733;</label
+                    >
+                    <p [class.active]="rating == 1">Terrible</p>
+                  </div>
+                  <div class="text-center">
+                    <input
+                      type="radio"
+                      class="star"
+                      id="star2"
+                      name="rating"
+                      value="2"
+                      formControlName="rating"
+                    />
+                    <label [class.active]="rating >= 2" for="star2"
+                      >&#9733;</label
+                    >
+                    <p [class.active]="rating == 2">Poor</p>
+                  </div>
+                  <div class="text-center">
+                    <input
+                      type="radio"
+                      class="star"
+                      id="star3"
+                      name="rating"
+                      value="3"
+                      formControlName="rating"
+                    />
+                    <label [class.active]="rating >= 3" for="star3"
+                      >&#9733;</label
+                    >
+                    <p [class.active]="rating == 3">Fair</p>
+                  </div>
+                  <div class="text-center">
+                    <input
+                      id="star4"
+                      type="radio"
+                      class="star"
+                      name="rating"
+                      value="4"
+                      formControlName="rating"
+                    />
+
+                    <label [class.active]="rating >= 4" for="star4"
+                      >&#9733;</label
+                    >
+                    <p [class.active]="rating == 4">Good</p>
+                  </div>
+                  <div class="text-center">
+                    <input
+                      id="star5"
+                      type="radio"
+                      class="star"
+                      name="rating"
+                      value="5"
+                      formControlName="rating"
+                    />
+                    <label [class.active]="rating >= 5" for="star5"
+                      >&#9733;</label
+                    >
+                    <p [class.active]="rating == 5">Excellent</p>
+                  </div>
+                </div>
+                <div *ngIf="errorMsg" class="text-danger">
+                  Give rating to submit a review!!
+                </div>
+              </div>
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Tell us about product</label
+              >
+              <textarea
+                formControlName="reviwField"
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+              ></textarea>
+
+              <div class="mb-3">
+                <div>
+                  <label for="exampleInputPassword1" class="form-label mt-2"
+                    >Add an image:</label
+                  >
+                </div>
+                <div>
+                  <input
+                    #imageInput
+                    formControlName="image"
+                    type="file"
+                    id="imageUpload"
+                    name="imageUpload"
+                    accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
+                  />
+                </div>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            #closeBTN
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary" (click)="addReview()">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- return modal -->
+<section>
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header returnModalHeader">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">To return</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="returnForm">
+            <div class="orderNo mb-2">
+              <label class="returnLabel m-0"> Order </label>
+              <label class="orderNoInput ms-1"> #</label>
+              <input
+                id="orderNo"
+                type="text"
+                class="orderNoInput"
+                name="orderNo"
+                value="ioyefe"
+                formControlName="orderNo"
+                readonly
+              />
+            </div>
+            <!-- product part -->
+            <div class="product d-flex">
+              <div class="productImage">
+                <img class="returnProductImage" [src]="productImageSrc" />
+              </div>
+              <div class="productDetails">
+                <div class="productName">
+                  <input
+                    id="productName"
+                    type="text"
+                    class="productNameInput"
+                    name="productImage"
+                    value="0.7mm"
+                    formControlName="groupName"
+                    readonly
+                  />
+                </div>
+                <div class="goodsName">
+                  <input
+                    id="goodsName"
+                    type="text"
+                    class="productCodeInput"
+                    name="productCode"
+                    value=" "
+                    formControlName="goodsName"
+                    readonly
+                  />
+                </div>
+                <div class="productIPrice">
+                  <img
+                    class="taKa_icon"
+                    src="../../../assets/images/takaIcon.png"
+                  />
+                  <input
+                    id="productId"
+                    type="text"
+                    class="productIdInput returnPrice"
+                    name="productId"
+                    value=" "
+                    formControlName="price"
+                    readonly
+                  />
+                </div>
+              </div>
+            </div>
+
+            <!-- product Return part -->
+
+            <div class="returnPart mt-5">
+              <label class="returnLabel">Select return Type</label>
+              <select
+                class="form-select"
+                aria-label="Default select example"
+                formControlName="typeId"
+              >
+                <option
+                  *ngFor="let option of returnTypeData"
+                  [value]="option.typeId"
+                >
+                  {{ option.returnType }}
+                </option>
+              </select>
+
+              <!-- alert -->
+
+              <div class="danger" *ngIf="returnType">
+                <p class="m-0"><strong>give</strong> a return type</p>
+              </div>
+
+              <!-- remarks -->
+              <div class="mt-2">
+                <label class="returnLabel"> Add Remark </label>
+                <textarea
+                  type="text"
+                  class="w-100 rounded p-1 returnRemarks"
+                  formControlName="remarks"
+                ></textarea>
+              </div>
+            </div>
+            <div class="modal-footer">
+              <button
+                #closeModalButton
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button
+                type="button"
+                class="btn btn-primary"
+                (click)="SaveReturnData()"
+              >
+                Return
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

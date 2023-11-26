@@ -1,0 +1,53 @@
+p{
+    margin: 0;
+}
+.pr{
+     overflow: hidden;
+     width: 1000px;  
+}
+.image-row{
+     position: relative;
+     transition: 0.5s ease-in;
+}
+.image-column{
+    margin-right: 5px;
+    width: 82px;
+    height: 81px;
+    border: 1px solid black;
+}
+.image-column:hover{
+      border: 1px solid #3a98b9;
+}
+.compare-page-img{
+      width: 80px;
+      height: 80px; 
+}
+.angle{
+     width: 30px; 
+}
+.product-title{
+      font-size: 14px;
+      width: 308px;
+}
+
+.compare-f{
+      font-size: 15px;
+}
+.faka-box{
+      width: 200px;
+      height: 113px;
+}                                                   
+.check{
+      width: 300px;
+}
+.compare-img{  
+    height: 77px;
+    width: 77px;
+}
+.product{
+      width: 400px;
+}
+.headers{
+      height: 27px;
+      width: 200px;
+}

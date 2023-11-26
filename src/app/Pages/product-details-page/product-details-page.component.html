@@ -1,0 +1,868 @@
+
+<app-header [cartCount]="cartCount"></app-header>
+
+
+ <div
+    [ngClass]="{ show: cartDataDetail.size > 0 }"
+    class="offcanvas right-sidebar offcanvas-end"
+    data-bs-scroll="true"
+    data-bs-backdrop="false"
+    tabindex="-1"
+    id="offcanvasScrolling"
+    aria-labelledby="offcanvasScrollingLabel"
+  >
+    <!-- <div class="offcanvas-header">
+    <div></div>
+    <button type="button" class="btn-close" data-bs-dismiss="offcanvas" aria-label="Close"></button>
+  </div> -->
+
+    <div class="offcanvas-body border" *ngIf="cartDataDetail.size > 0">
+      <div
+        class="border-1 border-secondary w-100 border-bottom d-flex flex-column align-items-center pb-2"
+      >
+        <h6 class="offcanvas-title text-center" id="offcanvasScrollingLabel">
+          Subtotal
+        </h6>
+        <h5 class="text-center">৳{{ totalPrice }}</h5>
+        <button
+          class="btn btn-light border border-1 rounded-4 w-100 go-truck"
+          routerLink="/cartView"
+        >
+          Go to Truck
+        </button>
+      </div>
+
+      <div
+        class="border-1 border-secondary border-bottom pb-2"
+        *ngFor="let entry of cartDataDetail | keyvalue"
+      >
+        <div class="d-flex flex-column align-items-center">
+          <img
+            class="w-100"
+            [src]="
+              entry.value.imagePath
+                ? entry.value.imagePath.substring(
+                    entry.value.imagePath.indexOf('assets')
+                  )
+                : '../../../assets/images/' + entry.value.groupName + '.jpg'
+            "
+            alt=""
+          />
+          <p class="fw-bold text-center">
+            {{
+              entry.value.goodsName.length > 20
+                ? (entry.value.goodsName | slice : 0 : 20) + "..."
+                : entry.value.goodsName
+            }}
+          </p>
+          <p class="fw-bold">
+            <span class="money-icon">৳</span>{{ entry.value.price }}
+          </p>
+        </div>
+        <div class="d-flex justify-content-between align-items-center px-1">
+          <span class="fw-bold"
+            >Qty:
+            {{
+              cartDataQt.get(entry.value.groupCode + "&" + entry.value.goodsID)
+            }}</span
+          >
+          <svg
+            (click)="deleteFromSideCart(entry)"
+            class="delete-icon"
+            xmlns="http://www.w3.org/2000/svg"
+            fill="gray"
+            height="1em"
+            viewBox="0 0 448 512"
+          >
+            <path
+              d="M135.2 17.7L128 32H32C14.3 32 0 46.3 0 64S14.3 96 32 96H416c17.7 0 32-14.3 32-32s-14.3-32-32-32H320l-7.2-14.3C307.4 6.8 296.3 0 284.2 0H163.8c-12.1 0-23.2 6.8-28.6 17.7zM416 128H32L53.2 467c1.6 25.3 22.6 45 47.9 45H346.9c25.3 0 46.3-19.7 47.9-45L416 128z"
+            />
+          </svg>
+        </div>
+      </div>
+    </div>
+  </div>
+
+<!-- Modal for cart-->
+  <div
+   #exampleModal
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <!-- <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1> -->
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <p class="h4">
+             ({{ popUpCount }}) new item(s) have been added to your cart
+          </p>
+        </div>
+        <div class="modal-footer">
+          <!-- <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button> -->
+          <button
+            routerLink="/cartView"
+            type="button"
+            data-bs-dismiss="modal"
+            class="btn btn-warning"
+          >
+            GO TO CART
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+
+
+<div class="productDetailsBody pb-4">
+  <!-- 1st section -->
+  <section class="mb-4">
+    <div class="row">
+      <!-- product image part -->
+      <div class="col-12 col-lg-5 col-md-6 col-sm-12 py-4 px-5">
+        <div>
+          <div class="singleImage d-flex justify-content-center p-3">
+            <img
+              class="p-3"
+              [src]="
+                detailsData.imagePath
+                  ? detailsData.imagePath.substring(
+                      detailsData.imagePath.indexOf('assets')
+                    )
+                  : '../../../assets/images/' + detailsData.groupName + '.jpg'
+              "
+            />
+          </div>
+          <div
+            id="carouselExampleIndicators"
+            class="carousel slide"
+            data-bs-ride="true"
+          >
+            <div class="carousel-inner">
+              <div class="carousel-item active">
+                <div class="imageSlider">
+                  <!-- Loop through the array of image objects -->
+                  <img
+                    *ngFor="let image of imageArray"
+                    [src]="
+                      detailsData.imagePath
+                        ? detailsData.imagePath.substring(
+                            detailsData.imagePath.indexOf('assets')
+                          )
+                        : '../../../assets/images/' +
+                          detailsData.groupName +
+                          '.jpg'
+                    "
+                  />
+                </div>
+              </div>
+
+              <div class="carousel-item">
+                <div class="imageSlider">
+                  <img
+                    *ngFor="let image of imageArray"
+                    [src]="
+                      detailsData.imagePath
+                        ? detailsData.imagePath.substring(
+                            detailsData.imagePath.indexOf('assets')
+                          )
+                        : '../../../assets/images/' +
+                          detailsData.groupName +
+                          '.jpg'
+                    "
+                  />
+                </div>
+              </div>
+              <div class="carousel-item">
+                <div class="imageSlider">
+                  <img
+                    *ngFor="let image of imageArray"
+                    [src]="
+                      detailsData.imagePath
+                        ? detailsData.imagePath.substring(
+                            detailsData.imagePath.indexOf('assets')
+                          )
+                        : '../../../assets/images/' +
+                          detailsData.groupName +
+                          '.jpg'
+                    "
+                  />
+                </div>
+              </div>
+            </div>
+            <button
+              class="carousel-control-prev"
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="prev"
+            >
+              <span
+                class="carousel-control-prev-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Previous</span>
+            </button>
+            <button
+              class="carousel-control-next"
+              type="button"
+              data-bs-target="#carouselExampleIndicators"
+              data-bs-slide="next"
+            >
+              <span
+                class="carousel-control-next-icon"
+                aria-hidden="true"
+              ></span>
+              <span class="visually-hidden">Next</span>
+            </button>
+          </div>
+        </div>
+      </div>
+      <!-- product name part -->
+      <div
+        class="col-12 col-lg-6 col-md-6 col-sm-12 b p-4 d-flex justify-content-center align-items-end"
+      >
+        <Div>
+          <div class="productName">{{ detailsData.goodsName }}</div>
+          <!-- rating -->
+          <div class="productRating d-flex py-2">
+            <div class="star">
+              <!-- full star  -->
+              <ng-container *ngFor="let fullStar of fullStarArray">
+                <img
+                  class="ratingStarSingleReview"
+                  src="../../../assets/images/star/fullStar.png"
+                />
+              </ng-container>
+
+              <!-- checking -->
+
+              <ng-container *ngIf="decimalNumber > 0 && decimalNumber < 4">
+                <img
+                  class="ratingStarSingleReview"
+                  src="../../../assets/images/star/4.3Star.png"
+                />
+              </ng-container>
+              <ng-container *ngIf="decimalNumber > 3 && decimalNumber < 5">
+                <img
+                  class="ratingStarSingleReview"
+                  src="../../../assets/images/star/4.4Star.png"
+                />
+              </ng-container>
+              <ng-container *ngIf="decimalNumber > 4 && decimalNumber < 6">
+                <img
+                  class="ratingStarSingleReview"
+                  src="../../../assets/images/star/4.5Star.png"
+                />
+              </ng-container>
+              <ng-container *ngIf="decimalNumber > 5">
+                <img
+                  class="ratingStarSingleReview"
+                  src="../../../assets/images/star/4.7Star.png"
+                />
+              </ng-container>
+
+              <!-- empty star -->
+              <ng-container *ngFor="let emptyStar of emptyStarArray">
+                <img
+                  class="ratingStarSingleReview"
+                  src="../../../assets/images/star/emptyStar.png"
+                />
+              </ng-container>
+            </div>
+            <div class="ratingCount">{{ totalRatings }} Ratings</div>
+            <div class="vertical-line"></div>
+            <div class="qsnAns">4 Answered Questions</div>
+          </div>
+          <!-- brand -->
+          <div class="brand d-flex py-2">
+            <div class="brandName">
+              Brand: <a href="">{{ detailsData.companyName }}</a>
+            </div>
+            <div class="vertical-line"></div>
+            <div class="moreProduct">
+              <a href="/productsPageComponent">
+                More {{ detailsData.goodsName }} from
+                {{ detailsData.groupName }}</a
+              >
+            </div>
+          </div>
+          <!-- price -->
+          <div class="price d-flex align-items-center">
+            <div>
+              <img
+                class="taKa_icon"
+                src="../../../assets/images/takaIcon.png"
+              />
+              {{ detailsData.price }}
+            </div>
+
+              <div class="ms-3">
+                <input
+                        #qtyInput
+                        type="number"
+                        [readonly]="detailsData.approveSalesQty === '0'"
+                        class="txt-qt border"
+                        min="1"
+                        [max]="getMaxValue(detailsData.approveSalesQty)"
+                        [ngModel]="detailsData.approveSalesQty === '0' ? 0 : 1"
+                        (input)="onInputChange($event,detailsData)"
+                        (blur)="isEmpty($event)"
+                      />
+                </div>
+              <div class="ms-3">
+              <button
+              (click) = "setCart(detailsData,qtyInput.value)"
+              class="btn btn-success"
+              data-bs-toggle="modal"
+              data-bs-target="#exampleModal"
+              [disabled]="detailsData.approveSalesQty==='0'"
+              >Add to Cart</button>
+              </div>
+
+          </div>
+
+          <!-- quantity -->
+          <!-- <div class="quantity d-flex">
+             Quantity <i class="fa-solid fa-plus"></i>
+
+           </div> -->
+          <!-- buy now -->
+          <!-- <div class="buyNow">
+            <button type="button" class="buyNowButton">Buy Now</button>
+            <button type="button" class="AddToCartButton">Add to Cart</button>
+          </div> -->
+        </Div>
+      </div>
+      <!-- product delivery part -->
+      <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12 p-4   p-2"> -->
+      <!-- <span>Delivery</span> -->
+      <!-- <div class="location d-flex justify-content-between py-2">
+          <div class="address">Dhaka, Dhaka North, Banani Road No. 12 - 19</div>
+          <a href=""> Change</a>
+        </div>
+        <div class="freeDelivery py-2">
+          <b> Free Delivery</b> 18 Sep - 22 Sep
+        </div>
+        <div class="cashOnDelivery py-2">
+          <b> Cash on Delivery </b> Available
+        </div>
+      </div> -->
+    </div>
+  </section>
+  <!-- 1st section end -->
+
+  <!-- 2nd section  -->
+  <section class="productDetails mb-4">
+    <div class="productDetailsTitle">
+      Product details of {{ detailsData.goodsName }}
+    </div>
+    <div class="row py-2 productDetailsData">
+      <div class="col productDetailsCol">
+        <ul class="special-list">
+          <li class=" ">Metarial: Steel</li>
+          <li class=" ">A second item</li>
+          <li class=" ">A third item</li>
+          <li class=" ">A fourth item</li>
+          <li class=" ">And a fifth one</li>
+        </ul>
+      </div>
+      <div class="col productDetailsCol">
+        <ul class="">
+          <li class="">An item</li>
+          <li class=" ">Metarial: Steel</li>
+          <li class=" ">A second item</li>
+          <li class=" ">A third item</li>
+          <li class=" ">A fourth item</li>
+          <li class=" ">And a fifth one</li>
+        </ul>
+      </div>
+      <div class="col">
+        <div
+          [ngClass]="{ disabled: disableMouseActions }"
+          (click)="disableMouseActions ? null : mouse()"
+          (mouseenter)="disableMouseActions ? null : mouse()"
+          (mouseleave)="disableMouseActions ? null : mouse()"
+        >
+          <!-- Your content here -->
+        </div>
+
+        <!-- <button (click)="toggleMouseActions()">Toggle Mouse Actions</button> -->
+      </div>
+    </div>
+    <div class="innerTitle">Specifications of {{ detailsData.goodsName }}</div>
+    <div class="row Specifications">
+      <div class="col-6">
+        <p class="specificationsName">Company</p>
+        <p class="specifications">{{ detailsData.companyName }}</p>
+      </div>
+      <div class="col-6">
+        <p class="specificationsName">Size</p>
+        <p class="specifications">{{ detailsData.specification }}</p>
+      </div>
+    </div>
+  </section>
+  <!-- Ratings & Reviews  section ,3rd -->
+  <section class="mb-4 Rating&Review">
+    <div class="productDetailsTitle">
+      Ratings & Reviews of {{ detailsData.goodsName }}
+    </div>
+
+    <div class="ratingsdiv row">
+      <div class="col-4 col-lg-6 col-md-5 col-sm-4">
+        <div class="ratingText color-primary">
+          <span class="ratingRatio">{{ this.avgRatings }} </span
+          ><span class=""> out of 5</span>
+        </div>
+        <div class="star bigStar">
+          <!-- full star  -->
+          <ng-container *ngFor="let fullStar of fullStarArray">
+            <img
+              class="ratingStarSingleReview"
+              src="../../../assets/images/star/fullStar.png"
+            />
+          </ng-container>
+
+          <!-- checking -->
+
+          <ng-container *ngIf="decimalNumber > 0 && decimalNumber < 4">
+            <img
+              class="ratingStarSingleReview"
+              src="../../../assets/images/star/4.3Star.png"
+            />
+          </ng-container>
+          <ng-container *ngIf="decimalNumber > 3 && decimalNumber < 5">
+            <img
+              class="ratingStarSingleReview"
+              src="../../../assets/images/star/4.4Star.png"
+            />
+          </ng-container>
+          <ng-container *ngIf="decimalNumber > 4 && decimalNumber < 6">
+            <img
+              class="ratingStarSingleReview"
+              src="../../../assets/images/star/4.5Star.png"
+            />
+          </ng-container>
+          <ng-container *ngIf="decimalNumber > 5">
+            <img
+              class="ratingStarSingleReview"
+              src="../../../assets/images/star/4.7Star.png"
+            />
+          </ng-container>
+
+          <!-- empty star -->
+          <ng-container *ngFor="let emptyStar of emptyStarArray">
+            <img
+              class="ratingStarSingleReview"
+              src="../../../assets/images/star/emptyStar.png"
+            />
+          </ng-container>
+        </div>
+        <div class="ratingCount">{{ totalRatings }} Ratings</div>
+      </div>
+      <div class="col-8 col-lg-6 col-md-7 col-sm-8">
+        <ng-container *ngFor="let row of indexArray; let i = index">
+          <div class="row mt-1">
+            <div class="col-5 col-lg-3 col-md-4 col-sm-5">
+              <div class="star">
+                <ng-container *ngFor="let rating of ratingArray(i)">
+                  <img
+                    class="ratingStarSingleReview"
+                    src="../../../assets/images/star/fullStar.png"
+                  />
+                </ng-container>
+                <ng-container *ngFor="let rating of EmptyratingArray(i)">
+                  <img
+                    class="ratingStarSingleReview"
+                    src="../../../assets/images/star/emptyStar.png"
+                  />
+                </ng-container>
+              </div>
+            </div>
+            <div
+              class="col-7 col-lg-8 col-md-8 col-sm-7 d-flex align-items-center"
+            >
+              <div class="ratingColorDiv m-0 colordiv"></div>
+              <div class="ratingColorDiv unColoredDiv"></div>
+              {{ perRatingCount[i] }}
+            </div>
+          </div>
+        </ng-container>
+      </div>
+    </div>
+    <!-- review  by buyer-->
+    <div class="innerTitle">Product Reviews</div>
+
+    <div class="review" *ngFor="let row of reviewData">
+      <div class="d-flex">
+        <!-- review part -->
+        <div class="reviewPart">
+          <div class="buyerIndivualRating">
+            <div class="star mb-1">
+              <ng-container
+                *ngFor="let ratingRow of parseRatingArray(row.ratingArray)"
+              >
+                <img
+                  class="ratingStarSingleReview"
+                  src="../../../assets/images/star/fullStar.png"
+                />
+              </ng-container>
+              <ng-container
+                *ngFor="
+                  let ratingRow of parseRatingEmptyArray(row.emptyRatingArray)
+                "
+              >
+                <img
+                  class="ratingStarSingleReview"
+                  src="../../../assets/images/star/emptyStar.png"
+                />
+              </ng-container>
+            </div>
+          </div>
+          <div class="ratingBy mb-1">by {{ row.buyerName }}</div>
+          <div class="reviewText mb-1">
+            {{ row.reviewText == "null" ? "" : row.reviewText }}
+          </div>
+
+          <div class="reviewImage d-flex mb-2" *ngIf="row.imagePath != ''">
+            <img
+              class="mx-2 my-1"
+              [src]="row.imagePath.substring(row.imagePath.indexOf('assets'))"
+            />
+            <!-- <img
+              [src]="
+              row.imagePath
+                  ? row.imagePath.substring(
+                    row.imagePath.indexOf('assets')
+                    )
+                  : '../../../assets/images/' + row.groupName + '.jpg'
+              "
+            /> -->
+          </div>
+        </div>
+        <!-- review part end -->
+
+        <div class="reviewEdit" *ngIf="row.buyerCode == buyerCode">
+          <a
+            #reviewBTN
+            data-bs-toggle="modal"
+            data-bs-target="#staticBackdrop"
+            (click)="setDetail(row)"
+            >edit</a
+          >
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- qsn & ans section -->
+  <section class="mb-4">
+    <div class="productDetailsTitle">Questions About This Product (4)</div>
+    <div class="row qsn">
+      <p class="m-0">
+        <a href="/login">Login</a> or <a href="/register">Register</a> to ask
+        questions to seller
+      </p>
+    </div>
+    <div class="qsnAnsDiv">
+      <hr class="mt-0" />
+      <div class="row qsndiv">
+        <div class="col-1">
+          <div class="qsnAnsIcon qsnIcon">Q</div>
+        </div>
+
+        <div class="col-8">
+          <p class="buyerQsn m-0">delivery crg kom hobe??</p>
+          <p class="buyerName m-0">mariya - 1 week ago</p>
+        </div>
+      </div>
+      <div class="row ansDiv">
+        <div class="col-1">
+          <div class="qsnAnsIcon ansIcon">A</div>
+        </div>
+        <div class="col-8">
+          <p class="sellerAns m-0">No</p>
+          <p class="sellerName m-0">PAPER TREE - answered within 31 minutes</p>
+        </div>
+      </div>
+    </div>
+  </section>
+  <!-- recently viewed -->
+  <section class="">
+    <div class="productDetailsTitle">
+      People Who Viewed This Item Also Viewed
+    </div>
+
+    <div class="d-flex justify-content-center">
+      <div class="card m-3" style="width: 18rem">
+        <div class="d-flex justify-content-center p-2">
+          <img
+            class="cardImage"
+            [src]="
+              detailsData.imagePath
+                ? detailsData.imagePath.substring(
+                    detailsData.imagePath.indexOf('assets')
+                  )
+                : '../../../assets/images/' + detailsData.groupName + '.jpg'
+            "
+          />
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">{{ detailsData.goodsName }}</h5>
+          <div class="star">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+          </div>
+          <div class="price">
+            {{ detailsData.price }}
+            <img class="taKa_icon" src="../../../assets/images/takaIcon.png" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card m-3" style="width: 18rem">
+        <div class="d-flex justify-content-center p-2">
+          <img
+            class="cardImage"
+            [src]="
+              detailsData.imagePath
+                ? detailsData.imagePath.substring(
+                    detailsData.imagePath.indexOf('assets')
+                  )
+                : '../../../assets/images/' + detailsData.groupName + '.jpg'
+            "
+          />
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">{{ detailsData.goodsName }}</h5>
+          <div class="star">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+          </div>
+          <div class="price">
+            {{ detailsData.price }}
+            <img class="taKa_icon" src="../../../assets/images/takaIcon.png" />
+          </div>
+        </div>
+      </div>
+
+      <div class="card m-3" style="width: 18rem">
+        <div class="d-flex justify-content-center p-2">
+          <img
+            class="cardImage"
+            [src]="
+              detailsData.imagePath
+                ? detailsData.imagePath.substring(
+                    detailsData.imagePath.indexOf('assets')
+                  )
+                : '../../../assets/images/' + detailsData.groupName + '.jpg'
+            "
+          />
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">{{ detailsData.goodsName }}</h5>
+          <div class="star">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+          </div>
+          <div class="price">
+            {{ detailsData.price }}
+            <img class="taKa_icon" src="../../../assets/images/takaIcon.png" />
+          </div>
+        </div>
+      </div>
+      <div class="card m-3" style="width: 18rem">
+        <div class="d-flex justify-content-center p-2">
+          <img
+            class="cardImage"
+            [src]="
+              detailsData.imagePath
+                ? detailsData.imagePath.substring(
+                    detailsData.imagePath.indexOf('assets')
+                  )
+                : '../../../assets/images/' + detailsData.groupName + '.jpg'
+            "
+          />
+        </div>
+
+        <div class="card-body">
+          <h5 class="card-title">{{ detailsData.goodsName }}</h5>
+          <div class="star">
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-solid fa-star"></i>
+            <i class="fa-regular fa-star"></i>
+          </div>
+          <div class="price">
+            {{ detailsData.price }}
+            <img class="taKa_icon" src="../../../assets/images/takaIcon.png" />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</div>
+<app-footer></app-footer>
+
+<!-- review Modal -->
+<section class="">
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="staticBackdrop"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="staticBackdropLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="staticBackdropLabel">
+            Add a Review
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="reviewForm">
+            <div class="mb-3">
+              <div class="mb-3">
+                <label for="exampleInputPassword1" class="form-label"
+                  >Ratings</label
+                >
+                <!-- Rating Design -->
+                <div class="ratings">
+                  <div class="text-center">
+                    <input
+                      type="radio"
+                      class="star"
+                      id="star1"
+                      name="rating"
+                      value="1"
+                      formControlName="rating"
+                    />
+                    <label [class.active]="rating >= 1" for="star1"
+                      >&#9733;</label
+                    >
+                    <p [class.active]="rating == 1">Terrible</p>
+                  </div>
+                  <div class="text-center">
+                    <input
+                      type="radio"
+                      class="star"
+                      id="star2"
+                      name="rating"
+                      value="2"
+                      formControlName="rating"
+                    />
+                    <label [class.active]="rating >= 2" for="star2"
+                      >&#9733;</label
+                    >
+                    <p [class.active]="rating == 2">Poor</p>
+                  </div>
+                  <div class="text-center">
+                    <input
+                      type="radio"
+                      class="star"
+                      id="star3"
+                      name="rating"
+                      value="3"
+                      formControlName="rating"
+                    />
+                    <label [class.active]="rating >= 3" for="star3"
+                      >&#9733;</label
+                    >
+                    <p [class.active]="rating == 3">Fair</p>
+                  </div>
+                  <div class="text-center">
+                    <input
+                      id="star4"
+                      type="radio"
+                      class="star"
+                      name="rating"
+                      value="4"
+                      formControlName="rating"
+                    />
+
+                    <label [class.active]="rating >= 4" for="star4"
+                      >&#9733;</label
+                    >
+                    <p [class.active]="rating == 4">Good</p>
+                  </div>
+                  <div class="text-center">
+                    <input
+                      id="star5"
+                      type="radio"
+                      class="star"
+                      name="rating"
+                      value="5"
+                      formControlName="rating"
+                    />
+                    <label [class.active]="rating >= 5" for="star5"
+                      >&#9733;</label
+                    >
+                    <p [class.active]="rating == 5">Excellent</p>
+                  </div>
+                </div>
+                <div *ngIf="errorMsg" class="text-danger">
+                  Give rating to submit a review!!
+                </div>
+              </div>
+              <label for="exampleFormControlTextarea1" class="form-label"
+                >Tell us about product</label
+              >
+              <textarea
+                formControlName="reviwField"
+                class="form-control"
+                id="exampleFormControlTextarea1"
+                rows="3"
+              ></textarea>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-secondary"
+            data-bs-dismiss="modal"
+            #closeBTN
+          >
+            Close
+          </button>
+          <button type="button" class="btn btn-primary" (click)="editReview()">
+            Submit
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>

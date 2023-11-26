@@ -1,0 +1,36 @@
+.table-header{
+  background-color:#cce3ea;
+  color: rgb(48, 48, 48);
+}
+.inventory_header_text{
+  color: var(--color-primary);
+}
+ 
+.search-container {
+  position: relative;
+  display: flex;
+  width: 100%;
+  max-width: 18.5rem; /* Adjust the maximum width as needed */
+  margin-right: 0.7rem;
+  height: 2rem;
+}
+
+.search-input {
+  width: 100%;
+  padding: 0.36rem;
+  border-radius: 0.3rem;
+  /* background-color: #f1eeee; */
+  background-color: rgb(229, 241, 247) !important;
+}
+.search_Name_list a:hover {
+  background-color: rgb(229, 241, 247);
+  cursor: pointer;
+}
+.search-icon {
+  position: absolute;
+  right: 0.5rem;
+  padding-top: 0.45rem;
+  font-size: 1rem;
+  /* color: #555; */
+  color: var(--color-primary);
+}

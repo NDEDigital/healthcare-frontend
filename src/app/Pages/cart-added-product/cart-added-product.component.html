@@ -1,0 +1,91 @@
+<app-header [cartCount] = "cartCount"></app-header>
+<section class="cart-detail">
+
+    <div class="d-flex m-3 ">
+        <div class="full-detail">
+        <div class="container-fluid cart-product">
+            <div class="ps-3 pt-3">
+                <h3 class="mb-0">Cart Detail</h3>
+            </div>
+             <hr>
+        <ng-container *ngFor="let entry of cartDataDetail| keyvalue; let i = index">
+        <div class="d-flex ps-5"> 
+         <div>
+             <img class="product-img" src="/assets/images/hc1.jpg" alt="">
+         </div>
+         <div class="ps-3  product-detail">
+            <span class="product-name">{{ entry.value.groupName + ' (' + entry.value.goodsName + ')'}}</span>
+             <p class="fw-bold price">৳{{(entry.value.price)?entry.value.price:""}}</p>
+             <p>{{entry.value.companyName}}</p>
+             <p>Only 5 left in stock - order soon.</p>
+             <div class="product-foot">
+                <span>Qty: {{cartDataQt.get(entry.key)}} |</span>
+                <span class="ms-3 cursor"
+                (click) = "deleteCartProduct(entry.key)"
+                >Delete</span>
+                <!-- <span class="ms-3 cursor"
+                 (click) = "saveForLater(entry.key,entry.value)"
+                >Save for later</span> -->
+             </div>
+         </div>
+         </div>  
+        
+          <hr *ngIf="i !== cartDataDetail.size - 1">
+        </ng-container>  
+             
+             <div *ngIf = "cartDataDetail.size === 0" class="text-center  py-5">
+            <button (click)="productPage()" class="btn btn-warning">Go to Product</button>
+             </div>
+        </div>
+
+        <!-- <div class="cart-product mt-3">
+             <div class="container-fluid cart-product">
+            <div class="ps-3 pt-3">
+                <h3 class="mb-0">Saved for later ({{saveLaterData.size}} item)</h3>
+               
+            </div>
+             <hr>
+        <ng-container *ngFor="let entry of saveLaterData| keyvalue; let i = index">
+        <div class="d-flex ps-5"> 
+         <div>
+             <img class="product-img" src="/assets/images/hc1.jpg" alt="">
+         </div>
+         <div class="ps-3  product-detail">
+            <span class="product-name">{{ entry.value.groupName + ' (' + entry.value.goodsName + ')'}}</span>
+             <p class="fw-bold price">৳{{(entry.value.price)?entry.value.price:""}}</p>
+             <p>{{entry.value.companyName}}</p>
+             <p>Only 5 left in stock - order soon.</p>
+             <div class="product-foot">
+                <span>Qty: {{this.saveLaterDataQt.get(entry.key)}} |</span>
+                <span class="ms-3 cursor"
+                (click) = "deleteSaveProduct(entry.key)"
+                >Delete |</span>
+                <span class="ms-3 cursor"
+                (click) = "moveToCart(entry.key,entry.value)"
+                >Move to Cart </span>
+               
+             </div>
+         </div>
+         </div>  
+        
+          <hr *ngIf="i !== cartDataDetail.size - 1">
+        </ng-container>  
+
+        </div>
+        </div> -->
+
+        </div>
+
+       <div class="d-flex flex-column  subtotal-parent">
+         <div class="ms-4 subtotal p-4">
+             <p class="subtotal-title">Subtotal ({{this.cartCount}}): <b>৳{{this.totalPrice}}</b> </p>
+             <button class="btn btn-warning mt-2 w-100" (click)="procced()">Proceed to checkout</button>
+         </div>
+         <div class=" ms-4  mt-3 h-100 subtotal">
+                <p>Ads promotional things</p>
+         </div>
+        </div>
+    </div> 
+    
+</section>
+

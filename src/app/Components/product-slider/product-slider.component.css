@@ -1,0 +1,138 @@
+p {
+  margin-bottom: 0;
+}
+.slider_container {
+  background: #eceff2a4;
+  width: 80%;
+  margin: 1% 6%;
+}
+.product_slider {
+  /* box-shadow: 0 0 0.35rem var(--color-gray); */
+  box-shadow: 0 0 0.35rem #ffffff;
+  border: 1px solid #d9d9d9;
+}
+.slider_wrap {
+  position: relative;
+  overflow: hidden;
+  height: 17rem;
+}
+
+.slider_main {
+  position: absolute;
+  width: 202%;
+  /* padding: 5rem; */
+}
+.slider_main--extended {
+  /* left: -17.55rem; */
+  /* left: -34.5rem; */
+}
+.product_header {
+  width: 20rem;
+  border: 1px solid #2c506d;
+  text-align: center;
+  background: #eceff2a4;
+  text-shadow: 2px 2px 2px rgb(121, 148, 153);
+  font-size: 2.5rem;
+  color: #2c506d;
+  box-shadow: 0 0 0.35rem #2c506d;
+}
+.product_header img {
+  height: 12rem;
+}
+.item {
+  width: 16rem;
+  display: inline-flex;
+  position: relative;
+  /* height: 10rem; */
+  /* margin: 6.5px; */
+  padding: 5px;
+  /* border: 1px solid #2c506d; */
+  text-align: center;
+  justify-content: center;
+  cursor: pointer;
+  /* box-shadow: 0 0 0.2rem #2c506d; */
+  background: #eceff2a4;
+}
+.item img {
+  height: 80px;
+}
+
+.product-title {
+  /* color: #2c506d; */
+  margin-bottom: 0;
+  font-size: 1rem;
+  font-weight: 700;
+  /* text-shadow: 1px 1px 2px rgb(104, 114, 116); */
+}
+.company_name {
+  font-size: 0.9rem;
+  font-weight: 700;
+}
+.quantity {
+  font-weight: 600;
+  color: #5b5a5a;
+}
+.specification {
+  font-weight: 500;
+}
+.product_slider:hover {
+  border: 1px solid #c3c8cc;
+  box-shadow: 0 0.1rem 0.6rem #7e9eb8;
+}
+
+.carousel-button {
+  color: #444;
+  /* box-shadow: 1px 1px 2px 4px rgba(87, 87, 87, 0.1); */
+
+  background-color: white;
+  width: 2.5rem;
+  height: 6rem;
+  /* margin: 6.5rem 0; */
+  opacity: 1;
+  border: 1px solid #7a90a1;
+  border-radius: 7%;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+}
+.carousel-control-prev {
+  left: 0.55rem;
+}
+.remove-btn {
+  display: none;
+}
+
+/* .detail-img {
+  height: 12rem;
+}
+.title {
+  margin-bottom: 0;
+}
+.prime-color {
+  color: var(--color-primary);
+}
+.type {
+  margin-bottom: 1px;
+}
+.second-color {
+  color: var(--color-gray);
+}
+.detail-img {
+  transition: transform 0.3s ease-in-out;
+}
+.detail-img:hover {
+  transform: scale(1.2);
+} */
+/* .carousel-control-prev{
+  left: 0.2rem;
+} */
+@media (max-width: 1500px) {
+  .product_slider {
+    width: 95%;
+  }
+}
+@media (max-width: 576px) {
+  .remove-btn {
+    display: block;
+  }
+}

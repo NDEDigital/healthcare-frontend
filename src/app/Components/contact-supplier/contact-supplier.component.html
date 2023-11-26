@@ -1,0 +1,186 @@
+<app-header></app-header>
+<section class="container bg-light p-3 px-4 mt-4 rounded-3">
+  <div class="company_info row fw-bold p-2">
+    <span class="supplier_photo col-2 d-flex">
+      <p class="me-2">To:</p>
+      <img src="/assets/images/abstract-user-flat-3.jpg" alt="" />
+      <p class="ms-2">Mr. Akib Zaman</p></span
+    >
+    <span class="delimiter_vertical text-muted col-1"> |</span>
+    <span class="trade_photo col-6 d-flex">
+      <p class="me-2">NDE Steel Structure</p>
+      <img src="/assets/images/TB1_JVrzUH1gK0jSZSyXXXtlpXa-194-206.svg" alt=""
+    /></span>
+  </div>
+  <div
+    class="product-details fs-5 d-flex justify-content-between align-items-center"
+  >
+    <div class="product-info d-flex align-items-center">
+      <span class="product_image me-2"
+        ><img class="rounded" src="/assets/images/Allen Bolt.jpg" alt=""
+      /></span>
+      <p class="porduct_title">
+        BD seller sheet  galvanized steel coil with best price
+      </p>
+    </div>
+    <div class="quantity d-flex align-items-center fs-6">
+      <p class="mt-2 me-2">Quantity</p>
+      <input class="quantity_input border border-1 rounded" type="text" />
+      <select class="bg-light text-muted ms-1" name="units" id="units">
+        <option value="ton">Ton</option>
+        <option value="kg">Kg</option>
+      </select>
+    </div>
+  </div>
+
+  <div class="content-main rounded border border-1 m-1 p-2 px-4 mx-auto">
+    <div class="d-flex w-25">
+      <span class="text-danger me-2">*</span>
+      <h6>Detailed requirments:</h6>
+      <i class="fa-solid fa-circle-info mt-1 ms-3"></i>
+    </div>
+    <p class="w-100">
+      Enter product details such as color, size, materials etc. and other
+      specification requirements to receive an accurate quote.
+    </p>
+    <textarea
+      class="w-100 rounded ps-2"
+      id="text_area"
+      #textArea
+      name="text_area"
+      rows="4"
+      cols=""
+      placeholder="Please type in"
+    ></textarea>
+    <div class="suggestions mt-2 p-1">
+      <span class="text-warning d-flex"
+        ><i class="fa-regular fa-lightbulb fs-2"></i>
+        <p class="text-muted ms-2">
+          Check out these questions from other buyers. Click to insert the
+          questions in the box above.
+        </p>
+      </span>
+      <!-- <div class="questions">
+        <button class="bg-white rounded rounded-pill p-1 px-3 m-2">
+          What is the best price you can offer?
+        </button>
+        <button class="bg-white rounded rounded-pill p-1 px-3 m-2">
+          What is the shipping cost?
+        </button>
+        <button class="bg-white rounded rounded-pill p-1 px-3 m-2">
+          Do you support customization?
+        </button>
+        <button class="bg-white rounded rounded-pill p-1 px-3 m-2">
+          How long will it take to ship to my country?
+        </button>
+        <button class="bg-white rounded rounded-pill p-1 px-3 m-2">
+          What is the MOQ for this product?
+        </button>
+        <button class="bg-white rounded rounded-pill p-1 px-3 m-2">
+          Do you have a new catalog?
+        </button>
+        <button class="bg-white rounded rounded-pill p-1 px-3 m-2">
+          Can I get a sample first?
+        </button>
+        <button class="bg-white rounded rounded-pill p-1 px-3 m-2">
+          Can I add my own logo?
+        </button>
+      </div> -->
+
+      <div class="questions">
+        <button
+          class="bg-white rounded rounded-pill p-1 px-3 m-2"
+          (click)="addQuestion($event)"
+        >
+          What is the best price you can offer?
+        </button>
+        <button
+          class="bg-white rounded rounded-pill p-1 px-3 m-2"
+          (click)="addQuestion($event)"
+        >
+          What is the shipping cost?
+        </button>
+        <button
+          class="bg-white rounded rounded-pill p-1 px-3 m-2"
+          (click)="addQuestion($event)"
+        >
+          Do you support customization?
+        </button>
+        <button
+          class="bg-white rounded rounded-pill p-1 px-3 m-2"
+          (click)="addQuestion($event)"
+        >
+          How long will it take to ship to my point?
+        </button>
+        <button
+          class="bg-white rounded rounded-pill p-1 px-3 m-2"
+          (click)="addQuestion($event)"
+        >
+          What is the MOQ for this product?
+        </button>
+        <button
+          class="bg-white rounded rounded-pill p-1 px-3 m-2"
+          (click)="addQuestion($event)"
+        >
+          Do you have a new catalog?
+        </button>
+        <button
+          class="bg-white rounded rounded-pill p-1 px-3 m-2"
+          (click)="addQuestion($event)"
+        >
+          Can I get a sample first?
+        </button>
+        <button
+          class="bg-white rounded rounded-pill p-1 px-3 m-2"
+          (click)="addQuestion($event)"
+        >
+          Can I add my own logo?
+        </button>
+      </div>
+    </div>
+    <!-- file upload -->
+    <!-- <div class="m-1">
+      <button class="upload bg- rounded p-2 m-1 ms-2">
+        <i class="fa fa-paperclip me-2"></i>Add attachment
+        <input id="file-upload" type="file" class="d-none" />
+      </button>
+      <div *ngIf="selectedFile">{{ selectedFile.name }}</div>
+    </div> -->
+
+    <div class="upload m-1">
+      <button
+        class="upload-btn bg- rounded p-2 m-1 ms-2"
+        (click)="fileInput.click()"
+      >
+        <i class="fa fa-paperclip me-2"></i>Add attachment
+        <input
+          #fileInput
+          id="file-upload"
+          type="file"
+          class="d-none"
+          (change)="onFileSelected($event)"
+        />
+      </button>
+      <div class="ms-2 ps-2" *ngIf="selectedFile">{{ selectedFile.name }}</div>
+    </div>
+  </div>
+  <div class="d-grid mt-5">
+    <span
+      ><input class="me-2" type="checkbox" name="" id="" />
+      <label for=""
+        >Recommend matching suppliers if this supplier doesn't contact me on
+        Message Center within 24 hours.</label
+      ></span
+    >
+    <span
+      ><input class="me-2" type="checkbox" name="" id="" />
+      <label for="">Agree to share Business Card with supplier.</label></span
+    >
+    <button
+      class="send-btn mx-auto rounded-pill w-25 p-2 fs-6"
+      value="Send inquiry now"
+    >
+      Send inquiry now
+    </button>
+  </div>
+</section>

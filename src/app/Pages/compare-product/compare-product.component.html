@@ -1,0 +1,286 @@
+<app-header></app-header>
+<section class="m-4">
+    <div class="d-flex">
+          <h4>Compare Box</h4>
+          <div class="d-flex align-items-center ms-4">
+          <!-- <input type="checkbox" name="" id=""> -->
+           <p class="ms-1">Selected <span class="fw-bold">{{(compareData.length>0)?compareData.length:0}}</span></p>
+          </div>
+    </div>
+
+<div class="mt-3">
+  <div class="d-flex">
+    <!-- <div class="d-flex flex-column justify-content-center"> 
+       <svg (click)="previousSlide()"  xmlns="http://www.w3.org/2000/svg"  height="3em" viewBox="0 0 320 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"  [ngStyle]="{ 'fill': backColor, 'cursor': 'pointer' }" /></svg>
+   </div> -->
+   
+    <div class="">
+      <div *ngIf="compareData.length">
+      <div [style.right.px]="left" class="image-row d-flex align-items-center">
+        <div class="col-md-1 image-column ms-4" *ngFor="let data of compareData; let i=index" style="position: relative;">
+          <img  [src]="data.imagePath.substring(data.imagePath.indexOf('assets'))" class="compare-page-img img-fluid" [alt]="">
+           <!-- <svg (click) = "removeCompareProduct(i)" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" style="position: absolute; top: 0; right: 0; cursor:pointer;">
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" fill="" />
+          </svg> -->
+           <svg (click) = "removeCompareProduct(i)" xmlns="http://www.w3.org/2000/svg" width="20px" height="20px" fill="currentColor" class="bi bi-x" viewBox="0 0 16 16" style="position: absolute; top: 0; right: -22px; cursor:pointer;">
+          <path d="M4.646 4.646a.5.5 0 0 1 .708 0L8 7.293l2.646-2.647a.5.5 0 0 1 .708.708L8.707 8l2.647 2.646a.5.5 0 0 1-.708.708L8 8.707l-2.646 2.647a.5.5 0 0 1-.708-.708L7.293 8 4.646 5.354a.5.5 0 0 1 0-.708z" fill="gray" />
+          </svg>
+          
+        </div>
+      </div>
+    </div>
+    </div>
+
+    <!-- <div class="angle d-flex flex-column justify-content-center">
+       <svg (click)="nextSlide()" xmlns="http://www.w3.org/2000/svg" height="3rem" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z"  [ngStyle]="{ 'fill': forWardColor, 'cursor': 'pointer' }"/></svg>
+    </div> -->
+  </div>
+</div>
+
+<div class="mt-5  border border-secondary">
+  <div class="d-flex align-items-center border-bottom border-secondary pt-2 pb-2">
+       <div class="d-flex justify-content-around align-items-center   w-75">
+          <h4>Compare Results</h4>
+          <div class="d-flex align-items-center">
+          <p class="">View:</p>
+          <div class="dropdown ms-2">
+              <button class="btn btn-secondary dropdown-toggle" type="button" data-bs-toggle="dropdown" aria-expanded="false">
+                All Features
+              </button>
+              <ul class="dropdown-menu">
+                <li><a class="dropdown-item" href="#">Action</a></li>
+                <li><a class="dropdown-item" href="#">Another action</a></li>
+                <li><a class="dropdown-item" href="#">Something else here</a></li>
+              </ul>
+         </div>
+         </div>
+         <div class="d-flex align-items-center">
+            <input type="checkbox" name="" id="">
+            <p>Hide the Same</p>
+         </div>
+          <div class="d-flex align-items-center">
+            <input type="checkbox" name="" id="">
+            <p>Highlight the Difference</p>
+         </div>
+       </div>
+       <div class="w-25 text-end me-5">
+           <p class="fw-bold h5">Print</p>
+       </div>
+  </div>
+
+  <div class="d-flex">
+     <div class="container-fluid p-0">
+          <div class="d-flex  border-bottom border-secondary">
+          <div class="faka-box  d-flex flex-column align-items-end justify-content-center">
+               <svg (click)="prevProduct()" xmlns="http://www.w3.org/2000/svg"  height="3em" viewBox="0 0 320 512"><path d="M41.4 233.4c-12.5 12.5-12.5 32.8 0 45.3l160 160c12.5 12.5 32.8 12.5 45.3 0s12.5-32.8 0-45.3L109.3 256 246.6 118.6c12.5-12.5 12.5-32.8 0-45.3s-32.8-12.5-45.3 0l-160 160z"  [ngStyle]="{ 'fill': backColor, 'cursor': 'pointer' }" /></svg>
+          </div>
+           <div class="d-flex pt-3 ps-2 pb-3 product faka-box border-start border-secondary">
+            
+                  <div *ngIf="compareData.length > 0" class="">
+                    <img [src]="compareData[first].imagePath.substring(compareData[first].imagePath.indexOf('assets'))" class="img-fluid compare-img border border-secondary" alt="">
+                  </div>
+
+                 <div class=" product-title">
+                  <p class="ms-2 ">{{(compareData.length > 0) ? (compareData[first].goodsName.length>80)
+                    ?compareData[first].goodsName.slice(0,80)+"...":compareData[first].goodsName : "" }}</p>
+                  <button *ngIf="compareData.length > 0" class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
+                     Contact Supplier</button>
+                 </div>
+               
+          </div>
+          
+
+               <div class="d-flex pt-3 ps-2 pb-3 product faka-box border-start border-secondary">
+  
+                  <div *ngIf="compareData.length > 1" class="">
+                    <img [src]="compareData[second].imagePath.substring(compareData[second].imagePath.indexOf('assets'))" class="img-fluid compare-img border border-secondary" alt="">
+                  </div>
+
+                 <div class=" product-title">
+                  <p class="ms-2">{{(compareData.length > 1) ? (compareData[second].goodsName.length>80)
+                    ?compareData[second].goodsName.slice(0,80)+"...":compareData[second].goodsName : "" }}</p>
+                  <button *ngIf="compareData.length > 1" class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
+                     Contact Supplier</button>
+                 </div>
+
+              </div>
+
+                <div class="d-flex pt-3 ps-2 pb-3 product faka-box border-start border-secondary">
+                 
+                  <div *ngIf="compareData.length > 2" class="">
+                    <img [src]="compareData[third].imagePath.substring(compareData[third].imagePath.indexOf('assets'))" class="img-fluid compare-img border border-secondary" alt="">
+                  </div>
+
+                 <div class=" product-title">
+                  <p class="ms-2">{{(compareData.length > 2) ? (compareData[third].goodsName.length>80)
+                    ?compareData[third].goodsName.slice(0,80)+"...":compareData[third].goodsName : "" }}</p>
+                  <button *ngIf="compareData.length > 2" class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
+                     Contact Supplier</button>
+                 </div>
+
+              </div>
+                <div class="d-flex flex-column align-items-end justify-content-center border-start border-secondary">
+              <svg (click)="nextProduct()" xmlns="http://www.w3.org/2000/svg" height="3rem" viewBox="0 0 320 512"><path d="M278.6 233.4c12.5 12.5 12.5 32.8 0 45.3l-160 160c-12.5 12.5-32.8 12.5-45.3 0s-12.5-32.8 0-45.3L210.7 256 73.4 118.6c-12.5-12.5-12.5-32.8 0-45.3s32.8-12.5 45.3 0l160 160z" [ngStyle]="{ 'fill': forWardColor, 'cursor': 'pointer' }"/></svg>
+             </div>
+             
+          </div>
+         
+          <div class="d-flex">
+            <div class="headers text-end pe-2">
+              <h5>Product Features</h5>
+            </div>
+              <div class=" ">
+              
+              </div>
+                <div class="border-start border-secondary ">
+              
+              </div>
+         </div>
+
+         <div class="d-flex border-top border-secondary">
+            <div class="headers text-end pe-2">
+            <p>Available Quantity</p>
+            </div>
+            <div class="ps-2 border-start border-secondary  product">
+             <p *ngIf="compareData.length>0">{{compareData[first].quantity}} tons</p>
+            </div>
+            <div class="ps-2 border-start border-secondary  product">
+             <p *ngIf="compareData.length>1">{{compareData[second].quantity}} tons</p>
+            </div>
+             <div class="ps-2 border-start border-secondary  product">
+             <p *ngIf="compareData.length>2">{{compareData[third].quantity}} tons</p>
+            </div>
+         </div>
+
+          <div class="d-flex border-bottom border-top border-secondary">
+            <div class="headers text-end pe-2">
+            <p>Min. order quantity</p>
+            </div>
+            <div class="ps-2 border-start border-secondary  product">
+             <p>3tons</p>
+            </div>
+            <div class="ps-2 border-start border-secondary  product">
+             <p>3tons</p>
+            </div>
+             <div class="ps-2 border-start border-secondary  product">
+             <p>3tons</p>
+            </div>
+         </div>
+
+         <div class="d-flex border-bottom border-secondary">
+             <div class="headers text-end pe-2">
+            <p>FOB Price</p>
+            </div>
+            <div class="ps-2 border-start border-secondary  product">
+            <p *ngIf = "compareData.length > 0">{{(compareData[first].price !== "")?"BDT ৳"+compareData[first].price+"/ton":"N/A"}}</p>
+           </div>
+           <div class="ps-2 border-start border-secondary  product">
+            <p *ngIf = "compareData.length > 1">{{(compareData[second].price !== "")?"BDT ৳"+compareData[second].price+"/ton":"N/A"}}</p>
+           </div>
+           <div class="ps-2 border-start border-secondary  product">
+            <p *ngIf = "compareData.length > 2">{{(compareData[third].price !== "")?"BDT ৳"+compareData[third].price+"/ton":"N/A"}}</p>
+           </div>
+         </div>
+         <div class="d-flex border-bottom border-secondary">
+            <div class="headers text-end pe-2">
+            <h5>Supplier features</h5>
+            </div>
+            <div class="border-start border-secondary  product">
+               
+            </div>
+         </div>
+
+         <div class="d-flex border-bottom border-secondary">
+             <div class="headers text-end pe-2">
+             <p>Company Name</p>
+             </div>
+             <div  class="ps-2 border-start border-secondary  product">
+             <p *ngIf="compareData.length > 0">{{compareData[first].companyName}}</p>
+             </div>
+             <div class="ps-2 border-start border-secondary  product">
+             <p *ngIf="compareData.length > 1">{{compareData[second].companyName}}</p>
+             </div>
+             <div class="ps-2 border-start border-secondary  product">
+             <p *ngIf="compareData.length > 2">{{compareData[third].companyName}}</p>
+             </div>
+         </div>
+
+         <div class="d-flex border-bottom border-secondary">
+             <div class="headers text-end pe-2">
+             <p>Main Products</p>
+             </div>
+             <div class="ps-2 border-start border-secondary product">
+             <p>Hr plate</p>
+             <p>Hr Coil</p>
+             </div>
+             <div class="ps-2 border-start border-secondary product">
+             <p>Hr plate</p>
+             <p>Hr Coil</p>
+             <p>Angle Bolt</p>
+             </div>
+             <div class="ps-2 border-start border-secondary product">
+             <p>Hr plate</p>
+             <p>Hr Coil</p>
+             </div>
+         </div>
+
+         <div class="d-flex border-bottom border-secondary">
+            <div class="headers text-end pe-2"> 
+            <h5>Trade Capability</h5>
+            </div>
+             <div class="border-start border-secondary  product">
+                 
+            </div>
+         </div>
+
+         <div class="d-flex border-bottom border-secondary">
+          <div class="headers text-end pe-2">
+           <p>Chat with supplier</p>
+          </div>
+          <div  class="border-start ps-2 border-secondary  product">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots-fill text-primary" viewBox="0 0 16 16">
+                  <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                  </svg>
+          </div>
+           <div  class="border-start ps-2 border-secondary  product">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots-fill text-primary" viewBox="0 0 16 16">
+                  <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                  </svg>
+          </div>
+           <div  class="border-start ps-2 border-secondary  product">
+               <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-chat-dots-fill text-primary" viewBox="0 0 16 16">
+                  <path d="M16 8c0 3.866-3.582 7-8 7a9.06 9.06 0 0 1-2.347-.306c-.584.296-1.925.864-4.181 1.234-.2.032-.352-.176-.273-.362.354-.836.674-1.95.77-2.966C.744 11.37 0 9.76 0 8c0-3.866 3.582-7 8-7s8 3.134 8 7zM5 8a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm4 0a1 1 0 1 0-2 0 1 1 0 0 0 2 0zm3 1a1 1 0 1 0 0-2 1 1 0 0 0 0 2z"/>
+                  </svg>
+          </div>
+         </div>
+
+         <div class="d-flex border-bottom border-secondary">
+            <div class="headers text-end pe-2">
+            <p>Select to contact</p>
+            </div>
+            <div class="border-start ps-2 border-secondary  product">
+                 <input type="checkbox" name="" id="">
+            </div>
+            <div class="border-start ps-2 border-secondary  product">
+                 <input type="checkbox" name="" id="">
+            </div>
+            <div class="border-start ps-2 border-secondary  product">
+                 <input type="checkbox" name="" id="">
+            </div>
+         </div>
+
+         <div class="d-flex">
+            <div class="headers text-end pe-2"> 
+            <p><input type="checkbox" name="" id=""> Select All</p>
+            </div>
+            <div class="border-start ps-2 border-secondary pb-2  product">
+           <button class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
+                      Contact Supplier</button>
+                      </div>
+          </div>
+     </div>  
+  </div>
+  </div>
+</section>
+
+<app-footer></app-footer>

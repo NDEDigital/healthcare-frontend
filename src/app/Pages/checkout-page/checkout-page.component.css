@@ -1,0 +1,34 @@
+.container {
+  letter-spacing: 0.05rem;
+  box-shadow: 0 0 0.4rem var(--color-gray);
+}
+.editable {
+  border: none;
+  border: 1px solid var(--color-primary);
+}
+
+input,
+textarea {
+  border: 1px solid #dee2e6;
+}
+.product {
+  border-bottom: 1px solid #dee2e6;
+}
+.product img {
+  width: 5rem;
+}
+.row h6,
+.vat-info {
+  font-size: 0.9rem;
+}
+.edit_btn {
+  color: var(--color-primary);
+}
+.save_btn {
+  background: var(--color-primary);
+  color: #ffff;
+}
+.border-highlight {
+  border: 1px solid var(--color-primary);
+  box-shadow: 0 0 0.3rem var(--color-primary);
+}

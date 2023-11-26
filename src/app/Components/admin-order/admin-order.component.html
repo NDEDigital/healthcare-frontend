@@ -1,0 +1,589 @@
+<div class="order_body">
+  <div class="order_status">
+    <button
+      type="button"
+      class="order_status_button"
+      [ngClass]="{ selected_button: selectedButtonIndex === 'All' }"
+      (click)="statusChange('All', 'All')"
+    >
+      <!-- All Orders -->
+      All Orders ({{ statusData["totalRowCount"] }})
+    </button>
+    <button
+      type="button"
+      class="order_status_button"
+      [ngClass]="{ selected_button_pending: selectedButtonIndex === 'Pending' }"
+      (click)="statusChange('Pending', 'Pending')"
+    >
+      Pending ({{ statusData["pendingCount"] }})
+    </button>
+    <button
+      type="button"
+      class="order_status_button"
+      [ngClass]="{
+        selected_button_shipped: selectedButtonIndex === 'Approved'
+      }"
+      (click)="statusChange('Approved', 'Approved')"
+    >
+      Approved ({{ statusData["approvedCount"] }})
+    </button>
+
+    <button
+      type="button"
+      class="order_status_button"
+      [ngClass]="{
+        selected_button_shipped: selectedButtonIndex === 'Delivered'
+      }"
+      (click)="statusChange('Delivered', 'Delivered')"
+    >
+      Delivered ({{ statusData["deliveredCount"] }})
+    </button>
+    <button
+      type="button"
+      class="order_status_button"
+      [ngClass]="{
+        selected_button_cancelled: selectedButtonIndex === 'ToReturn'
+      }"
+      (click)="statusChange('ToReturn', 'to Return')"
+    >
+      To Return ({{ statusData["toReturnCount"] }})
+    </button>
+    <button
+      type="button"
+      class="order_status_button"
+      [ngClass]="{
+        selected_button_cancelled: selectedButtonIndex === 'Returned'
+      }"
+      (click)="statusChange('Returned', 'Returned')"
+    >
+      Returned ({{ statusData["returnedCount"] }})
+    </button>
+    <button
+      type="button"
+      class="order_status_button"
+      [ngClass]="{
+        selected_button_cancelled: selectedButtonIndex === 'Cancelled'
+      }"
+      (click)="statusChange('Cancelled', 'Cancelled')"
+    >
+      Cancelled ({{ statusData["cancelledCount"] }})
+    </button>
+  </div>
+
+  <div class="order_search_div">
+    <!-- search_by_all -->
+    <div class="search_by_all">
+      <div class="search-container">
+        <input
+          id="searchInput"
+          type="text"
+          class="search-input"
+          (keyup)="onKeyUp($event)"
+          placeholder="{{ placeholder }}{{ searchby }}"
+        />
+        <i class="fa-solid fa-search search-icon"></i>
+      </div>
+
+      <div class="dropdown">
+        <button
+          class="dropdown-toggle bg-white"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          {{ SearchByname }}
+        </button>
+        <ul
+          style="z-index: 2000"
+          class="dropdown-menu search_Name_list"
+          aria-labelledby="dropdownMenuButton1"
+        >
+          <li *ngIf="!returnProduct">
+            <a class="dropdown-item" (click)="setSearchOption('OrderDate')"
+              >Order Date</a
+            >
+          </li>
+          <li>
+            <a class="dropdown-item" (click)="setSearchOption('OrderNo')"
+              >Order No</a
+            >
+          </li>
+          <li *ngIf="!returnProduct">
+            <a class="dropdown-item" (click)="setSearchOption('Status')">
+              Status</a
+            >
+          </li>
+          <li *ngIf="!returnProduct">
+            <a class="dropdown-item" (click)="setSearchOption('TotalPrice')">
+              Price</a
+            >
+          </li>
+          <li *ngIf="returnProduct">
+            <a class="dropdown-item" (click)="setSearchOption('GroupName')">
+              Group Name</a
+            >
+          </li>
+          <li *ngIf="returnProduct">
+            <a class="dropdown-item" (click)="setSearchOption('GoodsName')">
+              Goods Name</a
+            >
+          </li>
+          <li *ngIf="returnProduct">
+            <a class="dropdown-item" (click)="setSearchOption('ReturnType')">
+              Return Type</a
+            >
+          </li>
+        </ul>
+      </div>
+    </div>
+    <!-- search_by_all end -->
+    <div class="search_by_date">
+      <label for="toDate">From: </label>
+
+      <input
+        type="date"
+        class="todate form-control"
+        [(ngModel)]="fromDate"
+        name="todate"
+      />
+      <label for="FromDate">To:</label>
+      <input
+        class="form-control"
+        type="date"
+        [(ngModel)]="toDate"
+        name="ToDate"
+      />
+
+      <i
+        class="fa-solid fa-magnifying-glass pe-3 date_order_search"
+        (click)="searchByDate()"
+      ></i>
+
+      <button type="button" class="btn btn-primary" (click)="clearDate()">
+        clear
+      </button>
+    </div>
+  </div>
+  <!------------- Master table ------------->
+  <div
+    class="Admin_order_container rounded border border-1 bg-white"
+    id="approvalTable"
+  >
+    <!--------------------- Master Header  ----------------------->
+    <div id="DynamicApprovalHeader" class="sticky-top">
+      <div
+        class="Admin_order_container_row approval_container_HederRow row bg-light p-0 m-0"
+      >
+        <div
+          class="col-1 checkbox_col fw-bold"
+          *ngIf="this.status === 'to Return' || this.status === 'Pending'"
+        >
+          <input
+            type="checkbox"
+            class="check_all_Master"
+            (click)="
+              checkAll('.check_all_Master', '.individual_checkbox_Master','.individual_checkbox_details')
+            "
+          />
+          <span *ngIf="this.status === 'to Return' || this.status === 'Pending'"
+            >All
+          </span>
+        </div>
+        <div
+          class="col-1 checkbox_col fw-bold"
+          *ngIf="this.status != 'to Return' && this.status != 'Pending'"
+        >
+          <!--  for return -->
+
+          <span># </span>
+        </div>
+
+        <div *ngIf="!returnProduct" class="col-1 order_col fw-bold">
+          Invoice
+        </div>
+        <div *ngIf="!returnProduct" class="col-1 order_col fw-bold">
+          Order No
+        </div>
+        <div *ngIf="!returnProduct" class="col-1 order_col_big fw-bold">
+          Address
+        </div>
+        <div *ngIf="!returnProduct" class="col-1 order_col fw-bold">
+          Order Date
+        </div>
+        <div *ngIf="!returnProduct" class="col-1 order_col fw-bold">
+          Payment type
+        </div>
+        <div *ngIf="!returnProduct" class="col-1 order_col fw-bold">Items</div>
+        <div *ngIf="!returnProduct" class="col-1 order_col fw-bold">
+          Total price
+        </div>
+
+        <!-- return part -->
+        <div *ngIf="returnProduct" class="col-1 order_col fw-bold">
+          Order No.
+        </div>
+        <div *ngIf="returnProduct" class="col-1 order_col fw-bold">
+          Group Name
+        </div>
+        <div *ngIf="returnProduct" class="col-1 order_col_big fw-bold">
+          Goods Name
+        </div>
+        <div *ngIf="returnProduct" class="col-1 order_col fw-bold">
+          Apply Date
+        </div>
+        <div *ngIf="returnProduct" class="col-1 order_col fw-bold">
+          Return type
+        </div>
+        <div *ngIf="returnProduct" class="col-1 order_col fw-bold">Price</div>
+        <div *ngIf="returnProduct" class="col-1 order_col fw-bold">Remarks</div>
+        <div class="col-1 order_col fw-bold">Status</div>
+      </div>
+    </div>
+    <!--------------------- Master Data  ----------------------->
+    <div id="DynamicApprovalData" *ngFor="let row of ordersData; let i = index">
+      <!-- Data rows -->
+      <ng-container>
+        <!-- *ngIf="
+        row.status === getSelectedButtonName() ||
+        (getSelectedButtonName() === 'All Orders' && i < selectedValue)
+      " -->
+        <div class="Admin_order_container_row master_data_row row p-0 m-0">
+          <div
+            class="col-1 checkbox_col"
+            *ngIf="status === 'to Return' || status === 'Pending'"
+          >
+            <!--  for return -->
+            <input
+              *ngIf="this.status === 'to Return'"
+              class="individual_checkbox_Master"
+              type="checkbox"
+              [id]="row.detailsId"
+              (click)="
+                checkboxFunctions(
+                  '.check_all_Master',
+                  '.individual_checkbox_Master'
+                )
+              "
+            />
+            <!--   pending Checkbox-->
+            <input
+              *ngIf="this.status === 'Pending'"
+              class="individual_checkbox_Master"
+              type="checkbox"
+
+              [id]="row.orderMasterId"
+              (change)="callFunctionIfChecked($event)"
+
+              (click)="
+                checkboxFunctions(
+                  '.check_all_Master',
+                  '.individual_checkbox_Master'
+                )
+              "
+            />
+
+            <!-- for pending icon -->
+            <i
+              *ngIf="
+                this.status === 'Pending' || this.status === 'PendingsDetails'
+              "
+              class="fa-solid fa-caret-down rotate-icon ms-2"
+              [ngClass]="{ rotate: isIconRotatedMap[row.orderMasterId] }"
+
+              (click)="GetDetailsData(row.orderMasterId,i)"
+            ></i>
+          </div>
+
+          <div
+            class="col-1 checkbox_col"
+            *ngIf="
+              !(
+                status === 'Pending' ||
+                status === 'to Return' ||
+                status === 'PendingsDetails'
+              )
+            "
+          >
+            <!-- for All -->
+            <span>{{ dataIndexNumber + i }}</span>
+          </div>
+          <div class="col-1 order_col" *ngIf="!returnProduct">
+            <a (click)="GotoInvoice(row.orderMasterId)"> invoice </a>
+          </div>
+          <div class="col-1 order_col">
+            {{ row.orderNo }}
+          </div>
+
+          <div class="col-1 order_col_big" *ngIf="!returnProduct">
+            {{ row.address }}
+          </div>
+          <div class="col-1 order_col" *ngIf="!returnProduct">
+            {{ row.orderDate.split(" ")[0] | date : "dd-MM-yyyy" }}
+          </div>
+          <div class="col-1 order_col" *ngIf="!returnProduct">
+            {{ row.paymentMethod }}
+          </div>
+          <div class="col-1 order_col" *ngIf="!returnProduct">
+            {{ row.numberOfItem }}
+          </div>
+          <div class="col-1 order_col" *ngIf="!returnProduct">
+            {{ row.totalPrice }}
+          </div>
+
+          <div class="col-1 order_col" *ngIf="returnProduct">
+            {{ row.groupName }}
+          </div>
+          <div class="col-1 order_col_big" *ngIf="returnProduct">
+            {{ row.goodsName }}
+          </div>
+          <div class="col-1 order_col" *ngIf="returnProduct">
+            {{ row.applyDate.split("T")[0] | date : "dd-MM-yyyy" }}
+          </div>
+          <div class="col-1 order_col" *ngIf="returnProduct">
+            {{ row.returnType }}
+          </div>
+          <div class="col-1 order_col" *ngIf="returnProduct">
+            {{ row.price }}
+          </div>
+          <div class="col-1 order_col" *ngIf="returnProduct">
+            {{ row.remarks }}
+          </div>
+
+          <div class="col-1 order_col">
+            <button
+              *ngIf="
+                selectedButtonIndex != 'Pending' &&
+                selectedButtonIndex != 'ToReturn'
+              "
+              type="button"
+              class="Container_button"
+              [ngClass]="{
+                order_Pending_status: row.status === 'Pending',
+                order_shipped_status: row.status === 'Approved',
+                order_cancelled_status: row.status === 'Cancelled',
+                order_returned_status: row.status === 'Returned'
+              }"
+            >
+              {{ row.status }}
+            </button>
+            <div
+              class="approval_icon"
+              *ngIf="
+                selectedButtonIndex == 'Pending' ||
+                selectedButtonIndex == 'ToReturn'
+              "
+            >
+              <!-- for pending -->
+              <!-- <img
+                *ngIf="selectedButtonIndex == 'Pending'"
+                (click)="actionBtn(row.orderMasterId, '', '', 'Approved')"
+                src="../../../assets/images/Icons/check.png"
+              />
+
+              <img
+                *ngIf="selectedButtonIndex == 'Pending'"
+                (click)="actionBtn(row.orderMasterId, '', '', 'Cancelled')"
+                src="../../../assets/images/Icons/close.png"
+              /> -->
+              <img
+                *ngIf="selectedButtonIndex == 'Pending'"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                (click)="setID(row.orderMasterId, 'Approved',i)"
+                src="../../../assets/images/Icons/check.png"
+              />
+
+              <img
+                *ngIf="selectedButtonIndex == 'Pending'"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                (click)="setID(row.orderMasterId, 'Cancelled',i)"
+                src="../../../assets/images/Icons/close.png"
+              />
+
+              <!-- for to return -->
+              <img
+                *ngIf="selectedButtonIndex == 'ToReturn'"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                (click)="setID(row.detailsId, 'Returned',i)"
+                src="../../../assets/images/Icons/check.png"
+              />
+
+              <img
+                *ngIf="selectedButtonIndex == 'ToReturn'"
+                data-bs-toggle="modal"
+                data-bs-target="#exampleModal"
+                (click)="setID(row.detailsId, 'Return Cancelled',i)"
+                src="../../../assets/images/Icons/close.png"
+              />
+            </div>
+          </div>
+        </div>
+        <!-------------------- details table ------------------------->
+        <div
+          class="relativeDiv"
+          *ngIf="
+            detailsData.length > 0 &&
+            detailsData[0].orderMasterId == row.orderMasterId
+          "
+        >
+          <!-- -------------- details header -------->
+          <div id="DynamicApprovalHeader" class="sticky-top">
+            <div
+              class="Admin_order_container_row order_details_HederRow row bg-light p-0 m-0"
+            >
+              <div class="col-1 checkbox_col fw-bold">
+                <!-- <input
+                  *ngIf="this.status === 'Pending'"
+                  type="checkbox"
+                  class="check_All_details"
+                  [id]="detailsData[0].orderMasterId"
+                  name="vehicle1"
+                  value="Bike"
+                  (click)="checkAll('.check_All_details','.individual_checkbox_details')"
+                />
+                <span *ngIf="this.status === 'Pending'">All </span> -->
+              </div>
+              <div class="col-1 order_col">Company</div>
+              <div class="col-1 order_col">Product</div>
+              <div class="col-1 order_col_big">Description</div>
+              <div class="col-1 order_col">Quantity</div>
+              <div class="col-1 order_col">price</div>
+              <div class="col-1 order_col">Delivery Charge</div>
+              <div class="col-1 order_col">Sub Total</div>
+              <div class="col-1 order_col">Sub Total</div>
+            </div>
+          </div>
+          <!-- ------------  details data   ------- ---->
+          <div *ngFor="let row of detailsData; let i = index">
+            <div class="Admin_order_container_row row details_row p-0 m-0">
+              <div class="col-1 checkbox_col">
+                <input
+                  class="individual_checkbox_details"
+                  type="checkbox"
+                  [id]="row.orderDetailId"
+
+                  (click)="detailsCheckBox(row.orderMasterId ,row.orderDetailId, i)"
+                />
+              </div>
+
+              <div class="col-1 order_col">{{ row.companyName }}</div>
+              <div class="col-1 order_col">{{ row.goodsName }}</div>
+              <div class="col-1 order_col_big">{{ row.specification }}</div>
+              <div class="col-1 order_col">{{ row.quantity }}</div>
+              <div class="col-1 order_col">{{ row.price }}</div>
+              <div class="col-1 order_col">{{ row.deliveryCharge }}</div>
+              <div class="col-1 order_col">
+                {{ row.price + row.deliveryCharge }}
+              </div>
+              <div class="col-1 order_col">
+                {{ row.price + row.deliveryCharge }}
+              </div>
+              <!-- <div class="col-1 order_col">
+
+                <div class="approval_icon">
+                  <img
+                    (click)="actionBtn(row.orderMasterId, 'Approved')"
+
+                    src="../../../assets/images/Icons/check.png"
+                  />
+
+                  <img
+                    (click)="actionBtn(row.orderMasterId, 'Cancelled')"
+
+                    src="../../../assets/images/Icons/close.png"
+                  />
+                </div>
+              </div> -->
+            </div>
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+
+  <div
+    class="pagination_button_div d-flex justify-content-between align-items-center"
+  >
+    <app-pagination
+      [inputdata]="totalPages"
+      (myData)="paginationData($event)"
+    ></app-pagination>
+
+    <div
+      class="d-flex gap-2"
+      *ngIf="status == 'Pending' || status == 'to Return'"
+    >
+      <button
+        type="button"
+        class="btn btn-outline-primary p-1"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        (click)="changeStatus('Approved')"
+      >
+        Approve
+      </button>
+      <button
+        *ngIf="detailsData.length == 0"
+        type="button"
+        data-bs-toggle="modal"
+        data-bs-target="#exampleModal"
+        class="btn btn-outline-danger p-1"
+        (click)="changeStatus('Cancelled')"
+      >
+        Cancell
+      </button>
+    </div>
+    <!-- button div end-->
+  </div>
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="exampleModalLabel">Massage</h1>
+          <button
+            type="button"
+            class="btn-close  "
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="popUpClose()"
+          ></button>
+
+
+        </div>
+        <div class="modal-body">
+          {{ ModalText }}
+        </div>
+        <div class="modal-footer">
+          <button
+            type="button"
+            class="btn btn-cancel"
+            data-bs-dismiss="modal"
+            (click)="popUpClose()"
+          >
+            Close
+          </button>
+          <button
+            type="button"
+            class="btn  btn-Approved"
+            data-bs-dismiss="modal"
+            *ngIf="checked"
+            (click)="statusCheck()"
+          >
+            Save changes
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

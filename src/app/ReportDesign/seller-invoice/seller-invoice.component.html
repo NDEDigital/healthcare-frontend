@@ -1,0 +1,126 @@
+<!-- Invoice design  -->
+<section>
+  <div class="invoice">
+    <div class="header py-2">
+      <h3 class="invoiceText">Invoice</h3>
+    </div>
+    <div class="content border-top-0 p-0">
+      <div class="info">
+        <div class="d-flex justify-content-between border-bottom border-top">
+          <div class="py-2">
+            <!-- <p><strong>Invoice No:</strong> {{ invoice.invoiceNumber }}</p>
+            <p><strong>Order No:</strong> {{ invoice.orderNo }}</p> -->
+            <p><strong>Invoice No:</strong> {{ invoice.orderNo }}</p>
+            <p class="date_title text-muted" *ngIf="invoice.generateDate">
+              Date:
+              <span class="fst-italic">
+                {{ invoice.generateDate.split(" ")[0] }}</span
+              >
+            </p>
+          </div>
+          <div class="text-end" *ngIf="invoice.generateDate">
+            <p>
+              <strong>Oder Date:</strong>
+              <span class="fst-italic">{{
+                invoice.orderDate.split(",")[0]
+              }}</span>
+            </p>
+            <p>
+              <strong>Delivery Date:</strong>
+              <span class="fst-italic">
+                {{ invoice.deliveryDate.split(" ")[0] }}
+              </span>
+            </p>
+          </div>
+        </div>
+        <div class="row d-flex justify-content-around mt-3 mx-1">
+          <div class="col-6 border">
+            <div class="row py-2">
+              <div class="col-6">
+                <h6 class="fst-italic">Bill From:</h6>
+              </div>
+              <div class="row">
+                <span class="col-3 text-end"><strong>Name: </strong></span>
+                <span class="col-9">{{ invoice.sellerName }}</span>
+              </div>
+              <div class="row">
+                <span class="col-3 text-end"><strong>Company: </strong></span>
+                <span class="col-9">{{ invoice.sellerCompanyName }}</span>
+              </div>
+              <div class="row">
+                <span class="col-3 text-end"><strong>Address: </strong></span>
+                <span class="col-9">{{ invoice.sellerAddress }}</span>
+              </div>
+              <div class="row">
+                <span class="col-3 text-end"><strong>Phone: </strong></span>
+                <span class="col-9">{{ invoice.sellerPhone }}</span>
+              </div>
+            </div>
+          </div>
+          <div class="col-6 border">
+            <div class="row py-2">
+              <div class="col-6"><h6 class="fst-italic">Bill To:</h6></div>
+              <div class="row">
+                <span class="col-3 text-end"><strong>Name: </strong></span>
+                <span class="col-9">{{ invoice.buyerName }}</span>
+              </div>
+              <div class="row" *ngIf="invoice.buyerCompanyName">
+                <span class="col-3 text-end"><strong>Company: </strong></span>
+                <span class="col-9">{{ invoice.buyerCompanyName }}</span>
+              </div>
+              <div class="row">
+                <span class="col-3 text-end"><strong>Address: </strong></span>
+                <span class="col-9">{{ invoice.buyerAddress }}</span>
+              </div>
+              <div class="row">
+                <span class="col-3 text-end"><strong>Phone: </strong></span>
+                <span class="col-9">{{ invoice.buyerPhone }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="table-responsive">
+        <table class="items">
+          <tr>
+            <th>Porduct Name</th>
+            <th>Description</th>
+            <th>Quantity</th>
+            <th>Price</th>
+            <!-- <th>Discount</th> -->
+            <!-- <th>Delivery Charge</th> -->
+            <th>Total</th>
+          </tr>
+          <tr *ngFor="let product of invoice.productDetailsList">
+            <!-- <ng-container *ngIf=" product.status =='Pending'"  > -->
+              <td>{{ product.productName }}</td>
+              <td>{{ product.specification }}</td>
+              <td>{{ product.quantity }}</td>
+              <td>{{ product.subTotalPrice }}Tk</td>
+              <!-- <td>{{ product.discount }}</td> -->
+              <!-- <td>{{ product.deliveryCharge }}Tk</td> -->
+              <td>{{ product.subTotalPrice }}Tk</td>
+            <!-- </ng-container> -->
+
+          </tr>
+
+        </table>
+      </div>
+      <div class="table-responsive" *ngIf="invoice.productDetailsList">
+        <table class="items table">
+          <tr>
+            <td class="totalPrice_col">Delivery charge</td>
+            <td>{{ invoice.productDetailsList[0].deliveryCharge }}Tk</td>
+          </tr>
+          <tr>
+            <td class="totalPrice_col">Total</td>
+            <td>{{ invoice.totalPrice }}Tk</td>
+          </tr>
+        </table>
+      </div>
+      <!-- <div class="total">
+        <p><strong>Total:</strong> {{ invoice.totalPrice }}Tk</p>
+      </div> -->
+    </div>
+  </div>
+</section>
