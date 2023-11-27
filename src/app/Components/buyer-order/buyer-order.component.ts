@@ -300,7 +300,7 @@ export class BuyerOrderComponent {
     });
     this.productImageSrc = returnData.imagePath
       ? returnData.imagePath.substring(returnData.imagePath.indexOf('assets'))
-      : '../../../assets/images/' + returnData.groupName + '.jpg';
+      : '../../../assets/images/medical/' + returnData.groupName.trim() + '.jpg';
   }
 
   SaveReturnData() {

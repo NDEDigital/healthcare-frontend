@@ -90,6 +90,7 @@ export class ProductDetailsPageComponent {
     const productData = sessionStorage.getItem('productData');
     if (productData) {
       this.detailsData = JSON.parse(productData);
+      console.log("this.detailsData ",this.detailsData)
     }
     this.buyerCode = localStorage.getItem('code');
     console.log(' buyerCode ', this.buyerCode);
