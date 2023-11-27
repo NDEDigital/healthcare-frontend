@@ -2,9 +2,10 @@ p {
   margin-bottom: 0;
 }
 .slider_container {
-  background: #eceff2a4;
-  width: 80%;
-  margin: 1% 6%;
+  /* background: #eceff2a4; */
+  background-color: #eceaff;
+  width: 90%;
+  margin: 3% 6%;
 }
 .product_slider {
   /* box-shadow: 0 0 0.35rem var(--color-gray); */
@@ -14,32 +15,30 @@ p {
 .slider_wrap {
   position: relative;
   overflow: hidden;
-  height: 17rem;
+  height: 23rem;
 }
-
+.card {
+  background-color: #fefefe;
+}
 .slider_main {
   position: absolute;
   width: 202%;
+  height: 20rem;
   /* padding: 5rem; */
 }
 .slider_main--extended {
   /* left: -17.55rem; */
   /* left: -34.5rem; */
 }
-.product_header {
-  width: 20rem;
-  border: 1px solid #2c506d;
-  text-align: center;
-  background: #eceff2a4;
-  text-shadow: 2px 2px 2px rgb(121, 148, 153);
-  font-size: 2.5rem;
-  color: #2c506d;
-  box-shadow: 0 0 0.35rem #2c506d;
+.text-head {
+  margin-left: 1.5rem;
+  border-bottom: 1px solid rgb(202, 198, 198);
+  padding-top: 1rem;
 }
-.product_header img {
-  height: 12rem;
-}
+
 .item {
+  margin-bottom: 1rem;
+  height: 20rem;
   width: 16rem;
   display: inline-flex;
   position: relative;
@@ -51,10 +50,13 @@ p {
   justify-content: center;
   cursor: pointer;
   /* box-shadow: 0 0 0.2rem #2c506d; */
-  background: #eceff2a4;
+  background: #ffffff;
+}
+.card:hover {
+  box-shadow: 3px 3px 3px rgb(196, 197, 197);
 }
 .item img {
-  height: 80px;
+  height: 12rem;
 }
 
 .product-title {
