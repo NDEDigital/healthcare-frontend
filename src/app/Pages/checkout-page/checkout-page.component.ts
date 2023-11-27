@@ -58,7 +58,7 @@ export class CheckoutPageComponent {
     this.getUserInfo();
     setTimeout(() => {
       this.setUserInfo();
-    }, 50);
+    }, 30);
 
     // by tushar
     if (this.message) {
@@ -80,7 +80,7 @@ export class CheckoutPageComponent {
         }
       },
       (error) => {
-        alert('Error try Again');
+      //  alert('Error try Again');
         this.route.navigate(['/cartView']);
         console.error('Error:', error);
       }
@@ -152,12 +152,12 @@ export class CheckoutPageComponent {
     this.randomComponent = Math.random().toString(36).substr(2, 5);
     this.uniqueString = this.timestamp + this.randomComponent;
     this.confirmOrder();
-    this.SSLPayment.postPaymentAPI(this.totalPrice, this.uniqueString);
-    this.SSLPayment.callApi(
-      this.cartDataDetail.size,
-      this.totalPrice,
-      this.uniqueString
-    );
+     this.SSLPayment.postPaymentAPI(this.totalPrice, this.uniqueString);
+    // this.SSLPayment.callApi(
+    //   this.cartDataDetail.size,
+    //   this.totalPrice,
+    //   this.uniqueString
+    // );
   }
   getUserInfo() {
     const userCode = localStorage.getItem('code');

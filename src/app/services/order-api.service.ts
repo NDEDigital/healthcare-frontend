@@ -4,7 +4,6 @@ import { CartItem } from '../Pages/cart-added-product/cart-item.interface';
 import { CartDataService } from './cart-data.service';
 import { API_URL } from '../config';
 
-
 interface OrderMaster {
   orderNo: string;
   orderDate: string;
@@ -58,8 +57,8 @@ export class OrderApiService {
   phone: any;
   address: any;
   URL = API_URL;
- // URL = 'http://172.16.5.18:8081'; // liveURL
-    //URL = 'https://localhost:7006';
+  // URL = 'http://172.16.5.18:8081'; // liveURL
+  //URL = 'https://localhost:7006';
   orderPostUrl = `${this.URL}/api/Order`;
   getUserInfoURL = `${this.URL}/api/Order/getOrderUserInfo`;
   getAllOrderForBuyerURL = `${this.URL}/api/Order/getAllOrderForBuyer`;
@@ -92,7 +91,7 @@ export class OrderApiService {
     this.cartDataDetail = cart.cartDataDetail;
     this.cartDataQt = cart.cartDataQt;
     this.totalPriceWithDeliveryCharge =
-    this.cartDataService.getTotalPrice() + 100;
+      this.cartDataService.getTotalPrice() + 100;
 
     this.buyerCode = localStorage.getItem('code');
 
@@ -131,13 +130,11 @@ export class OrderApiService {
         status: 'Pending',
       };
       orderData.detail.push(detailData);
-
-
     }
   }
   insertOrderData() {
     this.setData();
-
+    console.log(' orderData', orderData);
     return this.http.post<any>(this.orderPostUrl, orderData, this.httpOptions);
   }
   // get user info for order
@@ -163,7 +160,6 @@ export class OrderApiService {
   }
 
   checkUnderOrderProccess(GoodsId: number, GroupCode: string) {
-
     return this.http.get(this.checkUnderOrderProccessURL, {
       params: { GoodsId, GroupCode },
     });

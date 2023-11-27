@@ -100,7 +100,9 @@ export class GoodsDataService {
     // this.groupName = localStorage.getItem('activeEntry') || '';
     console.log(this.groupCode, 'groupCode', this.groupName, 'groupname');
 
-    const productCompany = `${this.URL}/api/Goods/GetProductCompany?GroupCode=${this.groupCode}&GroupName=${this.groupName}`;
+    const encodedGroupName = encodeURIComponent(this.groupName);
+    console.log("encodedGroupName ",encodedGroupName)
+    const productCompany = `${this.URL}/api/Goods/GetProductCompany?GroupCode=${this.groupCode}&GroupName=${encodedGroupName}`;
 
     return this.http.post<any[]>(productCompany, null).pipe(
       tap((response: any[]) => {

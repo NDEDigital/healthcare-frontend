@@ -2,12 +2,12 @@
   border-bottom: 1px solid rgb(191, 191, 191);
 }
 .nav-parent {
-  width: 40%;
+  width:60%;
 }
 .individual-nav {
 }
 .navbelt_container {
-  height: 8.5rem;
+  height: 9rem;
   background: #eceff2a4;
 }
 .navbelt_items {
@@ -22,7 +22,7 @@
 }
 
 .navbelt_image img {
-  height: 5rem;
+ width: 5rem;
 }
 .menu-display {
   display: none;
@@ -42,6 +42,8 @@
 }
 .nav_item {
   cursor: pointer;
+  width: 20rem;
+  text-align: center;
 }
 .nav_item.active .navbelt_title,
 .nav_item:hover .navbelt_title {

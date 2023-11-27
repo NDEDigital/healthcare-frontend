@@ -93,7 +93,7 @@ export class BuyerOrderComponent {
   }
   setDetail(detail: any) {
     this.detailData = detail;
-    console.log(' details data ', this.detailData);
+    console.log(' details data888888888888888888888888888888 ', this.detailData);
   }
   goToDetail(detail: any) {
     this.item = detail;

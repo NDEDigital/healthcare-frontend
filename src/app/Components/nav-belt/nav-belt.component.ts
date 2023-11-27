@@ -53,14 +53,16 @@ export class NavBeltComponent implements OnInit {
     this.goodsData.getNavData().subscribe((data: any[]) => {
       this.goods = data;
       for (let i = 0; i < this.goods.length; i++) {
-        this.products.set(this.goods[i].groupName, this.goods[i].groupCode);
+        this.products.set(this.goods[i].groupName.trim(), this.goods[i].groupCode);
       }
+
+      console.log("this.goods ",this.goods," this.products", this.products )
     });
   }
 
   setSelectData(groupName: string, groupCode: string) {
-  
-    
+
+
     this.sharedService.setNavSelectData(groupCode, groupName);
     this.router.navigate(['/productsPageComponent']);
 
