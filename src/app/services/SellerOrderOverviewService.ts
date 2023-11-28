@@ -9,13 +9,13 @@ import { API_URL } from '../config';
 })
 export class SellerOrderOverviewService {
   constructor(private http: HttpClient) {}
-  URL = API_URL; 
+  URL = API_URL;
   // getOrderInfoURL = `${this.URL}/api/Order/getAllOrderForSeller`;
   getOrderInfoURL = `${this.URL}/api/Order/getSearchedAllOrderForSeller`;
   updateOrderStatusURL = `${this.URL}/api/Order/updateSellerOrderStatus`;
   updateDetaiilsOrderStatusURL = `${this.URL}/api/Order/updateDetailsOrderStatus`;
    getUsersDataURL = `${this.URL}/api/Order/getBuyerInfo`;
-
+   SellerInventory = `${this.URL}/api/Order/GetSellerInventory`;
   // getBuyerDataURL = `${this.URL}/api/Order/GetBuyerOrderData?`;
   // getOrderInfo(sellerId: any) {
   //   // const ordersInfos = of(OrdersInfos);
@@ -142,5 +142,14 @@ export class SellerOrderOverviewService {
   getUsersData(idList: any) {
     console.log(idList);
     return this.http.get(this.getUsersDataURL, { params: { idList } });
+  }
+
+  getSellerInventory(Code: string)  {
+    return this.http.get<any>(this.SellerInventory, {
+      params: {
+        sellerCode: Code,
+
+      },
+    } );
   }
 }

@@ -14,18 +14,11 @@ export class SellerOrderOverviewService {
   //URL = 'https://localhost:7006'; //LocalURL
   // URL = 'http://172.16.5.18:8081'; // liveURL
   // getOrderInfoURL = `${this.URL}/api/Order/getAllOrderForSeller`;
+
   getOrderInfoURL = `${this.URL}/api/Order/getSearchedAllOrderForSeller`;
   updateOrderStatusURL = `${this.URL}/api/Order/updateSellerOrderStatus`;
   getInvoiceForSellerURL = `${this.URL}/api/Invoice/GetInvoiceDataForSeller`;
-  // getBuyerDataURL = `${this.URL}/api/Order/GetBuyerOrderData?`;
-  // getOrderInfo(sellerId: any) {
-  //   // const ordersInfos = of(OrdersInfos);
 
-  //   // return this.http.get<orderInfo[]>(
-  //   //   `https://localhost:7006/api/Order/GetSellerOrderOverview?SellerId=${SellerId}`
-  //   // );
-  //   return this.http.get(this.getOrderInfoURL, { params: { sellerId } });
-  // }
   getOrderInfo(
     sellerId: any,
     status: string,
@@ -76,31 +69,7 @@ export class SellerOrderOverviewService {
     });
   }
 
-  // getBuyerOrderData(orderMasterId: any) {
-  //   return this.http.get(this.getBuyerDataURL, {
-  //     params: {
-  //       orderMasterId,
-  //     },
-  //   });
-  // }
 
-  // getBuyerOrderData(orderMasterId: any) {
-  //   return this.http.get(this.getBuyerDataURL, {
-  //     params: {
-  //       orderMasterId,
-  //     },
-  //   });
-  // }
-
-  // updateOrderStatus(
-  //   OrderMasterIds: string,
-  //   StatusValue: string
-  // ) {
-  //   // return this.http.put(
-  //   //   `https://localhost:7006/api/SellerOrderOverview/UpdateStatus/${OrderMasterIds}?value=${StatusValue}`,
-  //   // );
-  // ;
-  // }
   updateOrderStatus(OrderMasterIds: string, StatusValue: string) {
     console.log(OrderMasterIds, StatusValue, 'dsadsaasd');
 
@@ -117,4 +86,7 @@ export class SellerOrderOverviewService {
       params: { sellerCode, OrderID },
     });
   }
+
+
+
 }

@@ -1,11 +1,11 @@
-.table-header{
-  background-color:#cce3ea;
+.table-header {
+  background-color: #cce3ea;
   color: rgb(48, 48, 48);
 }
-.inventory_header_text{
+.inventory_header_text {
   color: var(--color-primary);
 }
- 
+
 .search-container {
   position: relative;
   display: flex;
@@ -33,4 +33,13 @@
   font-size: 1rem;
   /* color: #555; */
   color: var(--color-primary);
+}
+.inventoryTable {
+  height: 30rem;
+  overflow: scroll;
+}
+
+.table-header {
+  position: sticky;
+  top: 0; /* To stick at the top */
 }

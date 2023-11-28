@@ -3,7 +3,7 @@
     <h1 class="inventory_header_text">Inventory</h1>
   </div>
 
-  <div class="inventory_search_div bg-white mt-3 pt-4">
+  <div class="inventory_search_div bg-white mt-3 py-4 ">
     <!-- search_by_all -->
     <div class="search_by_all d-flex px-4">
       <div class="search-container">
@@ -15,7 +15,7 @@
           [(ngModel)]="searchInputValue"
           placeholder="{{ placeholder }}{{ searchby }}"
         />
-        <i class="fa-solid fa-search search-icon" ></i>
+        <i class="fa-solid fa-search search-icon"></i>
       </div>
 
       <div class="dropdown">
@@ -43,7 +43,6 @@
               Goods Name</a
             >
           </li>
-
         </ul>
       </div>
     </div>
@@ -52,46 +51,30 @@
 
   <!-- table -->
 
-  <div class="table-responsive bg-white p-4 ">
-    <table class="table table-striped   ">
+  <div class="table-responsive bg-white p-4 pt-0 inventoryTable">
+    <table class="table table-striped">
       <thead class="table-header">
         <tr class="text-center">
           <th scope="col">#</th>
           <th scope="col">Group Code</th>
           <th scope="col">Goods Name</th>
-          <th scope="col">Available Quantity</th>
+          <th scope="col">Goods Id</th>
           <th scope="col">Total Quantity</th>
+          <th scope="col">Available Quantity</th>
           <th scope="col">Sales Quantiy</th>
           <th scope="col">Price</th>
         </tr>
       </thead>
-      <tbody >
-        <tr class="text-center" >
-          <th scope="row">1</th>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mutuydo</td>
-        </tr>
+      <tbody *ngFor="let row of inventoryData; let i = index">
         <tr class="text-center">
-          <th scope="row">2</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
-        </tr>
-        <tr class="text-center">
-          <th scope="row">3</th>
-          <td>Jacob</td>
-          <td>Thornton</td>
-          <td>@fat</td>
-          <td>Mark</td>
-          <td>Otto</td>
-          <td>@mdo</td>
+          <th scope="row">{{i+1}}</th>
+          <td>{{ row.groupCode }}</td>
+          <td>{{ row.goodsName }}</td>
+          <td>{{ row.goodsID }}</td>
+          <td>{{ row.totalQuantity }}</td>
+          <td>{{ row.availableQuantity }}</td>
+          <td>{{ row.salesQuantiy }}</td>
+          <td>{{ row.price }}</td>
         </tr>
       </tbody>
     </table>
