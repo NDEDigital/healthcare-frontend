@@ -3,7 +3,7 @@
     <h1 class="inventory_header_text">Inventory</h1>
   </div>
 
-  <div class="inventory_search_div bg-white mt-3 py-4 ">
+  <div class="inventory_search_div bg-white mt-3 py-4">
     <!-- search_by_all -->
     <div class="search_by_all d-flex px-4">
       <div class="search-container">
@@ -15,7 +15,7 @@
           [(ngModel)]="searchInputValue"
           placeholder="{{ placeholder }}{{ searchby }}"
         />
-        <i class="fa-solid fa-search search-icon"></i>
+        <i class="fa-solid fa-search search-icon" (click)="searchIcon()"></i>
       </div>
 
       <div class="dropdown">
@@ -59,15 +59,15 @@
           <th scope="col">Group Code</th>
           <th scope="col">Goods Name</th>
           <th scope="col">Goods Id</th>
-          <th scope="col">Total Quantity</th>
-          <th scope="col">Available Quantity</th>
-          <th scope="col">Sales Quantiy</th>
+          <th scope="col">Total Qty</th>
+          <th scope="col">Available Qty</th>
+          <th scope="col">Sales Qty</th>
           <th scope="col">Price</th>
         </tr>
       </thead>
       <tbody *ngFor="let row of inventoryData; let i = index">
         <tr class="text-center">
-          <th scope="row">{{i+1}}</th>
+          <th scope="row">{{ i + 1 }}</th>
           <td>{{ row.groupCode }}</td>
           <td>{{ row.goodsName }}</td>
           <td>{{ row.goodsID }}</td>

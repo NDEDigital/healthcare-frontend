@@ -10,37 +10,61 @@ import { FormsModule } from '@angular/forms';
 export class SellerInventoryComponent {
   SearchByname = 'Search by';
   placeholder = 'Search by';
-  searchby = ' GroupCode';
+  searchby = ' Goods Name';
   searchInputValue = '';
   inventoryData: any = [];
+  goodsName: string = '';
+  groupCode: string = '';
   sellerCode: any;
   constructor(
     private elementRef: ElementRef,
     private SellerService: SellerOrderOverviewService
   ) {}
+  ngOnInit() {
+    this.GetData();
+  }
 
   setSearchOption(text: string) {
     this.searchInputValue = '';
     this.SearchByname = text;
+    console.log(' this.SearchByname ', this.SearchByname);
     this.searchby = text;
     this.placeholder = ' Search by ';
+    // clearing search value and call data with out search
+    this.goodsName = '';
+    this.groupCode = '';
+    this.GetData();
   }
 
   onKeyUp(event: KeyboardEvent) {
     // Check if the pressed key is Enter (keycode 13) or Backspace (keycode 8)
     if (event.keyCode === 13 || event.keyCode === 8) {
       console.log('  searchInputValue', this.searchInputValue);
+      this.Search();
     }
   }
-  ngOnInit() {
+
+  Search() {
+    // checking
+    if (this.SearchByname == 'GroupCode') {
+      this.groupCode = this.searchInputValue;
+    } else {
+      this.goodsName = this.searchInputValue;
+    }
+
     this.GetData();
   }
+
+  searchIcon() {
+    this.Search();
+  }
+
 
   GetData() {
 this.sellerCode = localStorage.getItem('code') || '';
     console.log(" sellerCode", this.sellerCode)
     // this.SellerService.getSellerInventory('USR-STL-MDL-23-11-0003').subscribe(
-    this.SellerService.getSellerInventory(this.sellerCode).subscribe(
+    this.SellerService.getSellerInventory(    this.sellerCode,this.goodsName, this.groupCode).subscribe(
       (data: any) => {
         console.log(' load dataaaaaa', data); // Use a type if possible for better type checking
         this.inventoryData = data;

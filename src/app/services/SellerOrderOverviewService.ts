@@ -144,11 +144,12 @@ export class SellerOrderOverviewService {
     return this.http.get(this.getUsersDataURL, { params: { idList } });
   }
 
-  getSellerInventory(Code: string)  {
+  getSellerInventory(Code: string ,  goodsName: string  ,groupCode: string  )  {
     return this.http.get<any>(this.SellerInventory, {
       params: {
-        sellerCode: Code,
-
+        SellerCode: Code,
+        GoodsName : goodsName,
+        GroupCode : groupCode
       },
     } );
   }
