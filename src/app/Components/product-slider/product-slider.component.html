@@ -78,21 +78,24 @@
 <!-- =============================================== -->
 <section class="slider_container mx-auto px-3 py-2 rounded border border-1">
   <section
-    class="product_slider bg-white rounded d-flex mx-auto my-3 px-3 py-1 align-items-center"
+    class="product_slider bg-white rounded mx-auto my-3 px-3 py-1 align-items-center"
     *ngFor="let product of products3 | keyvalue; let i = index"
   >
     <!-- (mouseenter)="onMouseEnter(i)"
 (mouseleave)="onMouseLeave(i)" -->
-    <div class="product_header rounded">
-      <img
+
+    <div class="text-head fw-bold fs-3">
+      {{ splitProductKey(product.key) }}
+    </div>
+
+    <!-- <img
         class="mt-1"
         src="/assets/images/medical/{{ splitProductKey(product.key) }}.jpg"
         alt=""
-      />
-      <p class="fs-4 fw-bold">{{ splitProductKey(product.key) }}</p>
-    </div>
+      /> -->
+
     <div class="container-fluid">
-      <div class="slider_wrap mx-auto d-flex align-items-center">
+      <div class="slider_wrap d-flex align-items-center">
         <div
           class="slider_main text-nowrap"
           #Items
@@ -108,16 +111,23 @@
         </div> -->
 
           <div
-            class="item mx-2 rounded-3 border border-1"
+            class="item mx-2 rounded-3"
             #Item
             *ngFor="let value of product.value"
             (click)="navigateToData(value)"
           >
-            <div class="my-3 text-start p-1 ms-1">
+            <div class="card">
               <!-- <p class="product-title">Product Name: {{ value[0] }}</p>
             <p class="quantity">
               Available Qty: <span class="fw-bold"> {{ value[1] }}</span>
             </p> -->
+              <img
+                class="mt-1 h-70"
+                src="/assets/images/medical/{{
+                  splitProductKey(product.key)
+                }}.jpg"
+                alt=""
+              />
               <p class="product-title text-wrap">
                 Product Name:
                 <span class="fs-6 text-secondary"
@@ -176,7 +186,7 @@
         </div>
         <div
           class="mx-3"
-          [ngClass]="{ 'remove-btn': product.value.length < 4 }"
+          [ngClass]="{ 'remove-btn': product.value.length < 5 }"
         >
           <button
             class="carousel-control-prev carousel-button"

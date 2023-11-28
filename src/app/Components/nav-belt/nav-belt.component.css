@@ -2,12 +2,12 @@
   border-bottom: 1px solid rgb(191, 191, 191);
 }
 .nav-parent {
-  width:60%;
+  width: 60%;
 }
 .individual-nav {
 }
 .navbelt_container {
-  height: 9rem;
+  height: 10rem;
   background: #eceff2a4;
 }
 .navbelt_items {
@@ -22,7 +22,8 @@
 }
 
 .navbelt_image img {
- width: 5rem;
+  width: 5rem;
+  height: 5rem;
 }
 .menu-display {
   display: none;

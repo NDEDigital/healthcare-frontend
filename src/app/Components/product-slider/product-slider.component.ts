@@ -150,7 +150,7 @@ export class ProductSliderComponent {
               salesQty: this.goods[i].salesQty,
               approveSalesQty: this.goods[i].approveSalesQty,
               price: this.goods[i].price,
-              sellerCode: this.goods[i].sellerCode
+              sellerCode: this.goods[i].sellerCode,
             };
             finObj.push(obj);
 
@@ -166,8 +166,9 @@ export class ProductSliderComponent {
               stockQty: this.goods[i].stockQty,
               salesQty: this.goods[i].salesQty,
               approveSalesQty: this.goods[i].approveSalesQty,
-              price: (this.goods[i].price.length === 0)?1200:this.goods[i].price,
-              sellerCode: this.goods[i].sellerCode
+              price:
+                this.goods[i].price.length === 0 ? 1200 : this.goods[i].price,
+              sellerCode: this.goods[i].sellerCode,
             };
             this.products3.set(this.goods[i].groupName, [obj]);
           }
@@ -235,12 +236,10 @@ export class ProductSliderComponent {
   //   }, 5000);
   // }
 
-
-
   updateQuantity() {
     this.intervalId = setInterval(() => {
       this.goodsDataObj.getCarouselData().subscribe((data: any[]) => {
-        console.log(" data error ", )
+        console.log(' data error ');
         this.goods = data;
         // console.log(this.goods, 'allGoods');
 
