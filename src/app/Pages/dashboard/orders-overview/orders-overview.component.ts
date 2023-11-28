@@ -608,7 +608,7 @@ export class OrdersOverviewComponent {
   statusCheck() {
     console.log('this.UpdateStatus in status check ', this.UpdateStatus);
     if (this.UpdateStatus == 'Rejected' || this.UpdateStatus == 'Approved' ||this.UpdateStatus == 'Returned'||this.UpdateStatus == 'Return Cancelled') {
-      if (this.UpdateStatus == 'Approved') {
+      if (this.UpdateStatus == 'Approved' ||this.UpdateStatus == 'Returned' ) {
         this.getApprove();
       } else {
         this.getReject();
