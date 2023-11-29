@@ -76,7 +76,7 @@ export class LoginComponent {
         } else this.router.navigate(['/dashboard']);
       },
       error: (error: any) => {
-        // console.log(error);
+         console.log(error);
         this.errorMessage = error.error.message;
         // this.errorMessage = " pass word does not match";
         //   alert(" error");
@@ -96,7 +96,7 @@ export class LoginComponent {
   getPhoneNumberErrorMessage() {
     const phoneControl = this.loginForm.get('phoneNumber');
     if (phoneControl?.hasError('required')) {
-      this.errorMessage = '';
+
       return 'Phone number is required.';
     }
     //else if (phoneControl?.hasError('pattern')) {
