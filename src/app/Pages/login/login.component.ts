@@ -89,9 +89,9 @@ export class LoginComponent {
   }
   isFieldInvalid(fieldName: string) {
     const field = this.loginForm.get(fieldName);
-    this.errorMessage = '';
+  //  this.errorMessage = '';
     // return field?.invalid && field.touched;
-    return field?.invalid && field.touched && field.dirty;
+    return field?.invalid && field.touched && field.dirty ;
   }
   getPhoneNumberErrorMessage() {
     const phoneControl = this.loginForm.get('phoneNumber');
