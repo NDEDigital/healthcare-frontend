@@ -68,6 +68,7 @@ export class CheckoutPageComponent {
     }
   }
   confirmOrder() {
+
     this.orderService.insertOrderData().subscribe(
       (response) => {
         if (response.message === 'Data inserted successfully.') {
@@ -81,7 +82,7 @@ export class CheckoutPageComponent {
       },
       (error) => {
       //  alert('Error try Again');
-        this.route.navigate(['/cartView']);
+      //  this.route.navigate(['/cartView']);
         console.error('Error:', error);
       }
     );

@@ -61,11 +61,9 @@ export class LoginComponent {
         if (response.role === 'buyer') {
           this.router.navigate(['/']);
 
-
           // const localStorageRefresh = localStorage.getItem('RefreshToken');
 
           // console.log(' localStorage Refresh', localStorageRefresh);
-
 
           // this.userData.RenewToken(this.refreshToken).subscribe({
           //   next: (response) => {
@@ -75,33 +73,30 @@ export class LoginComponent {
           //     console.log(error);
           //   },
           // });
-
-
         } else this.router.navigate(['/dashboard']);
       },
       error: (error: any) => {
         // console.log(error);
         this.errorMessage = error.error.message;
-        // alert(error.error.message);
+        // this.errorMessage = " pass word does not match";
+        //   alert(" error");
       },
       // complete() {
       //   // window.location.href = '/';
       //   // this.router.navigate(['/']);
       // },
     });
-
-
-
   }
   isFieldInvalid(fieldName: string) {
     const field = this.loginForm.get(fieldName);
+    this.errorMessage = '';
     // return field?.invalid && field.touched;
     return field?.invalid && field.touched && field.dirty;
   }
   getPhoneNumberErrorMessage() {
     const phoneControl = this.loginForm.get('phoneNumber');
-
     if (phoneControl?.hasError('required')) {
+      this.errorMessage = '';
       return 'Phone number is required.';
     }
     //else if (phoneControl?.hasError('pattern')) {

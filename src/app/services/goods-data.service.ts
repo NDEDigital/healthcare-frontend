@@ -122,7 +122,9 @@ export class GoodsDataService {
 
     this.companyCode = sessionStorage.getItem('companyCode') || '';
     this.groupName = localStorage.getItem('activeEntry') || '';
-    const productCompany = `${this.URL}/api/Goods/GetProductList?CompanyCode=${this.companyCode}&GroupName=${this.groupName}`;
+
+    const encodedGroupName = encodeURIComponent(this.groupName);
+    const productCompany = `${this.URL}/api/Goods/GetProductList?CompanyCode=${this.companyCode}&GroupName=${encodedGroupName}`;
 
     return this.http.get<any[]>(productCompany).pipe(
       tap((response: any[]) => {
