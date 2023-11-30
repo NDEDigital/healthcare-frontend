@@ -251,7 +251,7 @@ export class DashboardComponent {
     this.sharedService.updateLoginStatus(false, null, null);
     localStorage.clear();
     sessionStorage.clear();
-    window.location.href = '/';
+    window.location.href = '/login';
   }
   approvalModalStatus(btn: any) {
     console.log(btn);

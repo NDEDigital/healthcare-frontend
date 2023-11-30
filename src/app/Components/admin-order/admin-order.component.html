@@ -205,10 +205,10 @@
         <div *ngIf="!returnProduct" class="col-1 order_col fw-bold">
           Order No
         </div>
-        <div *ngIf="!returnProduct" class="col-1 order_col_big fw-bold">
+        <div *ngIf="!returnProduct" class="col-1 order_col fw-bold">
           Address
         </div>
-        <div *ngIf="!returnProduct" class="col-1 order_col fw-bold">
+        <div *ngIf="!returnProduct" class="col-1 order_col_big fw-bold">
           Order Date
         </div>
         <div *ngIf="!returnProduct" class="col-1 order_col fw-bold">
@@ -315,11 +315,11 @@
             {{ row.orderNo }}
           </div>
 
-          <div class="col-1 order_col_big" *ngIf="!returnProduct">
+          <div class="col-1 order_col" *ngIf="!returnProduct">
             {{ row.address }}
           </div>
-          <div class="col-1 order_col" *ngIf="!returnProduct">
-            {{ row.orderDate.split(" ")[0] | date : "dd-MM-yyyy" }}
+          <div class="col-1 order_col_big" *ngIf="!returnProduct">
+            {{ row.orderDate  }}
           </div>
           <div class="col-1 order_col" *ngIf="!returnProduct">
             {{ row.paymentMethod }}
@@ -338,7 +338,7 @@
             {{ row.goodsName }}
           </div>
           <div class="col-1 order_col" *ngIf="returnProduct">
-            {{ row.applyDate.split("T")[0] | date : "dd-MM-yyyy" }}
+            {{ row.applyDate.split(" ")[0] | date : "dd-MM-yyyy" }}
           </div>
           <div class="col-1 order_col" *ngIf="returnProduct">
             {{ row.returnType }}
