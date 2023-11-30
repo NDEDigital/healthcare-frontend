@@ -154,11 +154,11 @@ export class CheckoutPageComponent {
     this.uniqueString = this.timestamp + this.randomComponent;
     this.confirmOrder();
      this.SSLPayment.postPaymentAPI(this.totalPrice, this.uniqueString);
-    // this.SSLPayment.callApi(
-    //   this.cartDataDetail.size,
-    //   this.totalPrice,
-    //   this.uniqueString
-    // );
+    this.SSLPayment.callApi(
+      this.cartDataDetail.size,
+      this.totalPrice,
+      this.uniqueString
+    );
   }
   getUserInfo() {
     const userCode = localStorage.getItem('code');
