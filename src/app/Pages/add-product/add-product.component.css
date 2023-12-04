@@ -41,6 +41,16 @@ select:focus {
   box-shadow: 0 0 0.3rem var(--color-primary);
 }
 
+
+.companyName {
+  padding: 2rem;
+
+font-size: 2rem;
+color: white;
+text-decoration: none;
+
+}
+
 @media (max-width: 998px) {
   .form_container {
     width: 100%;
