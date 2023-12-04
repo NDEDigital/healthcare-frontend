@@ -60,6 +60,7 @@ export class AdminOrderComponent {
   detailsCancelledMap: { [key: number]: any } = {};
 
   detailsMap: { [key: number]: any } = {};
+  masterId = "";
 
   masterMap: { [key: number]: any } = {};
   isIconRotatedMap: { [key: string]: boolean } = {}; // for master row icon
@@ -644,16 +645,16 @@ export class AdminOrderComponent {
 
       console.log(' this.detailsUnCheckedId', this.detailsUnCheckedId);
 
-      if (this.masterCheckId != '') {
-        this.actionBtn(
-          this.masterCheckId,
-          this.detailsCheckedId,
-          this.detailsUnCheckedId,
-          this.checkedStatus
-        );
-      } else {
-        console.log(' checked please');
-      }
+      // if (this.masterCheckId != '') {
+      //   this.actionBtn(
+      //     this.masterCheckId,
+      //     this.detailsCheckedId,
+      //     this.detailsUnCheckedId,
+      //     this.checkedStatus
+      //   );
+      // } else {
+      //   console.log(' checked please');
+      // }
     }
     if (this.status == 'to Return') {
       // if (this.checkedStatus == 'Approved') {
@@ -905,4 +906,29 @@ export class AdminOrderComponent {
 
     console.log(this.detailsMap, 'detailsMap');
   }
+
+  checkMasterCheckbox(){
+     // creating obj of master
+     const individual_check_Master =
+     this.elementRef.nativeElement.querySelectorAll(
+       '.individual_checkbox_Master'
+     );
+     
+     for( let i=0; i<individual_check_Master.length; i++){
+        if (individual_check_Master[i].checked){
+          const id = individual_check_Master[i].getAttribute('id');
+
+          //storing master id 
+          if (this.masterId == '') {
+            this.masterId = id;
+            break;
+          } else {
+            this.masterId = this.masterId + ',' + id;
+            break;
+          }
+        }
+     }
+  }
 }
+
+
