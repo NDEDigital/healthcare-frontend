@@ -574,7 +574,7 @@ export class OrdersOverviewComponent {
           this.sendEmailToBuyer(
             email,
             `Your Order is ${status}`,
-            `Dear  ${name},\nYour order is ${status} successfully.\nThank you. Stay with NDE Digital Market.`
+            `Dear  ${name},\nYour order is ${status} successfully.\nThank you. Stay with Nimpex HealthCare.`
           );
         }
       },
