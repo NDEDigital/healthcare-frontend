@@ -642,6 +642,9 @@ export class AdminOrderComponent {
           this.detailsUnCheckedId = this.detailsUnCheckedId + ',' + value;
         }
       });
+   this.checkMasterCheckbox()
+    
+   console.log(' this.masterid', this.masterId);
 
       console.log(' this.detailsUnCheckedId', this.detailsUnCheckedId);
 
