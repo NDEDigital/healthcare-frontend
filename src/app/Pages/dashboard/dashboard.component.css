@@ -9,6 +9,12 @@ a {
   /* text-align: center; */
   /* margin-left: 100%; */
 }
+.companyName {
+  font-size: 2rem;
+  color: white;
+  text-decoration: none;
+  margin: .6rem 0;
+}
 .nav-item a {
   color: white;
 }

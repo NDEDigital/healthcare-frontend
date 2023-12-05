@@ -141,16 +141,17 @@ export class ProductSliderComponent {
           if (finObj) {
             let obj = {
               companyName: this.goods[i].companyName,
-              groupName: this.goods[i].groupName,
               groupCode: this.goods[i].groupCode,
               goodsID: this.goods[i].goodsID,
+              groupName: this.goods[i].groupName,                
               goodsName: this.goods[i].goodsName,
               specification: this.goods[i].specification,
-              stockQty: this.goods[i].stockQty,
-              salesQty: this.goods[i].salesQty,
               approveSalesQty: this.goods[i].approveSalesQty,
-              price: this.goods[i].price,
               sellerCode: this.goods[i].sellerCode,
+              quantityUnit :  this.goods[i].quantityUnit,
+              imagePath :  this.goods[i].imagePath,
+              price: this.goods[i].price,
+            
             };
             finObj.push(obj);
 
@@ -158,17 +159,16 @@ export class ProductSliderComponent {
           } else {
             let obj = {
               companyName: this.goods[i].companyName,
-              groupName: this.goods[i].groupName,
               groupCode: this.goods[i].groupCode,
               goodsID: this.goods[i].goodsID,
+              groupName: this.goods[i].groupName,                
               goodsName: this.goods[i].goodsName,
               specification: this.goods[i].specification,
-              stockQty: this.goods[i].stockQty,
-              salesQty: this.goods[i].salesQty,
               approveSalesQty: this.goods[i].approveSalesQty,
-              price:
-                this.goods[i].price.length === 0 ? 1200 : this.goods[i].price,
               sellerCode: this.goods[i].sellerCode,
+              quantityUnit :  this.goods[i].quantityUnit,
+              imagePath :  this.goods[i].imagePath,
+              price: this.goods[i].price,
             };
             this.products3.set(this.goods[i].groupName, [obj]);
           }

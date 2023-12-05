@@ -924,12 +924,14 @@ export class AdminOrderComponent {
           //storing master id 
           if (this.masterId == '') {
             this.masterId = id;
-            break;
+           
           } else {
             this.masterId = this.masterId + ',' + id;
-            break;
-          }
+      
+          }  
+          console.log(" this.masterId", this.masterId)   
         }
+    
      }
   }
 }

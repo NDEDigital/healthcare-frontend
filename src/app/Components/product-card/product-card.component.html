@@ -13,7 +13,12 @@
       class="d-flex justify-content-between align-items-center text-truncate-container"
     >
       <h6 class="product-title" (click)="goToDetail()">
-        {{ title }}
+       
+        ({{
+          title.length > 15
+            ? (title | slice : 0 : 15) + "..."
+            : title
+        }})
       </h6>
       <div class="btns d-flex text-end">
         <button

@@ -17,7 +17,7 @@ declare var bootstrap: any;
 })
 export class ProductDetailsPageComponent {
   detailsData: any = [];
-  totalRatings = 1;
+  totalRatings = 0;
   perRatingCount: any = [];
   buyerCode: any = '';
   avgRatings: any = 0;
@@ -28,7 +28,7 @@ export class ProductDetailsPageComponent {
   fullStarArray: any = [];
   emptyStar: any = 0;
   emptyStarArray: any = [];
-
+  isSeller = false;
   // Add cart related data
   cartDataDetail: Map<string, CartItem> = new Map<string, CartItem>();
   cartDataQt = new Map<string, number>();
@@ -37,14 +37,7 @@ export class ProductDetailsPageComponent {
   cartCount: number = 0;
 
   reviewData: any = [];
-  productData = '../../../assets/images/Expansion Bolt.jpg';
-  images = {
-    imagePath1: '../../../assets/images/Expansion Bolt.jpg',
-    imagePath2: '../../../assets/images/Expansion Bolt.jpg',
-    imagePath3: '../../../assets/images/Expansion Bolt.jpg',
-    imagePath4: '../../../assets/images/Expansion Bolt.jpg',
-    // ... other properties
-  };
+ 
   enableTextarea = false; // Initial state is read-only
   @ViewChild('reviewBTN') reviewBTN!: ElementRef;
   @ViewChild('closeBTN') closeBTN!: ElementRef;
@@ -83,6 +76,10 @@ export class ProductDetailsPageComponent {
   }
 
   ngOnInit() {
+    const role = localStorage.getItem('role');
+    if (role === 'seller') {
+      this.isSeller = true;
+    }
     // this.detailsData = this.goodsData.getDetaileData();
     // this.cartDataService.clearCartData();
     this.cartDataService.initializeAndLoadData();

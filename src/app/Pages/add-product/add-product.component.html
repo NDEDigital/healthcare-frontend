@@ -1,6 +1,6 @@
 <section class="add_product_container">
   <div class="head">
-    <a><img src="assets/images/Logo/final-logo-6.png" alt="" /></a>
+    <a class="companyName">Nimpex HealthCare</a>
   </div>
 
   <form
@@ -68,7 +68,7 @@
       <div class="col-7">
         <div class="mb-3">
           <label for="material" class="form-label"
-            ><span class="text-danger">*</span>Material Type</label
+            ><span class="text-danger">*</span>Group Name</label
           >
           <select
             name="material"
@@ -87,114 +87,10 @@
             </option>
           </select>
         </div>
-        <div class="mb-3">
-          <!-- <label for="dimensions" class="form-label"
-            ><span class="text-danger">*</span>Dimensions</label
-          > -->
-          <div class="row d-flex">
-            <div class="col-9 d-flex justify-content-around">
-              <div>
-                <label for="Height" class="form-label"
-                  ><span class="text-danger">*</span>Height</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="height"
-                  required
-                />
-              </div>
-              <div>
-                <label for="Width" class="form-label"
-                  ><span class="text-danger">*</span>Width</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="width"
-                  required
-                />
-              </div>
-              <div>
-                <label for="Length" class="form-label"
-                  ><span class="text-danger">*</span>Length</label
-                >
-                <input
-                  type="text"
-                  class="form-control"
-                  formControlName="length"
-                  required
-                />
-              </div>
-            </div>
-            <div class="col-3">
-              <div>
-                <label for="Length" class="form-label"
-                  ><span class="text-danger">*</span>Unit</label
-                >
-                <select
-                  class="form-select bg-light text-muted mx-1"
-                  name="dimensionUnit"
-                  id="dimensionUnit"
-                  formControlName="dimensionUnit"
-                  required
-                >
-                  <option value="mm">mm</option>
-                  <option value="cm">cm</option>
-                </select>
-              </div>
-            </div>
-          </div>
-        </div>
+ 
         <div class="row d-flex justify-content-between">
-          <div class="col-6 mb-3">
-            <label for="weight" class="form-label"
-              ><span class="text-danger">*</span>Weight</label
-            >
-            <div class="d-flex">
-              <input
-                type="text"
-                class="form-control"
-                formControlName="weight"
-                required
-              />
-              <select
-                class="form-select bg-light text-muted mx-1"
-                name="weightUnit"
-                id="weightUnit"
-                required
-                formControlName="weightUnit"
-              >
-                <option value="Ton">Ton</option>
-                <option value="Kg">Kg</option>
-              </select>
-            </div>
-          </div>
-          <div class="col-3 mb-3">
-            <label for="price" class="form-label"
-              ><span class="text-danger">*</span>Price</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              formControlName="price"
-              required
-            />
-          </div>
-          <div class="col-3 mb-3">
-            <label for="finish" class="form-label"
-              ><span class="text-danger">*</span>Finish</label
-            >
-            <input
-              type="text"
-              class="form-control"
-              formControlName="finish"
-              required
-            />
-          </div>
-        </div>
-        <div class="row d-flex justify-content-between">
-          <div class="col-7 mb-3">
+        
+          <div class="col-8 mb-3">
             <label for="quantity" class="form-label"
               ><span class="text-danger">*</span>Quantity</label
             >
@@ -219,17 +115,19 @@
           </div>
 
           <div class="col-4 mb-3">
-            <label for="grade" class="form-label"
-              ><span class="text-danger">*</span>Grade</label
+            <label for="price" class="form-label"
+              ><span class="text-danger">*</span>Price</label
             >
             <input
               type="text"
               class="form-control"
-              formControlName="grade"
+              formControlName="price"
               required
             />
           </div>
+ 
         </div>
+    
       </div>
     </div>
     <butTon type="submit" class="btn submit_btn" (click)="onSubmit()">

@@ -4,6 +4,12 @@ html {
 .mod {
   z-index: 1200;
 }
+.companyName {
+  font-size: 2rem;
+  color: white;
+  text-decoration: none;
+  /* margin: .4rem 0; */
+}
 .header_container {
   background: var(--color-primary);
   /* height: 3.7rem; */
@@ -16,7 +22,7 @@ html {
 .cat_btn:focus,.cat_btn:link  {
   border: none;
 } */
-.catergoriesButton{
+.catergoriesButton {
   background-color: var(--color-primary);
   color: #ffffff;
 }
@@ -114,7 +120,7 @@ html {
   font-size: 1rem;
   font-weight: 500;
   position: relative;
-  padding: 0 .4rem;
+  padding: 0 0.4rem;
 }
 .count {
   position: absolute;

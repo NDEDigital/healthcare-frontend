@@ -113,11 +113,12 @@
 <div class="header_container container-fluid sticky-top px-4 py-1">
   <!-- <div class="d-flex flex-column justify-content-around border border-danger"> -->
   <div class="row justify-content-around laptop-menu m-0">
-    <div class="logo_container col-3 d-flex justify-content-between  ">
+    <div class="logo_container col-3 d-flex justify-content-between">
       <!-- <a href="" -->
-      <a routerLink=""
-        ><img src="assets/images/Logo/final-logo-6.png" alt="logo"
-      /></a>
+      <a routerLink=" " class="companyName">
+        <span>Nimpex HealthCare</span>
+      <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" />-->
+      </a>
 
       <!-- <div class="categories dropdown mt-2 ms-4  " *ngIf="isCategoriesVisible">
         <button
@@ -149,25 +150,24 @@
         </ul>
       </div> -->
 
-
-    <!-- admin -->
-    <div class="dropdown  mt-3   ms-2"  *ngIf="isCategoriesVisible">
-      <button
-        class="dropdown-toggle catergoriesButton   "
-        type="button"
-        id="dropdownMenuButton1"
-        data-bs-toggle="dropdown"
-        aria-expanded="false"
-      >
-      <span
-      ><i
-        class="fa-solid fa-ellipsis-vertical"
-        style="margin-right: 2.5px"
-      ></i
-      ><i class="fa-solid fa-bars"></i
-    ></span>
-    <span class="fw-semibold"> Categories</span>
-      </button>
+      <!-- admin -->
+      <div class="dropdown mt-3 ms-2" *ngIf="isCategoriesVisible">
+        <button
+          class="dropdown-toggle catergoriesButton"
+          type="button"
+          id="dropdownMenuButton1"
+          data-bs-toggle="dropdown"
+          aria-expanded="false"
+        >
+          <span
+            ><i
+              class="fa-solid fa-ellipsis-vertical"
+              style="margin-right: 2.5px"
+            ></i
+            ><i class="fa-solid fa-bars"></i
+          ></span>
+          <span class="fw-semibold"> Categories</span>
+        </button>
 
         <ul class="dropdown-menu">
           <li
@@ -210,8 +210,9 @@
     </div>
     <div class="col-3 d-flex align-items-center justify-content-between">
       <ul
-        class="d-flex justify-content-around justify-content-md-between  align-items-center p-0 mb-0"
-         style ="width:100%;"  >
+        class="d-flex justify-content-around justify-content-md-between align-items-center p-0 mb-0"
+        style="width: 100%"
+      >
         <li class="nav-item login" *ngIf="!isLoggedIn">
           <!-- <div class="login"> -->
           <a routerLink="/login">
@@ -253,7 +254,8 @@
               <div class="popup-item mt-1">
                 <a routerLink="/userProfile" class="d-flex">
                   <i class="fa-solid fa-circle-user fs-6 me-2 mt-1"></i>
-                  <p>My Profile</p></a>
+                  <p>My Profile</p></a
+                >
               </div>
               <div class="delimiter-horizontal"></div>
               <div *ngIf="!isBuyer">
@@ -520,7 +522,7 @@
         </div> -->
       </div>
 
-      <div class="bag col-4    " *ngIf="isBuyer">
+      <div class="bag col-4" *ngIf="isBuyer">
         <!-- <i class="fa-solid fa-bag-shopping"></i> -->
         <span class="cart_icon">
           <!-- <svg xmlns="http://www.w3.org/2000/svg" width="2.5rem" fill="white" class="bi bi-truck-flatbed" viewBox="0 0 16 16">
@@ -533,11 +535,12 @@
     </div>
     <!-- --------------- searchBar --------------- -->
     <!-- <div class="d-flex justify-content-center w-100"> -->
-    <div class="  d-flex  justify-content-center">
-      <div class="searchbar_container     d-flex align-items-center justify-content-between" >
-
+    <div class="d-flex justify-content-center">
+      <div
+        class="searchbar_container d-flex align-items-center justify-content-between"
+      >
         <!-- // category -->
-        <div class="dropdown   me-4 " *ngIf="isCategoriesVisible">
+        <div class="dropdown me-4" *ngIf="isCategoriesVisible">
           <button
             class="dropdown-toggle catergoriesButton"
             type="button"
@@ -592,7 +595,6 @@
         <!-- </div> -->
       </div>
     </div>
-
 
     <!-- <div class="row nav_menu-container">
         <ul class="nav_menu-mobile p-0">

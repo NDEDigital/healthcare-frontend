@@ -124,8 +124,12 @@
     >
       <i class="fa-solid fa-bars"></i>
     </button>
-    <div class="logo_container mx-auto">
-      <a><img src="assets/images/Logo/final-logo-6.png" alt="logo" /></a>
+    <div class="logo_container mx-auto companyName">
+      <a class="companyName">
+        <span>Nimpex HealthCare</span>
+        <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" /> -->
+      </a>
+
     </div>
     <div class="user_icon d-flex align-items-center">
       <ul
@@ -537,8 +541,8 @@
           <div class="mb-5 me-3">
             <app-product-card
               [index]="i"
-              [title]="item.productName"
-              [quantity]="item.quantity"
+              [title]="item.goodsName"
+              [quantity]="item.approveSalesQty"
               [imageSRC]="item.imagePath"
               [item]="item"
             ></app-product-card>

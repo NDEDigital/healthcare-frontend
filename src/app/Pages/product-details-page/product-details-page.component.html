@@ -284,7 +284,7 @@
             </div>
             <div class="ratingCount">{{ totalRatings }} Ratings</div>
             <div class="vertical-line"></div>
-            <div class="qsnAns">4 Answered Questions</div>
+            <!-- <div class="qsnAns">4 Answered Questions</div> -->
           </div>
           <!-- brand -->
           <div class="brand d-flex py-2">
@@ -299,8 +299,11 @@
               >
             </div>
           </div>
+          <div  class="py-2"> 
+            <span > Quantity : </span>{{detailsData.approveSalesQty}}
+          </div>
           <!-- price -->
-          <div class="price d-flex align-items-center">
+          <div class="price d-flex align-items-center py-2" *ngIf="!isSeller" >
             <div>
               <img
                 class="taKa_icon"
@@ -371,39 +374,10 @@
       Product details of {{ detailsData.goodsName }}
     </div>
     <div class="row py-2 productDetailsData">
-      <div class="col productDetailsCol">
-        <ul class="special-list">
-          <li class=" ">Metarial: Steel</li>
-          <li class=" ">A second item</li>
-          <li class=" ">A third item</li>
-          <li class=" ">A fourth item</li>
-          <li class=" ">And a fifth one</li>
-        </ul>
-      </div>
-      <div class="col productDetailsCol">
-        <ul class="">
-          <li class="">An item</li>
-          <li class=" ">Metarial: Steel</li>
-          <li class=" ">A second item</li>
-          <li class=" ">A third item</li>
-          <li class=" ">A fourth item</li>
-          <li class=" ">And a fifth one</li>
-        </ul>
-      </div>
-      <div class="col">
-        <div
-          [ngClass]="{ disabled: disableMouseActions }"
-          (click)="disableMouseActions ? null : mouse()"
-          (mouseenter)="disableMouseActions ? null : mouse()"
-          (mouseleave)="disableMouseActions ? null : mouse()"
-        >
-          <!-- Your content here -->
-        </div>
-
-        <!-- <button (click)="toggleMouseActions()">Toggle Mouse Actions</button> -->
-      </div>
+      {{ detailsData.specification }}
+   
     </div>
-    <div class="innerTitle">Specifications of {{ detailsData.goodsName }}</div>
+    <!-- <div class="innerTitle">Specifications of {{ detailsData.goodsName }}</div>
     <div class="row Specifications">
       <div class="col-6">
         <p class="specificationsName">Company</p>
@@ -413,7 +387,7 @@
         <p class="specificationsName">Size</p>
         <p class="specifications">{{ detailsData.specification }}</p>
       </div>
-    </div>
+    </div> -->
   </section>
   <!-- Ratings & Reviews  section ,3rd -->
   <section class="mb-4 Rating&Review">
@@ -565,7 +539,7 @@
   </section>
 
   <!-- qsn & ans section -->
-  <section class="mb-4">
+  <!-- <section class="mb-4">
     <div class="productDetailsTitle">Questions About This Product (4)</div>
     <div class="row qsn">
       <p class="m-0">
@@ -595,9 +569,9 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
   <!-- recently viewed -->
-  <section class="">
+  <!-- <section class="">
     <div class="productDetailsTitle">
       People Who Viewed This Item Also Viewed
     </div>
@@ -727,7 +701,7 @@
         </div>
       </div>
     </div>
-  </section>
+  </section> -->
 </div>
 <app-footer></app-footer>
 
