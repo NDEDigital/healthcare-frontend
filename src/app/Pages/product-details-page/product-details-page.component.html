@@ -284,7 +284,7 @@
             </div>
             <div class="ratingCount">{{ totalRatings }} Ratings</div>
             <div class="vertical-line"></div>
-            <div class="qsnAns">4 Answered Questions</div>
+            <!-- <div class="qsnAns">4 Answered Questions</div> -->
           </div>
           <!-- brand -->
           <div class="brand d-flex py-2">
@@ -303,7 +303,7 @@
             <span > Quantity : </span>{{detailsData.approveSalesQty}}
           </div>
           <!-- price -->
-          <div class="price d-flex align-items-center py-2">
+          <div class="price d-flex align-items-center py-2" *ngIf="!isSeller" >
             <div>
               <img
                 class="taKa_icon"

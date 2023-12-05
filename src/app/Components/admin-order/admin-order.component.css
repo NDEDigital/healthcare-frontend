@@ -150,7 +150,7 @@
 .Admin_order_container_row {
   width: max-content;
   border-bottom: 1px solid #ececec;
-  font-size: 1.07rem;
+  font-size: 1rem;
   /* height: 4.4rem; */
   cursor: pointer;
 }
@@ -294,16 +294,16 @@
 
 @media (min-width: 1900px) {
   .order_col {
-    width: 12.405rem !important;
+    width: 10.5rem !important;
   }
   .checkbox_col {
-    width: 7rem !important;
+    width: 5rem !important;
   }
   .order_col_big {
-    width: 20rem !important;
+    width: 17rem !important;
   }
   .details_col {
-    width: 15.8rem !important;
+    width: 14rem !important;
   }
 }
 

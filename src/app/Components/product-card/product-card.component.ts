@@ -30,31 +30,29 @@ export class ProductCardComponent {
   ) {}
 
   ngOnInit() {
+    console.log(" data ",this.item);
     console.log();
   }
   goToDetail() {
-    console.log(this.item);
+  
 
     let obj = {
-      approveSalesQty: this.item.quantity,
+      approveSalesQty: this.item.approveSalesQty,
       companyName: this.item.companyName,
-      dimensionUnit: this.item.dimensionUnit,
-      finish: this.item.finish,
-      goodsID: this.item.productId,
-      goodsName: this.item.productName,
-      grade: this.item.grade,
-      groupCode: this.item.materialType,
-      groupName: this.item.materialName,
+      goodsID: this.item.goodsID,
+      goodsName: this.item.goodsName,
+      groupCode: this.item.groupCode,
+      groupName: this.item.groupName,
       imagePath: this.item.imagePath,
-      length: this.item.length,
       price: this.item.price,
+ 
       quantityUnit: this.item.quantityUnit,
-      salesQty: this.item.quantity,
-      sellerCode: this.item.supplierCode,
-      specification: this.item.ProductDescription,
+      sellerCode: this.item.sellerCode,
+      specification: this.item.specification,
       stockQty: this.item.quantity,
-      weight: this.item.width,
+    
     };
+    console.log(" obj",obj)
     sessionStorage.setItem('productData', JSON.stringify(obj));
     // this.route.navigate(['/productDetails']);
     window.open('/productDetails', '_blank');

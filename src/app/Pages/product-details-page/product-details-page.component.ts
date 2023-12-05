@@ -28,7 +28,7 @@ export class ProductDetailsPageComponent {
   fullStarArray: any = [];
   emptyStar: any = 0;
   emptyStarArray: any = [];
-
+  isSeller = false;
   // Add cart related data
   cartDataDetail: Map<string, CartItem> = new Map<string, CartItem>();
   cartDataQt = new Map<string, number>();
@@ -76,6 +76,10 @@ export class ProductDetailsPageComponent {
   }
 
   ngOnInit() {
+    const role = localStorage.getItem('role');
+    if (role === 'seller') {
+      this.isSeller = true;
+    }
     // this.detailsData = this.goodsData.getDetaileData();
     // this.cartDataService.clearCartData();
     this.cartDataService.initializeAndLoadData();
