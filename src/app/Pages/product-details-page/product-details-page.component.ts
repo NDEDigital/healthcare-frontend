@@ -17,7 +17,7 @@ declare var bootstrap: any;
 })
 export class ProductDetailsPageComponent {
   detailsData: any = [];
-  totalRatings = 1;
+  totalRatings = 0;
   perRatingCount: any = [];
   buyerCode: any = '';
   avgRatings: any = 0;

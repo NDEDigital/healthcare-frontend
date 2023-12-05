@@ -274,7 +274,7 @@
                     </div>
                     <div class="">
                       <p class="quantity clr mb-1">
-                        Available Qty:
+                       Quantity:
                         <span class="clr">{{ entry.approveSalesQty }}</span>
                       </p>
                     </div>
@@ -285,11 +285,11 @@
                   >
                     <div>
                       <div>
-                        <button class="" (click)="dataClick(entry)">
+                        <button class=" bg-white" (click)="dataClick(entry)">
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
+                            width="20"
+                            height="20"
                             fill="currentColor"
                             class="bi bi-info-square"
                             viewBox="0 0 16 16"
@@ -306,7 +306,7 @@
 
                       <div>
                         <button
-                          class=""
+                          class="bg-white"
                           data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
                           (click)="setCart(entry,qtyInput.value)"
@@ -315,10 +315,10 @@
                         >
                           <svg
                             xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
+                            width="20"
+                            height="20"
                             fill="currentColor"
-                            class="bi bi-cart-plus"
+                            class="bi bi-cart-plus bg-white"
                             viewBox="0 0 16 16"
                           >
                             <path
