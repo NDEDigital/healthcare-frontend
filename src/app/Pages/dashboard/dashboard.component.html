@@ -436,7 +436,7 @@
             <!-- *ngFor="let item of filteredProducts" -->
             <app-product-approval
               [product]="item"
-              [nm]="item.productId"
+              [nm]="item.goodsId"
               [status]="status"
               (checkboxChange)="handleCheckboxChange($event)"
               (statusChange)="handleStatusChange($event)"

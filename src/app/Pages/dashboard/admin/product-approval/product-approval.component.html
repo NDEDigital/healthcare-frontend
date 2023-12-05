@@ -1,6 +1,6 @@
 <div
   class="approval_container-row row py-2 m-0 bg-white"
-  [id]="'row' + product.productId"
+  [id]="'row' + product.goodsId"
 >
   <div class="col-1 product_col checkbox_col">
     <div class="form-check">
@@ -8,7 +8,7 @@
         class="form-check-input singleCheckbox"
         type="checkbox"
         value=""
-        [id]="product.productId"
+        [id]="product.goodsId"
         (change)="checkboxChangeHandler($event)"
       />
     </div>
@@ -21,7 +21,7 @@
   </div>
 
   <div class="col-1 product_col text-col">
-    <span class="text-truncate mx-1"> {{ product.productName }}</span>
+    <span class="text-truncate mx-1"> {{ product.goodsName }}</span>
   </div>
   <div class="col-1 product_col text-col">
     <span class="text-truncate mx-1"> {{ product.companyName }} </span>
@@ -35,7 +35,7 @@
       class="text-success fs-5 mx-2"
       data-bs-target="#singleApprovalModal"
       data-bs-toggle="modal"
-      (click)="approvalModalStatus('approve', product.productId)"
+      (click)="approvalModalStatus('approve', product.goodsId)"
       *ngIf="status === 'new' || status === 'edited' || status === 'rejected'"
     >
       <!--       (click)="changeSingleStatus('approved', product.productId)" -->
@@ -45,7 +45,7 @@
       class="text-danger fs-5 mx-2"
       data-bs-target="#singleApprovalModal"
       data-bs-toggle="modal"
-      (click)="approvalModalStatus('reject', product.productId)"
+      (click)="approvalModalStatus('reject', product.goodsId)"
       *ngIf="status === 'new' || status === 'edited'"
     >
       <!-- (click)="changeSingleStatus('rejected', product.productId)" -->
@@ -53,14 +53,14 @@
     </span>
     <span
       class="text-primary fs-5 mx-2"
-      (click)="selectProductID(product.productId)"
+      (click)="selectProductID(product.goodsId)"
     >
       <i class="bi bi-info-circle"></i>
     </span>
     <span
       *ngIf="status === 'edited'"
       class="btn btn-warning text-white"
-      (click)="comapreProductData(product.productId)"
+      (click)="comapreProductData(product.goodsId)"
     >
       Compare</span
     >

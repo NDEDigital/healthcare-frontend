@@ -281,6 +281,7 @@ export class DashboardComponent {
   getPaginatedProducts(): any[] {
     const startIndex = this.currentPage * this.rowsPerPage;
     const endIndex = startIndex + this.rowsPerPage;
+    console.log("this.filteredProducts.slice(startIndex, endIndex) ",this.filteredProducts.slice(startIndex, endIndex))
     return this.filteredProducts.slice(startIndex, endIndex);
   }
 
@@ -393,6 +394,7 @@ export class DashboardComponent {
   }
 
   handleCheckboxChange(event: any) {
+     console.log(" Check box event  ",event);
     this.selectedCheckboxIds = event;
     console.log(this.selectedCheckboxIds, 'event selectedCheckboxIds');
     console.log(event);
@@ -426,6 +428,8 @@ export class DashboardComponent {
     console.log(this.selectedCheckboxIds, 'selectedCheckboxIds');
     if (this.selectedCheckboxIds.length > 0) {
       const productIdsInt = this.selectedCheckboxIds.map((id) => parseInt(id));
+      console.log(" productIdsInt",productIdsInt);
+      console.log(" this.selectedCheckboxIds",this.selectedCheckboxIds)
       this.dashboardService
         .updateProductStatus(
           this.sellerCode,

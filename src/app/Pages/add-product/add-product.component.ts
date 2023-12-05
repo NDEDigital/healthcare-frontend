@@ -39,17 +39,13 @@ export class AddProductComponent {
       productDescription: new FormControl(''),
       image: new FormControl(''),
       material: new FormControl(''),
-      height: new FormControl(''),
-      width: new FormControl(''),
-      length: new FormControl(''),
-      dimensionUnit: new FormControl('mm'),
-      weight: new FormControl(''),
-      weightUnit: new FormControl('Kg'),
+
+
       price: new FormControl(''),
-      finish: new FormControl(''),
+  
       quantity: new FormControl(''),
       quantityUnit: new FormControl('Ton'),
-      grade: new FormControl(''),
+
     });
     this.productForm.valueChanges.subscribe(() => {
       this.isFormValid = this.productForm.valid;
@@ -117,17 +113,12 @@ export class AddProductComponent {
       productName: this.product.productName,
       productDescription: this.product.productDescription,
       material: this.product.materialType + '%' + this.product.materialName,
-      height: this.product.height,
-      width: this.product.width,
-      length: this.product.length,
-      dimensionUnit: this.product.dimensionUnit,
-      weight: this.product.weight,
-      weightUnit: this.product.weightUnit,
+     
       price: this.product.price,
-      finish: this.product.finish,
+
       quantity: this.product.quantity,
       quantityUnit: this.product.quantityUnit,
-      grade: this.product.grade,
+  
     });
     this.productForm.get('image')?.disable();
   }
@@ -161,11 +152,10 @@ export class AddProductComponent {
   addProduct() {
     this.addFormData();
     this.formData.append('Status', 'new');
-    this.formData.append('StatusBit', '1');
     this.formData.append('Image', this.imageInput.nativeElement.files[0]);
     this.formData.append('ImageName', this.imageFileName || '');
-    this.formData.append('AddedPC', this.publicIP);
-    this.formData.append('UpdatedPC', this.publicIP);
+    this.formData.append('AddedPc', this.publicIP);
+    this.formData.append('UpdatedPc', this.publicIP);
     console.log('FormData inside Add:');
     this.formData.forEach((value, key) => {
       console.log(key, value);
@@ -211,23 +201,16 @@ export class AddProductComponent {
     if (!supplierCode) {
       supplierCode = '';
     }
-    this.formData.append('ProductName', this.productForm.value.productName);
+    this.formData.append('GoodsName', this.productForm.value.productName);
     this.formData.append(
-      'ProductDescription',
+      'Specification',
       this.productForm.value.productDescription
     );
-    this.formData.append('MaterialType', matType);
-    this.formData.append('MaterialName', matName);
-    this.formData.append('Height', this.productForm.value.height);
-    this.formData.append('Width', this.productForm.value.width);
-    this.formData.append('Length', this.productForm.value.length);
-    this.formData.append('DimensionUnit', this.productForm.value.dimensionUnit);
-    this.formData.append('Weight', this.productForm.value.weight);
-    this.formData.append('WeightUnit', this.productForm.value.weightUnit);
-    this.formData.append('Finish', this.productForm.value.finish);
-    this.formData.append('Grade', this.productForm.value.grade);
+    this.formData.append('GroupCode', matType);
+    this.formData.append('GroupName', matName);
+
     this.formData.append('Price', this.productForm.value.price);
-    this.formData.append('SupplierCode', supplierCode);
+    this.formData.append('SellerCode', supplierCode);
     this.formData.append('Quantity', this.productForm.value.quantity);
     this.formData.append('QuantityUnit', this.productForm.value.quantityUnit);
   }
