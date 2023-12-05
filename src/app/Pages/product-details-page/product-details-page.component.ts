@@ -37,14 +37,7 @@ export class ProductDetailsPageComponent {
   cartCount: number = 0;
 
   reviewData: any = [];
-  productData = '../../../assets/images/Expansion Bolt.jpg';
-  images = {
-    imagePath1: '../../../assets/images/Expansion Bolt.jpg',
-    imagePath2: '../../../assets/images/Expansion Bolt.jpg',
-    imagePath3: '../../../assets/images/Expansion Bolt.jpg',
-    imagePath4: '../../../assets/images/Expansion Bolt.jpg',
-    // ... other properties
-  };
+ 
   enableTextarea = false; // Initial state is read-only
   @ViewChild('reviewBTN') reviewBTN!: ElementRef;
   @ViewChild('closeBTN') closeBTN!: ElementRef;
