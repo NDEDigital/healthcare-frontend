@@ -104,7 +104,7 @@ export class BuyerOrderComponent {
       companyName: this.item.companyName,
       dimensionUnit: this.item.dimensionUnit,
       finish: this.item.finish,
-      goodsID: this.item.goodsId,
+      goodsId: this.item.goodsId,
       goodsName: this.item.goodsName,
       grade: this.item.grade,
       groupCode: this.item.groupCode,
@@ -144,7 +144,7 @@ export class BuyerOrderComponent {
       this.formData.append('SellerId', this.detailData.sellerCode);
       this.formData.append('OrderDetailId', this.detailData.orderDetailId);
       this.formData.append('GroupCode', this.detailData.groupCode);
-      this.formData.append('GoodsId', this.detailData.goodsId);
+      this.formData.append('goodsId', this.detailData.goodsId);
       this.formData.append('GroupName', this.detailData.groupName);
       const buyerCode = localStorage.getItem('code');
       console.log(buyerCode);
@@ -311,7 +311,7 @@ export class BuyerOrderComponent {
       this.formData.append('GroupName', this.returnForm.value.groupName);
       this.formData.append('GoodsName', this.returnForm.value.goodsName);
       this.formData.append('GroupCode', this.returnForm.value.groupCode);
-      this.formData.append('GoodsId', this.returnForm.value.goodsId);
+      this.formData.append('goodsId', this.returnForm.value.goodsId);
       this.formData.append('Remarks', this.returnForm.value.remarks);
       this.formData.append('TypeId', this.returnForm.value.typeId);
       this.formData.append('Price', this.returnForm.value.price);
