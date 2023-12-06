@@ -16,7 +16,7 @@ export class BuyerOrderComponent {
   @ViewChild('reviewBTN') reviewBTN!: ElementRef;
   @ViewChild('closeBTN') closeBTN!: ElementRef;
   orderSection: boolean = true;
-  activeNav: string = 'All';
+  activeNav: string = '';
   pageNum = 1;
   rowCount = 10;
   toShipCount = 0;
@@ -238,7 +238,7 @@ export class BuyerOrderComponent {
     sessionStorage.setItem('order', JSON.stringify(order));
   }
   btnClick(str: string) {
-    if (str === 'All') {
+    if (str === '') {
       this.activeNav = str;
       console.log('clicked', str);
     } else if (str === 'Ready to Ship') {
