@@ -479,7 +479,7 @@ export class OrdersOverviewComponent {
 
     if (selectedCheckboxs.length > 0) {
       this.checked = true;
-      this.ModalText = `want to ${status} the  order`;
+      this.ModalText = `Want to ${this.activeNavvItem} the order?`;
     } else {
       this.checked = false;
       this.ModalText = `select an order`;
