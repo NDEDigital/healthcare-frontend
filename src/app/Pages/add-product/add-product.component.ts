@@ -33,7 +33,8 @@ export class AddProductComponent {
     private sharedService: SharedService,
     private goodsData: GoodsDataService,
     private dashboardData: DashboardDataService
-  ) {
+  ) 
+  {
     this.productForm = new FormGroup({
       productName: new FormControl(''),
       productDescription: new FormControl(''),
@@ -43,6 +44,7 @@ export class AddProductComponent {
       quantity: new FormControl(''),
       quantityUnit: new FormControl('Ton'),
     });
+
     this.productForm.valueChanges.subscribe(() => {
       this.isFormValid = this.productForm.valid;
     });
@@ -51,23 +53,18 @@ export class AddProductComponent {
       .then((response) => response.json())
       .then((data) => {
         this.publicIP = data.ip;
-        // console.log(this.publicIP, 'public ip');
+      
       });
-
     const productData = sessionStorage.getItem('editData');
-
-
-     console.log("productData for edit  ", productData)
     if (productData) {
       this.product = JSON.parse(productData);
-      /// console.log(this.product, productData);
+   
       if (this.product != undefined) this.editMode = true;
     }
-
-    //sharedService.editProduct;
+   
   }
+
   ngOnInit() {
-    console.log(this.editMode);
     this.loadData();
     if (this.editMode) {
       this.headerTitle = 'Update Product';
@@ -89,10 +86,27 @@ export class AddProductComponent {
 
   loadData(): void {
     this.goodsData.getNavData().subscribe((data: any[]) => {
-      console.log(" nav data ", data)
+   
       this.goods = data;
       for (let i = 0; i < this.goods.length; i++) {
         this.products.set(this.goods[i].groupName, this.goods[i].groupCode);
+      }
+      if (this.products && this.products.size > 0) {
+        // Get the first product key and value
+        const firstValue = this.products.entries().next().value;
+        const defaultMaterialKey = firstValue[0];
+        const defaultMaterialValue = firstValue[1];
+        const materialControl = this.productForm.get('material');
+       
+         
+        // Check if the material control exists and then set the value
+        if (materialControl) {
+          materialControl.setValue(defaultMaterialValue + '%' + defaultMaterialKey);
+        }
+       
+     
+        // Set the default dropdown value
+        // this.productForm.get('material').setValue(defaultMaterialValue + '%' + defaultMaterialKey);
       }
     });
   }
@@ -180,8 +194,7 @@ export class AddProductComponent {
 
   addFormData() {
     const materialValue = this.productForm.get('material')?.value;
-    // console.log(materialValue);
-    // const materialValue = this.productForm.value.material;
+  
     const matType = materialValue ? materialValue.split('%')[0] : '';
     const matName = materialValue ? materialValue.split('%')[1] : '';
 
