@@ -511,7 +511,7 @@
             {{ row.reviewText == "null" ? "" : row.reviewText }}
           </div>
 
-          <div class="reviewImage d-flex mb-2" *ngif="row.ImagePath">
+          <!-- <div class="reviewImage d-flex mb-2"  >
             <img
               [src]="
               row.imagePath
@@ -521,6 +521,17 @@
                   : '../../../assets/images/medical/' + row.groupName.trim() + '.jpg'
               "
             />
+          </div> -->
+          <div class="reviewImage d-flex mb-2"  *ngIf="row.imagePath !== ' '">
+            <img
+            [src]="
+            row.imagePath
+                ? row.imagePath.substring(
+                  row.imagePath.indexOf('assets')
+                  )
+                : '../../../assets/images/medical/' + row.groupName.trim() + '.jpg'
+            "
+          />
           </div>
         </div>
         <!-- review part end -->

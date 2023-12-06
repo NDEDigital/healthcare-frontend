@@ -5,7 +5,7 @@ html {
   z-index: 1200;
 }
 .companyName {
-  font-size: 2rem;
+  font-size: 2.2rem;
   color: white;
   text-decoration: none;
   /* margin: .4rem 0; */
@@ -202,7 +202,8 @@ html {
 .profile-popup {
   position: absolute;
   z-index: 100;
-  top: 3.7rem;
+  top: 3.6rem;
+ 
   box-shadow: 0 0 1rem var(--color-gray);
   /* width: 14.5rem; */
   background: white;
@@ -217,7 +218,7 @@ html {
   width: 20px;
   display: block;
   background: white;
-  left: 25px;
+  left: 30px;
   top: -10px;
   z-index: -1;
   transform: rotate(45deg);
