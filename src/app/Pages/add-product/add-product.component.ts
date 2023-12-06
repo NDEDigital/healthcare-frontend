@@ -42,7 +42,7 @@ export class AddProductComponent {
       material: new FormControl(''),
       price: new FormControl(''),
       quantity: new FormControl(''),
-      quantityUnit: new FormControl('Ton'),
+      quantityUnit: new FormControl('Piece'),
     });
 
     this.productForm.valueChanges.subscribe(() => {
