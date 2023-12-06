@@ -511,7 +511,7 @@
             {{ row.reviewText == "null" ? "" : row.reviewText }}
           </div>
 
-          <div class="reviewImage d-flex mb-2">
+          <div class="reviewImage d-flex mb-2" *ngif="row.ImagePath">
             <img
               [src]="
               row.imagePath
