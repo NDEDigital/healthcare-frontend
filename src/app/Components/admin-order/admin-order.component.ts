@@ -195,11 +195,12 @@ export class AdminOrderComponent {
 
     if (this.detailsData == 0) {
       this.service.GetDetatilsData(orderMasterId).subscribe((data: any) => {
-        console.log('details data dataaaaaa', data); // Use a type if possible for better type checking
+    
         this.detailsData = data;
         // Add the isChecked property with a default value of false to each object
         this.detailsData = data.map((item: any) => ({ ...item, isChecked: false }));  
         //  this.togglingDetailsCheckbox(index);
+        console.log('details data dataaaaaa',    this.detailsData); // Use a type if possible for better type checking
         setTimeout(() => {
           this.togglingDetailsCheckbox(index, this.detailsData);
           // this.insertCancelledId(this.detailsData);
@@ -216,6 +217,7 @@ export class AdminOrderComponent {
         
         // Add the isChecked property with a default value of false to each object
         this.detailsData = data.map((item: any) => ({ ...item, isChecked: false }));  
+        console.log('details data dataaaaaa',    this.detailsData); // Use a type if possible for better type checking
         setTimeout(() => {
           this.togglingDetailsCheckbox(index, this.detailsData);
           // this.insertCancelledId(this.detailsData);
@@ -224,7 +226,7 @@ export class AdminOrderComponent {
     } else {
       this.detailsData.length = 0; // clearing the array for  hiding the details data div
     }
-    console.log(" details data ", this.detailsData)
+
     console.log(' isIconRotatedMap', this.isIconRotatedMap);
   }
 
