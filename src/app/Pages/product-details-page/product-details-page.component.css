@@ -178,6 +178,11 @@ ul.special-list {
   background-color: #efefe9;
   margin-right: 0.7rem;
 }
+.qtyInput{
+  width: 3.5rem;
+  padding-left: .2rem;
+
+}
 .reviewImage img {
   width: 7rem;
   height: 5rem;

@@ -36,8 +36,8 @@ export class ProductDetailsPageComponent {
   totalPrice = 0;
   cartCount: number = 0;
 
-  reviewData: any = [];
- 
+  reviewData: any = [];         
+  CartButtonText ="Add to Cart";
   enableTextarea = false; // Initial state is read-only
   @ViewChild('reviewBTN') reviewBTN!: ElementRef;
   @ViewChild('closeBTN') closeBTN!: ElementRef;
@@ -88,6 +88,9 @@ export class ProductDetailsPageComponent {
     if (productData) {
       this.detailsData = JSON.parse(productData);
       console.log("this.detailsData ",this.detailsData)
+    }
+    if( this.detailsData.approveSalesQty == 0){
+      this.CartButtonText ="Out of stock";
     }
     this.buyerCode = localStorage.getItem('code');
     console.log(' buyerCode ', this.buyerCode);

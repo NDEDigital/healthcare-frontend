@@ -309,8 +309,8 @@
                           class="bg-white"
                           data-bs-toggle="modal"
                           data-bs-target="#exampleModal"
-                          (click)="setCart(entry,qtyInput.value)"
-                          [disabled]="entry.approveSalesQty === '0'"
+                          (click)="entry.approveSalesQty !== 0 && setCart(entry,qtyInput.value)"
+                          [disabled]="entry.approveSalesQty === 0"
                          
                         >
                           <svg
@@ -329,6 +329,8 @@
                             />
                           </svg>
                         </button>
+   
+
                       </div>
                     </div>
 
@@ -349,11 +351,12 @@
                       <input
                          #qtyInput
                         type="number"
-                        [readonly]="entry.approveSalesQty === '0'"
-                        class="txt-qt border"
+                        [readonly]="entry.approveSalesQty === 0"
+                        class="txt-qt border "
                         min="1"
+                  
                         [max]="getMaxValue(entry.approveSalesQty)"
-                        [ngModel]="entry.approveSalesQty === '0' ? 0 : 1"
+                        [ngModel]="entry.approveSalesQty === 0 ? 0 : 1"
                         (input)="onInputChange($event, entry)"
                         (blur)="isEmpty($event)"
                       />
