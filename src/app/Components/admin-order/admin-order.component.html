@@ -271,10 +271,8 @@
               *ngIf="this.status === 'Pending'"
               class="individual_checkbox_Master"
               type="checkbox"
-
               [id]="row.orderMasterId"
               (change)="callFunctionIfChecked($event)"
-
               (click)="
                 checkboxFunctions(
                   '.check_all_Master',

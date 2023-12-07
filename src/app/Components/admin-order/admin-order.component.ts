@@ -79,6 +79,7 @@ export class AdminOrderComponent {
   }
   searchTerm$ = new Subject<string>();
   ngOnInit() {
+  
     this.loadData();
     console.log(' SearchTerm valuee on init', this.searchTerm$);
     this.searchTerm$
@@ -123,6 +124,9 @@ export class AdminOrderComponent {
       this.searchValue = inputValue;
     }
     this.GetData();
+    this.detailsCancelledArray = [];
+    this.masterId = '';
+    this.detailsUnCheckedId = '';
   }
 
   GetData() {
@@ -565,7 +569,7 @@ export class AdminOrderComponent {
       }
     }
 
-    console.log(' masterCheckId ', this.masterCheckId);
+   // console.log(' masterCheckId ', this.masterCheckId);
 
     this.checkboxCheck(status);
   }
@@ -648,16 +652,16 @@ export class AdminOrderComponent {
 
       console.log(' this.detailsUnCheckedId', this.detailsUnCheckedId);
 
-      // if (this.masterCheckId != '') {
-      //   this.actionBtn(
-      //     this.masterCheckId,
-      //     this.detailsCheckedId,
-      //     this.detailsUnCheckedId,
-      //     this.checkedStatus
-      //   );
-      // } else {
-      //   console.log(' checked please');
-      // }
+      if (this.masterCheckId != '') {
+        this.actionBtn(
+          this.masterId,
+          this.detailsCheckedId,
+          this.detailsUnCheckedId,
+          this.checkedStatus
+        );
+      } else {
+        console.log(' checked please');
+      }
     }
     if (this.status == 'to Return') {
       // if (this.checkedStatus == 'Approved') {
@@ -765,7 +769,7 @@ export class AdminOrderComponent {
 
     //cleaing the data
     this.detailsCancelledArray = [];
-    this.masterCheckId = '';
+    this.masterId = '';
     this.detailsUnCheckedId = '';
   }
 
@@ -929,7 +933,7 @@ export class AdminOrderComponent {
             this.masterId = this.masterId + ',' + id;
       
           }  
-          console.log(" this.masterId", this.masterId)   
+          
         }
     
      }
