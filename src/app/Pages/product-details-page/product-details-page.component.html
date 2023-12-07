@@ -338,7 +338,9 @@
 
               <button
                  (click)="detailsData.approveSalesQty !== 0 && setCart(detailsData, qtyInput.value)"
-                 class="btn btn-success"
+                 class="btn "
+                 [class.btn-success]="detailsData.approveSalesQty !== 0"
+                 [class.btn-secondary]="detailsData.approveSalesQty === 0"
                  data-bs-toggle="modal"
                  data-bs-target="#exampleModal"
                  [disabled]="detailsData.approveSalesQty === 0">
