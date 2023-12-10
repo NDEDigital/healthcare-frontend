@@ -2,6 +2,7 @@ import { Component, ElementRef, Renderer2 } from '@angular/core';
 import { AdminOrderDataGetService } from 'src/app/services/admin-order-data-get.service';
 import { FormsModule } from '@angular/forms';
 import { AdminOrderModel } from '../../Model/AdminOrderModel';
+import { DetailsModel } from '../../Model/DetailsModel';
 import { PaginationComponent } from '../../Components/pagination/pagination.component';
 import { ViewChild } from '@angular/core';
 import { Subject } from 'rxjs';
@@ -32,6 +33,7 @@ export class AdminOrderComponent {
   SearchByname: string = 'Search by';
   // leaveList: AdminOrderModel[] = [];
   AdminOrderData: AdminOrderModel[] = [];
+  detail: DetailsModel[]=[];
   ordersData: AdminOrderModel[] = [];
   // statusCount: AdminOrderModel[] = [];
   selectedPageIndex: number = 1; // Default selected index is 0
