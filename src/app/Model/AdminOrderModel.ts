@@ -1,7 +1,7 @@
 export interface AdminOrderModel {
   // employeeId: number;
   // LeaveProcessStatus: string;
-  orderMasterId: string;
+  orderMasterId: number;
   orderNo: string;
   orderDate: string;
   SellerCode: string;
@@ -35,4 +35,10 @@ export interface AdminOrderModel {
   detailsId: string;
   returnType: string;
   toReturnCount : number;
+
+
+  // details
+
+  //orderMasterId: number; // Assuming orderMasterId is of type number
+  isChecked: boolean;   // Assuming isChecked is of type boolean
 }
