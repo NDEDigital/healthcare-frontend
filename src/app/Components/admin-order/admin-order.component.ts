@@ -813,7 +813,9 @@ export class AdminOrderComponent {
       if (individual_checkbox_Master[i].getAttribute('id') == masterId) {
         masterIndex = i;
         individual_checkbox_Master[i].checked = true;
+ 
 
+        this.detailsData[index].isChecked = true;
         if (this.masterCheckId == '') {
           this.masterCheckId = masterId;
           break;
