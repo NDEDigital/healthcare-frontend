@@ -272,7 +272,7 @@
               class="individual_checkbox_Master"
               type="checkbox"
               [id]="row.orderMasterId"
-              (change)="callFunctionIfChecked($event)"
+              (change)="callFunctionIfChecked($event,row.orderMasterId)"
               (click)="
                 checkboxFunctions(
                   '.check_all_Master',
@@ -462,7 +462,7 @@
                   class="individual_checkbox_details"
                   type="checkbox"
                   [id]="row.orderDetailId"
-
+                  [checked]="row.isChecked"
                   (click)="detailsCheckBox(row.orderMasterId ,row.orderDetailId, i)"
                 />
               </div>

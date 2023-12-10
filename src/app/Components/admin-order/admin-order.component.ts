@@ -781,26 +781,29 @@ export class AdminOrderComponent {
     this.detailsUnCheckedId = '';
   }
 
-  callFunctionIfChecked(event: Event) {
+  callFunctionIfChecked(event: Event ,orderMasterId:any ) {
     const isChecked = (event.target as HTMLInputElement).checked;
 
     const individual_checkbox_details =
       this.elementRef.nativeElement.querySelectorAll('.individual_checkbox_details');
+      this.detailsData
+      .filter(detail => detail.orderMasterId === orderMasterId)
+      .forEach(detail => detail.isChecked = isChecked);
 
-    individual_checkbox_details.forEach((checkbox: HTMLElement) => {
-      (checkbox as HTMLInputElement).checked = isChecked;
+    // individual_checkbox_details.forEach((checkbox: HTMLElement) => {
+    //   (checkbox as HTMLInputElement).checked = isChecked;
 
-      let id = checkbox.getAttribute('id');
-      console.log("id ",id)
-      console.log('this.detailsMap', this.detailsMap);
-      if (id !== null) {
-        if (this.detailsMap[+id]) {
-          console.log('this.detailsMap[id] ', this.detailsMap[+id]);
-          delete this.detailsMap[+id];
-        }
-      }
+    //   let id = checkbox.getAttribute('id');
+    //   console.log("id ",id)
+    //   console.log('this.detailsMap', this.detailsMap);
+    //   if (id !== null) {
+    //     if (this.detailsMap[+id]) {
+    //       console.log('this.detailsMap[id] ', this.detailsMap[+id]);
+    //       delete this.detailsMap[+id];
+    //     }
+    //   }
 
-    });
+    // });
     console.log("detailsMap",this.detailsMap);
   }
 
