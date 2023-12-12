@@ -11,7 +11,20 @@
         <ng-container *ngFor="let entry of cartDataDetail| keyvalue; let i = index">
         <div class="d-flex ps-5"> 
          <div>
-             <img class="product-img" src="/assets/images/hc1.jpg" alt="">
+             <!-- <img class="product-img" src="/assets/images/hc1.jpg" alt=""> -->
+             <img
+             class="rounded border border-1 mb-3"
+             width="300rem"
+             height="200rem"
+             [src]="
+               entry.value.imagePath
+                 ? entry.value.imagePath.substring(
+                     entry.value.imagePath.indexOf('assets')
+                   )
+                 : '../../../assets/images/' + entry.value.groupName + '.jpg'
+             "
+             alt=""
+           />
          </div>
          <div class="ps-3  product-detail">
             <span class="product-name">{{ entry.value.groupName + ' (' + entry.value.goodsName + ')'}}</span>
