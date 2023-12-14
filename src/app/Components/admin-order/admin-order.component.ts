@@ -272,9 +272,9 @@ export class AdminOrderComponent {
         console.log(' id ', id);
 
         if (this.detailsMap[id]) {
-          individual_check_details[i].checked = false;
+          this.detailsData[i].isChecked= false;
         } else {
-          individual_check_details[i].checked = true;
+          this.detailsData[i].isChecked = true;
         }
       }
     }
@@ -465,23 +465,7 @@ export class AdminOrderComponent {
     this.reloadPagination();
   }
 
-  checkboxFunctions(masterCheckbox: any, ChildCheckbox: any) {
-    let checkedCount = 0;
-    const checkboxAll =
-      this.elementRef.nativeElement.querySelector(masterCheckbox);
-    const checkbox =
-      this.elementRef.nativeElement.querySelectorAll(ChildCheckbox);
-    for (let i = 0; i < checkbox.length; i++) {
-      if (checkbox[i].checked) {
-        checkedCount++;
-      }
-    }
-    if (checkedCount == checkbox.length) {
-      checkboxAll.checked = true;
-    } else {
-      checkboxAll.checked = false;
-    }
-  }
+
 
   paginationData(data: { selectedPageIndex: number; selectedValue: number }) {
     this.selectedPageIndex = data.selectedPageIndex;
@@ -759,13 +743,31 @@ export class AdminOrderComponent {
         '.individual_checkbox_details'
       );
     for (let i = 0; i < individual_check_details.length; i++) {
-      individual_check_details[i].checked = false;
+      this.detailsData[i].isChecked = false;
     }
 
     //cleaing the data
     this.detailsCancelledArray = [];
     this.masterId = '';
     this.detailsUnCheckedId = '';
+  }
+
+  checkboxFunctions(masterCheckbox: any, ChildCheckbox: any) {
+    let checkedCount = 0;
+    const checkboxAll =
+      this.elementRef.nativeElement.querySelector(masterCheckbox);
+    const checkbox =
+      this.elementRef.nativeElement.querySelectorAll(ChildCheckbox);
+    for (let i = 0; i < checkbox.length; i++) {
+      if (checkbox[i].checked) {
+        checkedCount++;
+      }
+    }
+    if (checkedCount == checkbox.length) {
+      checkboxAll.checked = true;
+    } else {
+      checkboxAll.checked = false;
+    }
   }
 
   callFunctionIfChecked(event: Event ,orderMasterId:number ) {
@@ -780,7 +782,7 @@ export class AdminOrderComponent {
        // check/uncheck the detaiulks checkbox
       if (this.detailsData[i].orderMasterId == orderMasterId){
         this.detailsData[i].isChecked = isChecked;
-      
+//        individual_checkbox_details[i].checked=isChecked;
         if(isChecked == false )
             {
 
@@ -816,13 +818,7 @@ export class AdminOrderComponent {
  
 
         this.detailsData[index].isChecked = true;
-        if (this.masterCheckId == '') {
-          this.masterCheckId = masterId;
-          break;
-        } else {
-          this.masterCheckId = this.masterCheckId + ',' + masterId;
-          break;
-        }
+       
       }
     }
     console.log('this.masterMap ', this.masterMap);
