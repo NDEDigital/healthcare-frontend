@@ -372,18 +372,7 @@
                 selectedButtonIndex == 'ToReturn'
               "
             >
-              <!-- for pending -->
-              <!-- <img
-                *ngIf="selectedButtonIndex == 'Pending'"
-                (click)="actionBtn(row.orderMasterId, '', '', 'Approved')"
-                src="../../../assets/images/Icons/check.png"
-              />
-
-              <img
-                *ngIf="selectedButtonIndex == 'Pending'"
-                (click)="actionBtn(row.orderMasterId, '', '', 'Cancelled')"
-                src="../../../assets/images/Icons/close.png"
-              /> -->
+ 
               <img
                 *ngIf="selectedButtonIndex == 'Pending'"
                 data-bs-toggle="modal"
@@ -395,6 +384,7 @@
               <img
                 *ngIf="selectedButtonIndex == 'Pending'"
                 data-bs-toggle="modal"
+       
                 data-bs-target="#exampleModal"
                 (click)="setID(row.orderMasterId, 'Cancelled',i)"
                 src="../../../assets/images/Icons/close.png"
@@ -433,16 +423,7 @@
               class="Admin_order_container_row order_details_HederRow row bg-light p-0 m-0"
             >
               <div class="col-1 checkbox_col fw-bold">
-                <!-- <input
-                  *ngIf="this.status === 'Pending'"
-                  type="checkbox"
-                  class="check_All_details"
-                  [id]="detailsData[0].orderMasterId"
-                  name="vehicle1"
-                  value="Bike"
-                  (click)="checkAll('.check_All_details','.individual_checkbox_details')"
-                />
-                <span *ngIf="this.status === 'Pending'">All </span> -->
+        
               </div>
               <div class="col-1 order_col">Company</div>
               <div class="col-1 order_col">Product</div>
@@ -463,7 +444,7 @@
                   type="checkbox"
                   [id]="row.orderDetailId"
                   [checked]="row.isChecked"
-                  (click)="detailsCheckBox(row.orderMasterId ,row.orderDetailId, i)"
+                  (click)="detailsCheckBox($event,row.orderMasterId ,row.orderDetailId, i)"
                 />
               </div>
 
@@ -479,22 +460,6 @@
               <div class="col-1 order_col">
                 {{ row.price + row.deliveryCharge }}
               </div>
-              <!-- <div class="col-1 order_col">
-
-                <div class="approval_icon">
-                  <img
-                    (click)="actionBtn(row.orderMasterId, 'Approved')"
-
-                    src="../../../assets/images/Icons/check.png"
-                  />
-
-                  <img
-                    (click)="actionBtn(row.orderMasterId, 'Cancelled')"
-
-                    src="../../../assets/images/Icons/close.png"
-                  />
-                </div>
-              </div> -->
             </div>
           </div>
         </div>
@@ -524,7 +489,7 @@
         Approve
       </button>
       <button
-        *ngIf="detailsData.length == 0"
+        *ngIf="isDetailsMapEmpty()"
         type="button"
         data-bs-toggle="modal"
         data-bs-target="#exampleModal"
