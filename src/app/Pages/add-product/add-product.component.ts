@@ -33,24 +33,18 @@ export class AddProductComponent {
     private sharedService: SharedService,
     private goodsData: GoodsDataService,
     private dashboardData: DashboardDataService
-  ) {
+  ) 
+  {
     this.productForm = new FormGroup({
       productName: new FormControl(''),
       productDescription: new FormControl(''),
       image: new FormControl(''),
       material: new FormControl(''),
-      height: new FormControl(''),
-      width: new FormControl(''),
-      length: new FormControl(''),
-      dimensionUnit: new FormControl('mm'),
-      weight: new FormControl(''),
-      weightUnit: new FormControl('Kg'),
       price: new FormControl(''),
-      finish: new FormControl(''),
       quantity: new FormControl(''),
-      quantityUnit: new FormControl('Ton'),
-      grade: new FormControl(''),
+      quantityUnit: new FormControl('Piece'),
     });
+
     this.productForm.valueChanges.subscribe(() => {
       this.isFormValid = this.productForm.valid;
     });
@@ -59,27 +53,25 @@ export class AddProductComponent {
       .then((response) => response.json())
       .then((data) => {
         this.publicIP = data.ip;
-        // console.log(this.publicIP, 'public ip');
+      
       });
-
     const productData = sessionStorage.getItem('editData');
     if (productData) {
       this.product = JSON.parse(productData);
-      /// console.log(this.product, productData);
+   
       if (this.product != undefined) this.editMode = true;
     }
-
-    //sharedService.editProduct;
+   
   }
+
   ngOnInit() {
-    console.log(this.editMode);
     this.loadData();
     if (this.editMode) {
       this.headerTitle = 'Update Product';
       this.submitBtnTitle = 'Update';
       this.setValues();
       this.productForm.get('material')?.disable();
-      this.selectedMaterial = this.product.materialType;
+      this.selectedMaterial = this.product.groupCode;
     } else {
       setTimeout(() => {
         this.selectedMaterial = [...this.products.values()][0];
@@ -94,9 +86,27 @@ export class AddProductComponent {
 
   loadData(): void {
     this.goodsData.getNavData().subscribe((data: any[]) => {
+   
       this.goods = data;
       for (let i = 0; i < this.goods.length; i++) {
         this.products.set(this.goods[i].groupName, this.goods[i].groupCode);
+      }
+      if (this.products && this.products.size > 0) {
+        // Get the first product key and value
+        const firstValue = this.products.entries().next().value;
+        const defaultMaterialKey = firstValue[0];
+        const defaultMaterialValue = firstValue[1];
+        const materialControl = this.productForm.get('material');
+       
+         
+        // Check if the material control exists and then set the value
+        if (materialControl) {
+          materialControl.setValue(defaultMaterialValue + '%' + defaultMaterialKey);
+        }
+       
+     
+        // Set the default dropdown value
+        // this.productForm.get('material').setValue(defaultMaterialValue + '%' + defaultMaterialKey);
       }
     });
   }
@@ -108,37 +118,29 @@ export class AddProductComponent {
     }
   }
   setValues() {
-    console.log(this.product.materialName);
-    const materialValue =
-      this.product.materialType + '%' + this.product.materialName;
+    console.log(this.product.groupName);
+    const materialValue = 
+    this.product.groupCode + '%' + this.product.groupName;
     console.log(materialValue, 'materialValue');
 
     this.productForm.patchValue({
-      productName: this.product.productName,
-      productDescription: this.product.productDescription,
-      material: this.product.materialType + '%' + this.product.materialName,
-      height: this.product.height,
-      width: this.product.width,
-      length: this.product.length,
-      dimensionUnit: this.product.dimensionUnit,
-      weight: this.product.weight,
-      weightUnit: this.product.weightUnit,
+      productName: this.product.goodsName,
+      productDescription: this.product.specification,
+      material: this.product.groupCode + '%' + this.product.groupName,
       price: this.product.price,
-      finish: this.product.finish,
-      quantity: this.product.quantity,
+      quantity: this.product.approveSalesQty,
       quantityUnit: this.product.quantityUnit,
-      grade: this.product.grade,
+  
     });
     this.productForm.get('image')?.disable();
   }
   updateProduct() {
     console.log('update callde');
-
     this.addFormData();
     this.formData.append('Status', 'edited');
     this.formData.append('StatusBit', '4');
-    this.formData.append('UpdatedPC', this.publicIP);
-    this.formData.append('ProductId', this.product.productId);
+    this.formData.append('UpdatedPc', this.publicIP);
+    this.formData.append('GoodsId', this.product.goodsId);
     console.log('FormData inside Update:');
     this.formData.forEach((value, key) => {
       console.log(key, value);
@@ -160,17 +162,17 @@ export class AddProductComponent {
   }
   addProduct() {
     this.addFormData();
+    
     this.formData.append('Status', 'new');
-    this.formData.append('StatusBit', '1');
     this.formData.append('Image', this.imageInput.nativeElement.files[0]);
     this.formData.append('ImageName', this.imageFileName || '');
-    this.formData.append('AddedPC', this.publicIP);
-    this.formData.append('UpdatedPC', this.publicIP);
+    this.formData.append('AddedPc', this.publicIP);
+    this.formData.append('UpdatedPc', this.publicIP);
     console.log('FormData inside Add:');
     this.formData.forEach((value, key) => {
       console.log(key, value);
     });
-    // if (this.isFormValid) {
+    if (this.isFormValid) {
     this.dashboardData.addProduct(this.formData).subscribe({
       next: (response) => {
         console.log('Product Added successfully', response);
@@ -179,8 +181,7 @@ export class AddProductComponent {
         this.productForm
           ?.get('material')
           ?.setValue([...this.products.values()][0]);
-        this.productForm?.get('dimensionUnit')?.setValue(['mm']);
-        this.productForm?.get('weightUnit')?.setValue(['Kg']);
+
         this.productForm?.get('quantityUnit')?.setValue(['Ton']);
         window.location.href = '/dashboard';
       },
@@ -188,46 +189,31 @@ export class AddProductComponent {
         console.error('Error', error);
       },
     });
-    // }
+    }
   }
 
   addFormData() {
     const materialValue = this.productForm.get('material')?.value;
-    // console.log(materialValue);
-    // const materialValue = this.productForm.value.material;
+  
     const matType = materialValue ? materialValue.split('%')[0] : '';
     const matName = materialValue ? materialValue.split('%')[1] : '';
 
-    // console.log(
-    //   materialValue,
-    //   'materialValue',
-    //   matType,
-    //   'matType',
-    //   matName,
-    //   'matName'
-    // );
-
+ 
     let supplierCode = localStorage.getItem('code');
+
     if (!supplierCode) {
       supplierCode = '';
     }
-    this.formData.append('ProductName', this.productForm.value.productName);
+   
+    this.formData.append('GoodsName', this.productForm.value.productName);
     this.formData.append(
-      'ProductDescription',
+      'Specification',
       this.productForm.value.productDescription
     );
-    this.formData.append('MaterialType', matType);
-    this.formData.append('MaterialName', matName);
-    this.formData.append('Height', this.productForm.value.height);
-    this.formData.append('Width', this.productForm.value.width);
-    this.formData.append('Length', this.productForm.value.length);
-    this.formData.append('DimensionUnit', this.productForm.value.dimensionUnit);
-    this.formData.append('Weight', this.productForm.value.weight);
-    this.formData.append('WeightUnit', this.productForm.value.weightUnit);
-    this.formData.append('Finish', this.productForm.value.finish);
-    this.formData.append('Grade', this.productForm.value.grade);
+    this.formData.append('GroupCode', matType);
+    this.formData.append('GroupName', matName);
     this.formData.append('Price', this.productForm.value.price);
-    this.formData.append('SupplierCode', supplierCode);
+    this.formData.append('SellerCode', supplierCode);
     this.formData.append('Quantity', this.productForm.value.quantity);
     this.formData.append('QuantityUnit', this.productForm.value.quantityUnit);
   }

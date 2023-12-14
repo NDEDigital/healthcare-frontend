@@ -38,6 +38,8 @@ export class ProductComponent {
     this.goodsData
       .getProductList(this.sharedService.companyCode)
       .subscribe((data: any[]) => {
+      
+        
         this.products = data;
         this.filteredProducts = [...this.products];
       });
@@ -48,7 +50,7 @@ export class ProductComponent {
         .subscribe((data: any[]) => {
           data.forEach((newProduct: any) => {
             const existingProduct = this.filteredProducts.find(
-              (product: any) => product.goodsID === newProduct.goodsID
+              (product: any) => product.goodsId === newProduct.goodsId
             );
             if (existingProduct) {
               existingProduct.approveSalesQty = newProduct.approveSalesQty;
@@ -102,7 +104,7 @@ export class ProductComponent {
         .subscribe((data: any[]) => {
           data.forEach((newProduct: any) => {
             const existingProduct = this.filteredProducts.find(
-              (product: any) => product.goodsID === newProduct.goodsID
+              (product: any) => product.goodsId === newProduct.goodsId
             );
             if (existingProduct) {
               existingProduct.approveSalesQty = newProduct.approveSalesQty;
@@ -218,13 +220,16 @@ export class ProductComponent {
     this.cartDataDetail = this.cartDataService.getCartData().cartDataDetail;
     this.cartDataQt = this.cartDataService.getCartData().cartDataQt;
     this.totalPrice = this.cartDataService.getTotalPrice();
+   
+    
   }
 
   setCart(entry: any, inputQt: string) {
     if (entry.price === '' || entry.price === undefined) {
       entry.price = '12000';
     }
-    let groupCode_groupId = entry.groupCode + '&' + entry.goodsID;
+    
+    let groupCode_groupId = entry.groupCode + '&' + entry.goodsId;
 
     this.cartDataService.setCartCount(groupCode_groupId);
     this.cartDataService.setPrice(

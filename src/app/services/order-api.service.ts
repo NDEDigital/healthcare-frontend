@@ -115,9 +115,10 @@ export class OrderApiService {
       if (qt === undefined) {
         qt = 0;
       }
-
+     
+      
       const detailData: OrderDetail = {
-        goodsId: parseInt(entry.goodsID),
+        goodsId: parseInt(entry.goodsId),
         goodsName: entry.goodsName,
         quantity: qt,
         discount: 0,

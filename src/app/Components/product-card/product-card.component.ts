@@ -45,7 +45,6 @@ export class ProductCardComponent {
       groupName: this.item.groupName,
       imagePath: this.item.imagePath,
       price: this.item.price,
- 
       quantityUnit: this.item.quantityUnit,
       sellerCode: this.item.sellerCode,
       specification: this.item.specification,
@@ -94,8 +93,8 @@ export class ProductCardComponent {
   //   // }
   // }
   isUnderOrderProccess(indx: any, status: string) {
-    const goodsId = this.dashboard.products[indx].productId;
-    const groupCode = this.dashboard.products[indx].materialType;
+    const goodsId = this.dashboard.products[indx].goodsId;
+    const groupCode = this.dashboard.products[indx].groupCode;
     this.OrderService.checkUnderOrderProccess(goodsId, groupCode).subscribe(
       (response: any) => {
         console.log(response.isUnderOrderProccess);
@@ -104,10 +103,10 @@ export class ProductCardComponent {
           if (status === 'delete') {
 
 
-            console.log(" delete id ",this.dashboard.products[indx].productId )
+            console.log(" delete id ",this.dashboard.products[indx].goodsId )
             sessionStorage.setItem(
               'deleteData',
-              JSON.stringify(this.dashboard.products[indx].productId)
+              JSON.stringify(this.dashboard.products[indx].goodsId)
             );
             this.deleteModal.nativeElement.click();
           }

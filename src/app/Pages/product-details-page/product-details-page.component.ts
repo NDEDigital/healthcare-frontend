@@ -36,8 +36,8 @@ export class ProductDetailsPageComponent {
   totalPrice = 0;
   cartCount: number = 0;
 
-  reviewData: any = [];
- 
+  reviewData: any = [];         
+  CartButtonText ="Add to Cart";
   enableTextarea = false; // Initial state is read-only
   @ViewChild('reviewBTN') reviewBTN!: ElementRef;
   @ViewChild('closeBTN') closeBTN!: ElementRef;
@@ -89,16 +89,19 @@ export class ProductDetailsPageComponent {
       this.detailsData = JSON.parse(productData);
       console.log("this.detailsData ",this.detailsData)
     }
+    if( this.detailsData.approveSalesQty == 0){
+      this.CartButtonText ="Out of stock";
+    }
     this.buyerCode = localStorage.getItem('code');
     console.log(' buyerCode ', this.buyerCode);
    console.log(" detailsData ",this.detailsData )
     // this.detailsData = this.goodsData.getDetaileData();
 
-    console.log('this.detailsData.goodsID,this.detailsData.groupCode', this.detailsData.goodsID,this.detailsData.groupCode);
+    console.log('this.detailsData.goodsId,this.detailsData.groupCode', this.detailsData.goodsId,this.detailsData.groupCode);
     // console.log('goodsName', this.detailsData.goodsName);
     this.service
       .getReviewRatingsData(
-        this.detailsData.goodsID,
+        this.detailsData.goodsId,
         this.detailsData.groupCode
       )
       .subscribe((data: any) => {
@@ -293,7 +296,7 @@ export class ProductDetailsPageComponent {
     if (entry.price === '' || entry.price === undefined) {
       entry.price = '12000';
     }
-    let groupCode_groupId = entry.groupCode + '&' + entry.goodsID;
+    let groupCode_groupId = entry.groupCode + '&' + entry.goodsId;
 
     this.cartDataService.setCartCount(groupCode_groupId);
     this.cartDataService.setPrice(

@@ -47,9 +47,9 @@ export class SellerInventoryComponent {
   Search() {
     // checking
     if (this.SearchByname == 'GroupCode') {
-      this.groupCode = this.searchInputValue;
+      this.groupCode = this.searchInputValue.trim();
     } else {
-      this.goodsName = this.searchInputValue;
+      this.goodsName = this.searchInputValue.trim();
     }
 
     this.GetData();

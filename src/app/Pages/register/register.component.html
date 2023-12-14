@@ -1,5 +1,8 @@
 <div class="head">
-  <a routerLink=""><img src="assets/images/Logo/final-logo-6.png" alt="" /></a>
+  <a routerLink=" " class="companyName">
+    <span>Nimpex HealthCare</span>
+  <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" />-->
+  </a>
 </div>
 <div class="container mt-5 mb-5 rounded" [ngStyle]="getContainerWidth()">
   <h2 class="register_title">Register</h2>
@@ -7,7 +10,7 @@
   <form [formGroup]="userForm">
     <div class="form-group checkbox-group mt-5 mx-auto">
       <!-- <label><span class="text-danger">*</span>Select Your trade Role</label> -->
-      <!-- <label for="buyerTrade">
+      <label for="buyerTrade">
         <input
           type="radio"
           id="buyerTrade"
@@ -15,8 +18,8 @@
           value="Buyer"
         />
         Buyer
-      </label> -->
-      <!-- <label for="sellerTrade">
+      </label>
+      <label for="sellerTrade">
         <input
           type="radio"
           id="sellerTrade"
@@ -24,7 +27,7 @@
           value="Seller"
         />
         Seller
-      </label> -->
+      </label>
       <!-- <label for="bothTrade">
         <input
           type="radio"
@@ -160,7 +163,7 @@
               <option class="d-none" value="Nothing Selected" disabled>
                 Nothing Selected
               </option>
-              <option value="Steel material">Steel material</option>
+              <option value="Steel material">Medical material</option>
             </select>
           </div>
           <div class="form-group">

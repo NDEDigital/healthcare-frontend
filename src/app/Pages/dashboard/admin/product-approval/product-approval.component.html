@@ -1,6 +1,6 @@
 <div
   class="approval_container-row row py-2 m-0 bg-white"
-  [id]="'row' + product.productId"
+  [id]="'row' + product.goodsId"
 >
   <div class="col-1 product_col checkbox_col">
     <div class="form-check">
@@ -8,7 +8,7 @@
         class="form-check-input singleCheckbox"
         type="checkbox"
         value=""
-        [id]="product.productId"
+        [id]="product.goodsId"
         (change)="checkboxChangeHandler($event)"
       />
     </div>
@@ -21,7 +21,7 @@
   </div>
 
   <div class="col-1 product_col text-col">
-    <span class="text-truncate mx-1"> {{ product.productName }}</span>
+    <span class="text-truncate mx-1"> {{ product.goodsName }}</span>
   </div>
   <div class="col-1 product_col text-col">
     <span class="text-truncate mx-1"> {{ product.companyName }} </span>
@@ -35,7 +35,7 @@
       class="text-success fs-5 mx-2"
       data-bs-target="#singleApprovalModal"
       data-bs-toggle="modal"
-      (click)="approvalModalStatus('approve', product.productId)"
+      (click)="approvalModalStatus('approve', product.goodsId)"
       *ngIf="status === 'new' || status === 'edited' || status === 'rejected'"
     >
       <!--       (click)="changeSingleStatus('approved', product.productId)" -->
@@ -45,7 +45,7 @@
       class="text-danger fs-5 mx-2"
       data-bs-target="#singleApprovalModal"
       data-bs-toggle="modal"
-      (click)="approvalModalStatus('reject', product.productId)"
+      (click)="approvalModalStatus('reject', product.goodsId)"
       *ngIf="status === 'new' || status === 'edited'"
     >
       <!-- (click)="changeSingleStatus('rejected', product.productId)" -->
@@ -53,14 +53,14 @@
     </span>
     <span
       class="text-primary fs-5 mx-2"
-      (click)="selectProductID(product.productId)"
+      (click)="selectProductID(product.goodsId)"
     >
       <i class="bi bi-info-circle"></i>
     </span>
     <span
       *ngIf="status === 'edited'"
       class="btn btn-warning text-white"
-      (click)="comapreProductData(product.productId)"
+      (click)="comapreProductData(product.goodsId)"
     >
       Compare</span
     >
@@ -174,50 +174,18 @@
             Before Edit
           </h5>
 
-          <p><strong>Product Name:</strong> {{ oldData.productName }}</p>
+          <p><strong>Product Name:</strong> {{ oldData.goodsName }}</p>
           <p>
             <strong>Product Description:</strong>
-            {{ oldData.productDescription }}
+            {{ oldData.specification }}
           </p>
           <p>
             <strong>Product Material Type:</strong>
-            {{ oldData.materialType }}
+            {{ oldData.groupCode }}
           </p>
           <p>
             <strong>Product Price:</strong>
             {{ oldData.price }}
-          </p>
-          <p>
-            <strong>Product Finish:</strong>
-            {{ oldData.finish }}
-          </p>
-          <p>
-            <strong>Product Grade:</strong>
-            {{ oldData.grade }}
-          </p>
-          <p>
-            <strong>Product Height:</strong>
-            {{ oldData.height }}
-          </p>
-          <p>
-            <strong>Product Width:</strong>
-            {{ oldData.width }}
-          </p>
-          <p>
-            <strong>Product Length:</strong>
-            {{ oldData.length }}
-          </p>
-          <p>
-            <strong>Product Dimension Unit:</strong>
-            {{ oldData.dimensionUnit }}
-          </p>
-          <p>
-            <strong>Product Weight:</strong>
-            {{ oldData.length }}
-          </p>
-          <p>
-            <strong>Product Weight Unit:</strong>
-            {{ oldData.weightUnit }}
           </p>
           <p>
             <strong>Product Quantity:</strong>
@@ -236,50 +204,18 @@
             After Edit
           </h5>
 
-          <p><strong>Product Name:</strong> {{ newData.productName }}</p>
+          <p><strong>Product Name:</strong> {{ newData.goodsName }}</p>
           <p>
             <strong>Product Description:</strong>
-            {{ newData.productDescription }}
+            {{ newData.specification }}
           </p>
           <p>
             <strong>Product Material Type:</strong>
-            {{ newData.materialType }}
+            {{ newData.groupCode }}
           </p>
           <p>
             <strong>Product Price:</strong>
             {{ newData.price }}
-          </p>
-          <p>
-            <strong>Product Finish:</strong>
-            {{ newData.finish }}
-          </p>
-          <p>
-            <strong>Product Grade:</strong>
-            {{ newData.grade }}
-          </p>
-          <p>
-            <strong>Product Height:</strong>
-            {{ newData.height }}
-          </p>
-          <p>
-            <strong>Product Width:</strong>
-            {{ newData.width }}
-          </p>
-          <p>
-            <strong>Product Length:</strong>
-            {{ newData.length }}
-          </p>
-          <p>
-            <strong>Product Dimension Unit:</strong>
-            {{ newData.dimensionUnit }}
-          </p>
-          <p>
-            <strong>Product Weight:</strong>
-            {{ newData.length }}
-          </p>
-          <p>
-            <strong>Product Weight Unit:</strong>
-            {{ newData.weightUnit }}
           </p>
           <p>
             <strong>Product Quantity:</strong>

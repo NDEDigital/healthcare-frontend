@@ -124,10 +124,11 @@ export class CartDataService {
   }
 
   setCartData(obj: any, qt: any) {
-    let groupCode_groupId = obj.groupCode + '&' + obj.goodsID;
+    let groupCode_groupId = obj.groupCode + '&' + obj.goodsId;
     this.cartDataDetail.set(groupCode_groupId, obj);
-    
-    
+     
+     
+      
     this.cartDataQt.set(groupCode_groupId, qt);
 
     // Convert Map to an array of its entries and then stringify

@@ -61,7 +61,7 @@ export class ProductApprovalComponent {
         console.log(response);
         this.oldData = response.oldData;
         this.newData = response.newData;
-        console.log(this.oldData, this.newData);
+        console.log(  "this.oldData",this.oldData, "this.newData",this.newData);
         this.gotData = true;
         setTimeout(() => {
           this.compareModalBtn.nativeElement.click();

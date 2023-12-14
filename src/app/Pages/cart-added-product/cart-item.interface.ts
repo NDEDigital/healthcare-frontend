@@ -2,7 +2,7 @@ export interface CartItem {
   imagePath: any;
   companyName: string;
   groupCode: string;
-  goodsID: string;
+  goodsId: string;
   groupName: string;
   goodsName: string;
   specification: string;

@@ -64,7 +64,7 @@
         <span class="fw-bold"
           >Qty:
           {{
-            cartDataQt.get(entry.value.groupCode + "&" + entry.value.goodsID)
+            cartDataQt.get(entry.value.groupCode + "&" + entry.value.goodsId)
           }}</span
         >
         <svg
@@ -316,26 +316,40 @@
               <input
                 #qtyInput
                 type="number"
-                [readonly]="detailsData.approveSalesQty === '0'"
-                class="txt-qt border"
+                [readonly]="detailsData.approveSalesQty === 0"
+                class="txt-qt border qtyInput"
                 min="1"
                 [max]="getMaxValue(detailsData.approveSalesQty)"
-                [ngModel]="detailsData.approveSalesQty === '0' ? 0 : 1"
+                [ngModel]="detailsData.approveSalesQty === 0 ? 0 : 1"
                 (input)="onInputChange($event, detailsData)"
                 (blur)="isEmpty($event)"
               />
             </div>
             <div class="ms-3">
-              <button
+              <!-- <button
                 (click)="setCart(detailsData, qtyInput.value)"
                 class="btn btn-success"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                [disabled]="detailsData.approveSalesQty === '0'"
+                [disabled]="detailsData.approveSalesQty === 0"
               >
-                Add to Cart
-              </button>
-            </div>
+               {{CartButtonText}}
+              </button> -->
+
+              <button
+                 (click)="detailsData.approveSalesQty !== 0 && setCart(detailsData, qtyInput.value)"
+                 class="btn "
+                 [class.btn-success]="detailsData.approveSalesQty !== 0"
+                 [class.btn-secondary]="detailsData.approveSalesQty === 0"
+                 data-bs-toggle="modal"
+                 data-bs-target="#exampleModal"
+                 [disabled]="detailsData.approveSalesQty === 0">
+                 {{ CartButtonText }}
+                 </button>
+
+               <!-- Only render the modal trigger if approveSalesQty is not 0 -->
+            
+           </div>
           </div>
 
           <!-- quantity -->
@@ -511,7 +525,7 @@
             {{ row.reviewText == "null" ? "" : row.reviewText }}
           </div>
 
-          <div class="reviewImage d-flex mb-2">
+          <!-- <div class="reviewImage d-flex mb-2"  >
             <img
               [src]="
               row.imagePath
@@ -521,6 +535,17 @@
                   : '../../../assets/images/medical/' + row.groupName.trim() + '.jpg'
               "
             />
+          </div> -->
+          <div class="reviewImage d-flex mb-2"  *ngIf="row.imagePath !== ' '">
+            <img
+            [src]="
+            row.imagePath
+                ? row.imagePath.substring(
+                  row.imagePath.indexOf('assets')
+                  )
+                : '../../../assets/images/medical/' + row.groupName.trim() + '.jpg'
+            "
+          />
           </div>
         </div>
         <!-- review part end -->

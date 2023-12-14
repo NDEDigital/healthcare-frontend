@@ -81,7 +81,7 @@ export class ProductSliderComponent {
   //           companyName: this.goods[i].companyName,
   //           groupName: this.goods[i].groupName,
   //           groupCode: this.goods[i].groupCode,
-  //           goodsID: this.goods[i].goodsID,
+  //           goodsId: this.goods[i].goodsId,
   //           goodsName: this.goods[i].goodsName,
   //           specification: this.goods[i].specification,
   //           stockQty: this.goods[i].stockQty,
@@ -97,7 +97,7 @@ export class ProductSliderComponent {
   //           companyName: this.goods[i].companyName,
   //           groupName: this.goods[i].groupName,
   //           groupCode: this.goods[i].groupCode,
-  //           goodsID: this.goods[i].goodsID,
+  //           goodsId: this.goods[i].goodsId,
   //           goodsName: this.goods[i].goodsName,
   //           specification: this.goods[i].specification,
   //           stockQty: this.goods[i].stockQty,
@@ -142,7 +142,7 @@ export class ProductSliderComponent {
             let obj = {
               companyName: this.goods[i].companyName,
               groupCode: this.goods[i].groupCode,
-              goodsID: this.goods[i].goodsID,
+              goodsId: this.goods[i].goodsId,
               groupName: this.goods[i].groupName,                
               goodsName: this.goods[i].goodsName,
               specification: this.goods[i].specification,
@@ -160,7 +160,7 @@ export class ProductSliderComponent {
             let obj = {
               companyName: this.goods[i].companyName,
               groupCode: this.goods[i].groupCode,
-              goodsID: this.goods[i].goodsID,
+              goodsId: this.goods[i].goodsId,
               groupName: this.goods[i].groupName,                
               goodsName: this.goods[i].goodsName,
               specification: this.goods[i].specification,
@@ -203,7 +203,7 @@ export class ProductSliderComponent {
 
   //           if (finObj) {
   //             let product = finObj.find(
-  //               (p: any) => p.goodsID === this.goods[i].goodsID
+  //               (p: any) => p.goodsId === this.goods[i].goodsId
   //             );
   //             if (product) {
   //               product.approveSalesQty = this.goods[i].approveSalesQty;
@@ -250,7 +250,7 @@ export class ProductSliderComponent {
 
           if (finObj) {
             let product = finObj.find(
-              (p: any) => p.goodsID === this.goods[i].goodsID
+              (p: any) => p.goodsId === this.goods[i].goodsId
             );
             if (product) {
               // product.stockQty = this.goods[i].stockQty;
@@ -260,7 +260,7 @@ export class ProductSliderComponent {
               let obj = {
                 // groupName: this.goods[i].groupName,
                 // groupCode: this.goods[i].groupCode,
-                // goodsID: this.goods[i].goodsID,
+                // goodsId: this.goods[i].goodsId,
                 // goodsName: this.goods[i].goodsName,
                 // specification: this.goods[i].specification,
                 // stockQty: this.goods[i].stockQty,
@@ -273,7 +273,7 @@ export class ProductSliderComponent {
             let obj = {
               // groupName: this.goods[i].groupName,
               // groupCode: this.goods[i].groupCode,
-              // goodsID: this.goods[i].goodsID,
+              // goodsId: this.goods[i].goodsId,
               // goodsName: this.goods[i].goodsName,
               // specification: this.goods[i].specification,
               // stockQty: this.goods[i].stockQty,

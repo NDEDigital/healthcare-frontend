@@ -83,8 +83,8 @@
                  <div class=" product-title">
                   <p class="ms-2 ">{{(compareData.length > 0) ? (compareData[first].goodsName.length>80)
                     ?compareData[first].goodsName.slice(0,80)+"...":compareData[first].goodsName : "" }}</p>
-                  <button *ngIf="compareData.length > 0" class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
-                     Contact Supplier</button>
+                  <!-- <button *ngIf="compareData.length > 0" class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
+                     Contact Supplier</button> -->
                  </div>
                
           </div>
@@ -99,8 +99,8 @@
                  <div class=" product-title">
                   <p class="ms-2">{{(compareData.length > 1) ? (compareData[second].goodsName.length>80)
                     ?compareData[second].goodsName.slice(0,80)+"...":compareData[second].goodsName : "" }}</p>
-                  <button *ngIf="compareData.length > 1" class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
-                     Contact Supplier</button>
+                  <!-- <button *ngIf="compareData.length > 1" class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
+                     Contact Supplier</button> -->
                  </div>
 
               </div>
@@ -114,8 +114,8 @@
                  <div class=" product-title">
                   <p class="ms-2">{{(compareData.length > 2) ? (compareData[third].goodsName.length>80)
                     ?compareData[third].goodsName.slice(0,80)+"...":compareData[third].goodsName : "" }}</p>
-                  <button *ngIf="compareData.length > 2" class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
-                     Contact Supplier</button>
+                  <!-- <button *ngIf="compareData.length > 2" class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
+                     Contact Supplier</button> -->
                  </div>
 
               </div>
@@ -142,13 +142,13 @@
             <p>Available Quantity</p>
             </div>
             <div class="ps-2 border-start border-secondary  product">
-             <p *ngIf="compareData.length>0">{{compareData[first].quantity}} tons</p>
+             <p *ngIf="compareData.length>0">{{compareData[first].quantity}} pieces</p>
             </div>
             <div class="ps-2 border-start border-secondary  product">
-             <p *ngIf="compareData.length>1">{{compareData[second].quantity}} tons</p>
+             <p *ngIf="compareData.length>1">{{compareData[second].quantity}} pieces</p>
             </div>
              <div class="ps-2 border-start border-secondary  product">
-             <p *ngIf="compareData.length>2">{{compareData[third].quantity}} tons</p>
+             <p *ngIf="compareData.length>2">{{compareData[third].quantity}} pieces</p>
             </div>
          </div>
 
@@ -157,13 +157,13 @@
             <p>Min. order quantity</p>
             </div>
             <div class="ps-2 border-start border-secondary  product">
-             <p>3tons</p>
+             <p>3pieces</p>
             </div>
             <div class="ps-2 border-start border-secondary  product">
-             <p>3tons</p>
+             <p>3pieces</p>
             </div>
              <div class="ps-2 border-start border-secondary  product">
-             <p>3tons</p>
+             <p>3pieces</p>
             </div>
          </div>
 
@@ -172,13 +172,13 @@
             <p>FOB Price</p>
             </div>
             <div class="ps-2 border-start border-secondary  product">
-            <p *ngIf = "compareData.length > 0">{{(compareData[first].price !== "")?"BDT ৳"+compareData[first].price+"/ton":"N/A"}}</p>
+            <p *ngIf = "compareData.length > 0">{{(compareData[first].price !== "")?"BDT ৳"+compareData[first].price+"/pieces":"N/A"}}</p>
            </div>
            <div class="ps-2 border-start border-secondary  product">
-            <p *ngIf = "compareData.length > 1">{{(compareData[second].price !== "")?"BDT ৳"+compareData[second].price+"/ton":"N/A"}}</p>
+            <p *ngIf = "compareData.length > 1">{{(compareData[second].price !== "")?"BDT ৳"+compareData[second].price+"/pieces":"N/A"}}</p>
            </div>
            <div class="ps-2 border-start border-secondary  product">
-            <p *ngIf = "compareData.length > 2">{{(compareData[third].price !== "")?"BDT ৳"+compareData[third].price+"/ton":"N/A"}}</p>
+            <p *ngIf = "compareData.length > 2">{{(compareData[third].price !== "")?"BDT ৳"+compareData[third].price+"/pieces":"N/A"}}</p>
            </div>
          </div>
          <div class="d-flex border-bottom border-secondary">
@@ -210,17 +210,17 @@
              <p>Main Products</p>
              </div>
              <div class="ps-2 border-start border-secondary product">
-             <p>Hr plate</p>
-             <p>Hr Coil</p>
+             <!-- <p>Hr plate</p>
+             <p>Hr Coil</p> -->
              </div>
              <div class="ps-2 border-start border-secondary product">
-             <p>Hr plate</p>
+             <!-- <p>Hr plate</p>
              <p>Hr Coil</p>
-             <p>Angle Bolt</p>
+             <p>Angle Bolt</p> -->
              </div>
              <div class="ps-2 border-start border-secondary product">
-             <p>Hr plate</p>
-             <p>Hr Coil</p>
+             <!-- <p>Hr plate</p>
+             <p>Hr Coil</p> -->
              </div>
          </div>
 
@@ -274,8 +274,8 @@
             <p><input type="checkbox" name="" id=""> Select All</p>
             </div>
             <div class="border-start ps-2 border-secondary pb-2  product">
-           <button class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
-                      Contact Supplier</button>
+           <!-- <button class="btn border border-secondary ms-2 mt-3"><i class="bi bi-envelope"></i>
+                      Contact Supplier</button> -->
                       </div>
           </div>
      </div>  
