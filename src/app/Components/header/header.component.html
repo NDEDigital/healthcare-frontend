@@ -115,8 +115,9 @@
   <div class="row justify-content-around laptop-menu m-0">
     <div class="logo_container col-3 d-flex justify-content-between">
       <!-- <a href="" -->
-      <a routerLink=" " class="companyName">
-        <span>Nimpex HealthCare</span>
+      <a   class="companyName">
+        <span *ngIf="!isBuyer">Nimpex HealthCare</span>
+        <span *ngIf="isBuyer" [routerLink]="' '"style="cursor: pointer;" > Nimpex HealthCare</span>
       <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" />-->
       </a>
 
