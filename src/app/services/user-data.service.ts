@@ -20,6 +20,8 @@ export class UserDataService {
   getSingleUserURL = `${this.URL}/getSingleUserInfo`;
   passURL = `${this.URL}/updatePass`;
   updateUserURL = `${this.URL}/UpdateUser`;
+  bankDataURL =  `${this.URL}/api/Goods/BankData`;
+  MobileBankingTypeURL = `${this.URL}/api/Goods/MobileBankData`;
   constructor(private http: HttpClient) {}
   UserExist(userData: any) {
     return this.http.post(this.UserExistURL, userData);
@@ -67,6 +69,14 @@ export class UserDataService {
     return this.http.post(`${this.URL}/GenerateRefreshToken`,formData)
 
   }
+
+  GetBankdata() {
+    return this.http.get(this.bankDataURL);
+  } 
+
+  GetMobileBankingdata() {
+    return this.http.get(this.MobileBankingTypeURL);
+  }   
 
 
 }

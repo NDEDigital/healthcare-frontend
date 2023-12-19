@@ -43,6 +43,8 @@ export class RegisterComponent implements AfterViewInit {
 
   // payment 
   paymentMethods: string[] = ['Credit Card', 'Cash','Mobile Banking'];
+  bankData:any = [];
+  mobileBankingData:any = [];
   selectedPaymentMethod: string = 'Nothing Selected'; // Variable to hold the selected payment method
   showBankingInfo: boolean = false; // Variable to control the visibility of banking information fields
   showMobileBankingInfo: boolean = false;
@@ -82,10 +84,20 @@ export class RegisterComponent implements AfterViewInit {
         companyName: new FormControl(''),
         website: new FormControl(''),
         productCategory: new FormControl('Nothing Selected'),
-        yearsInBusiness: new FormControl(''),
+        companyFoundationDate: new FormControl(''),
+
         businessRegNum: new FormControl(''),
         taxIdNum: new FormControl(''),
+
+        // payment
         prefPaymentMethod: new FormControl('Nothing Selected'),
+        //bank
+        bankId: new FormControl(''),
+        bankAccountNo: new FormControl(''),
+        bankHolderName: new FormControl(''),
+        // mbl
+        MobileBankingTypeId: new FormControl(''),
+        MobileBankingNo: new FormControl(''),
       },
       { validators: this.passwordMatchValidator }
     );
@@ -151,36 +163,42 @@ export class RegisterComponent implements AfterViewInit {
 
       website: this.userForm.value.website,
       productCategory: this.userForm.value.productCategory,
-      yearsInBusiness: this.userForm.value.yearsInBusiness,
+      companyFoundationDate: this.userForm.value.companyFoundationDate,
       businessRegistrationNumber: this.userForm.value.businessRegNum,
       taxIDNumber: this.userForm.value.taxIdNum,
+
       preferredPaymentMethod: this.userForm.value.prefPaymentMethod,
+      bankId: this.userForm.value.bankId,
+      bankAccountNo: this.userForm.value.bankAccountNo,
+      bankHolderName: this.userForm.value.bankHolderName,
+      MobileBankingTypeId: this.userForm.value.MobileBankingTypeId,
+      MobileBankingNo: this.userForm.value.MobileBankingNo,
     };
     console.log(this.user);
 
-    if (this.userForm.valid) {
-      this.userData.UserExist(this.user).subscribe({
-        next: (response: any) => {
-          setTimeout(() => {
-            this.userExist = response.userExist;
-            console.log(response);
-            if (this.userExist) {
-              this.alertMsg = 'User already exists';
-              this.UserExistModalBTN.nativeElement.click();
-            } else {
-              console.log(this.userExist);
-              this.captchaVerify();
-            }
-          }, 100);
-        },
-        error: (error: any) => {
-          console.log(error);
-          //  alert(error.error.message);
-          // this.alertMsg = error.error.message;
-          // this.UserExistModalBTN.nativeElement.click();
-        },
-      });
-    }
+    // if (this.userForm.valid) {
+    //   this.userData.UserExist(this.user).subscribe({
+    //     next: (response: any) => {
+    //       setTimeout(() => {
+    //         this.userExist = response.userExist;
+    //         console.log(response);
+    //         if (this.userExist) {
+    //           this.alertMsg = 'User already exists';
+    //           this.UserExistModalBTN.nativeElement.click();
+    //         } else {
+    //           console.log(this.userExist);
+    //           this.captchaVerify();
+    //         }
+    //       }, 100);
+    //     },
+    //     error: (error: any) => {
+    //       console.log(error);
+    //       //  alert(error.error.message);
+    //       // this.alertMsg = error.error.message;
+    //       // this.UserExistModalBTN.nativeElement.click();
+    //     },
+    //   });
+    // }
     // console.log(userData);
 
     // this.cdr.detectChanges();
@@ -401,9 +419,37 @@ export class RegisterComponent implements AfterViewInit {
   onPaymentMethodChange() {
     // If 'Credit Card' is selected, show banking information fields
     this.showBankingInfo = this.selectedPaymentMethod == 'Credit Card';
- 
-    this.showMobileBankingInfo = this.selectedPaymentMethod == 'Mobile Banking';
+    if(this.showBankingInfo){
+      this.bankdata();
+      
+    }
 
-  }
+    this.showMobileBankingInfo = this.selectedPaymentMethod == 'Mobile Banking';
+    if(this.showMobileBankingInfo){
+      this.MobileBankingdata();
+    }
  
+  }
+
+  // get bank data 
+  bankdata(){
+    this.userData
+    .GetBankdata()
+    .subscribe((data: any) => {
+      console.log(' GetBankdata dataaaaaa ', data); // Use a type if possible for better type checking
+       this.bankData = data;
+    });
+   
+  }
+    // get MobileBanking data 
+    MobileBankingdata(){
+      this.userData
+      .GetMobileBankingdata()
+      .subscribe((data: any) => {
+        console.log(' GetMobileBankingdata dataaaaaa ', data); // Use a type if possible for better type checking  
+        this.mobileBankingData = data;
+      });
+    }
+
+
 }
