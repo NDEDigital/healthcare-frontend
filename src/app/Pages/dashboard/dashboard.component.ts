@@ -41,6 +41,8 @@ export class DashboardComponent {
   sidebarCol2Title = 'Add Product';
   sidebarCol3Title = 'Orders';
   sidebarCol4Title = 'Inventory';
+  sidebarCol6Title = 'Other Sales';
+  sidebarCol5Title = 'Add Quantity';
   sidebarCol4Link = '/payment';
   sidebarCol2Link = '/addProduct';
   sidebarCol3Link = '/ordersOverview';
@@ -69,6 +71,8 @@ export class DashboardComponent {
   isBuyerOrder = false;
   isSellerOrder = false;
   loading: boolean = true;
+  SellerQuantity:boolean =false;
+  productOthersSales:boolean = false;
   private subscription: Subscription;
   isLoggedIn = false;
   pForm: FormGroup;
@@ -599,6 +603,7 @@ export class DashboardComponent {
     const role = localStorage.getItem('role');
     console.log(role, 'role');
     this.sellerInventory = false;
+    this.SellerQuantity = false;
     if (this.isAdmin) {
       this.isAdminOrder = orderClicked;
       console.log(this.isAdminOrder, 'isAdminOrder');
@@ -614,5 +619,21 @@ export class DashboardComponent {
   inventory(){
     this.sellerInventory = true;
     this.isSellerOrder = false;
+    this.SellerQuantity = false
+  }
+
+  AddQuantity(){
+   this.SellerQuantity = true;
+   this.isSellerOrder = false;
+   this.sellerInventory = false;
+   this.productOthersSales = false;
+ 
+  }
+
+  OthersSales(){
+    this.productOthersSales = true;
+    this.isSellerOrder = false;
+    this.sellerInventory = false;
+
   }
 }

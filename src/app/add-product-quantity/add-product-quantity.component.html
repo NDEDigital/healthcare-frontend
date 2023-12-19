@@ -1,0 +1,205 @@
+<div class="addQuantityBody">
+    <div class="addQuantity_header bg-white d-flex justify-content-center p-2">
+      <h1 class="addQuantity_header_text">Add Product Quantity</h1>
+    </div>
+
+
+  
+     <!--  field -->
+     <div class="field-div  p-3 mt-3">
+         <!-- master field -->
+      <div class="master-field">
+        <div class=" row m-1">
+          <div class=" col " >
+            <div class="form-group">
+              <div class="row m-1">
+                <div class="col-5">
+                  <label for="website">Portal Received Code</label>
+                </div>
+                <div class="col-7">
+                  <input type="text" id="website"   />
+                </div>
+              </div>                      
+            </div>
+            <div class="form-group">
+              <div class="row m-1">
+                <div class="col-5">
+                  <label for="website">Portal Received Date</label>
+                </div>
+                <div class="col-7">
+                  <input type="date" id="website"   />
+                </div>
+              </div>                       
+            </div>
+          </div>
+          <div class=" col" >
+            <div class="form-group">
+              <div class="row m-1">
+                <div class="col-4">
+                  <label for="website">Challan No</label>
+                </div>
+                <div class="col-8">                  
+                  <input type="text" id="website"   />
+                </div>
+              </div>                
+            </div>
+            <div class="form-group">
+              <div class="row m-1">
+                <div class="col-4">
+                  <label for="website">Challan Date</label>
+                </div>
+                <div class="col-8">
+                  <input type="date" id="website"   />
+                </div>
+              </div>              
+            </div> 
+          </div>
+          <div class=" col" >
+            <div class="form-group">
+              <div class="row">
+                <div class="col-4">
+                  <label for="website">Remarks</label>
+                </div>
+                <div class="col-8">
+                  <input type="text" id="website"   />
+                </div>
+              </div>                          
+            </div>       
+          </div>
+        </div>
+
+      </div>
+         <!-- details field -->
+       <div class="details-field  mt-4">
+        <div class="table-responsive">
+          <table class="table  table-striped table-hover">
+            <thead>
+              <tr class="details-header">
+                <th scope="col">#</th>
+                <th scope="col">Portal Details Code </th>
+                <th scope="col">Portal Receive Code</th>
+                <th scope="col">Portal Group Code</th>
+                <th scope="col">Product Code </th>
+                <th scope="col">Specification</th>
+                <th scope="col">Received Qty</th>
+                <th scope="col">Unit Id </th>
+                <th scope="col">Price</th>
+                <th scope="col">Remarks</th>
+              </tr>
+            </thead>
+            <tbody  >
+              <tr  *ngFor="let row of rows; let i = index">
+                <th scope="row">{{i+1}}</th>
+                <td>
+                     
+                    <input type="text" id="website"   readonly/>
+              
+                </td>
+                <td>
+               
+                    <input type="text" id="website"  readonly />
+           
+                </td>
+                <td>
+                                
+                    <input type="text" id="website"  readonly />
+                  
+                </td>
+                <td>
+         
+                    <input type="text" id="website"   readonly/>
+          
+                </td>
+                <td>
+             
+                    <input type="text" id="website"  readonly />
+        
+                </td>
+                <td>
+        
+                    <input type="text" id="website"   />
+    
+                </td>
+                <td>
+    
+                    <input type="text" id="website"  readonly />
+            
+                </td>
+                <td>
+                
+                    <input type="text" id="website"  readonly />
+              
+                </td>
+                <td>
+                 
+                    <input type="text" id="website"   />
+             
+                </td>
+              </tr>
+             
+            </tbody>
+      
+            
+          </table>
+         
+        </div>
+
+       </div>  
+
+       <div class="div-button">
+         <div class="icons">
+          <i class="fa-solid fa-plus" (click)="addRow()"></i>
+          <i class="fa-solid fa-trash"></i>
+         </div>
+       </div>
+
+
+     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- fields div -->
+  <div class="addQuantity_field_div bg-white mt-3 py-4 d-none">
+  
+      <!-- groupName -->
+      <div class="dropdown mx-2" (click)="toggleDropdown('groupName')">
+        <button class="dropbtn dropdown-toggle">{{dropdown_groupName}}</button>
+        <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isGroupNameDropdownOpen }">
+          <input type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')">
+          <a *ngFor="let item of dropdownItems" (click)="SetDropDownName(item)">{{item}}</a>
+        </div>
+      </div>
+ 
+       <!-- goodsName -->
+       <div class="dropdown  mx-2" (click)="toggleDropdown('goodsName')">
+        <button class="dropbtn dropdown-toggle">{{dropdown_goodsName}}</button>
+        <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isGoodsNameDropdownOpen }">
+          <input type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')">
+          <a *ngFor="let item of dropdownItems" (click)="SetDropDownName(item)">{{item}}</a>
+        </div>
+     </div> 
+  </div>
+
+    
+
+
+
+</div>
+  

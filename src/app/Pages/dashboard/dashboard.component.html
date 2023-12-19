@@ -280,13 +280,54 @@
         </div>
         <div class="sidebar_delimiter"  ></div>
       </div>
+      <div *ngIf="!isAdmin" >
+        <div class="sidebar_item d-flex justify-content-between p-1 py-3">
+          <div class="d-flex">
 
+            <a
+              class="d-flex menu_link"
+              [ngClass]="{ active: SidebarIndex === 5 }"
+              (click)="SidebarIndex = 5"
+              (click)="AddQuantity()"
+            >
+              <span class="title_icon text-start me-2"
+                ><i class="fa-solid fa-cart-shopping"></i
+              ></span>
+              <h5>{{ sidebarCol5Title }}</h5>
+            </a>
+          </div>
+
+
+        </div>
+        <div class="sidebar_delimiter"  ></div>
+      </div>
+      <div *ngIf="!isAdmin" >
+        <div class="sidebar_item d-flex justify-content-between p-1 py-3">
+          <div class="d-flex">
+
+            <a
+              class="d-flex menu_link"
+              [ngClass]="{ active: SidebarIndex === 6 }"
+              (click)="SidebarIndex = 6"
+              (click)="OthersSales()"
+            >
+              <span class="title_icon text-start me-2"
+                ><i class="fa-solid fa-cart-shopping"></i
+              ></span>
+              <h5>{{ sidebarCol6Title }}</h5>
+            </a>
+          </div>
+
+
+        </div>
+        <div class="sidebar_delimiter"  ></div>
+      </div>
 
     </div>
   </div>
   <!-- ================  end of sidebar =============  -->
   <div class="dashboard_body px-5 py-2">
-    <div *ngIf="!isAdminOrder && !isBuyerOrder && !isSellerOrder && !sellerInventory">
+    <div *ngIf="!isAdminOrder && !isBuyerOrder && !isSellerOrder && !sellerInventory && !SellerQuantity">
       <div class="dashboard_body-header sticky-top">
         <nav class="navbar bg-white rounded border border-1">
           <div class="container-fluid" *ngIf="!isAdmin">
@@ -532,6 +573,8 @@
           </div>
         </div>
       </section>
+
+
       <!-- sellers Products -->
       <section class="mt-2 row" *ngIf="filteredProducts.length > 0 && !isAdmin">
         <div
@@ -553,6 +596,12 @@
         <h1 class="text-danger text-center">No Product Found!</h1>
       </section>
     </div>
+
+    <!-- Sellers Add Quantity -->
+    <section  *ngIf="SellerQuantity" class="seller_inventory_body"  >
+      <app-add-product-quantity></app-add-product-quantity>
+    </section>
+
     <section
       class="admin_order_body"
       *ngIf="isAdminOrder && !isBuyerOrder && !isSellerOrder  "
@@ -560,12 +609,19 @@
       <app-admin-order></app-admin-order>
     </section>
 
+     <!-- sellers inventory -->
     <section
     class="seller_inventory_body  "
-    *ngIf="!isAdminOrder && !isBuyerOrder && !isSellerOrder && sellerInventory "
+    *ngIf=" sellerInventory "
   >
     <app-seller-inventory></app-seller-inventory>
   </section>
+       <!-- sellers inventory end-->
+
+ 
+
+
+
     <section
       class="seller_order_body"
       *ngIf="isSellerOrder && !isBuyerOrder && !isAdminOrder  "
