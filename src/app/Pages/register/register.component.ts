@@ -30,6 +30,8 @@ export class RegisterComponent implements AfterViewInit {
   // isError: boolean = false;
   // flag: string = '';
   @ViewChild('userExistModalBTN') UserExistModalBTN!: ElementRef;
+   // payment 
+  @ViewChild('PaymentInfo', { static: false }) PaymentInfo!: ElementRef;
   alertMsg: string = '';
   phoneNumber = '***********';
   recaptchaVerifier!: RecaptchaVerifier | null;
@@ -38,6 +40,12 @@ export class RegisterComponent implements AfterViewInit {
   userExist = true;
   user: any;
 
+
+  // payment 
+  paymentMethods: string[] = ['Credit Card', 'Cash','Mobile Banking'];
+  selectedPaymentMethod: string = 'Nothing Selected'; // Variable to hold the selected payment method
+  showBankingInfo: boolean = false; // Variable to control the visibility of banking information fields
+  showMobileBankingInfo: boolean = false;
   //  Otp Related
   otpValue: number | null = null;
   error = false;
@@ -91,6 +99,14 @@ export class RegisterComponent implements AfterViewInit {
     //     this.otpModalBtn.nativeElement.click();
     //   }
     //   this.initializeTimer();
+    // }
+
+     // Scroll to the banking info element
+
+    //  console.log('showBankingInfo:', this.showBankingInfo); // Check if this is true
+    //  console.log('PaymentInfo:', this.PaymentInfo); // Check if this is defined
+    //  if (this.showBankingInfo ) {
+    //   this.PaymentInfo.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     // }
   }
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
@@ -377,5 +393,17 @@ export class RegisterComponent implements AfterViewInit {
     //   .catch((error) => {
     //     console.log(error.code, 'inside resend');
     //   });
+
+
+
   }
+
+  onPaymentMethodChange() {
+    // If 'Credit Card' is selected, show banking information fields
+    this.showBankingInfo = this.selectedPaymentMethod == 'Credit Card';
+ 
+    this.showMobileBankingInfo = this.selectedPaymentMethod == 'Mobile Banking';
+
+  }
+ 
 }
