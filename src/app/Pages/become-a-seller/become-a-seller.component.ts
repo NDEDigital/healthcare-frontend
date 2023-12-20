@@ -11,7 +11,8 @@ import { UserDataService } from 'src/app/services/user-data.service';
 })
 export class BecomeASellerComponent {
   @ViewChild('userExistModalBTN') UserExistModalBTN!: ElementRef;
-
+  @ViewChild('CompanyImageInput') CompanyImageInput!: ElementRef;
+  @ViewChild('TradeLicenseInput') TradeLicenseInput!: ElementRef;
   compnay: any;
   alertMsg: string = '';
   companyResistrationForm!: FormGroup;
@@ -21,6 +22,8 @@ export class BecomeASellerComponent {
   // selectedPaymentMethod: string = 'Nothing Selected'; // Variable to hold the selected payment method
   showBankingInfo: boolean = false; // Variable to control the visibility of banking information fields
   showMobileBankingInfo: boolean = false;
+  MAX_FILE_SIZE_BYTES = 4194304; // 4MB = 1024 * 1024 * 4 bytes
+  imageSizeExceeded = false;
   constructor(
     private userData: UserDataService,
     private companyService: CompanyService
@@ -30,8 +33,8 @@ export class BecomeASellerComponent {
     this.companyResistrationForm = new FormGroup({
       companyName: new FormControl('', Validators.required),
       companyFoundationDate: new FormControl('', Validators.required),
-      businessRegNum: new FormControl('', Validators.required),
-      taxIdntificationNum: new FormControl('', Validators.required),
+      businessRegistrationNumber: new FormControl('', Validators.required),
+      taxIdentificationNumber: new FormControl('', Validators.required),
       tradeLicense: new FormControl('', Validators.required),
       companyImage: new FormControl('', Validators.required),
       preferredPaymentMethodID: new FormControl('3', Validators.required),
@@ -85,16 +88,44 @@ export class BecomeASellerComponent {
     Object.values(this.companyResistrationForm.controls).forEach((control) => {
       control.markAsTouched();
       control.markAsDirty();
-      // console.log(control);
     });
-    const formData = this.companyResistrationForm.value; // Use the form value directly
-    console.log('Form Data:', formData);
+
+    const formData = new FormData();
+
+    // Append values to formData
+    Object.entries(this.companyResistrationForm.value).forEach(
+      ([key, value]) => {
+        if (value instanceof File) {
+          // Append file with its original name
+          formData.append(key, value, value.name);
+        } else {
+          formData.append(key, String(value));
+        }
+      }
+    );
+
+    // Append additional values
+    formData.append('AddedBy', 'user');
+    formData.append('AddedPC', '0.0.0.0');
+    formData.append(
+      'companyImageFile',
+      this.CompanyImageInput.nativeElement.files[0]
+    );
+    formData.append(
+      'tradeLicenseFile',
+      this.TradeLicenseInput.nativeElement.files[0]
+    );
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
 
     if (
       this.companyResistrationForm.valid &&
       this.companyResistrationForm.get('preferredPaymentMethodID')?.value > 0
     ) {
-      this.companyService.createUser(this.compnay).subscribe({
+      console.log('valid');
+
+      this.companyService.createCompany(formData).subscribe({
         next: (response: any) => {
           console.log(response);
         },

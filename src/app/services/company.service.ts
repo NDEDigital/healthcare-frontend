@@ -11,7 +11,7 @@ export class CompanyService {
   payMethodCompanyURL = `${this.URL}/api/HK_Gets/PreferredPaymentMethods`;
   preferredBankNamesURL = `${this.URL}/api/HK_Gets/PreferredBankNames`;
   constructor(private http: HttpClient) {}
-  createUser(companyData: any) {
+  createCompany(companyData: any) {
     return this.http.post(this.createCompanyURL, companyData);
   }
   getpayMethod() {
