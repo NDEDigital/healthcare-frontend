@@ -109,43 +109,14 @@ export class BecomeASellerComponent {
   }
 
   // payment
-  onPaymentMethodChange() {
-    console.log(
-      this.companyResistrationForm.get('preferredPaymentMethodID')?.value,
-      'paymethod'
-    );
-
-    if (
-      this.companyResistrationForm.get('preferredPaymentMethodID')?.value ===
-      '1'
-    ) {
-      this.showBankingInfo = true;
-      // this.bankdata();
-    } else if (
-      this.companyResistrationForm.get('preferredPaymentMethodID')?.value ===
-      '2'
-    ) {
-      this.showBankingInfo = true;
-      // this.MobileBankingdata();
-    } else {
-      this.showBankingInfo = false;
-    }
-    console.log(this.showBankingInfo);
-  }
 
   getBankInfo() {
+    this.companyResistrationForm.get('bankNameID')?.setValue('0');
     if (
-      this.companyResistrationForm.get('preferredPaymentMethodID')?.value ===
-      '1'
+      this.companyResistrationForm.get('preferredPaymentMethodID')?.value !==
+      '3'
     ) {
       this.showBankingInfo = true;
-      // this.bankdata();
-    } else if (
-      this.companyResistrationForm.get('preferredPaymentMethodID')?.value ===
-      '2'
-    ) {
-      this.showBankingInfo = true;
-      // this.MobileBankingdata();
     } else {
       this.showBankingInfo = false;
     }
