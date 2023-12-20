@@ -9,12 +9,18 @@ import { Component } from '@angular/core';
 export class AddProductQuantityComponent {
   isGoodsNameDropdownOpen: boolean = false
   isGroupNameDropdownOpen: boolean = false
-  dropdown_groupName  = "groupnmae"
-  dropdown_goodsName = " goodsNmae"
+  dropdown_groupName  = "Product Name"
+  selectedProduct :any;
   masterForm: FormGroup;
   form!: FormGroup;
   masterdata: any;
-  dropdownItems: string[] = ['Item 1', 'Item 2', 'Item 3', 'Item 4'];
+  products: any =  [
+    { productId: 1, productName: 'Product A', productCode: 'PA001', availableQty: 50 },
+    { productId: 2, productName: 'Product B', productCode: 'PB002', availableQty: 30 },
+    { productId: 3, productName: 'Product C', productCode: 'PC003', availableQty: 20 },
+    // Add more objects as needed
+  ];
+ 
   constructor(private fb: FormBuilder) {
     this.masterForm = this.fb.group({
       portalReceivedCode: [''],
@@ -88,8 +94,6 @@ export class AddProductQuantityComponent {
     this.isGroupNameDropdownOpen = (type === 'groupName') ? !this.isGroupNameDropdownOpen : false;
     this.isGoodsNameDropdownOpen = (type !== 'groupName') ? !this.isGoodsNameDropdownOpen : false;
   }
-
-
   filterFunction(event: Event , className: string): void {
  
     const input = (event.target as HTMLInputElement).value.toUpperCase();
@@ -105,10 +109,21 @@ export class AddProductQuantityComponent {
     });
   }
   
-  SetDropDownName(groupName : string){
-    this.dropdown_groupName = groupName
+  // SetDropDownName(groupName : string){
+  //   this.dropdown_groupName = groupName
+    
+  // }
+  SetDropDownName(selectedItem: any) {
+    this.selectedProduct = selectedItem;
+    this.dropdown_groupName = selectedItem.productName;
+  
+    // Assuming you're using a reactive form
+    this.form.patchValue({
+      ProductName: selectedItem.productName,
+      ProductCode: selectedItem.productCode,
+      // Set other fields based on the selected product
+      // For example:
+      AvailableQty: selectedItem.availableQty
+    });
   }
-
-
-
 }
