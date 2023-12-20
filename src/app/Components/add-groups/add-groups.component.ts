@@ -50,12 +50,13 @@ export class AddGroupsComponent {
       this.addProductService.createProductGroup(formData).subscribe({
         next: (response: any) => {
           console.log(response);
+          this.addGroupForm.reset();
           this.alertMsg = 'Successfully added this Product Group';
           this.UserExistModalBTN.nativeElement.click();
         },
         error: (error: any) => {
           console.log(error);
-          this.alertMsg = ' Faild to add this Product Group';
+          this.alertMsg = error.error.message;
           this.UserExistModalBTN.nativeElement.click();
         },
       });
