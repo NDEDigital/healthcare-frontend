@@ -62,6 +62,9 @@ import { SellerInventoryComponent } from './Components/seller-inventory/seller-i
 import { AddProductQuantityComponent } from './add-product-quantity/add-product-quantity.component';
 import { AddProductsComponent } from './Components/add-products/add-products.component';
 import { AddGroupsComponent } from './Components/add-groups/add-groups.component';
+import { UserRegFormComponent } from './Components/user-reg-form/user-reg-form.component';
+import { UserRegistrationComponent } from './Pages/user-registration/user-registration.component';
+import { CompanyApprovalComponent } from './Components/company-approval/company-approval.component';
 
 @NgModule({
   declarations: [
@@ -117,6 +120,9 @@ import { AddGroupsComponent } from './Components/add-groups/add-groups.component
     AddProductQuantityComponent,
     AddProductsComponent,
     AddGroupsComponent,
+    UserRegFormComponent,
+    UserRegistrationComponent,
+    CompanyApprovalComponent,
   ],
   imports: [
     BrowserModule,

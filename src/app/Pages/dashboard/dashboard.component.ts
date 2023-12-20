@@ -35,9 +35,10 @@ export class DashboardComponent {
   filteredProducts: any[] = []; // Array to hold the filtered products
   showSidebar = true;
   isAdmin: boolean = false;
-  isAdminOrder: boolean = false;
-  addProducts: boolean = false;
-  addGroups: boolean = false;
+  userRole: string = '';
+  // isAdminOrder: boolean = false;
+  // addProducts: boolean = false;
+  // addGroups: boolean = false;
 
   sidebarCol1Title = 'Product List';
   sidebarCol2Title = 'Add Products';
@@ -46,12 +47,13 @@ export class DashboardComponent {
   sidebarCol5Title = 'Add Quantity';
   sidebarCol6Title = 'Other Sales';
   sidebarCol7Title = 'Add Groups';
+  sidebarCol8Title = 'Company Approval';
   sidebarCol4Link = '/payment';
   sidebarCol2Link = '/addProduct';
   sidebarCol3Link = '/ordersOverview';
   activeButton: string | null = 'new';
   status: string | null = 'new';
-  sellerInventory: boolean = false;
+  // sellerInventory: boolean = false;
   SidebarIndex = 1;
   newCount = 0;
   editedCount = 0;
@@ -71,10 +73,10 @@ export class DashboardComponent {
   productDetails: any = [];
   isAdminOrderString: string = '';
   checkSidebar: string = '';
-  isBuyerOrder = false;
-  isSellerOrder = false;
+  // isBuyerOrder = false;
+  // isSellerOrder = false;
   loading: boolean = true;
-  SellerQuantity: boolean = false;
+  // SellerQuantity: boolean = false;
   productOthersSales: boolean = false;
   private subscription: Subscription;
   isLoggedIn = false;
@@ -134,15 +136,16 @@ export class DashboardComponent {
     //   this.isAdminOrder = false;
     // }
     this.getDashboardContents();
-    const role = localStorage.getItem('role');
-    if (role === 'admin') {
-      this.isAdmin = true;
-    }
-    console.log(this.isAdmin, 'isAdmin');
+
     setTimeout(() => {
+      const role = localStorage.getItem('role');
+      if (role) this.userRole = role;
+      if (role === 'admin') {
+        this.isAdmin = true;
+      }
+      console.log(this.isAdmin, 'isAdmin');
       if (this.isAdmin == true) {
         this.sidebarCol1Title = 'Product Approval';
-        this.sidebarCol2Title = 'User List';
         this.sidebarCol2Link = '/becomeASeller'; // userList
       }
     }, 15);
@@ -393,7 +396,7 @@ export class DashboardComponent {
         console.log(response.isAdmin, 'response.isAdmin');
         this.products = response.products;
         this.filteredProducts = [...this.products];
-        this.isAdmin = response.isAdmin;
+        // this.isAdmin = response.isAdmin;
         this.newCount = response.newCount;
         this.editedCount = response.editedCount;
         this.approvedCount = response.approvedCount;
@@ -608,58 +611,66 @@ export class DashboardComponent {
     this.selectedCheckboxIds = [];
     console.log(this.selectedCheckboxIds);
   }
-  AdminOrder(orderClicked: boolean) {
-    const role = localStorage.getItem('role');
-    console.log(role, 'role');
-    this.sellerInventory = false;
-    this.SellerQuantity = false;
-    this.addProducts = false;
-    this.addGroups = false;
+  // AdminOrder(orderClicked: boolean) {
+  //   const role = localStorage.getItem('role');
+  //   console.log(role, 'role');
+  //   this.sellerInventory = false;
+  //   this.SellerQuantity = false;
+  //   this.addProducts = false;
+  //   this.addGroups = false;
 
-    if (this.isAdmin) {
-      this.isAdminOrder = orderClicked;
-      console.log(this.isAdminOrder, 'isAdminOrder');
-    } else if (role === 'seller') {
-      this.isSellerOrder = orderClicked;
-      console.log(this.isSellerOrder, 'isSellerOrder');
-    } else {
-      this.isBuyerOrder = orderClicked;
-      console.log(this.isBuyerOrder, 'isBuyerOrder');
-    }
-  }
+  //   if (this.isAdmin) {
+  //     this.isAdminOrder = orderClicked;
+  //     console.log(this.isAdminOrder, 'isAdminOrder');
+  //   } else if (role === 'seller') {
+  //     this.isSellerOrder = orderClicked;
+  //     console.log(this.isSellerOrder, 'isSellerOrder');
+  //   } else {
+  //     this.isBuyerOrder = orderClicked;
+  //     console.log(this.isBuyerOrder, 'isBuyerOrder');
+  //   }
+  // }
 
-  inventory() {
-    this.sellerInventory = true;
-    this.isSellerOrder = false;
-    this.SellerQuantity = false;
-  }
+  // inventory() {
+  //   this.sellerInventory = true;
+  //   this.isSellerOrder = false;
+  //   this.SellerQuantity = false;
+  // }
 
-  AddQuantity() {
-    this.SellerQuantity = true;
-    this.isSellerOrder = false;
-    this.sellerInventory = false;
-    this.productOthersSales = false;
-  }
+  // AddQuantity() {
+  //   this.SellerQuantity = true;
+  //   this.isSellerOrder = false;
+  //   this.sellerInventory = false;
+  //   this.productOthersSales = false;
+  // }
 
-  OthersSales() {
-    this.productOthersSales = true;
-    this.isSellerOrder = false;
-    this.sellerInventory = false;
-  }
-  AddProducts() {
-    this.addProducts = true;
-    this.SellerQuantity = false;
-    this.isSellerOrder = false;
-    this.sellerInventory = false;
-    this.productOthersSales = false;
-    this.addGroups = false;
-  }
-  AddGroups() {
-    this.addGroups = true;
-    this.addProducts = false;
-    this.SellerQuantity = false;
-    this.isSellerOrder = false;
-    this.sellerInventory = false;
-    this.productOthersSales = false;
-  }
+  // OthersSales() {
+  //   this.productOthersSales = true;
+  //   this.isSellerOrder = false;
+  //   this.sellerInventory = false;
+  // }
+  // AddProducts() {
+  //   this.addProducts = true;
+  //   this.SellerQuantity = false;
+  //   this.isSellerOrder = false;
+  //   this.sellerInventory = false;
+  //   this.productOthersSales = false;
+  //   this.addGroups = false;
+  // }
+  // AddGroups() {
+  //   this.addGroups = true;
+  //   this.addProducts = false;
+  //   this.SellerQuantity = false;
+  //   this.isSellerOrder = false;
+  //   this.sellerInventory = false;
+  //   this.productOthersSales = false;
+  // }
+  // CompanyApproval() {
+  //   this.addGroups = true;
+  //   this.addProducts = false;
+  //   this.SellerQuantity = false;
+  //   this.isSellerOrder = false;
+  //   this.sellerInventory = false;
+  //   this.productOthersSales = false;
+  // }
 }

@@ -28,6 +28,7 @@ import { BuyerOnlyGuard } from './services/buyer-only.guard';
 import { SellerOnlyGuard } from './services/seller-only.guard';
 import { AdminSellerOnlyGuard } from './services/admin-seller-only.guard';
 import { NegativeSellerAdminGuardGuard } from './guards/negative-seller-admin-guard.guard';
+import { UserRegistrationComponent } from './Pages/user-registration/user-registration.component';
 const routes: Routes = [
   {
     path: '',
@@ -46,6 +47,11 @@ const routes: Routes = [
   {
     path: 'register',
     component: RegisterComponent,
+    canActivate: [AuthGuardGuard],
+  },
+  {
+    path: 'userRegistration',
+    component: UserRegistrationComponent,
     canActivate: [AuthGuardGuard],
   },
   {
@@ -97,7 +103,6 @@ const routes: Routes = [
     component: BuyerOrderComponent,
     canActivate: [BuyerOnlyGuard],
   },
-
 
   {
     path: 'buyerOrderDetails',
