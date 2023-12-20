@@ -50,5 +50,10 @@
   background-color: #a4a554 !important ;
 }
 
+.actionBtn{
+  cursor:pointer;
+  background:none;
+  border:none;
+}
 
 
