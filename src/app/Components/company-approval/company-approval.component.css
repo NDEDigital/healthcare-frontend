@@ -43,5 +43,12 @@
   background-color: var(--color-primary);
 }
 
+.btn-active{
+  background-color: #78ac8b !important ;
+}
+.btn-inactive{
+  background-color: #a4a554 !important ;
+}
+
 
 

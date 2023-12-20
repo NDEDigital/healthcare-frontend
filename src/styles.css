@@ -102,8 +102,7 @@ body {
   transform: scale(1.1);
 }
 
-/* modern button design */
-
+/* custom button design */
 .custom-btn {
   background-color: var(--color-primary-dark);
   border: none;
@@ -112,21 +111,31 @@ body {
   text-align: center;
   text-decoration: none;
   display: inline-block;
-  font-size: 16px;
+  font-size: 1rem; /* Responsive font size */
   margin: 4px 2px;
   cursor: pointer;
-  border-radius: .2rem;
+  border-radius: 0.2rem;
   transition: background-color 0.3s, box-shadow 0.3s;
 
-  width: 5rem;
-  height: 2.5rem;
-
+  width: 5rem; /* Initial fixed width */
+  height: 2.5rem; /* Initial fixed height */
 }
 
 .custom-btn:hover {
   background-color: var(--color-primary);
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
 }
+
+/* Responsive adjustments */
+@media (max-width: 600px) {
+  .custom-btn {
+    width: 100%;
+    height: auto;
+    font-size: 0.9rem;
+    padding: 0.4rem 0.6rem;
+  }
+}
+
 
 /* Media Queries */
 @media (max-width: 1700px) {
