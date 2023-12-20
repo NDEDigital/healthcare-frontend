@@ -129,7 +129,6 @@
         <span>Nimpex HealthCare</span>
         <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" /> -->
       </a>
-
     </div>
     <div class="user_icon d-flex align-items-center">
       <ul
@@ -223,25 +222,10 @@
           ><i class="fa-solid fa-chevron-down"></i
         ></span> -->
       </a>
-      <div class="sidebar_delimiter"></div>
-      <div class="sidebar_item d-flex justify-content-between p-1 py-3">
-        <div class="d-flex">
-          <a class="d-flex menu_link" (click)="editMode()">
-            <span class="title_icon text-start me-2"
-              ><i class="fa-solid fa-calendar-plus"></i
-            ></span>
-            <!-- <h5 routerLink="/addProduct">Add Product</h5> -->
-            <h5>{{ sidebarCol2Title }}</h5></a
-          >
-        </div>
-        <!-- <span class="icon_chevron-down"
-          ><i class="fa-solid fa-chevron-down"></i
-        ></span> -->
-      </div>
-      <div class="sidebar_delimiter"></div>
-      <div class="sidebar_item d-flex justify-content-between p-1 py-3">
-        <div class="d-flex">
 
+      <div class="sidebar_delimiter"></div>
+      <div class="sidebar_item d-flex justify-content-between p-1 py-3">
+        <div class="d-flex">
           <a
             class="d-flex menu_link"
             [ngClass]="{ active: SidebarIndex === 3 }"
@@ -254,15 +238,12 @@
             <h5>{{ sidebarCol3Title }}</h5>
           </a>
         </div>
-
-
       </div>
 
-      <div class="sidebar_delimiter"  ></div>
-      <div *ngIf="!isAdmin" >
+      <div class="sidebar_delimiter"></div>
+      <div *ngIf="!isAdmin">
         <div class="sidebar_item d-flex justify-content-between p-1 py-3">
           <div class="d-flex">
-
             <a
               class="d-flex menu_link"
               [ngClass]="{ active: SidebarIndex === 4 }"
@@ -275,15 +256,12 @@
               <h5>{{ sidebarCol4Title }}</h5>
             </a>
           </div>
-
-
         </div>
-        <div class="sidebar_delimiter"  ></div>
+        <div class="sidebar_delimiter"></div>
       </div>
-      <div *ngIf="!isAdmin" >
+      <div *ngIf="!isAdmin">
         <div class="sidebar_item d-flex justify-content-between p-1 py-3">
           <div class="d-flex">
-
             <a
               class="d-flex menu_link"
               [ngClass]="{ active: SidebarIndex === 5 }"
@@ -296,15 +274,12 @@
               <h5>{{ sidebarCol5Title }}</h5>
             </a>
           </div>
-
-
         </div>
-        <div class="sidebar_delimiter"  ></div>
+        <div class="sidebar_delimiter"></div>
       </div>
-      <div *ngIf="!isAdmin" >
+      <div *ngIf="!isAdmin">
         <div class="sidebar_item d-flex justify-content-between p-1 py-3">
           <div class="d-flex">
-
             <a
               class="d-flex menu_link"
               [ngClass]="{ active: SidebarIndex === 6 }"
@@ -317,17 +292,58 @@
               <h5>{{ sidebarCol6Title }}</h5>
             </a>
           </div>
-
-
         </div>
-        <div class="sidebar_delimiter"  ></div>
+        <div class="sidebar_delimiter"></div>
       </div>
+      <div class="sidebar_delimiter"></div>
+      <div class="sidebar_item d-flex justify-content-between p-1 py-3">
+        <div class="d-flex">
+          <a
+            class="d-flex menu_link"
+            [ngClass]="{ active: SidebarIndex === 2 }"
+            (click)="SidebarIndex = 2"
+            (click)="AddProducts()"
+          >
+            <span class="title_icon text-start me-2"
+              ><i class="fa-solid fa-cart-shopping"></i
+            ></span>
+            <h5>{{ sidebarCol2Title }}</h5>
+          </a>
+        </div>
+      </div>
+      <div class="sidebar_delimiter"></div>
 
+      <div class="sidebar_item d-flex justify-content-between p-1 py-3">
+        <div class="d-flex">
+          <a
+            class="d-flex menu_link"
+            [ngClass]="{ active: SidebarIndex === 7 }"
+            (click)="SidebarIndex = 7"
+            (click)="AddGroups()"
+          >
+            <span class="title_icon text-start me-2"
+              ><i class="fa-solid fa-cart-shopping"></i
+            ></span>
+            <h5>{{ sidebarCol7Title }}</h5>
+          </a>
+        </div>
+      </div>
+      <div class="sidebar_delimiter"></div>
     </div>
   </div>
   <!-- ================  end of sidebar =============  -->
   <div class="dashboard_body px-5 py-2">
-    <div *ngIf="!isAdminOrder && !isBuyerOrder && !isSellerOrder && !sellerInventory && !SellerQuantity">
+    <div
+      *ngIf="
+        !isAdminOrder &&
+        !isBuyerOrder &&
+        !isSellerOrder &&
+        !sellerInventory &&
+        !SellerQuantity &&
+        !addProducts &&
+        !addGroups
+      "
+    >
       <div class="dashboard_body-header sticky-top">
         <nav class="navbar bg-white rounded border border-1">
           <div class="container-fluid" *ngIf="!isAdmin">
@@ -574,7 +590,6 @@
         </div>
       </section>
 
-
       <!-- sellers Products -->
       <section class="mt-2 row" *ngIf="filteredProducts.length > 0 && !isAdmin">
         <div
@@ -598,40 +613,38 @@
     </div>
 
     <!-- Sellers Add Quantity -->
-    <section  *ngIf="SellerQuantity" class="seller_inventory_body"  >
+    <section *ngIf="SellerQuantity" class="seller_inventory_body">
       <app-add-product-quantity></app-add-product-quantity>
     </section>
 
     <section
       class="admin_order_body"
-      *ngIf="isAdminOrder && !isBuyerOrder && !isSellerOrder  "
+      *ngIf="isAdminOrder && !isBuyerOrder && !isSellerOrder"
     >
       <app-admin-order></app-admin-order>
     </section>
 
-     <!-- sellers inventory -->
-    <section
-    class="seller_inventory_body  "
-    *ngIf=" sellerInventory "
-  >
-    <app-seller-inventory></app-seller-inventory>
-  </section>
-       <!-- sellers inventory end-->
-
- 
-
-
+    <!-- sellers inventory -->
+    <section class="seller_inventory_body" *ngIf="sellerInventory">
+      <app-seller-inventory></app-seller-inventory>
+    </section>
+    <!-- sellers inventory end-->
 
     <section
       class="seller_order_body"
-      *ngIf="isSellerOrder && !isBuyerOrder && !isAdminOrder  "
+      *ngIf="isSellerOrder && !isBuyerOrder && !isAdminOrder"
     >
       <app-orders-overview></app-orders-overview>
     </section>
-    <section
-      class="buyer_order_body border"
-      *ngIf="isBuyerOrder && !isSellerOrder && !isAdminOrder"
-    ></section>
+
+    <!-- Add products fields here -->
+    <section class="border" *ngIf="addProducts">
+      <app-add-products></app-add-products>
+    </section>
+    <!-- Add groups fields here -->
+    <section class="border" *ngIf="addGroups">
+      <app-add-groups></app-add-groups>
+    </section>
   </div>
   <!-- </div> -->
 
