@@ -1,1 +1,84 @@
-<p>add-groups works!</p>
+<div class="container containgFields mt-5 mb-5 rounded">
+  <h2 class="register_title">Add Product Groups Name</h2>
+  <hr />
+  <form [formGroup]="addGroupForm">
+    <div class="form-group">
+      <label for="groupName"
+        ><span class="text-danger">*</span>Product Group Name</label
+      >
+      <input
+        type="text"
+        id="groupName"
+        formControlName="groupName"
+        [class.error]="isFieldInvalid('groupName')"
+      />
+      <span class="text-danger" *ngIf="isFieldInvalid('groupName')"
+        >Product Group Name is required.</span
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="groupPrefix"
+        ><span class="text-danger">*</span>Product Group Prefix</label
+      >
+      <input
+        type="text"
+        id="groupPrefix"
+        formControlName="groupPrefix"
+        [class.error]="isFieldInvalid('groupPrefix')"
+      />
+      <span class="text-danger" *ngIf="isFieldInvalid('groupPrefix')"
+        >Product Group Prefix is required.</span>
+    </div>
+
+    <div class="form-group">
+      <label for="groupDetail">Product Group Detail</label>
+      <textarea
+        type="text"
+        id="groupDetail"
+        class="textAreaDesign"
+        formControlName="groupDetail"
+      ></textarea>
+    </div>
+
+    <button
+      type="submit"
+      class="button mt-3"
+      id="sign-in-button"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+      (click)="onSubmit()"
+    >
+      Submit
+    </button>
+
+    <!-- Modal -->
+    <div
+      class="modal fade"
+      id="exampleModal"
+      tabindex="-1"
+      aria-labelledby="exampleModalLabel"
+      aria-hidden="true"
+    >
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header modal-heading">
+            <h1 class="modal-title fs-5 text-light" id="exampleModalLabel">Add Product Groups Name</h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body">
+            <p class="fs-5">Successfully added  <span class="fw-bold fs-5">this Product Group </span></p>
+            <p class="text-danger fs-5"
+            >Faild to added <span class="fw-bold fs-5">this product Group</span></p>
+          </div>
+
+        </div>
+      </div>
+    </div>
+  </form>
+</div>

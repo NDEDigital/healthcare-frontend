@@ -1,0 +1,139 @@
+.head {
+  background-color: var(--color-primary);
+  height: 100px;
+}
+.head img {
+  height: 100px;
+}
+body {
+  font-family: Arial, sans-serif;
+  background-color: #f2f2f2;
+  margin: 0;
+  padding: 0;
+}
+
+.containgFields {
+  width: 50rem;
+  margin: 0 auto;
+  padding: 20px;
+  background: var(--background-color);
+  box-shadow: 0 0 1rem var(--color-gray);
+}
+
+h2 {
+  text-align: center;
+}
+
+.register_title {
+  font-size: 2.5rem;
+  color: var(--color-primary);
+  text-shadow: 2px 2px 2px rgb(34, 77, 85);
+}
+.form-group {
+  /* margin-bottom: 10px; */
+}
+
+label {
+  display: block;
+  margin-bottom: 5px;
+  font-weight: 500;
+}
+
+input[type="text"],
+input[type="email"],
+input[type="password"],
+textarea,
+select {
+  width: 100%;
+  padding: 5px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 35px;
+}
+.textAreaDesign {
+  resize: none;
+  height: 6.2rem;
+}
+.checkbox-group {
+  margin-top: 10px;
+  /* margin-bottom: 20px; */
+}
+
+.checkbox-group label {
+  display: inline-block;
+  margin-right: 10px;
+}
+
+.button {
+  display: block;
+  width: 100%;
+  padding: 10px;
+  background-color: var(--color-primary);
+  color: #fff;
+  text-align: center;
+  text-decoration: none;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  opacity: 0.9;
+}
+.button:hover {
+  transition: 0.5s ease-in-out;
+  opacity: 1;
+}
+.error {
+  border-color: red !important;
+}
+/* .pass_container .col-6 {
+
+    width: 47% !important;
+  } */
+.form_content {
+  /* display: flex; */
+  flex-wrap: wrap;
+  justify-content: space-evenly;
+}
+
+.allUser,
+.sellerNbothOnly {
+  flex-basis: 45%;
+}
+
+.otpInput::-webkit-inner-spin-button,
+.otpInput::-webkit-outer-spin-button {
+  -webkit-appearance: none;
+}
+.otpInput:focus,
+.verify_btn:focus {
+  border: 1px solid var(--color-primary);
+  box-shadow: 0 0 0.2rem var(--color-primary);
+}
+.error {
+  border: 1px solid red;
+  box-shadow: 0 0 0.2rem red;
+}
+.resend_btn {
+  background: transparent;
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+.resend_btn.active {
+  background: transparent;
+  color: var(--color-primary);
+  font-weight: 500;
+  font-size: 0.9rem;
+}
+.verify_btn {
+  background: var(--color-primary);
+  color: #ffff;
+}
+.timer {
+  font-weight: 500;
+}
+
+.modal-heading{
+  background-color: var(--color-primary);
+}
+
+
+

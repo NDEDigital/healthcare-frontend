@@ -1,4 +1,11 @@
 import { Component } from '@angular/core';
+import {
+  AbstractControl,
+  FormControl,
+  FormGroup,
+  ValidationErrors,
+  Validators,
+} from '@angular/forms';
 
 @Component({
   selector: 'app-add-groups',
@@ -6,5 +13,39 @@ import { Component } from '@angular/core';
   styleUrls: ['./add-groups.component.css']
 })
 export class AddGroupsComponent {
+
+  addGroupForm!:FormGroup;
+
+  constructor(){
+
+  }
+
+  ngOnInit() {
+    this.addGroupForm = new FormGroup(
+      {
+
+        groupName: new FormControl('', Validators.required),
+        groupPrefix: new FormControl('', Validators.required),
+        groupDetail: new FormControl('')
+      },
+      // { validators: this.passwordMatchValidator }
+    );
+  }
+
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.addGroupForm.get(fieldName);
+    // Check if the field is not null before accessing its properties
+    return field ? field.invalid && (field.dirty || field.touched) : false;
+  }
+
+  onSubmit(): void {
+    if (this.addGroupForm.valid) {
+      console.log('Form Data:', this.addGroupForm.value);
+    } else {
+      console.log('Form is not valid');
+    }
+  }
+
 
 }
