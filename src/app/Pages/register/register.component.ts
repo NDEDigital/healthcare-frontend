@@ -113,8 +113,7 @@ export class RegisterComponent implements AfterViewInit {
     //   this.initializeTimer();
     // }
 
-     // Scroll to the banking info element
-
+    // Scroll to the banking info element
     //  console.log('showBankingInfo:', this.showBankingInfo); // Check if this is true
     //  console.log('PaymentInfo:', this.PaymentInfo); // Check if this is defined
     //  if (this.showBankingInfo ) {
@@ -146,28 +145,24 @@ export class RegisterComponent implements AfterViewInit {
       return;
     }
     this.user = {
-      counteryRegion: 'Bangladesh',
-      isBuyer: this.userForm.value.trade === 'Buyer' ? true : false,
-      isSeller: this.userForm.value.trade === 'Seller' ? true : false,
+      IsBuyer: this.userForm.value.trade === 'Buyer' ? true : false,
+      IsSeller: this.userForm.value.trade === 'Seller' ? true : false,
       // isBoth: this.userForm.value.trade === 'Both' ? true : false,
-      fullName:
+      FullName:
         this.userForm.value.fullName === ''
           ? false
           : this.userForm.value.fullName,
-      phoneNumber:
-        this.userForm.value.phone === '' ? false : this.userForm.value.phone,
-      email: this.userForm.value.email,
-      password: this.userForm.value.password,
-      address: this.userForm.value.address,
-      companyName: this.userForm.value.companyName,
-
-      website: this.userForm.value.website,
-      productCategory: this.userForm.value.productCategory,
-      companyFoundationDate: this.userForm.value.companyFoundationDate,
-      businessRegistrationNumber: this.userForm.value.businessRegNum,
-      taxIDNumber: this.userForm.value.taxIdNum,
-
-      preferredPaymentMethod: this.userForm.value.prefPaymentMethod,
+      PhoneNumber:this.userForm.value.phone === '' ? false : this.userForm.value.phone,
+      Email: this.userForm.value.email,
+      Password: this.userForm.value.password,
+      Address: this.userForm.value.address,
+      CompanyName: this.userForm.value.companyName,
+      Website: this.userForm.value.website,
+      ProductCategory: this.userForm.value.productCategory,
+      CompanyFoundedDate: this.userForm.value.companyFoundationDate,
+      BusinessRegistrationNumber: this.userForm.value.businessRegNum,
+      TaxIdNumber: this.userForm.value.taxIdNum,
+      PaymentMethodId: this.userForm.value.prefPaymentMethod,
       bankId: this.userForm.value.bankId,
       bankAccountNo: this.userForm.value.bankAccountNo,
       bankHolderName: this.userForm.value.bankHolderName,
@@ -199,7 +194,7 @@ export class RegisterComponent implements AfterViewInit {
         },
       });
     }
-   // console.log(userData);
+    //console.log(userData);
 
     // this.cdr.detectChanges();
   }
