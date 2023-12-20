@@ -133,10 +133,13 @@ export class UserRegFormComponent {
           this.userResistrationForm.value.trade === 'Buyer' ? true : false,
         isSeller:
           this.userResistrationForm.value.trade === 'Seller' ? true : false,
+        isAdmin: false,
       };
       delete formData.trade;
       delete formData.confirmPassword;
-
+      if (this.userResistrationForm.value.trade === 'Buyer') {
+        delete formData.companyCode;
+      }
       console.log('Form Data:', formData);
 
       this.user = formData;
@@ -158,7 +161,6 @@ export class UserRegFormComponent {
         },
         error: (error: any) => {
           console.log(error);
-
           this.alertMsg = error.error.message;
           this.UserExistModalBTN.nativeElement.click();
         },
