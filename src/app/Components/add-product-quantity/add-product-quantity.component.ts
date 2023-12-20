@@ -1,5 +1,6 @@
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
 import { Component } from '@angular/core';
+import { AddProductService } from 'src/app/services/add-product.service';
 
 @Component({
   selector: 'app-add-product-quantity',
@@ -9,10 +10,11 @@ import { Component } from '@angular/core';
 export class AddProductQuantityComponent {
   isGoodsNameDropdownOpen: boolean = false
   isGroupNameDropdownOpen: boolean = false
-  dropdown_groupName  = "Product Name"
+  dropdown_groupName: string = "Product Name"; // Set an initial value
   selectedProduct :any;
   masterForm: FormGroup;
   form!: FormGroup;
+  productDertailsData:any;
   masterdata: any;
   products: any =  [
     { productId: 1, productName: 'Product A', productCode: 'PA001', availableQty: 50 },
@@ -21,7 +23,7 @@ export class AddProductQuantityComponent {
     // Add more objects as needed
   ];
  
-  constructor(private fb: FormBuilder) {
+  constructor(private fb: FormBuilder , private addProductService :AddProductService) {
     this.masterForm = this.fb.group({
       portalReceivedCode: [''],
       portalReceivedDate: [''],
@@ -47,22 +49,20 @@ export class AddProductQuantityComponent {
 
   addRow() {
     const newRow = this.fb.group({
-      // Define the form controls for each row
-      productName: [''],
-      ProductGroupCode: [''],
+      productName: ['Product Name'], // Initialize productName control
       specification: [''],
       unit: [''],
       price: [''],
       receiveQty: [''],
       availableQty: [''],
       Remarks: [''],
-   
       // ... other fields
     });
-
+  
     // Access the FormArray and push the new FormGroup
     (this.form.get('rows') as FormArray).push(newRow);
   }
+  
 
   removeRow(index: number) {
     // Remove a specific row from the FormArray by index
@@ -83,8 +83,9 @@ export class AddProductQuantityComponent {
       ChallanDate: this.masterForm.value.challanDate,
       Remarks: this.masterForm.value.remarks,
     };
+    console.log(" masterdata", this.masterdata)
     const formData = this.form.value;
-    console.log(formData);
+    console.log(" detailsdata ",formData);
     // Access the values from the FormArray
    
   }
@@ -92,10 +93,24 @@ export class AddProductQuantityComponent {
 
   toggleDropdown(type: string): void {
     this.isGroupNameDropdownOpen = (type === 'groupName') ? !this.isGroupNameDropdownOpen : false;
-    this.isGoodsNameDropdownOpen = (type !== 'groupName') ? !this.isGoodsNameDropdownOpen : false;
+    if(this.isGroupNameDropdownOpen){
+      this.getDetailsData();
+    }
+  }
+
+  getDetailsData(){
+    this.addProductService.GetProductDetailsData('CMP-23-0002') .subscribe({
+      next: (response) => {
+         console.log( response)
+         this.productDertailsData = response;
+         console.log("his.productDertailsData ",this.productDertailsData)
+      },
+      error: (error) => {
+       console.log("error ",error)
+      },
+    });
   }
   filterFunction(event: Event , className: string): void {
- 
     const input = (event.target as HTMLInputElement).value.toUpperCase();
     const links = document.querySelectorAll(className) as NodeListOf<HTMLAnchorElement>;
   
@@ -108,22 +123,22 @@ export class AddProductQuantityComponent {
       }
     });
   }
-  
-  // SetDropDownName(groupName : string){
-  //   this.dropdown_groupName = groupName
-    
-  // }
-  SetDropDownName(selectedItem: any) {
+
+  SetDropDownName(selectedItem: any, rowIndex: number) {
     this.selectedProduct = selectedItem;
     this.dropdown_groupName = selectedItem.productName;
-  
-    // Assuming you're using a reactive form
-    this.form.patchValue({
-      ProductName: selectedItem.productName,
-      ProductCode: selectedItem.productCode,
-      // Set other fields based on the selected product
-      // For example:
-      AvailableQty: selectedItem.availableQty
+    // Get the form control for the specified row index
+    const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
+    // Set the values for the specific row
+    rowGroup.patchValue({
+      productName: selectedItem.productName,
+      specification: selectedItem.specification,
+      unit: selectedItem.unit,
+      price: selectedItem.productName,
+      receiveQty:'',
+      availableQty: selectedItem.availableQty,
+      Remarks: '',
     });
   }
+  
 }

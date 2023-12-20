@@ -19,7 +19,7 @@
                     <label for="website">Portal Received Code</label>
                   </div>
                   <div class="col-7">
-                    <input type="text" id="portalReceivedCode" formControlName="portalReceivedCode"  readonly />
+                    <input type="text" class="disable" id="portalReceivedCode" formControlName="portalReceivedCode"  readonly />
                   </div>
                 </div>                      
               </div>
@@ -29,7 +29,7 @@
                     <label for="website">Portal Received Date</label>
                   </div>
                   <div class="col-7">
-                    <input type="date" id="portalReceivedDate"    formControlName="portalReceivedDate" readonly  />
+                    <input type="date"  class="disable"  id="portalReceivedDate"    formControlName="portalReceivedDate" readonly  />
                   </div>
                 </div>                       
               </div>
@@ -74,56 +74,55 @@
 
 
       <div class="table-responsive mt-5  details-table">
-        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <form [formGroup]="form"  >
           <table formArrayName="rows" width="5rem" >
             <!-- Table header -->
             <thead>
               <tr class="details-header">
                 <th >Product Name</th>
-                <th> Group Code</th>
+
                 <th>Specification</th>
                 <th>Unit</th>
                 <th>Price</th>
                 <th>Receive Qty</th>
                 <th>Available Qty</th>
                 <th> Remarks</th>
+                <th> Action</th>
               </tr>
             </thead>
             <!-- Table body - rows -->
             <tbody>
-              <tr  class="border border-1"  *ngFor="let row of rowsFormArray.controls; let i = index;" [formGroupName]="i">
+              <tr  class="border border-1  "  *ngFor="let row of rowsFormArray.controls; let i = index;" [formGroupName]="i">
                 <!-- <td><input formControlName="productName" placeholder="ProductName"></td> -->
                 <td><div class="dropdown mx-2" (click)="toggleDropdown('groupName')">
                   <button class="dropbtn dropdown-toggle"   formControlName="ProductName">{{dropdown_groupName}}</button>
+                   <!-- dropdown -->
                   <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isGroupNameDropdownOpen }">
+                    <!-- search field -->
                     <input type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')">
-                    <a *ngFor="let item of products" (click)="SetDropDownName(item)">{{item.productName}}</a>
+                    <a *ngFor="let item of productDertailsData; let j = index" (click)="SetDropDownName(item, i)">{{item.productName}}</a>
                   </div>
                 </div></td>
-                <td><input formControlName="ProductGroupCode" placeholder="Group Code"></td>
+              
                 <!-- Add input fields for other columns -->
-                <td><input formControlName="specification" placeholder="Specification"></td>
-                <td><input formControlName="unit" placeholder="Unit"></td>
-                <td><input formControlName="price" placeholder="Price"></td>
-                <td><input formControlName="receiveQty" placeholder="Receive Qty"></td>
-                <td><input formControlName="availableQty" placeholder="Available Qty"></td>
-                <td><input formControlName="Remarks" placeholder="Remarks"></td>
-                <td><button type="button" (click)="removeRow(i)">Remove</button></td>
+                <td><input formControlName="specification" placeholder="Specification" readonly></td>
+                <td><input formControlName="unit" placeholder="Unit" readonly></td>
+                <td><input formControlName="price" placeholder="Price" readonly></td>
+                <td><input formControlName="receiveQty" placeholder="Receive Qty" class="non-readonly-input"></td>
+                <td><input formControlName="availableQty" placeholder="Available Qty" readonly></td>
+                <td><input formControlName="Remarks" placeholder="Remarks" class="non-readonly-input"></td>
+                <td><button type="button" class="btn  btn-secondary   py-1 px-2  m-1" (click)="removeRow(i)">Remove</button></td>
               </tr>
             </tbody>
           </table>
-
-        </form>
-     
+        </form>   
       </div>
-      
-      
-
+         
          <!-- button div -->
        <div class="div-button justify-content-between d-flex">
          <div class="icons">
           <i class="fa-solid fa-plus" (click)="addRow()"></i>
-          <i class="fa-solid fa-trash"></i>
+         
          </div>
          <div class=" submit-button ">
           <button

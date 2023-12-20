@@ -2,7 +2,7 @@
     width: 100%;
    
 }
-  .addQuantity_header_text {
+.addQuantity_header_text {
     color: var(--color-primary);
   }
 .field-div{
@@ -18,16 +18,22 @@
   }
 .details-table{
   height: 20rem;
+  border: 1px solid var(--color-primary);
+
+}
+.non-readonly-input {
+  border: 1px solid #bee1ee; /* Add a different border to non-read-only inputs */
+  border-radius: 5px;
+  /* Other styles for non-read-only inputs */
 }
   .details-header{
     background-color: #5e8391;
     color: #fff;
     top: 0;
     position: sticky;
- 
-  
+
   }
-  .details-header th{
+  .details-table th{
      min-width: 12rem;
      padding: .3rem;
   }
@@ -39,13 +45,13 @@
   .master-field label {
     color: #181717;
     font-size: 500;
-
   }
   .master-field .col{
     border: 1px #6a93a3;
   }
-
-
+  .disable{
+    background-color: #c7c7c7;
+  }
   .div-button .icons i{
     color: var(--color-primary);
     font-size: .8rem;

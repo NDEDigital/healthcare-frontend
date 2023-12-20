@@ -60,7 +60,7 @@ export class SellerInventoryComponent {
   }
 
 
-  GetData() {
+GetData() {
 this.sellerCode = localStorage.getItem('code') || '';
     console.log(" sellerCode", this.sellerCode)
     // this.SellerService.getSellerInventory('USR-STL-MDL-23-11-0003').subscribe(
