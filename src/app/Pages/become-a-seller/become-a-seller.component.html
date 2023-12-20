@@ -1,7 +1,176 @@
-<body>
-  <app-header></app-header>
-  <!-- <p>become-a-seller works!</p> -->
-  <div class="test text-center">
-    <img class="" src="/assets/images/underConstruction.jpg" alt="" />
-  </div>
-</body>
+<div class="head">
+  <a routerLink=""><img src="assets/images/Logo/final-logo-6.png" alt="" /></a>
+</div>
+
+<div class="container mt-5 mb-5 rounded">
+  <h2 class="register_title">Company Registration</h2>
+  <hr />
+  <form [formGroup]="companyResistrationForm">
+    <div class="row">
+      <div class="col-12 col-md-6">
+        <!-- company Name -->
+        <div class="form-group">
+          <label for="companyName"
+            ><span class="text-danger">*</span>Company Name</label
+          >
+          <input
+            type="text"
+            id="companyName"
+            formControlName="companyName"
+            [class.error]="isFieldInvalid('companyName')"
+          />
+          <span class="text-danger" *ngIf="isFieldInvalid('companyName')"
+            >Company Name is required.</span
+          >
+        </div>
+
+        <!--foundation Date -->
+        <div class="form-group">
+          <label for="companyFoundationDate">Company Foundation Date</label>
+          <input
+            type="date"
+            id="companyFoundationDate"
+            formControlName="companyFoundationDate"
+            class="w-100 p-1 rounded-1"
+          />
+        </div>
+
+        <!-- Registration Number -->
+        <div class="form-group">
+          <label for="businessRegNum"
+            ><span class="text-danger">*</span>Business Registration
+            Number</label
+          >
+          <input
+            type="text"
+            id="businessRegNum"
+            formControlName="businessRegNum"
+            [class.error]="isFieldInvalid('businessRegNum')"
+          />
+          <span class="text-danger" *ngIf="isFieldInvalid('businessRegNum')"
+            >Business Registration Number is required.</span
+          >
+        </div>
+      </div>
+
+      <div class="col-12 col-md-6">
+        <!-- Tax Identification  -->
+        <div class="form-group">
+          <label for="taxIdntificationNum"
+            ><span class="text-danger">*</span>Tax Identification Number</label
+          >
+          <input
+            type="text"
+            id="taxIdntificationNum"
+            formControlName="taxIdntificationNum"
+            [class.error]="isFieldInvalid('taxIdntificationNum')"
+          />
+          <span class="text-danger" *ngIf="isFieldInvalid('email')"
+            >Tax Identification Number is required.</span
+          >
+        </div>
+
+        <!-- Trade Licence -->
+        <div class="form-group">
+          <label for="tradeLicence"
+            ><span class="text-danger">*</span>Upload Trade Licence</label
+          >
+          <input
+            class="form-control"
+            type="file"
+            id="tradeLicence"
+            formControlName="tradeLicence"
+          />
+          <span class="text-danger" *ngIf="isFieldInvalid('tradeLicence')"
+            >Uploding Trade Licence is required.</span
+          >
+        </div>
+
+        <!-- company Image -->
+        <div class="form-group">
+          <label for="companyLogo">Upload your company Image</label>
+          <input
+            class="form-control"
+            type="file"
+            id="companyLogo"
+            formControlName="companyLogo"
+          />
+        </div>
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <div class="col-12 col-md-6">
+          <!-- Payment method -->
+          <!-- <div class="form-group">
+            <label for="prefPaymentMethod">Preferred Payment Method</label>
+            <select
+              name="prefPaymentMethod"
+              id="prefPaymentMethod"
+              formControlName="prefPaymentMethod"
+              [class.error]="isFieldInvalid('prefPaymentMethod')"
+            >
+              <option class="d-none" value="Nothing Selected" disabled>
+                Nothing Selected
+              </option>
+              <option value="credit card">Credit Card</option>
+              <option value="cash">Cash</option>
+            </select>
+          </div> -->
+
+          <div class="form-group">
+            <label for="prefPaymentMethod">Preferred Payment Method</label>
+            <select
+              name="prefPaymentMethod"
+              id="prefPaymentMethod"
+              formControlName="prefPaymentMethod"
+              [(ngModel)]="selectedPaymentMethod"
+              (change)="onPaymentMethodChange()"
+            >
+              <option class="d-none" value="Nothing Selected" disabled>
+                Nothing Selected
+              </option>
+              <option *ngFor="let method of paymentMethods" [value]="method">
+                {{ method }}
+              </option>
+            </select>
+          </div>
+          <!--  banking information -->
+          <div *ngIf="showBankingInfo" class="mt-2" #PaymentInfo>
+            <!-- bank name -->
+            <div class="form-group">
+              <label for="taxIdNum">Bank Name</label>
+              <select name="bankId" id="bankId" formControlName="bankId">
+                <option class="d-none" value="Nothing Selected" disabled>
+                  Nothing Selected
+                </option>
+                <option *ngFor="let type of bankData" [value]="type.bankId">
+                  {{ type.bankName }}
+                </option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="taxIdNum">Account No</label>
+              <input
+                type="text"
+                id="taxIdNum"
+                formControlName="bankAccountNo"
+              />
+            </div>
+            <div class="form-group">
+              <label for="taxIdNum">Holder Name</label>
+              <input
+                type="text"
+                id="taxIdNum"
+                formControlName="bankHolderName"
+              />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <button type="submit" class="button mt-3" id="sign-in-button">
+      Submit
+    </button>
+  </form>
+</div>

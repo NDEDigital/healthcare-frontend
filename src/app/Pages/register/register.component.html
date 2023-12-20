@@ -1,7 +1,7 @@
 <div class="head">
   <a routerLink=" " class="companyName">
     <span>Nimpex HealthCare</span>
-  <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" />-->
+    <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" />-->
   </a>
 </div>
 <div class="container mt-5 mb-5 rounded" [ngStyle]="getContainerWidth()">
@@ -140,12 +140,12 @@
         <!--  only seller  -->
         <div
           class="sellerNbothOnly"
-          *ngIf="
-            userForm.get('trade')?.value === 'Seller' 
-          "
+          *ngIf="userForm.get('trade')?.value === 'Seller'"
         >
           <div class="form-group">
-            <label for="companyName"><span class="text-danger">*</span>Company Name</label>
+            <label for="companyName"
+              ><span class="text-danger">*</span>Company Name</label
+            >
             <input type="text" id="companyName" formControlName="companyName" />
           </div>
           <div class="form-group">
@@ -166,8 +166,10 @@
             </select>
           </div>
           <div class="form-group">
-            <label for="company Foundation Date"> Company foundation date</label>
-            <input 
+            <label for="company Foundation Date">
+              Company foundation date</label
+            >
+            <input
               type="date"
               id="companyFoundationDate"
               formControlName="companyFoundationDate"
@@ -194,29 +196,28 @@
               [(ngModel)]="selectedPaymentMethod"
               (change)="onPaymentMethodChange()"
             >
-            <option class="d-none" value="Nothing Selected" disabled>
-              Nothing Selected
-            </option>
-            <option *ngFor="let method of paymentMethods" [value]="method">
-              {{ method }}
-            </option>
+              <option class="d-none" value="Nothing Selected" disabled>
+                Nothing Selected
+              </option>
+              <option *ngFor="let method of paymentMethods" [value]="method">
+                {{ method }}
+              </option>
             </select>
           </div>
         </div>
-           <!--  banking information -->
+        <!--  banking information -->
         <div *ngIf="showBankingInfo" class="mt-2" #PaymentInfo>
-
-           <!-- bank name -->
+          <!-- bank name -->
           <div class="form-group">
             <label for="taxIdNum">Bank Name</label>
-            <select name="bankId" id="bankId" formControlName="bankId" > 
-               <option class="d-none" value="Nothing Selected" disabled>
-                 Nothing Selected
-               </option>
-               <option *ngFor="let type of bankData" [value]="type.bankId">
+            <select name="bankId" id="bankId" formControlName="bankId">
+              <option class="d-none" value="Nothing Selected" disabled>
+                Nothing Selected
+              </option>
+              <option *ngFor="let type of bankData" [value]="type.bankId">
                 {{ type.bankName }}
-               </option>
-            </select>  
+              </option>
+            </select>
           </div>
           <div class="form-group">
             <label for="taxIdNum">Account No</label>
@@ -228,25 +229,36 @@
           </div>
         </div>
 
-         <!-- Mobile banking -->
+        <!-- Mobile banking -->
         <div *ngIf="showMobileBankingInfo" class="mt-2" #PaymentInfo>
           <!-- bank name -->
-         <div class="form-group">
-           <label for="taxIdNum">Banking Type</label>
-          <select name="MobileBankingTypeId" id="MobileBankingTypeId" formControlName="MobileBankingTypeId">
-             <option class="d-none" value="Nothing Selected" disabled>
-               Nothing Selected
-             </option>
-             <option *ngFor="let type of mobileBankingData" [value]="type.mobileBankingTypeId">
-              {{ type.mobileBankingType }}
-             </option>
-          </select>          
-         </div>
-         <div class="form-group">
-           <label for="taxIdNum">Mobile No</label>
-           <input type="text" id="taxIdNum" formControlName="MobileBankingNo" />
-         </div>   
-       </div>
+          <div class="form-group">
+            <label for="taxIdNum">Banking Type</label>
+            <select
+              name="MobileBankingTypeId"
+              id="MobileBankingTypeId"
+              formControlName="MobileBankingTypeId"
+            >
+              <option class="d-none" value="Nothing Selected" disabled>
+                Nothing Selected
+              </option>
+              <option
+                *ngFor="let type of mobileBankingData"
+                [value]="type.mobileBankingTypeId"
+              >
+                {{ type.mobileBankingType }}
+              </option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="taxIdNum">Mobile No</label>
+            <input
+              type="text"
+              id="taxIdNum"
+              formControlName="MobileBankingNo"
+            />
+          </div>
+        </div>
       </div>
       <!-- seller   -->
     </div>
