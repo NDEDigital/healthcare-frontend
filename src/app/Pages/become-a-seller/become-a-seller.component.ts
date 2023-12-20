@@ -10,10 +10,10 @@ import { UserDataService } from 'src/app/services/user-data.service';
 export class BecomeASellerComponent {
   companyResistrationForm!: FormGroup;
   // payment
-  paymentMethods: string[] = ['Credit Card', 'Cash', 'Mobile Banking'];
+  paymentMethods: string[] = ['Cash', 'Credit Card', 'Mobile Banking'];
   bankData: any = [];
   mobileBankingData: any = [];
-  selectedPaymentMethod: string = 'Nothing Selected'; // Variable to hold the selected payment method
+  // selectedPaymentMethod: string = 'Nothing Selected'; // Variable to hold the selected payment method
   showBankingInfo: boolean = false; // Variable to control the visibility of banking information fields
   showMobileBankingInfo: boolean = false;
   constructor(private userData: UserDataService) {}
@@ -26,7 +26,7 @@ export class BecomeASellerComponent {
       taxIdntificationNum: new FormControl('', Validators.required),
       tradeLicence: new FormControl('', Validators.required),
       companyLogo: new FormControl('', Validators.required),
-      prefPaymentMethod: new FormControl('', Validators.required),
+      prefPaymentMethod: new FormControl('Cash', Validators.required),
     });
   }
 
@@ -46,12 +46,27 @@ export class BecomeASellerComponent {
 
   // payment
   onPaymentMethodChange() {
+    // this.showBankingInfo = true;
+
+    // if (this.selectedPaymentMethod === 'Credit Card') {
+    //   this.bankdata();
+    // } else if (this.selectedPaymentMethod === 'Mobile Banking') {
+    //   this.MobileBankingdata();
+    // } else {
+    //   this.showBankingInfo = false;
+    // }
+
     this.showBankingInfo = true;
- 
-    if (this.selectedPaymentMethod === 'Credit Card') {
+
+    if (
+      this.companyResistrationForm.get('prefPaymentMethod')?.value ===
+      'Credit Card'
+    ) {
       this.bankdata();
-    }
-    else if (this.selectedPaymentMethod === 'Mobile Banking') {
+    } else if (
+      this.companyResistrationForm.get('prefPaymentMethod')?.value ===
+      'Mobile Banking'
+    ) {
       this.MobileBankingdata();
     } else {
       this.showBankingInfo = false;

@@ -123,12 +123,9 @@
               name="prefPaymentMethod"
               id="prefPaymentMethod"
               formControlName="prefPaymentMethod"
-              [(ngModel)]="selectedPaymentMethod"
               (change)="onPaymentMethodChange()"
             >
-              <option class="d-none" value="Nothing Selected" disabled>
-                Nothing Selected
-              </option>
+              <!-- [(ngModel)]="selectedPaymentMethod" -->
               <option *ngFor="let method of paymentMethods" [value]="method">
                 {{ method }}
               </option>
@@ -140,9 +137,9 @@
             <div class="form-group">
               <label for="taxIdNum">Bank Name</label>
               <select name="bankId" id="bankId" formControlName="bankId">
-                <option class="d-none" value="Nothing Selected" disabled>
+                <!-- <option class="d-none" value="Nothing Selected" disabled>
                   Nothing Selected
-                </option>
+                </option> -->
                 <option *ngFor="let type of bankData" [value]="type.bankId">
                   {{ type.bankName }}
                 </option>
@@ -168,7 +165,6 @@
         </div>
       </div>
     </div>
-
     <button type="submit" class="button mt-3" id="sign-in-button">
       Submit
     </button>
