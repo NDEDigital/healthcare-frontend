@@ -36,13 +36,16 @@ export class DashboardComponent {
   showSidebar = true;
   isAdmin: boolean = false;
   isAdminOrder: boolean = false;
+  addProducts: boolean = false;
+  addGroups: boolean = false;
 
   sidebarCol1Title = 'Product List';
-  sidebarCol2Title = 'Add Product';
+  sidebarCol2Title = 'Add Products';
   sidebarCol3Title = 'Orders';
   sidebarCol4Title = 'Inventory';
-  sidebarCol6Title = 'Other Sales';
   sidebarCol5Title = 'Add Quantity';
+  sidebarCol6Title = 'Other Sales';
+  sidebarCol7Title = 'Add Groups';
   sidebarCol4Link = '/payment';
   sidebarCol2Link = '/addProduct';
   sidebarCol3Link = '/ordersOverview';
@@ -610,6 +613,9 @@ export class DashboardComponent {
     console.log(role, 'role');
     this.sellerInventory = false;
     this.SellerQuantity = false;
+    this.addProducts = false;
+    this.addGroups = false;
+
     if (this.isAdmin) {
       this.isAdminOrder = orderClicked;
       console.log(this.isAdminOrder, 'isAdminOrder');
@@ -639,5 +645,21 @@ export class DashboardComponent {
     this.productOthersSales = true;
     this.isSellerOrder = false;
     this.sellerInventory = false;
+  }
+  AddProducts() {
+    this.addProducts = true;
+    this.SellerQuantity = false;
+    this.isSellerOrder = false;
+    this.sellerInventory = false;
+    this.productOthersSales = false;
+    this.addGroups = false;
+  }
+  AddGroups() {
+    this.addGroups = true;
+    this.addProducts = false;
+    this.SellerQuantity = false;
+    this.isSellerOrder = false;
+    this.sellerInventory = false;
+    this.productOthersSales = false;
   }
 }
