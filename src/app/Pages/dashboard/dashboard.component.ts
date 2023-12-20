@@ -48,7 +48,7 @@ export class DashboardComponent {
   sidebarCol3Link = '/ordersOverview';
   activeButton: string | null = 'new';
   status: string | null = 'new';
-  sellerInventory :boolean = false;
+  sellerInventory: boolean = false;
   SidebarIndex = 1;
   newCount = 0;
   editedCount = 0;
@@ -71,8 +71,8 @@ export class DashboardComponent {
   isBuyerOrder = false;
   isSellerOrder = false;
   loading: boolean = true;
-  SellerQuantity:boolean =false;
-  productOthersSales:boolean = false;
+  SellerQuantity: boolean = false;
+  productOthersSales: boolean = false;
   private subscription: Subscription;
   isLoggedIn = false;
   pForm: FormGroup;
@@ -131,15 +131,15 @@ export class DashboardComponent {
     //   this.isAdminOrder = false;
     // }
     this.getDashboardContents();
-    const role = localStorage.getItem('role');
-    if (role === 'admin') {
-      this.isAdmin = true;
-    }
-    console.log(this.isAdmin, 'isAdmin');
+
     setTimeout(() => {
+      const role = localStorage.getItem('role');
+      if (role === 'admin') {
+        this.isAdmin = true;
+      }
+      console.log(this.isAdmin, 'isAdmin');
       if (this.isAdmin == true) {
         this.sidebarCol1Title = 'Product Approval';
-        this.sidebarCol2Title = 'User List';
         this.sidebarCol2Link = '/becomeASeller'; // userList
       }
     }, 15);
@@ -149,7 +149,6 @@ export class DashboardComponent {
     sessionStorage.clear();
     //window.location.href = this.sidebarCol2Link;
     window.open(this.sidebarCol2Link, '_blank');
-
   }
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('newPassword')?.value;
@@ -285,7 +284,10 @@ export class DashboardComponent {
   getPaginatedProducts(): any[] {
     const startIndex = this.currentPage * this.rowsPerPage;
     const endIndex = startIndex + this.rowsPerPage;
-    console.log("this.filteredProducts.slice(startIndex, endIndex) ",this.filteredProducts.slice(startIndex, endIndex))
+    console.log(
+      'this.filteredProducts.slice(startIndex, endIndex) ',
+      this.filteredProducts.slice(startIndex, endIndex)
+    );
     return this.filteredProducts.slice(startIndex, endIndex);
   }
 
@@ -398,7 +400,7 @@ export class DashboardComponent {
   }
 
   handleCheckboxChange(event: any) {
-     console.log(" Check box event  ",event);
+    console.log(' Check box event  ', event);
     this.selectedCheckboxIds = event;
     console.log(this.selectedCheckboxIds, 'event selectedCheckboxIds');
     console.log(event);
@@ -432,8 +434,8 @@ export class DashboardComponent {
     console.log(this.selectedCheckboxIds, 'selectedCheckboxIds');
     if (this.selectedCheckboxIds.length > 0) {
       const productIdsInt = this.selectedCheckboxIds.map((id) => parseInt(id));
-      console.log(" productIdsInt",productIdsInt);
-      console.log(" this.selectedCheckboxIds",this.selectedCheckboxIds)
+      console.log(' productIdsInt', productIdsInt);
+      console.log(' this.selectedCheckboxIds', this.selectedCheckboxIds);
       this.dashboardService
         .updateProductStatus(
           this.sellerCode,
@@ -533,11 +535,15 @@ export class DashboardComponent {
   deleteProd() {
     var storedData = sessionStorage.getItem('deleteData');
     if (storedData) {
-      this.productID= JSON.parse(storedData);
+      this.productID = JSON.parse(storedData);
       // Now 'parsedData' contains the data you stored in 'editData'
-      console.log(" this.productID",this.productID);
+      console.log(' this.productID', this.productID);
     }
-    console.log("this.sellerCode, this.productID",this.sellerCode, this.productID)
+    console.log(
+      'this.sellerCode, this.productID',
+      this.sellerCode,
+      this.productID
+    );
     this.dashboardService
       .deleteProduct(this.sellerCode, this.productID)
       .subscribe({
@@ -616,24 +622,22 @@ export class DashboardComponent {
     }
   }
 
-  inventory(){
+  inventory() {
     this.sellerInventory = true;
     this.isSellerOrder = false;
-    this.SellerQuantity = false
+    this.SellerQuantity = false;
   }
 
-  AddQuantity(){
-   this.SellerQuantity = true;
-   this.isSellerOrder = false;
-   this.sellerInventory = false;
-   this.productOthersSales = false;
- 
+  AddQuantity() {
+    this.SellerQuantity = true;
+    this.isSellerOrder = false;
+    this.sellerInventory = false;
+    this.productOthersSales = false;
   }
 
-  OthersSales(){
+  OthersSales() {
     this.productOthersSales = true;
     this.isSellerOrder = false;
     this.sellerInventory = false;
-
   }
 }

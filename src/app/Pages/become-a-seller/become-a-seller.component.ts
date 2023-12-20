@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { EmailService } from 'src/app/services/email.service';
 import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
@@ -16,7 +17,10 @@ export class BecomeASellerComponent {
   // selectedPaymentMethod: string = 'Nothing Selected'; // Variable to hold the selected payment method
   showBankingInfo: boolean = false; // Variable to control the visibility of banking information fields
   showMobileBankingInfo: boolean = false;
-  constructor(private userData: UserDataService) {}
+  constructor(
+    private userData: UserDataService,
+    private emailService: EmailService
+  ) {}
 
   ngOnInit() {
     this.companyResistrationForm = new FormGroup({
@@ -86,5 +90,24 @@ export class BecomeASellerComponent {
       console.log(' GetMobileBankingdata dataaaaaa ', data); // Use a type if possible for better type checking
       this.mobileBankingData = data;
     });
+  }
+
+  sendEmailToCompany(email: any, companyId: any) {
+    // You can customize the email message to include companyId, max users, and admin info
+    const message = `Thank you for registering your company! Your Company ID is ${companyId}. 
+   You can add up to X users as sellers, and the first added user will be the Company Admin.`;
+
+    this.emailService
+      .sendEmail(email, 'Company Registration Successful', message)
+      .subscribe({
+        next: (response: any) => {
+          console.log(response);
+          // Handle success
+        },
+        error: (error: any) => {
+          console.log(error);
+          // Handle error
+        },
+      });
   }
 }
