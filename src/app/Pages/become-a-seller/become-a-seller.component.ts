@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CompanyService } from 'src/app/services/company.service';
 import { EmailService } from 'src/app/services/email.service';
 import { UserDataService } from 'src/app/services/user-data.service';
 
@@ -9,31 +10,74 @@ import { UserDataService } from 'src/app/services/user-data.service';
   styleUrls: ['./become-a-seller.component.css'],
 })
 export class BecomeASellerComponent {
+  @ViewChild('userExistModalBTN') UserExistModalBTN!: ElementRef;
+  @ViewChild('CompanyImageInput') CompanyImageInput!: ElementRef;
+  @ViewChild('TradeLicenseInput') TradeLicenseInput!: ElementRef;
+  compnay: any;
+  alertMsg: string = '';
   companyResistrationForm!: FormGroup;
   // payment
-  paymentMethods: string[] = ['Cash', 'Credit Card', 'Mobile Banking'];
-  bankData: any = [];
-  mobileBankingData: any = [];
+  paymentMethods: any;
+  bankInfo: any;
   // selectedPaymentMethod: string = 'Nothing Selected'; // Variable to hold the selected payment method
   showBankingInfo: boolean = false; // Variable to control the visibility of banking information fields
   showMobileBankingInfo: boolean = false;
+  MAX_FILE_SIZE_BYTES = 4194304; // 4MB = 1024 * 1024 * 4 bytes
+  imageSizeExceeded = false;
   constructor(
     private userData: UserDataService,
-    private emailService: EmailService
+    private companyService: CompanyService
   ) {}
 
   ngOnInit() {
     this.companyResistrationForm = new FormGroup({
       companyName: new FormControl('', Validators.required),
       companyFoundationDate: new FormControl('', Validators.required),
-      businessRegNum: new FormControl('', Validators.required),
-      taxIdntificationNum: new FormControl('', Validators.required),
-      tradeLicence: new FormControl('', Validators.required),
-      companyLogo: new FormControl('', Validators.required),
-      prefPaymentMethod: new FormControl('Cash', Validators.required),
+      businessRegistrationNumber: new FormControl('', Validators.required),
+      taxIdentificationNumber: new FormControl('', Validators.required),
+      tradeLicense: new FormControl('', Validators.required),
+      companyImage: new FormControl('', Validators.required),
+      preferredPaymentMethodID: new FormControl('3', Validators.required),
+      bankNameID: new FormControl('0'),
+      accountNumber: new FormControl(''),
+      accountHolderName: new FormControl(''),
+    });
+    this.getData();
+    this.companyResistrationForm
+      .get('preferredPaymentMethodID')
+      ?.valueChanges.subscribe((method) => {
+        const bankNameIDControl =
+          this.companyResistrationForm.get('bankNameID');
+        const accountNumberControl =
+          this.companyResistrationForm.get('accountNumber');
+        const accountHolderNameControl =
+          this.companyResistrationForm.get('accountHolderName');
+        if (method !== '3') {
+          bankNameIDControl?.setValidators([Validators.required]);
+          accountNumberControl?.setValidators([Validators.required]);
+          accountHolderNameControl?.setValidators([Validators.required]);
+        } else {
+          bankNameIDControl?.clearValidators();
+          accountNumberControl?.clearValidators();
+          accountHolderNameControl?.clearValidators();
+        }
+        bankNameIDControl?.updateValueAndValidity();
+        accountNumberControl?.updateValueAndValidity();
+        accountHolderNameControl?.updateValueAndValidity();
+      });
+  }
+  getData() {
+    this.companyService.getpayMethod().subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.paymentMethods = response;
+        console.log(this.paymentMethods);
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
     });
   }
-
   isFieldInvalid(fieldName: string): boolean {
     const field = this.companyResistrationForm.get(fieldName);
     // Check if the field is not null before accessing its properties
@@ -44,70 +88,100 @@ export class BecomeASellerComponent {
     Object.values(this.companyResistrationForm.controls).forEach((control) => {
       control.markAsTouched();
       control.markAsDirty();
-      // console.log(control);
     });
-  }
 
-  // payment
-  onPaymentMethodChange() {
-    // this.showBankingInfo = true;
+    const formData = new FormData();
 
-    // if (this.selectedPaymentMethod === 'Credit Card') {
-    //   this.bankdata();
-    // } else if (this.selectedPaymentMethod === 'Mobile Banking') {
-    //   this.MobileBankingdata();
-    // } else {
-    //   this.showBankingInfo = false;
-    // }
+    // Append values to formData
+    Object.entries(this.companyResistrationForm.value).forEach(
+      ([key, value]) => {
+        if (value instanceof File) {
+          // Append file with its original name
+          formData.append(key, value, value.name);
+        } else {
+          formData.append(key, String(value));
+        }
+      }
+    );
 
-    this.showBankingInfo = true;
+    // Append additional values
+    formData.append('AddedBy', 'user');
+    formData.append('AddedPC', '0.0.0.0');
+    formData.append(
+      'companyImageFile',
+      this.CompanyImageInput.nativeElement.files[0]
+    );
+    formData.append(
+      'tradeLicenseFile',
+      this.TradeLicenseInput.nativeElement.files[0]
+    );
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
 
     if (
-      this.companyResistrationForm.get('prefPaymentMethod')?.value ===
-      'Credit Card'
+      this.companyResistrationForm.valid &&
+      this.companyResistrationForm.get('preferredPaymentMethodID')?.value > 0
     ) {
-      this.bankdata();
-    } else if (
-      this.companyResistrationForm.get('prefPaymentMethod')?.value ===
-      'Mobile Banking'
-    ) {
-      this.MobileBankingdata();
-    } else {
-      this.showBankingInfo = false;
-    }
-  }
+      console.log('valid');
 
-  // get bank data
-  bankdata() {
-    this.userData.GetBankdata().subscribe((data: any) => {
-      console.log(' GetBankdata dataaaaaa ', data); // Use a type if possible for better type checking
-      this.bankData = data;
-    });
-  }
-  // get MobileBanking data
-  MobileBankingdata() {
-    this.userData.GetMobileBankingdata().subscribe((data: any) => {
-      console.log(' GetMobileBankingdata dataaaaaa ', data); // Use a type if possible for better type checking
-      this.mobileBankingData = data;
-    });
-  }
-
-  sendEmailToCompany(email: any, companyId: any) {
-    // You can customize the email message to include companyId, max users, and admin info
-    const message = `Thank you for registering your company! Your Company ID is ${companyId}. 
-   You can add up to X users as sellers, and the first added user will be the Company Admin.`;
-
-    this.emailService
-      .sendEmail(email, 'Company Registration Successful', message)
-      .subscribe({
+      this.companyService.createCompany(formData).subscribe({
         next: (response: any) => {
           console.log(response);
-          // Handle success
         },
         error: (error: any) => {
           console.log(error);
-          // Handle error
+
+          this.alertMsg = error.error.message;
+          this.UserExistModalBTN.nativeElement.click();
         },
       });
+    }
   }
+
+  // payment
+
+  getBankInfo() {
+    this.companyResistrationForm.get('bankNameID')?.setValue('0');
+    if (
+      this.companyResistrationForm.get('preferredPaymentMethodID')?.value !==
+      '3'
+    ) {
+      this.showBankingInfo = true;
+    } else {
+      this.showBankingInfo = false;
+    }
+    const methodID = this.companyResistrationForm.get(
+      'preferredPaymentMethodID'
+    )?.value;
+    this.companyService.PreferredBankNames(methodID).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.bankInfo = response;
+        console.log(this.bankInfo);
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
+  }
+
+  // sendEmailToCompany(email: any, companyId: any) {
+  //   // You can customize the email message to include companyId, max users, and admin info
+  //   const message = `Thank you for registering your company! Your Company ID is ${companyId}.
+  //  You can add up to X users as sellers, and the first added user will be the Company Admin.`;
+
+  //   this.emailService
+  //     .sendEmail(email, 'Company Registration Successful', message)
+  //     .subscribe({
+  //       next: (response: any) => {
+  //         console.log(response);
+  //         // Handle success
+  //       },
+  //       error: (error: any) => {
+  //         console.log(error);
+  //         // Handle error
+  //       },
+  //     });
+  // }
 }

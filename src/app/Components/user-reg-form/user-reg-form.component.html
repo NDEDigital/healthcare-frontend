@@ -108,7 +108,9 @@
     class="form-group"
     *ngIf="userResistrationForm.get('trade')?.value === 'Seller'"
   >
-    <label for="companyCode">Company ID</label>
+    <label for="companyCode">
+      <span class="text-danger">*</span>Company ID</label
+    >
     <input
       type="text"
       id="companyCode"
