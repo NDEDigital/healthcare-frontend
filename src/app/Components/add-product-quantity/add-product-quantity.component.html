@@ -1,0 +1,293 @@
+<div class="addQuantityBody">
+    <div class="addQuantity_header bg-white d-flex justify-content-center p-2">
+      <h1 class="addQuantity_header_text">Add Product Quantity</h1>
+    </div>
+
+
+  
+     <!--  field -->
+     <div class="field-div  p-3 mt-3">
+         <!-- master field -->
+      <div class="master-field">
+        <form [formGroup]="masterForm">
+          <div class=" row m-1">
+            <div class=" col " >
+              <!-- Master form -->
+              <div class="form-group">
+                <div class="row m-1">
+                  <div class="col-5">
+                    <label for="website">Portal Received Code</label>
+                  </div>
+                  <div class="col-7">
+                    <input type="text" id="portalReceivedCode" formControlName="portalReceivedCode"  readonly />
+                  </div>
+                </div>                      
+              </div>
+              <div class="form-group">
+                <div class="row m-1">
+                  <div class="col-5">
+                    <label for="website">Portal Received Date</label>
+                  </div>
+                  <div class="col-7">
+                    <input type="date" id="portalReceivedDate"    formControlName="portalReceivedDate" readonly  />
+                  </div>
+                </div>                       
+              </div>
+            </div>
+            <div class=" col" >
+              <div class="form-group">
+                <div class="row m-1">
+                  <div class="col-4">
+                    <label for="website">Challan No</label>
+                  </div>
+                  <div class="col-8">                  
+                    <input type="text" id="challanNo"   formControlName="challanNo"   />
+                  </div>
+                </div>                
+              </div>
+              <div class="form-group">
+                <div class="row m-1">
+                  <div class="col-4">
+                    <label for="website">Challan Date</label>
+                  </div>
+                  <div class="col-8">
+                    <input type="date" id="challanDate"   formControlName="challanDate"   />
+                  </div>
+                </div>              
+              </div> 
+            </div>
+            <div class=" col" >
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-4">
+                    <label for="website">Remarks</label>
+                  </div>
+                  <div class="col-8">
+                    <input type="text" id="remarks"    formControlName="remarks"  />
+                  </div>
+                </div>                          
+              </div>       
+            </div>    
+        </div>
+        </form> 
+      </div>
+
+
+      <div class="table-responsive mt-5">
+        <form [formGroup]="form" (ngSubmit)="onSubmit()">
+          <table formArrayName="rows" width="5rem" >
+            <!-- Table header -->
+            <thead>
+              <tr class="details-header">
+                <th >Product Name</th>
+                <th> Group Code</th>
+                <th>Specification</th>
+                <th>Unit</th>
+                <th>Price</th>
+                <th>Receive Qty</th>
+                <th>Available Qty</th>
+                <th> Remarks</th>
+              </tr>
+            </thead>
+            <!-- Table body - rows -->
+            <tbody>
+              <tr *ngFor="let row of rowsFormArray.controls; let i = index;" [formGroupName]="i">
+                <td><input formControlName="productName" placeholder="ProductName"></td>
+                <td><input formControlName="ProductGroupCode" placeholder="Group Code"></td>
+                <!-- Add input fields for other columns -->
+                <td><input formControlName="specification" placeholder="Specification"></td>
+                <td><input formControlName="unit" placeholder="Unit"></td>
+                <td><input formControlName="price" placeholder="Price"></td>
+                <td><input formControlName="receiveQty" placeholder="Receive Qty"></td>
+                <td><input formControlName="availableQty" placeholder="Available Qty"></td>
+                <td><input formControlName="Remarks" placeholder="Remarks"></td>
+                <td><button type="button" (click)="removeRow(i)">Remove</button></td>
+              </tr>
+            </tbody>
+          </table>
+          <!-- <button type="button" (click)="addRow()">Add Row</button>
+          <button type="submit">Submit</button> -->
+          <!-- <div class="div-button justify-content-between d-flex">
+            <div class="icons">
+             <i class="fa-solid fa-plus" (click)="addRow()"></i>
+             <i class="fa-solid fa-trash"></i>
+             
+            </div>
+            <div class=" submit-button ">
+              <button type="submit" class="btn  approved py-1 px-2 m-1">Submit</button>  
+         
+             <button
+               type="button"
+               class="btn  btn-secondary   py-1 px-2  m-1">
+               Cancell
+             </button>
+            </div>
+          </div> -->
+        </form>
+     
+      </div>
+      
+      
+      <!-- <form [formGroup]="form" (ngSubmit)="onSubmit()">
+        <div formArrayName="rows">
+          <div *ngFor="let row of rowsFormArray.controls; let i = index;">
+            <div [formGroupName]="i">
+              <input formControlName="name" placeholder="Name">
+              <input formControlName="age" placeholder="Age">
+         
+              <button type="button" (click)="removeRow(i)">Remove</button>
+            </div>
+          </div>
+        </div>
+        <button type="button" (click)="addRow()">Add Row</button>
+        <button type="submit">Submit</button>
+      </form> -->
+
+
+
+
+         <!-- details field -->
+         <!-- <div class="details-field  mt-4">
+          <div class="table-responsive">
+            <form [formGroup]="detailsForm">
+              <table class="table table-striped table-hover">
+                <thead>
+                  <tr class="details-header">
+                  <th scope="col">#</th>
+                  <th scope="col">Product Name</th>
+                  <th scope="col">Product Code </th>
+                  <th scope="col">Specification</th>
+                  <th scope="col">Available Qty</th>
+                  <th scope="col">Receive Qty</th>
+                  <th scope="col">Unit </th>
+                  <th scope="col">Price</th>
+                  <th scope="col">Remarks</th>
+                </tr>
+              </thead>          
+       -->
+                <!-- details form -->       
+                <!-- *ngFor="let row of detailsData.controls; let i = index" -->
+            
+              <!-- <tbody formArrayName="detailsData">
+                  <tr *ngFor="let row of detailsForm.controls; let i = index" [formGroupName]="i">
+                 
+                      <th scope="row">ty</th>                
+                      <td>
+                        <div class="form-group"> 
+                          <input type="text" id="productName"  formControlName="productName"  readonly/>
+                       </div>
+                      </td>
+                      <td>
+                        <div class="form-group"> 
+                          <input type="text" id="productCode"  formControlName="productCode"  readonly/>
+                       </div>
+                      </td>
+                      <td>
+                        <div class="form-group"> 
+                          <input type="text" id="specification"  formControlName="specification"  readonly/>
+                       </div>
+                      </td>
+                      <td>
+                        <div class="form-group"> 
+                          <input type="text" id="availableQty"  formControlName="availableQty"  readonly/>
+                       </div>
+                      </td>
+                      <td>
+                        <div class="form-group"> 
+                          <input type="text" id="receivedQty"  formControlName="receivedQty"   />
+                       </div>
+                      </td>
+                      <td>
+                        <div class="form-group"> 
+                          <input type="text" id="unitId"  formControlName="unitId"  readonly/>
+                       </div>
+                      </td>
+                      <td>
+                        <div class="form-group"> 
+                          <input type="text" id="price"  formControlName="price"  readonly/>
+                       </div>
+                      </td>
+                      <td>
+                        <div class="form-group"> 
+                          <input type="text" id="remarks"  formControlName="remarks"  />
+                       </div>
+                      </td>                        
+                   </tr>
+                    
+              </tbody>   
+            </table>
+    
+          </form>
+
+        </div>
+
+       </div>   -->
+         <!-- button div -->
+       <div class="div-button justify-content-between d-flex">
+         <div class="icons">
+          <i class="fa-solid fa-plus" (click)="addRow()"></i>
+          <i class="fa-solid fa-trash"></i>
+         </div>
+         <div class=" submit-button ">
+          <button
+            type="button"
+            class="btn  approved py-1 px-2 m-1"
+            (click)="submit()" >
+            Submit
+          </button>
+          <button
+            type="button"
+            class="btn  btn-secondary   py-1 px-2  m-1">
+            Cancell
+          </button>
+         </div>
+       </div>
+     </div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    <!-- fields div -->
+  <div class="addQuantity_field_div bg-white mt-3 py-4 ">
+  
+      <!-- groupName -->
+      <div class="dropdown mx-2" (click)="toggleDropdown('groupName')">
+        <button class="dropbtn dropdown-toggle">{{dropdown_groupName}}</button>
+        <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isGroupNameDropdownOpen }">
+          <input type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')">
+          <a *ngFor="let item of dropdownItems" (click)="SetDropDownName(item)">{{item}}</a>
+        </div>
+      </div>
+ 
+       <!-- goodsName -->
+       <div class="dropdown  mx-2" (click)="toggleDropdown('goodsName')">
+        <button class="dropbtn dropdown-toggle">{{dropdown_goodsName}}</button>
+        <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isGoodsNameDropdownOpen }">
+          <input type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')">
+          <a *ngFor="let item of dropdownItems" (click)="SetDropDownName(item)">{{item}}</a>
+        </div>
+     </div> 
+  </div>
+
+    
+
+
+
+</div>
+  

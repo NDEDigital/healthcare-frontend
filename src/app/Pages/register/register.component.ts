@@ -176,29 +176,29 @@ export class RegisterComponent implements AfterViewInit {
     };
     console.log(this.user);
 
-    // if (this.userForm.valid) {
-    //   this.userData.UserExist(this.user).subscribe({
-    //     next: (response: any) => {
-    //       setTimeout(() => {
-    //         this.userExist = response.userExist;
-    //         console.log(response);
-    //         if (this.userExist) {
-    //           this.alertMsg = 'User already exists';
-    //           this.UserExistModalBTN.nativeElement.click();
-    //         } else {
-    //           console.log(this.userExist);
-    //           this.captchaVerify();
-    //         }
-    //       }, 100);
-    //     },
-    //     error: (error: any) => {
-    //       console.log(error);
-    //       //  alert(error.error.message);
-    //       // this.alertMsg = error.error.message;
-    //       // this.UserExistModalBTN.nativeElement.click();
-    //     },
-    //   });
-    // }
+    if (this.userForm.valid) {
+      this.userData.UserExist(this.user).subscribe({
+        next: (response: any) => {
+          setTimeout(() => {
+            this.userExist = response.userExist;
+            console.log(response);
+            if (this.userExist) {
+              this.alertMsg = 'User already exists';
+              this.UserExistModalBTN.nativeElement.click();
+            } else {
+              console.log(this.userExist);
+              this.captchaVerify();
+            }
+          }, 100);
+        },
+        error: (error: any) => {
+          console.log(error);
+          //  alert(error.error.message);
+          // this.alertMsg = error.error.message;
+          // this.UserExistModalBTN.nativeElement.click();
+        },
+      });
+    }
     // console.log(userData);
 
     // this.cdr.detectChanges();

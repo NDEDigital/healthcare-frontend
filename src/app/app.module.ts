@@ -59,7 +59,7 @@ import { OtpModalComponent } from './Components/otp-modal/otp-modal.component';
 // token
 import { UserTokenInterceptor } from './Interceptor/user-token.interceptor';
 import { SellerInventoryComponent } from './Components/seller-inventory/seller-inventory.component';
-import { AddProductQuantityComponent } from './add-product-quantity/add-product-quantity.component';
+import { AddProductQuantityComponent } from './Components/add-product-quantity/add-product-quantity.component';
 
 @NgModule({
   declarations: [
