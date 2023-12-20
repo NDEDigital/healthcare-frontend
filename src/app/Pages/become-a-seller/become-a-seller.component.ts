@@ -1,5 +1,6 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { CompanyService } from 'src/app/services/company.service';
 import { EmailService } from 'src/app/services/email.service';
 import { UserDataService } from 'src/app/services/user-data.service';
 
@@ -9,17 +10,20 @@ import { UserDataService } from 'src/app/services/user-data.service';
   styleUrls: ['./become-a-seller.component.css'],
 })
 export class BecomeASellerComponent {
+  @ViewChild('userExistModalBTN') UserExistModalBTN!: ElementRef;
+
+  compnay: any;
+  alertMsg: string = '';
   companyResistrationForm!: FormGroup;
   // payment
-  paymentMethods: string[] = ['Cash', 'Credit Card', 'Mobile Banking'];
-  bankData: any = [];
-  mobileBankingData: any = [];
+  paymentMethods: any;
+  bankInfo: any;
   // selectedPaymentMethod: string = 'Nothing Selected'; // Variable to hold the selected payment method
   showBankingInfo: boolean = false; // Variable to control the visibility of banking information fields
   showMobileBankingInfo: boolean = false;
   constructor(
     private userData: UserDataService,
-    private emailService: EmailService
+    private companyService: CompanyService
   ) {}
 
   ngOnInit() {
@@ -28,12 +32,49 @@ export class BecomeASellerComponent {
       companyFoundationDate: new FormControl('', Validators.required),
       businessRegNum: new FormControl('', Validators.required),
       taxIdntificationNum: new FormControl('', Validators.required),
-      tradeLicence: new FormControl('', Validators.required),
-      companyLogo: new FormControl('', Validators.required),
-      prefPaymentMethod: new FormControl('Cash', Validators.required),
+      tradeLicense: new FormControl('', Validators.required),
+      companyImage: new FormControl('', Validators.required),
+      preferredPaymentMethodID: new FormControl('3', Validators.required),
+      bankNameID: new FormControl('0'),
+      accountNumber: new FormControl(''),
+      accountHolderName: new FormControl(''),
+    });
+    this.getData();
+    this.companyResistrationForm
+      .get('preferredPaymentMethodID')
+      ?.valueChanges.subscribe((method) => {
+        const bankNameIDControl =
+          this.companyResistrationForm.get('bankNameID');
+        const accountNumberControl =
+          this.companyResistrationForm.get('accountNumber');
+        const accountHolderNameControl =
+          this.companyResistrationForm.get('accountHolderName');
+        if (method !== '3') {
+          bankNameIDControl?.setValidators([Validators.required]);
+          accountNumberControl?.setValidators([Validators.required]);
+          accountHolderNameControl?.setValidators([Validators.required]);
+        } else {
+          bankNameIDControl?.clearValidators();
+          accountNumberControl?.clearValidators();
+          accountHolderNameControl?.clearValidators();
+        }
+        bankNameIDControl?.updateValueAndValidity();
+        accountNumberControl?.updateValueAndValidity();
+        accountHolderNameControl?.updateValueAndValidity();
+      });
+  }
+  getData() {
+    this.companyService.getpayMethod().subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.paymentMethods = response;
+        console.log(this.paymentMethods);
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
     });
   }
-
   isFieldInvalid(fieldName: string): boolean {
     const field = this.companyResistrationForm.get(fieldName);
     // Check if the field is not null before accessing its properties
@@ -46,68 +87,99 @@ export class BecomeASellerComponent {
       control.markAsDirty();
       // console.log(control);
     });
+    const formData = this.companyResistrationForm.value; // Use the form value directly
+    console.log('Form Data:', formData);
+
+    if (
+      this.companyResistrationForm.valid &&
+      this.companyResistrationForm.get('preferredPaymentMethodID')?.value > 0
+    ) {
+      this.companyService.createUser(this.compnay).subscribe({
+        next: (response: any) => {
+          console.log(response);
+        },
+        error: (error: any) => {
+          console.log(error);
+
+          this.alertMsg = error.error.message;
+          this.UserExistModalBTN.nativeElement.click();
+        },
+      });
+    }
   }
 
   // payment
   onPaymentMethodChange() {
-    // this.showBankingInfo = true;
-
-    // if (this.selectedPaymentMethod === 'Credit Card') {
-    //   this.bankdata();
-    // } else if (this.selectedPaymentMethod === 'Mobile Banking') {
-    //   this.MobileBankingdata();
-    // } else {
-    //   this.showBankingInfo = false;
-    // }
-
-    this.showBankingInfo = true;
+    console.log(
+      this.companyResistrationForm.get('preferredPaymentMethodID')?.value,
+      'paymethod'
+    );
 
     if (
-      this.companyResistrationForm.get('prefPaymentMethod')?.value ===
-      'Credit Card'
+      this.companyResistrationForm.get('preferredPaymentMethodID')?.value ===
+      '1'
     ) {
-      this.bankdata();
+      this.showBankingInfo = true;
+      // this.bankdata();
     } else if (
-      this.companyResistrationForm.get('prefPaymentMethod')?.value ===
-      'Mobile Banking'
+      this.companyResistrationForm.get('preferredPaymentMethodID')?.value ===
+      '2'
     ) {
-      this.MobileBankingdata();
+      this.showBankingInfo = true;
+      // this.MobileBankingdata();
     } else {
       this.showBankingInfo = false;
     }
+    console.log(this.showBankingInfo);
   }
 
-  // get bank data
-  bankdata() {
-    this.userData.GetBankdata().subscribe((data: any) => {
-      console.log(' GetBankdata dataaaaaa ', data); // Use a type if possible for better type checking
-      this.bankData = data;
+  getBankInfo() {
+    if (
+      this.companyResistrationForm.get('preferredPaymentMethodID')?.value ===
+      '1'
+    ) {
+      this.showBankingInfo = true;
+      // this.bankdata();
+    } else if (
+      this.companyResistrationForm.get('preferredPaymentMethodID')?.value ===
+      '2'
+    ) {
+      this.showBankingInfo = true;
+      // this.MobileBankingdata();
+    } else {
+      this.showBankingInfo = false;
+    }
+    const methodID = this.companyResistrationForm.get(
+      'preferredPaymentMethodID'
+    )?.value;
+    this.companyService.PreferredBankNames(methodID).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.bankInfo = response;
+        console.log(this.bankInfo);
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
     });
   }
-  // get MobileBanking data
-  MobileBankingdata() {
-    this.userData.GetMobileBankingdata().subscribe((data: any) => {
-      console.log(' GetMobileBankingdata dataaaaaa ', data); // Use a type if possible for better type checking
-      this.mobileBankingData = data;
-    });
-  }
 
-  sendEmailToCompany(email: any, companyId: any) {
-    // You can customize the email message to include companyId, max users, and admin info
-    const message = `Thank you for registering your company! Your Company ID is ${companyId}. 
-   You can add up to X users as sellers, and the first added user will be the Company Admin.`;
+  // sendEmailToCompany(email: any, companyId: any) {
+  //   // You can customize the email message to include companyId, max users, and admin info
+  //   const message = `Thank you for registering your company! Your Company ID is ${companyId}.
+  //  You can add up to X users as sellers, and the first added user will be the Company Admin.`;
 
-    this.emailService
-      .sendEmail(email, 'Company Registration Successful', message)
-      .subscribe({
-        next: (response: any) => {
-          console.log(response);
-          // Handle success
-        },
-        error: (error: any) => {
-          console.log(error);
-          // Handle error
-        },
-      });
-  }
+  //   this.emailService
+  //     .sendEmail(email, 'Company Registration Successful', message)
+  //     .subscribe({
+  //       next: (response: any) => {
+  //         console.log(response);
+  //         // Handle success
+  //       },
+  //       error: (error: any) => {
+  //         console.log(error);
+  //         // Handle error
+  //       },
+  //     });
+  // }
 }

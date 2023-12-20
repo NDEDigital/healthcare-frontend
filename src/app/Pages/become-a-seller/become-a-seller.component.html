@@ -72,14 +72,14 @@
 
         <!-- Trade Licence -->
         <div class="form-group">
-          <label for="tradeLicence"
+          <label for="tradeLicense"
             ><span class="text-danger">*</span>Upload Trade Licence</label
           >
           <input
             class="form-control"
             type="file"
-            id="tradeLicence"
-            formControlName="tradeLicence"
+            id="tradeLicense"
+            formControlName="tradeLicense"
           />
           <span class="text-danger" *ngIf="isFieldInvalid('tradeLicence')"
             >Uploding Trade Licence is required.</span
@@ -88,12 +88,12 @@
 
         <!-- company Image -->
         <div class="form-group">
-          <label for="companyLogo">Upload your company Image</label>
+          <label for="companyImage">Upload your company Image</label>
           <input
             class="form-control"
             type="file"
-            id="companyLogo"
-            formControlName="companyLogo"
+            id="companyImage"
+            formControlName="companyImage"
           />
         </div>
       </div>
@@ -101,16 +101,21 @@
       <div class="d-flex justify-content-center">
         <div class="col-12 col-md-6">
           <div class="form-group">
-            <label for="prefPaymentMethod">Preferred Payment Method</label>
+            <label for="preferredPaymentMethodID"
+              >Preferred Payment Method</label
+            >
             <select
-              name="prefPaymentMethod"
-              id="prefPaymentMethod"
-              formControlName="prefPaymentMethod"
-              (change)="onPaymentMethodChange()"
+              name="preferredPaymentMethodID"
+              id="preferredPaymentMethodID"
+              formControlName="preferredPaymentMethodID"
+              (change)="getBankInfo()"
             >
               <!-- [(ngModel)]="selectedPaymentMethod" -->
-              <option *ngFor="let method of paymentMethods" [value]="method">
-                {{ method }}
+              <option
+                *ngFor="let method of paymentMethods"
+                [value]="method.pmid"
+              >
+                {{ method.pmName }}
               </option>
             </select>
           </div>
@@ -118,35 +123,81 @@
           <div *ngIf="showBankingInfo" class="mt-2" #PaymentInfo>
             <!-- bank name -->
             <div class="form-group">
-              <label for="taxIdNum">Bank Name</label>
-              <select name="bankId" id="bankId" formControlName="bankId">
-                <option *ngFor="let type of bankData" [value]="type.bankId">
-                  {{ type.bankName }}
+              <label for="bankNameID"
+                ><span class="text-danger">*</span>Bank Name</label
+              >
+              <select
+                name="bankNameID"
+                id="bankNameID"
+                formControlName="bankNameID"
+              >
+                <option class="d-none" value="0" disabled>
+                  Nothing is Selected
+                </option>
+                <option *ngFor="let type of bankInfo" [value]="type.pmid">
+                  {{ type.pmName }}
                 </option>
               </select>
             </div>
             <div class="form-group">
-              <label for="taxIdNum">Account No</label>
+              <label for="accountNumber"
+                ><span class="text-danger">*</span>Account No</label
+              >
               <input
                 type="text"
-                id="taxIdNum"
-                formControlName="bankAccountNo"
+                id="accountNumber"
+                formControlName="accountNumber"
               />
             </div>
             <div class="form-group">
-              <label for="taxIdNum">Holder Name</label>
+              <label for="accountHolderName"
+                ><span class="text-danger">*</span>Holder Name</label
+              >
               <input
                 type="text"
-                id="taxIdNum"
-                formControlName="bankHolderName"
+                id="accountHolderName"
+                formControlName="accountHolderName"
               />
             </div>
           </div>
         </div>
       </div>
     </div>
-    <button type="submit" class="button mt-3" id="sign-in-button">
+    <button type="submit" class="button mt-3" (click)="onSubmit()">
       Submit
     </button>
   </form>
+</div>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="userExistModal"
+  tabindex="-1"
+  aria-labelledby="userExistModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content border border-danger">
+      <div class="modal-header fs-5 fw-bold text-danger">
+        <h1 class="modal-title fs-5" id="userExistModalLabel">
+          {{ alertMsg }}
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Please login or use another phone number to register!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
 </div>
