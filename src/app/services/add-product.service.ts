@@ -9,9 +9,25 @@ export class AddProductService {
   URL = API_URL;
   createProductGroupURL = `${this.URL}/api/ProductGroups/CreateProductGroups`;
 
+  getProductGropURL = `${this.URL}/api/ProductGroups/GetProductGroupsList`;
+
+  getUnitURL = `${this.URL}/api/HK_Gets/GetUnitList`;
+
   constructor(private http: HttpClient) {}
 
   createProductGroup(productData: any) {
     return this.http.post(this.createProductGroupURL, productData);
   }
+
+
+  getProductGroups(){
+    return this.http.get(this.getProductGropURL);
+  }
+
+  getUnitGroups(){
+    return this.http.get(this.getUnitURL);
+  }
+
+
+
 }

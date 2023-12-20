@@ -3,23 +3,23 @@
   <hr />
   <form [formGroup]="addProductForm">
     <div class="form-group">
-      <label for="productGroupName"
-        ><span class="text-danger">*</span>Product Group
-      </label>
-
-      <select
-        name="productGroupName"
-        id="productGroupName"
-        formControlName="productGroupNameName"
-        [class.error]="isFieldInvalid('productGroupName')"
+      <label for="productGroupID"
+        ><span class="text-danger">*</span>Product Group Name</label
       >
-        <option class="d-none" value="Nothing Selected" disabled>
-          Nothing Selected
+      <select
+        id="productGroupID"
+        formControlName="productGroupID"
+        [class.error]="isFieldInvalid('productGroupID')"
+      >
+        <option value="" disabled>Select Product Group</option>
+        <option
+          *ngFor="let group of productGroups"
+          [value]="group.productGroupID"
+        >
+          {{ group.productGroupName }}
         </option>
-        <option value="credit card">Credit Card</option>
       </select>
-
-      <span class="text-danger" *ngIf="isFieldInvalid('productGroupName')"
+      <span class="text-danger" *ngIf="isFieldInvalid('productGroupID')"
         >Product Group Name is required.</span
       >
     </div>
@@ -62,38 +62,38 @@
     </div>
 
     <div class="form-group">
-      <label for="unit"><span class="text-danger">*</span>Unit</label>
+      <label for="unitId"><span class="text-danger">*</span>unitId</label>
 
       <select
-        name="unit"
-        id="unit"
-        formControlName="unit"
-        [class.error]="isFieldInvalid('unit')"
+        name="unitId"
+        id="unitId"
+        formControlName="unitId"
+        [class.error]="isFieldInvalid('unitId')"
       >
-        <option class="d-none" value="Nothing Selected" disabled>
-          Nothing Selected
+        <option value="" disabled>Select Unit</option>
+        <option *ngFor="let unit of units" [value]="unit.unitId">
+          {{ unit.name }}
         </option>
-        <option value="kg">Kg</option>
       </select>
 
-      <span class="text-danger" *ngIf="isFieldInvalid('unit')"
-        >Unit is required.</span
+      <span class="text-danger" *ngIf="isFieldInvalid('unitId')"
+        >unitId is required.</span
       >
     </div>
 
     <div class="form-group">
-      <label for="productImg"
+      <label for="imageFile"
         ><span class="text-danger">*</span>Upload Product Image
       </label>
 
       <input
         type="file"
         class="form-control"
-        id="productImg"
-        formControlName="productImg"
+        id="imageFile"
+        formControlName="imageFile"
       />
 
-      <span class="text-danger" *ngIf="isFieldInvalid('productImg')"
+      <span class="text-danger" *ngIf="isFieldInvalid('imageFile')"
         >Product Image is required.</span
       >
     </div>
@@ -102,25 +102,34 @@
       type="submit"
       class="button mt-3"
       id="sign-in-button"
-      data-bs-toggle="modal"
-      data-bs-target="#exampleModal"
       (click)="onSubmit()"
     >
       Submit
     </button>
 
+    <!-- invisible btn -->
+    <button
+      type="button"
+      class="btn btn-primary d-none"
+      data-bs-toggle="modal"
+      data-bs-target="#addProductModal"
+      #userExistModalBTN
+    >
+      Launch demo modal
+    </button>
+
     <!-- Modal -->
     <div
       class="modal fade"
-      id="exampleModal"
+      id="addProductModal"
       tabindex="-1"
-      aria-labelledby="exampleModalLabel"
+      aria-labelledby="addProductModalLabel"
       aria-hidden="true"
     >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header modal-heading">
-            <h1 class="modal-title fs-5 text-light" id="exampleModalLabel">
+            <h1 class="modal-title fs-5 text-light" id="addProductModalLabel">
               Add Product Groups Name
             </h1>
             <button
