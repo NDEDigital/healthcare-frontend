@@ -53,7 +53,9 @@
             formControlName="businessRegistrationNumber"
             [class.error]="isFieldInvalid('businessRegistrationNumber')"
           />
-          <span class="text-danger" *ngIf="isFieldInvalid('businessRegistrationNumber')"
+          <span
+            class="text-danger"
+            *ngIf="isFieldInvalid('businessRegistrationNumber')"
             >Business Registration Number is required.</span
           >
         </div>
@@ -109,10 +111,7 @@
             formControlName="companyImage"
             [class.error]="isFieldInvalid('companyImage')"
             #CompanyImageInput
-          /><span
-            class="text-danger"
-            *ngIf="isFieldInvalid('companyImage')"
-          >
+          /><span class="text-danger" *ngIf="isFieldInvalid('companyImage')">
             Uploding Company Image is required.</span
           >
         </div>
@@ -197,7 +196,16 @@
     </button>
   </form>
 </div>
-
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#userExistModal"
+  #userExistModalBTN
+>
+  Launch demo modal
+</button>
 <!-- Modal -->
 <div
   class="modal fade"

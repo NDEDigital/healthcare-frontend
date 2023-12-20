@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import {
   AbstractControl,
   FormControl,
@@ -6,6 +6,7 @@ import {
   ValidationErrors,
   Validators,
 } from '@angular/forms';
+import { AddProductService } from 'src/app/services/add-product.service';
 
 @Component({
   selector: 'app-add-groups',
@@ -13,19 +14,18 @@ import {
   styleUrls: ['./add-groups.component.css'],
 })
 export class AddGroupsComponent {
-  addGroupForm!: FormGroup;
+  @ViewChild('userExistModalBTN') UserExistModalBTN!: ElementRef;
 
-  constructor() {}
+  addGroupForm!: FormGroup;
+  alertMsg = '';
+  constructor(private addProductService: AddProductService) {}
 
   ngOnInit() {
-    this.addGroupForm = new FormGroup(
-      {
-        productGroupName: new FormControl('', Validators.required),
-        productGroupPrefix: new FormControl('', Validators.required),
-        productGroupDetails: new FormControl(''),
-      }
-      // { validators: this.passwordMatchValidator }
-    );
+    this.addGroupForm = new FormGroup({
+      productGroupName: new FormControl('', Validators.required),
+      productGroupPrefix: new FormControl('', Validators.required),
+      productGroupDetails: new FormControl(''),
+    });
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -35,8 +35,30 @@ export class AddGroupsComponent {
   }
 
   onSubmit(): void {
+    Object.values(this.addGroupForm.controls).forEach((control) => {
+      control.markAsTouched();
+      control.markAsDirty();
+    });
+    const formData = {
+      ...this.addGroupForm.value,
+      addedBy: 'user',
+      addedPC: '0.0.0.0',
+    };
     if (this.addGroupForm.valid) {
       console.log('Form Data:', this.addGroupForm.value);
+
+      this.addProductService.createProductGroup(formData).subscribe({
+        next: (response: any) => {
+          console.log(response);
+          this.alertMsg = 'Successfully added this Product Group';
+          this.UserExistModalBTN.nativeElement.click();
+        },
+        error: (error: any) => {
+          console.log(error);
+          this.alertMsg = ' Faild to add this Product Group';
+          this.UserExistModalBTN.nativeElement.click();
+        },
+      });
     } else {
       console.log('Form is not valid');
     }

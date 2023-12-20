@@ -22,10 +22,8 @@ export class BecomeASellerComponent {
   // selectedPaymentMethod: string = 'Nothing Selected'; // Variable to hold the selected payment method
   showBankingInfo: boolean = false; // Variable to control the visibility of banking information fields
   showMobileBankingInfo: boolean = false;
-  MAX_FILE_SIZE_BYTES = 4194304; // 4MB = 1024 * 1024 * 4 bytes
-  imageSizeExceeded = false;
+
   constructor(
-    private userData: UserDataService,
     private companyService: CompanyService
   ) {}
 

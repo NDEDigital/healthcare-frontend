@@ -41,18 +41,25 @@
         formControlName="productGroupDetails"
       ></textarea>
     </div>
-
+    <!-- Button trigger modal -->
     <button
       type="submit"
       class="button mt-3"
       id="sign-in-button"
-      data-bs-toggle="modal"
-      data-bs-target="#productGroupModal"
       (click)="onSubmit()"
     >
       Submit
     </button>
 
+    <button
+      type="button"
+      class="btn btn-primary d-none"
+      data-bs-toggle="modal"
+      data-bs-target="#productGroupModal"
+      #userExistModalBTN
+    >
+      Launch demo modal
+    </button>
     <!-- Modal -->
     <div
       class="modal fade"
@@ -75,14 +82,7 @@
             ></button>
           </div>
           <div class="modal-body">
-            <p class="fs-5">
-              Successfully added
-              <span class="fw-bold fs-5">this Product Group </span>
-            </p>
-            <p class="text-danger fs-5">
-              Faild to added
-              <span class="fw-bold fs-5">this product Group</span>
-            </p>
+            <p>{{ alertMsg }}</p>
           </div>
         </div>
       </div>
