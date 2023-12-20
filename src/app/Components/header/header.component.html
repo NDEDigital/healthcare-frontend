@@ -115,10 +115,12 @@
   <div class="row justify-content-around laptop-menu m-0">
     <div class="logo_container col-3 d-flex justify-content-between">
       <!-- <a href="" -->
-      <a   class="companyName">
+      <a class="companyName">
         <span *ngIf="!isBuyer">Nimpex HealthCare</span>
-        <span *ngIf="isBuyer" [routerLink]="' '"style="cursor: pointer;" > Nimpex HealthCare</span>
-      <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" />-->
+        <span *ngIf="isBuyer" [routerLink]="' '" style="cursor: pointer">
+          Nimpex HealthCare</span
+        >
+        <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" />-->
       </a>
 
       <!-- <div class="categories dropdown mt-2 ms-4  " *ngIf="isCategoriesVisible">
@@ -223,7 +225,10 @@
           <div class="login-popup bg-white p-1 px-4">
             <div class="popup-item d-flex justify-content-between">
               <p class="mt-2 fs-small">New Customer?</p>
-              <a href="/register" class="color-primary ms-1 mt-1">Sign Up</a>
+              <!-- <a href="/register" class="color-primary ms-1 mt-1">Sign Up</a> -->
+              <a href="/userRegistration" class="color-primary ms-1 mt-1"
+                >Register</a
+              >
             </div>
             <div class="delimiter-horizontal"></div>
 

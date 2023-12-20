@@ -60,6 +60,8 @@ import { OtpModalComponent } from './Components/otp-modal/otp-modal.component';
 import { UserTokenInterceptor } from './Interceptor/user-token.interceptor';
 import { SellerInventoryComponent } from './Components/seller-inventory/seller-inventory.component';
 import { AddProductQuantityComponent } from './add-product-quantity/add-product-quantity.component';
+import { UserRegFormComponent } from './Components/user-reg-form/user-reg-form.component';
+import { UserRegistrationComponent } from './Pages/user-registration/user-registration.component';
 
 @NgModule({
   declarations: [
@@ -113,6 +115,8 @@ import { AddProductQuantityComponent } from './add-product-quantity/add-product-
     OtpModalComponent,
     SellerInventoryComponent,
     AddProductQuantityComponent,
+    UserRegFormComponent,
+    UserRegistrationComponent,
   ],
   imports: [
     BrowserModule,

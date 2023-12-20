@@ -1,0 +1,166 @@
+<form [formGroup]="userResistrationForm">
+  <div class="d-flex">
+    <label><span class="text-danger">*</span>Select Your trade Role</label>
+    <label for="buyerTrade">
+      <input
+        type="radio"
+        id="buyerTrade"
+        formControlName="trade"
+        value="Buyer"
+        class="ms-1 me-1"
+      />
+      Buyer
+    </label>
+    <label for="sellerTrade">
+      <input
+        type="radio"
+        id="sellerTrade"
+        formControlName="trade"
+        value="Seller"
+        class="ms-1 me-1"
+      />
+      Seller
+    </label>
+  </div>
+
+  <div class="form-group">
+    <label for="fullName"><span class="text-danger">*</span>Full Name</label>
+    <input
+      type="text"
+      id="fullName"
+      formControlName="fullName"
+      [class.error]="isFieldInvalid('fullName')"
+    />
+    <span class="text-danger" *ngIf="isFieldInvalid('fullName')"
+      >Name is required.</span
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="email"><span class="text-danger">*</span>Email</label>
+    <input
+      type="email"
+      id="email"
+      formControlName="email"
+      [class.error]="isFieldInvalid('email')"
+    />
+    <span class="text-danger" *ngIf="isFieldInvalid('email')"
+      >Email is required.</span
+    >
+  </div>
+
+  <div class="form-group">
+    <label for="phoneNumber"
+      ><span class="text-danger">*</span>Phone Number</label
+    >
+    <input
+      type="text"
+      id="phoneNumber"
+      formControlName="phoneNumber"
+      [class.error]="isFieldInvalid('phoneNumber')"
+    />
+    <div class="text-danger" *ngIf="isFieldInvalid('phoneNumber')">
+      <span>{{ getPhoneNumberErrorMessage() }}</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="password"><span class="text-danger">*</span>Password</label>
+    <input
+      type="password"
+      id="password"
+      formControlName="password"
+      [class.error]="isFieldInvalid('password')"
+    />
+    <div class="text-danger" *ngIf="isFieldInvalid('password')">
+      <span>{{ getPasswordErrorMessage() }}</span>
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="confirmPassword"
+      ><span class="text-danger">*</span>Confirm Password</label
+    >
+    <input
+      type="password"
+      id="confirmPassword"
+      formControlName="confirmPassword"
+    />
+    <div
+      *ngIf="
+        userResistrationForm
+          .get('confirmPassword')
+          ?.hasError('passwordMismatch') &&
+        userResistrationForm.get('confirmPassword')?.dirty
+      "
+      class="text-danger"
+    >
+      Password and Confirm Password must match.
+    </div>
+  </div>
+
+  <div class="form-group">
+    <label for="address">Address</label>
+    <textarea type="address" id="address" formControlName="address"></textarea>
+  </div>
+
+  <div
+    class="form-group"
+    *ngIf="userResistrationForm.get('trade')?.value === 'Seller'"
+  >
+    <label for="companyCode">Company ID</label>
+    <input type="text" id="companyCode" formControlName="companyCode" />
+  </div>
+
+  <button
+    type="submit"
+    class="button mt-3"
+    id="sign-in-button"
+    (click)="onSubmit()"
+  >
+    Submit
+  </button>
+</form>
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#userExistModal"
+  #userExistModalBTN
+>
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="userExistModal"
+  tabindex="-1"
+  aria-labelledby="userExistModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content border border-danger">
+      <div class="modal-header fs-5 fw-bold text-danger">
+        <h1 class="modal-title fs-5" id="userExistModalLabel">
+          {{ alertMsg }}
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        Please login or use another phone number to register!
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
