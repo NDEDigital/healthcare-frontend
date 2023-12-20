@@ -109,7 +109,15 @@
     *ngIf="userResistrationForm.get('trade')?.value === 'Seller'"
   >
     <label for="companyCode">Company ID</label>
-    <input type="text" id="companyCode" formControlName="companyCode" />
+    <input
+      type="text"
+      id="companyCode"
+      formControlName="companyCode"
+      [class.error]="isFieldInvalid('companyCode')"
+    />
+    <span class="text-danger" *ngIf="isFieldInvalid('companyCode')"
+      >Company ID is required.</span
+    >
   </div>
 
   <button

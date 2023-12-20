@@ -43,13 +43,32 @@ export class UserRegFormComponent {
           Validators.maxLength(15),
         ]),
         confirmPassword: new FormControl('', Validators.required),
-        email: new FormControl('', Validators.required),
+        email: new FormControl('', [
+          Validators.required,
+          Validators.pattern(
+            '^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'
+          ),
+        ]),
+
         address: new FormControl(''),
         companyCode: new FormControl(''),
       },
       { validators: this.passwordMatchValidator }
     );
+    // Add or remove the 'required' validator for companyCode based on the trade value
+    this.userResistrationForm
+      .get('trade')
+      ?.valueChanges.subscribe((tradeValue) => {
+        const companyCodeControl = this.userResistrationForm.get('companyCode');
+        if (tradeValue === 'Seller') {
+          companyCodeControl?.setValidators([Validators.required]);
+        } else {
+          companyCodeControl?.clearValidators();
+        }
+        companyCodeControl?.updateValueAndValidity();
+      });
   }
+
   passwordMatchValidator(control: AbstractControl): ValidationErrors | null {
     const password = control.get('password')?.value;
     const confirmPassword = control.get('confirmPassword')?.value;
