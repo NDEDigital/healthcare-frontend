@@ -245,7 +245,7 @@
             </a>
           </div>
         </div>
-        <div class="sidebar_delimiter"></div>
+        <div *ngIf="isSeller" class="sidebar_delimiter"></div>
       </div>
       <div *ngIf="!isAdmin">
         <div class="sidebar_item d-flex justify-content-between p-1 py-3">
@@ -262,26 +262,8 @@
             </a>
           </div>
         </div>
-        <div class="sidebar_delimiter"></div>
+        <div *ngIf="isSeller" class="sidebar_delimiter"></div>
       </div>
-      <div *ngIf="!isAdmin">
-        <div class="sidebar_item d-flex justify-content-between p-1 py-3">
-          <div class="d-flex">
-            <a
-              class="d-flex menu_link"
-              [ngClass]="{ active: SidebarIndex === 6 }"
-              (click)="SidebarIndex = 6"
-            >
-              <span class="title_icon text-start me-2"
-                ><i class="fa-solid fa-cart-shopping"></i
-              ></span>
-              <h5>{{ sidebarCol6Title }}</h5>
-            </a>
-          </div>
-        </div>
-        <div class="sidebar_delimiter"></div>
-      </div>
-      <div *ngIf="!isAdmin" class="sidebar_delimiter"></div>
       <div
         *ngIf="!isAdmin"
         class="sidebar_item d-flex justify-content-between p-1 py-3"
@@ -299,7 +281,7 @@
           </a>
         </div>
       </div>
-      <div *ngIf="!isAdmin" class="sidebar_delimiter"></div>
+      <div *ngIf="isSeller" class="sidebar_delimiter"></div>
 
       <div
         *ngIf="!isAdmin"
@@ -318,9 +300,10 @@
           </a>
         </div>
       </div>
-      <div class="sidebar_delimiter"></div>
+      <div *ngIf="isSeller" class="sidebar_delimiter"></div>
+
       <div
-        *ngIf="userRole === 'seller'"
+        *ngIf="isSeller"
         class="sidebar_item d-flex justify-content-between p-1 py-3"
       >
         <div class="d-flex">
@@ -616,10 +599,7 @@
       <app-add-product-quantity></app-add-product-quantity>
     </section>
 
-    <section
-      class="admin_order_body"
-      *ngIf="userRole === 'admin' && SidebarIndex === 3"
-    >
+    <section class="admin_order_body" *ngIf="isAdmin && SidebarIndex === 3">
       <app-admin-order></app-admin-order>
     </section>
 
@@ -629,10 +609,7 @@
     </section>
     <!-- sellers inventory end-->
 
-    <section
-      class="seller_order_body"
-      *ngIf="userRole === 'seller' && SidebarIndex === 3"
-    >
+    <section class="seller_order_body" *ngIf="isSeller && SidebarIndex === 3">
       <app-orders-overview></app-orders-overview>
     </section>
 

@@ -35,7 +35,9 @@ export class DashboardComponent {
   filteredProducts: any[] = []; // Array to hold the filtered products
   showSidebar = true;
   isAdmin: boolean = false;
-  userRole: string = '';
+  isBuyer: boolean = false;
+  isSeller: boolean = false;
+  // userRole: string = '';
   // isAdminOrder: boolean = false;
   // addProducts: boolean = false;
   // addGroups: boolean = false;
@@ -45,7 +47,7 @@ export class DashboardComponent {
   sidebarCol3Title = 'Orders';
   sidebarCol4Title = 'Inventory';
   sidebarCol5Title = 'Add Quantity';
-  sidebarCol6Title = 'Other Sales';
+  // sidebarCol6Title = 'Other Sales';
   sidebarCol7Title = 'Add Groups';
   sidebarCol8Title = 'Company Approval';
   sidebarCol4Link = '/payment';
@@ -139,14 +141,21 @@ export class DashboardComponent {
 
     setTimeout(() => {
       const role = localStorage.getItem('role');
-      if (role) this.userRole = role;
       if (role === 'admin') {
         this.isAdmin = true;
       }
+      if (role === 'seller') {
+        this.isSeller = true;
+      }
+
+      if (role === 'buyer') {
+        this.isBuyer = true;
+      }
+
       console.log(this.isAdmin, 'isAdmin');
       if (this.isAdmin == true) {
         this.sidebarCol1Title = 'Product Approval';
-        this.sidebarCol2Link = '/becomeASeller'; // userList
+        // this.sidebarCol2Link = '/becomeASeller'; // userList
       }
     }, 15);
     this.toggleSidebar();
