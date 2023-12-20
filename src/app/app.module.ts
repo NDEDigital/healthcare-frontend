@@ -64,6 +64,7 @@ import { AddProductsComponent } from './Components/add-products/add-products.com
 import { AddGroupsComponent } from './Components/add-groups/add-groups.component';
 import { UserRegFormComponent } from './Components/user-reg-form/user-reg-form.component';
 import { UserRegistrationComponent } from './Pages/user-registration/user-registration.component';
+import { CompanyApprovalComponent } from './Components/company-approval/company-approval.component';
 
 @NgModule({
   declarations: [
@@ -121,6 +122,7 @@ import { UserRegistrationComponent } from './Pages/user-registration/user-regist
     AddGroupsComponent,
     UserRegFormComponent,
     UserRegistrationComponent,
+    CompanyApprovalComponent,
   ],
   imports: [
     BrowserModule,
