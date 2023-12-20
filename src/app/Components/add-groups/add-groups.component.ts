@@ -10,28 +10,23 @@ import {
 @Component({
   selector: 'app-add-groups',
   templateUrl: './add-groups.component.html',
-  styleUrls: ['./add-groups.component.css']
+  styleUrls: ['./add-groups.component.css'],
 })
 export class AddGroupsComponent {
+  addGroupForm!: FormGroup;
 
-  addGroupForm!:FormGroup;
-
-  constructor(){
-
-  }
+  constructor() {}
 
   ngOnInit() {
     this.addGroupForm = new FormGroup(
       {
-
-        groupName: new FormControl('', Validators.required),
-        groupPrefix: new FormControl('', Validators.required),
-        groupDetail: new FormControl('')
-      },
+        productGroupName: new FormControl('', Validators.required),
+        productGroupPrefix: new FormControl('', Validators.required),
+        productGroupDetails: new FormControl(''),
+      }
       // { validators: this.passwordMatchValidator }
     );
   }
-
 
   isFieldInvalid(fieldName: string): boolean {
     const field = this.addGroupForm.get(fieldName);
@@ -46,6 +41,4 @@ export class AddGroupsComponent {
       console.log('Form is not valid');
     }
   }
-
-
 }

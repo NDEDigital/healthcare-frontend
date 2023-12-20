@@ -18,7 +18,7 @@ export class AddProductsComponent {
   ngOnInit() {
     this.addProductForm = new FormGroup({
 
-      productGroup: new FormControl('', Validators.required),
+      productGroupName: new FormControl('', Validators.required),
       productName: new FormControl('', Validators.required),
       productSubName: new FormControl(''),
       specification: new FormControl('', Validators.required),

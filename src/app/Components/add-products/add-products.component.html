@@ -3,15 +3,15 @@
   <hr />
   <form [formGroup]="addProductForm">
     <div class="form-group">
-      <label for="productGroup"
+      <label for="productGroupName"
         ><span class="text-danger">*</span>Product Group
       </label>
 
       <select
-        name="productGroup"
-        id="productGroup"
-        formControlName="productGroup"
-        [class.error]="isFieldInvalid('productGroup')"
+        name="productGroupName"
+        id="productGroupName"
+        formControlName="productGroupNameName"
+        [class.error]="isFieldInvalid('productGroupName')"
       >
         <option class="d-none" value="Nothing Selected" disabled>
           Nothing Selected
@@ -19,8 +19,8 @@
         <option value="credit card">Credit Card</option>
       </select>
 
-      <span class="text-danger" *ngIf="isFieldInvalid('productGroup')"
-        >productGroup is required.</span
+      <span class="text-danger" *ngIf="isFieldInvalid('productGroupName')"
+        >Product Group Name is required.</span
       >
     </div>
 
