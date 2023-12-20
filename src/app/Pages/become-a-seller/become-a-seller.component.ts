@@ -46,15 +46,15 @@ export class BecomeASellerComponent {
 
   // payment
   onPaymentMethodChange() {
-    // If 'Credit Card' is selected, show banking information fields
-    this.showBankingInfo = this.selectedPaymentMethod == 'Credit Card';
-    if (this.showBankingInfo) {
+    this.showBankingInfo = true;
+ 
+    if (this.selectedPaymentMethod === 'Credit Card') {
       this.bankdata();
     }
-
-    this.showBankingInfo = this.selectedPaymentMethod == 'Mobile Banking';
-    if (this.showBankingInfo) {
+    else if (this.selectedPaymentMethod === 'Mobile Banking') {
       this.MobileBankingdata();
+    } else {
+      this.showBankingInfo = false;
     }
   }
 
