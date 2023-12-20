@@ -1,0 +1,47 @@
+/* header text design*/
+.companyApproval_header_text {
+  color: var(--color-primary);
+}
+
+/* table design */
+
+
+.headerRow, .tablebodyRow {
+  flex-wrap: nowrap;
+}
+.scrollable-table {
+  height: 35rem; /* Adjust the height as needed */
+  overflow-y: scroll;
+  overflow-x: auto;
+}
+.headerRow {
+
+  text-align: center;
+}
+.tablebodyRow {
+  text-align: center;
+}
+.tableHeader, .tableBody {
+  min-width: 10rem;
+}
+
+.tableBody {
+  background-color: white;
+  padding: .7rem;
+  border-bottom: 1px solid var( --color-gray);
+}
+
+.tableHeader{
+  background-color: #e5f1f7;
+  padding: .8rem;
+  border-bottom: 1px solid var( --color-gray);
+}
+
+
+/* modal heading */
+.modal-heading{
+  background-color: var(--color-primary);
+}
+
+
+

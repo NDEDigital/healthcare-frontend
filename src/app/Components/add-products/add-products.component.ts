@@ -24,7 +24,6 @@ export class AddProductsComponent {
       specification: new FormControl('', Validators.required),
       unit: new FormControl('', Validators.required),
       productImg: new FormControl('', Validators.required),
-
     });
   }
 

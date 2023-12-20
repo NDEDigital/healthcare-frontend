@@ -1,1 +1,136 @@
-<p>company-approval works!</p>
+<div class="container">
+  <div class="bg-white d-flex justify-content-center p-2">
+    <h1 class="companyApproval_header_text">Company Approval</h1>
+  </div>
+  <div class="mt-5 bg-light">
+    <div>
+      <button class="custom-btn">New</button>
+      <button class="custom-btn">Active</button>
+      <button class="custom-btn">InActive</button>
+    </div>
+  </div>
+  <div class="scrollable-table border border-1 bg-light">
+    <!-- TABLE header -->
+    <div class="row headerRow sticky-top fw-bolder">
+      <div class="col tableHeader">Company Name</div>
+      <div class="col tableHeader">Tax Id. Number</div>
+      <div class="col tableHeader">Foundation Date</div>
+      <div class="col tableHeader">Trade Licence File</div>
+      <div class="col tableHeader">Company Image</div>
+      <div class="col tableHeader">Prefered Method</div>
+      <div class="col tableHeader">Max User</div>
+      <div class="col tableHeader">Action</div>
+    </div>
+
+    <!-- table body -->
+
+    <div class="row tablebodyRow fw-semibold">
+      <div class="col tableBody">Nimpex ltd.</div>
+      <div class="col tableBody">3746273242473</div>
+      <div class="col tableBody">2/2/2023</div>
+      <div class="col tableBody">
+        <button
+          class="custom-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          view
+        </button>
+      </div>
+      <div class="col tableBody">
+        <button
+          class="custom-btn"
+          data-bs-toggle="modal"
+          data-bs-target="#staticBackdrop"
+        >
+          view
+        </button>
+      </div>
+      <div class="col tableBody">Bank</div>
+      <div class="col tableBody">
+        <input type="number" class="border border-1 p-2 w-75" />
+      </div>
+      <div class="col tableBody">
+        <div class="d-flex justify-content-center align-items-center">
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="30"
+              height="30"
+              fill="green"
+              class="bi bi-check2 me-3"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+              />
+            </svg>
+          </div>
+          <div>
+            <svg
+              xmlns="http://www.w3.org/2000/svg"
+              width="25"
+              height="25"
+              fill="red"
+              class="bi bi-x-lg fw-bolder"
+              viewBox="0 0 16 16"
+            >
+              <path
+                d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+              />
+            </svg>
+          </div>
+        </div>
+      </div>
+
+      <!-- Modal for tadeLicence -->
+      <div
+        class="modal fade"
+        id="staticBackdrop"
+        data-bs-backdrop="static"
+        data-bs-keyboard="false"
+        tabindex="-1"
+        aria-labelledby="staticBackdropLabel"
+        aria-hidden="true"
+      >
+        <div class="modal-dialog modal-xl">
+          <div class="modal-content">
+            <div class="modal-header modal-heading">
+              <h1 class="modal-title text-light fs-5" id="staticBackdropLabel">
+                Trade Licence
+              </h1>
+              <button
+                type="button"
+                class="btn-close"
+                data-bs-dismiss="modal"
+                aria-label="Close"
+              ></button>
+            </div>
+            <div class="modal-body">
+              <img
+                src="/src/assets/images/Allen Bolt.jpg"
+                alt="image of dark"
+              />
+
+              <p>
+                Lorem ipsum, dolor sit amet consectetur adipisicing elit.
+                Asperiores laborum neque aspernatur voluptas voluptate corporis
+                ex natus ut iure minus?
+              </p>
+            </div>
+            <!-- <div class="modal-footer">
+              <button
+                type="button"
+                class="btn btn-secondary"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+              <button type="button" class="btn btn-primary">Understood</button>
+            </div> -->
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

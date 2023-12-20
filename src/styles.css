@@ -5,6 +5,7 @@
   /* --color-primary: #3a98b9; */
   /* --color-primary: #8ea4ac; */
   --color-primary: #7b9eab;
+  --color-primary-dark: #608897;
   --color-gray: #6b6e71;
   --text-black: #5b5a5a;
   --background-color: #f5f5f5;
@@ -100,6 +101,33 @@ body {
 .detail-img:hover {
   transform: scale(1.1);
 }
+
+/* modern button design */
+
+.custom-btn {
+  background-color: var(--color-primary-dark);
+  border: none;
+  color: white;
+  padding: 0.5rem 0.7rem;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: .2rem;
+  transition: background-color 0.3s, box-shadow 0.3s;
+
+  width: 5rem;
+  height: 2.5rem;
+
+}
+
+.custom-btn:hover {
+  background-color: var(--color-primary);
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+}
+
 /* Media Queries */
 @media (max-width: 1700px) {
   html {
