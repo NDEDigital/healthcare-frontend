@@ -4,9 +4,27 @@
   </div>
   <div class="mt-2 bg-light">
     <div>
-      <button class="custom-btn">New</button>
-      <button class="custom-btn btn-active">Active</button>
-      <button class="custom-btn btn-inactive">InActive</button>
+      <button
+        class="custom-btn new-btn active"
+        [ngClass]="{ active: btnIndex === 1 }"
+        (click)="btnIndex = 1"
+      >
+        New
+      </button>
+      <button
+        class="custom-btn btn-active"
+        [ngClass]="{ active: btnIndex === 2 }"
+        (click)="btnIndex = 2"
+      >
+        Active
+      </button>
+      <button
+        class="custom-btn btn-inactive"
+        [ngClass]="{ active: btnIndex === 3 }"
+        (click)="btnIndex = 3"
+      >
+        Inactive
+      </button>
     </div>
   </div>
   <div class="scrollable-table border border-1 bg-light">

@@ -6,5 +6,5 @@ import { Component } from '@angular/core';
   styleUrls: ['./company-approval.component.css']
 })
 export class CompanyApprovalComponent {
-
+btnIndex=0;
 }
