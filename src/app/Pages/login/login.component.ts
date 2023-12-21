@@ -47,13 +47,13 @@ export class LoginComponent {
         this.userData.SetAccessToken(response.token);
         this.userData.SetRefreshToken(response.newRefreshToken);
         this.refreshToken = response.newRefreshToken;
-        // console.log(response.encryptedUserCode);
+        // console.log(response.userId);
         this.errorMessage = '';
         this.loginForm.reset();
         // alert(response.message);
         this.sharedServiceData.updateLoginStatus(
           true,
-          response.encryptedUserCode,
+          response.userId,
           response.role
         );
 
@@ -76,7 +76,7 @@ export class LoginComponent {
         } else this.router.navigate(['/dashboard']);
       },
       error: (error: any) => {
-         console.log(error);
+        console.log(error);
         this.errorMessage = error.error.message;
         // this.errorMessage = " pass word does not match";
         //   alert(" error");
@@ -89,14 +89,13 @@ export class LoginComponent {
   }
   isFieldInvalid(fieldName: string) {
     const field = this.loginForm.get(fieldName);
-  //  this.errorMessage = '';
+    //  this.errorMessage = '';
     // return field?.invalid && field.touched;
-    return field?.invalid && field.touched && field.dirty ;
+    return field?.invalid && field.touched && field.dirty;
   }
   getPhoneNumberErrorMessage() {
     const phoneControl = this.loginForm.get('phoneNumber');
     if (phoneControl?.hasError('required')) {
-
       return 'Phone number is required.';
     }
     //else if (phoneControl?.hasError('pattern')) {

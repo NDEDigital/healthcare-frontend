@@ -18,6 +18,7 @@ import { UserDataService } from 'src/app/services/user-data.service';
 export class UserRegFormComponent {
   @ViewChild('userExistModalBTN') UserExistModalBTN!: ElementRef;
   userResistrationForm!: FormGroup;
+  alertTitle: string = '';
   alertMsg: string = '';
   user: any;
 
@@ -147,7 +148,7 @@ export class UserRegFormComponent {
         next: (response: any) => {
           this.sharedServiceData.updateLoginStatus(
             true,
-            response.encryptedUserCode,
+            response.userId,
             response.role
           );
           console.log(response, 'done');
@@ -161,7 +162,9 @@ export class UserRegFormComponent {
         },
         error: (error: any) => {
           console.log(error);
-          this.alertMsg = error.error.message;
+          this.alertTitle = 'Error!!';
+            this.alertMsg = error.error.message;
+        
           this.UserExistModalBTN.nativeElement.click();
         },
       });

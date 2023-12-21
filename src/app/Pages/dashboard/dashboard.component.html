@@ -337,6 +337,24 @@
           </a>
         </div>
       </div>
+      <div *ngIf="isSeller" class="sidebar_delimiter"></div>
+      <div
+        *ngIf="isSeller"
+        class="sidebar_item d-flex justify-content-between p-1 py-3"
+      >
+        <div class="d-flex">
+          <a
+            class="d-flex menu_link"
+            [ngClass]="{ active: SidebarIndex === 10 }"
+            (click)="SidebarIndex = 10"
+          >
+            <span class="title_icon text-start me-2"
+              ><i class="fa-solid fa-cart-shopping"></i
+            ></span>
+            <h5>{{ sidebarCol10Title }}</h5>
+          </a>
+        </div>
+      </div>
       <div class="sidebar_delimiter"></div>
     </div>
   </div>
@@ -491,14 +509,6 @@
             *ngFor="let item of getPaginatedProducts()"
           >
             <!-- *ngFor="let item of filteredProducts" -->
-            <app-product-approval
-              [product]="item"
-              [nm]="item.goodsId"
-              [status]="status"
-              (checkboxChange)="handleCheckboxChange($event)"
-              (statusChange)="handleStatusChange($event)"
-              (shwoPRoductDetailsID)="handleShowProductDetailsID($event)"
-            ></app-product-approval>
           </section>
         </div>
 
@@ -644,6 +654,9 @@
     </section>
     <section class="priceNdiscounts" *ngIf="SidebarIndex === 9">
       <app-add-price-discounts></app-add-price-discounts>
+    </section>
+    <section class="productApproval" *ngIf="SidebarIndex === 10">
+      <app-product-approval></app-product-approval>
     </section>
   </div>
   <!-- </div> -->
