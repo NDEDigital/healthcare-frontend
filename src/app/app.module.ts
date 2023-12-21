@@ -31,7 +31,7 @@ import { CarouselComponent } from './Components/carousel/carousel.component';
 import { AddProductComponent } from './Pages/add-product/add-product.component';
 import { DashboardComponent } from './Pages/dashboard/dashboard.component';
 import { ProductCardComponent } from './Components/product-card/product-card.component';
-import { ProductApprovalComponent } from './Pages/dashboard/admin/product-approval/product-approval.component';
+
 import { FooterComponent } from './Components/footer/footer.component';
 import { SearchResultComponent } from './Pages/search-result/search-result.component';
 import { ProductSearchComponent } from './Components/product-search/product-search.component';
@@ -66,6 +66,7 @@ import { UserRegFormComponent } from './Components/user-reg-form/user-reg-form.c
 import { UserRegistrationComponent } from './Pages/user-registration/user-registration.component';
 import { CompanyApprovalComponent } from './Components/company-approval/company-approval.component';
 import { AddPriceDiscountsComponent } from './Components/add-price-discounts/add-price-discounts.component';
+import { ProductApprovalComponent } from './Components/product-approval/product-approval.component';
 
 @NgModule({
   declarations: [
@@ -92,7 +93,6 @@ import { AddPriceDiscountsComponent } from './Components/add-price-discounts/add
     AddProductComponent,
     DashboardComponent,
     ProductCardComponent,
-    ProductApprovalComponent,
     FooterComponent,
     SearchResultComponent,
     ProductSearchComponent,
@@ -125,6 +125,7 @@ import { AddPriceDiscountsComponent } from './Components/add-price-discounts/add
     UserRegistrationComponent,
     CompanyApprovalComponent,
     AddPriceDiscountsComponent,
+    ProductApprovalComponent,
   ],
   imports: [
     BrowserModule,
