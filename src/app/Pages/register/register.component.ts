@@ -30,7 +30,7 @@ export class RegisterComponent implements AfterViewInit {
   // isError: boolean = false;
   // flag: string = '';
   @ViewChild('userExistModalBTN') UserExistModalBTN!: ElementRef;
-   // payment 
+  // payment
   @ViewChild('PaymentInfo', { static: false }) PaymentInfo!: ElementRef;
   alertMsg: string = '';
   phoneNumber = '***********';
@@ -40,11 +40,10 @@ export class RegisterComponent implements AfterViewInit {
   userExist = true;
   user: any;
 
-
-  // payment 
-  paymentMethods: string[] = ['Credit Card', 'Cash','Mobile Banking'];
-  bankData:any = [];
-  mobileBankingData:any = [];
+  // payment
+  paymentMethods: string[] = ['Credit Card', 'Cash', 'Mobile Banking'];
+  bankData: any = [];
+  mobileBankingData: any = [];
   selectedPaymentMethod: string = 'Nothing Selected'; // Variable to hold the selected payment method
   showBankingInfo: boolean = false; // Variable to control the visibility of banking information fields
   showMobileBankingInfo: boolean = false;
@@ -112,9 +111,7 @@ export class RegisterComponent implements AfterViewInit {
     //   }
     //   this.initializeTimer();
     // }
-
-     // Scroll to the banking info element
-
+    // Scroll to the banking info element
     //  console.log('showBankingInfo:', this.showBankingInfo); // Check if this is true
     //  console.log('PaymentInfo:', this.PaymentInfo); // Check if this is defined
     //  if (this.showBankingInfo ) {
@@ -199,18 +196,18 @@ export class RegisterComponent implements AfterViewInit {
         },
       });
     }
-   // console.log(userData);
+    // console.log(userData);
 
     // this.cdr.detectChanges();
   }
 
   captchaVerify() {
     if (this.recaptchaVerifier) {
-      console.log(this.recaptchaVerifier,"before");
+      console.log(this.recaptchaVerifier, 'before');
       this.recaptchaVerifier.clear();
       console.log(this.recaptchaVerifier, 'after1');
       this.recaptchaVerifier = null;
-        console.log(this.recaptchaVerifier, 'after2');
+      console.log(this.recaptchaVerifier, 'after2');
     }
     const auth = getAuth();
     this.capcha_container.nativeElement.clear;
@@ -234,8 +231,8 @@ export class RegisterComponent implements AfterViewInit {
 
     signInWithPhoneNumber(
       auth,
-     // '+8801521451381',
-       '+88' + this.userForm.value.phone,
+      // '+8801521451381',
+      '+88' + this.userForm.value.phone,
       this.recaptchaVerifier!
     )
       .then((confirmationResult) => {
@@ -248,8 +245,7 @@ export class RegisterComponent implements AfterViewInit {
         }
       })
       .catch((error) => {
-        console.log(error.code,"code send error");
-
+        console.log(error.code, 'code send error');
       });
   }
 
@@ -266,7 +262,7 @@ export class RegisterComponent implements AfterViewInit {
             next: (response: any) => {
               this.sharedServiceData.updateLoginStatus(
                 true,
-                response.encryptedUserCode,
+                response.userId,
                 response.role
               );
               console.log(response, 'done');
@@ -411,45 +407,33 @@ export class RegisterComponent implements AfterViewInit {
     //   .catch((error) => {
     //     console.log(error.code, 'inside resend');
     //   });
-
-
-
   }
 
   onPaymentMethodChange() {
     // If 'Credit Card' is selected, show banking information fields
     this.showBankingInfo = this.selectedPaymentMethod == 'Credit Card';
-    if(this.showBankingInfo){
+    if (this.showBankingInfo) {
       this.bankdata();
-      
     }
 
     this.showMobileBankingInfo = this.selectedPaymentMethod == 'Mobile Banking';
-    if(this.showMobileBankingInfo){
+    if (this.showMobileBankingInfo) {
       this.MobileBankingdata();
     }
- 
   }
 
-  // get bank data 
-  bankdata(){
-    this.userData
-    .GetBankdata()
-    .subscribe((data: any) => {
+  // get bank data
+  bankdata() {
+    this.userData.GetBankdata().subscribe((data: any) => {
       console.log(' GetBankdata dataaaaaa ', data); // Use a type if possible for better type checking
-       this.bankData = data;
+      this.bankData = data;
     });
-   
   }
-    // get MobileBanking data 
-    MobileBankingdata(){
-      this.userData
-      .GetMobileBankingdata()
-      .subscribe((data: any) => {
-        console.log(' GetMobileBankingdata dataaaaaa ', data); // Use a type if possible for better type checking  
-        this.mobileBankingData = data;
-      });
-    }
-
-
+  // get MobileBanking data
+  MobileBankingdata() {
+    this.userData.GetMobileBankingdata().subscribe((data: any) => {
+      console.log(' GetMobileBankingdata dataaaaaa ', data); // Use a type if possible for better type checking
+      this.mobileBankingData = data;
+    });
+  }
 }

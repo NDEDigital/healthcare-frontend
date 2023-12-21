@@ -148,7 +148,7 @@ export class UserRegFormComponent {
         next: (response: any) => {
           this.sharedServiceData.updateLoginStatus(
             true,
-            response.encryptedUserCode,
+            response.userId,
             response.role
           );
           console.log(response, 'done');
