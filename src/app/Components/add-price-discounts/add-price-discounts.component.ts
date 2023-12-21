@@ -9,10 +9,13 @@ import { AddProductService } from 'src/app/services/add-product.service';
 })
 export class AddPriceDiscountsComponent {
   @ViewChild('ProductImageInput') ProductImageInput!: ElementRef;
+  @ViewChild('prdouctExistModalBTN') PrdouctExistModalBTN!: ElementRef;
 
   addPriceDiscountForm!: FormGroup;
   products: any[] = [];
   isDisabled: boolean = true;
+  alertMsg: string = '';
+  isError: boolean = false;
 
   constructor(private productService: AddProductService) {}
 
@@ -26,7 +29,7 @@ export class AddPriceDiscountsComponent {
       productId: new FormControl('', Validators.required),
       price: new FormControl('', Validators.required),
       discountAmount: new FormControl(''),
-      discountPct: new FormControl('', Validators.required),
+      discountPct: new FormControl(''),
       effectivateDate: new FormControl(''),
       endDate: new FormControl(''),
       productImage: new FormControl('', Validators.required),
@@ -69,10 +72,18 @@ export class AddPriceDiscountsComponent {
   calculateTotalPrice() {
     const price =
       parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
-    let discountAmount =
-      parseFloat(this.addPriceDiscountForm.get('discountAmount')?.value) || 0;
-    let discountPct =
-      parseFloat(this.addPriceDiscountForm.get('discountPct')?.value) || 0;
+    let discountAmount = parseFloat(
+      this.addPriceDiscountForm.get('discountAmount')?.value
+    );
+    let discountPct = parseFloat(
+      this.addPriceDiscountForm.get('discountPct')?.value
+    );
+
+    // Check if discountAmount and discountPct are NaN, set them to 0 if they are
+    discountAmount = isNaN(discountAmount) ? 0 : discountAmount;
+    discountPct = isNaN(discountPct) ? 0 : discountPct;
+
+    let calculatedDiscount = 0;
 
     if (price > 0) {
       if (discountAmount > 0) {
@@ -81,13 +92,14 @@ export class AddPriceDiscountsComponent {
         this.addPriceDiscountForm
           .get('discountPct')
           ?.setValue(discountPct.toFixed(2), { emitEvent: false });
+        calculatedDiscount = discountAmount;
       } else if (discountPct > 0) {
         // Calculate and update discount amount if discount percentage is provided
-        discountAmount = (price * discountPct) / 100;
+        calculatedDiscount = (price * discountPct) / 100;
       }
     }
 
-    const totalPrice = Math.max(price - discountAmount, 0); // Total price should not be negative
+    const totalPrice = Math.max(price - calculatedDiscount, 0); // Total price should not be negative
     this.addPriceDiscountForm
       .get('totalPrice')
       ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
@@ -108,6 +120,19 @@ export class AddPriceDiscountsComponent {
 
       Object.keys(this.addPriceDiscountForm.value).forEach((key) => {
         let value = this.addPriceDiscountForm.value[key];
+
+        if (key === 'discountAmount' || key === 'discountPct') {
+          // Check if the value is a valid number
+          const numberValue = parseFloat(value);
+          if (!isNaN(numberValue)) {
+            // Convert valid numbers to string with two decimal places
+            value = numberValue.toFixed(2);
+          } else {
+            // If value is not a number, use a default value (e.g., '0.00') or skip appending
+            value = '0.00';
+          }
+        }
+
         if (key === 'productId' || key === 'userId') {
           value = String(Math.floor(Number(value)));
           console.log(value);
@@ -132,16 +157,13 @@ export class AddPriceDiscountsComponent {
       formData.append('addedBy', 'user');
       formData.append('addedPC', '0.0.0.0');
 
-      let userIDstring =  localStorage.getItem('code');
+      let userIDstring = localStorage.getItem('code');
       let userID;
-      if(userIDstring){
+      if (userIDstring) {
         userID = parseInt(userIDstring, 10);
-        console.log(userID, "userID....");
-
+        console.log(userID, 'userID....');
+        formData.append('userId', userID.toString());
       }
-
-      // Append additional fields
-      formData.append('userId', '1');
       formData.append('companyCode', 'companyCode');
 
       for (let pair of (formData as any).entries()) {
@@ -151,16 +173,16 @@ export class AddPriceDiscountsComponent {
       this.productService.createSellerProductPrice(formData).subscribe({
         next: (response: any) => {
           console.log(response);
-          // this.alertMsg = response.message;
-          // this.isError = false; // Set isError to false for a success message
-          // this.PrdouctExistModalBTN.nativeElement.click();
+          this.alertMsg = response.message;
+          this.isError = false; // Set isError to false for a success message
+          this.PrdouctExistModalBTN.nativeElement.click();
           this.addPriceDiscountForm.reset();
         },
         error: (error: any) => {
           console.log(error);
-          // this.alertMsg = error.error.message;
-          // this.isError = true; // Set isError to true for an error message
-          // this.PrdouctExistModalBTN.nativeElement.click();
+          this.alertMsg = error.error.message;
+          this.isError = true; // Set isError to true for an error message
+          this.PrdouctExistModalBTN.nativeElement.click();
         },
       });
     } else {

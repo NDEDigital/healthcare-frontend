@@ -12,12 +12,9 @@
         [class.error]="isFieldInvalid('productId')"
       >
         <option value="" disabled>Select Product Name</option>
-        <option
-        *ngFor="let prod of products"
-        [value]="prod.productId"
-      >
-        {{ prod.productName }}
-      </option>
+        <option *ngFor="let prod of products" [value]="prod.productId">
+          {{ prod.productName }}
+        </option>
       </select>
       <span class="text-danger" *ngIf="isFieldInvalid('productId')"
         >Product Name is required.</span
@@ -37,24 +34,23 @@
       >
     </div>
 
-
-      <div class="form-group " >
-        <label for="discountAmount"> Discount Amount </label>
-        <input type="text" id="discountAmount" formControlName="discountAmount" />
-      </div>
-
-
-    <div class="form-group" [ngClass]="{'hidden': !isDiscountAmountGiven()}">
-      <label for="discountPct">Discount Percentage </label>
-      <input type="text" id="discountPct" class="readOnlyInput" formControlName="discountPct" readonly />
+    <div class="form-group">
+      <label for="discountAmount"> Discount Amount </label>
+      <input type="text" id="discountAmount" formControlName="discountAmount" />
     </div>
 
+    <div class="form-group" [ngClass]="{ hidden: !isDiscountAmountGiven() }">
+      <label for="discountPct">Discount Percentage </label>
+      <input
+        type="text"
+        id="discountPct"
+        class="readOnlyInput"
+        formControlName="discountPct"
+        readonly
+      />
+    </div>
 
-
-
-
-
-    <div class="row"  [ngClass]="{'hidden': !isDiscountAmountGiven()}">
+    <div class="row" [ngClass]="{ hidden: !isDiscountAmountGiven() }">
       <div class="form-group col-12 col-md-6">
         <label for="effectivateDate">Effectivate Date</label>
         <input
@@ -74,9 +70,7 @@
           class="w-100 p-2 border border-1 rounded-1"
         />
       </div>
-
     </div>
-
 
     <div class="form-group">
       <label for="productImage"
@@ -98,7 +92,13 @@
 
     <div class="form-group">
       <label for="totalPrice">Total Price</label>
-      <input type="text" id="totalPrice" class="readOnlyInput" formControlName="totalPrice"  readonly/>
+      <input
+        type="text"
+        id="totalPrice"
+        class="readOnlyInput"
+        formControlName="totalPrice"
+        readonly
+      />
     </div>
 
     <button
@@ -142,7 +142,13 @@
         ></button>
       </div>
       <div class="modal-body">
-        <p class="fs-5 fw-semibold">fsdakfdhkfd</p>
+        <p
+          class="fs-5 fw-semibold"
+          [class.text-success]="!isError"
+          [class.text-danger]="isError"
+        >
+          {{ alertMsg }}
+        </p>
       </div>
     </div>
   </div>
