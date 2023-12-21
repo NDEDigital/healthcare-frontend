@@ -12,10 +12,14 @@ export class AddProductService {
 
   private getdetailsData = `${this.URL}/ProductQuantity/GetProductForAddQtyByUserId`;
   private postData = `${this.URL}/ProductQuantity/PortalReceivedPost`;
+  createProductGroupURL = `${this.URL}/api/ProductGroups/CreateProductGroups`;
   constructor(private http: HttpClient) {
    }
 
-
+   createProductGroup(productData: any) {
+       return this.http.post(this.createProductGroupURL, productData);
+     }
+   
      // get dfetails data
     GetProductDetailsData(CompanyCode: any) {
  
