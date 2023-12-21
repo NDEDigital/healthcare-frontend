@@ -18,12 +18,7 @@ export class AddProductQuantityComponent {
   form!: FormGroup;
   productDertailsData:any;
   masterdata: any;
-  products: any =  [
-    { productId: 1, productName: 'Product A', productCode: 'PA001', availableQty: 50 },
-    { productId: 2, productName: 'Product B', productCode: 'PB002', availableQty: 30 },
-    { productId: 3, productName: 'Product C', productCode: 'PC003', availableQty: 20 },
-    // Add more objects as needed
-  ];
+ 
  
   constructor(private fb: FormBuilder , private addProductService :AddProductService) {
     this.masterForm = this.fb.group({
@@ -50,6 +45,9 @@ export class AddProductQuantityComponent {
   addRow() {
     const newRow = this.fb.group({
       productName: [''],
+      productId: [''],
+      productGroupId: [''],
+ 
       specification: [''],
       unit: [''],
       unitId: [''],
@@ -78,20 +76,53 @@ export class AddProductQuantityComponent {
     console.log(formData);
     // Process or submit the form data as needed
   }
-  submit() {
-    this.masterdata = {
-      PortalReceivedCode: this.masterForm.value.portalReceivedCode,
-      PortalReceivedDate: this.masterForm.value.portalReceivedDate,
-      ChallanNo: this.masterForm.value.challanNo,
-      ChallanDate: this.masterForm.value.challanDate,
-      Remarks: this.masterForm.value.remarks,
-    };
-    console.log(" masterdata", this.masterdata)
-    const formData = this.form.value;
-    console.log(" detailsdata ",formData);
-    // Access the values from the FormArray
+  // submit() {
+  //   this.masterdata = {
+  //     PortalReceivedCode: this.masterForm.value.portalReceivedCode,
+  //     PortalReceivedDate: this.masterForm.value.portalReceivedDate,
+  //     ChallanNo: this.masterForm.value.challanNo,
+  //     ChallanDate: this.masterForm.value.challanDate,
+  //     Remarks: this.masterForm.value.remarks,
+  //   };
+  //   console.log(" masterdata", this.masterdata)
+  //   const formData = this.form.value;
+  //   console.log(" detailsdata ",formData);
+  //   // Access the values from the FormArray
    
+  // }
+
+  submit() {
+    const formData = this.form.value;
+    console.log("formData", formData)
+  
+    this.masterdata = {
+      portalReceivedCode: this.masterForm.value.portalReceivedCode,
+      portalReceivedDate: this.masterForm.value.portalReceivedDate,
+      challanNo: this.masterForm.value.challanNo,
+      challanDate: this.masterForm.value.challanDate,
+      remarks: this.masterForm.value.remarks,
+      userId: 1,
+      companyCode: "CMP-23-0009",
+      addedBy: "string",
+      addedPC: "string",
+      portalReceivedDetailslist: formData.rows.map((row: any) => ({
+        productGroupId:row.productId, // Replace with appropriate values
+        productId: row.productId, // Replace with appropriate values
+        specification: row.specification,
+        receivedQty: parseInt(row.receiveQty, 10),
+        unitId: parseInt(row.unitId, 10),
+        price: row.price,
+        totalPrice: parseInt(row.receiveQty, 10) * row.price,
+        userId: 2, // Replace with appropriate values
+        addedBy: "string",
+        addedPC: "string"
+      }))
+    };
+  
+    console.log("masterdata", this.masterdata);
+    // Call a service method to submit data to an API or perform further actions
   }
+  
 
   // Inside your component class
 isDropdownVisible(rowIndex: number): boolean {
@@ -101,12 +132,6 @@ isDropdownVisible(rowIndex: number): boolean {
 }
 
 
-  // toggleDropdown(type: string): void {
-  //   this.isGroupNameDropdownOpen = (type === 'groupName') ? !this.isGroupNameDropdownOpen : false;
-  //   if(this.isGroupNameDropdownOpen){
-  //     this.getDetailsData();
-  //   }
-  // }
   toggleDropdown( rowIndex: number): void {
     // Close all dropdowns
     for (let i = 0; i < this.rowsFormArray.length; i++) {
@@ -150,31 +175,18 @@ isDropdownVisible(rowIndex: number): boolean {
     });
   }
 
-  // SetDropDownName(selectedItem: any, rowIndex: number) {
-  //   this.selectedProduct = selectedItem;
-  //   this.dropdown_ProductName = selectedItem.productName;
-  //   // Get the form control for the specified row index
-  //   const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
-  //   // Set the values for the specific row
-  //   rowGroup.patchValue({
-  //     productName: selectedItem.productName,
-  //     specification: selectedItem.specification,
-  //     unit: selectedItem.unit,
-  //     price: selectedItem.price,
-  //     unitId: selectedItem.unitId,
-  //     receiveQty:'',
-  //     availableQty: selectedItem.availableQty,
-  //     Remarks: '',
-  //   });
-  // }
+
   SetDropDownName(selectedItem: any, rowIndex: number) {
     this.selectedProduct = selectedItem;
     
     const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
     rowGroup.patchValue({
       productName: selectedItem.productName,
+      productId:selectedItem.productId,
+      productGroupId:selectedItem.productGroupId,
       specification: selectedItem.specification,
       unit: selectedItem.unit,
+      unitId: selectedItem.unitId,
       price: selectedItem.price,
       receiveQty:'',
       availableQty: selectedItem.availableQty,

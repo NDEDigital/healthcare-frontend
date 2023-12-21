@@ -95,8 +95,10 @@
               <tr  class="border border-1  "  *ngFor="let row of rowsFormArray.controls; let i = index;" [formGroupName]="i">
        
                 <!-- <td><input formControlName="productName" placeholder="ProductName"></td> -->
-                <td><div class="dropdown mx-2" (click)="toggleDropdown(i)">
+                <td><div class="dropdown mx-2" (click)="toggleDropdown(i)" >
                   <button class="dropbtn dropdown-toggle">{{ selectedProductNames[i] || 'Select Product' }}</button>
+                  <!-- <input type="button" class="custom-button dropdown-toggle" [formControlName]="'selectedProduct'" value="{{ selectedProductNames[i] || 'Select Product' }}"> -->
+
                    <!-- dropdown -->
                    <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isDropdownVisible(i) }">
                     <!-- search field -->
@@ -140,51 +142,6 @@
          </div>
        </div>
      </div>
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-    <!-- fields div -->
-  <!-- <div class="addQuantity_field_div bg-white mt-3 py-4 d-none">
-  
-   
-      <div class="dropdown mx-2" (click)="toggleDropdown('groupName')">
-        <button class="dropbtn dropdown-toggle">{{dropdown_groupName}}</button>
-        <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isGroupNameDropdownOpen }">
-          <input type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')">
-          <a *ngFor="let item of dropdownItems" (click)="SetDropDownName(item)">{{item}}</a>
-        </div>
-      </div>
- 
-     
-       <div class="dropdown  mx-2" (click)="toggleDropdown('goodsName')">
-        <button class="dropbtn dropdown-toggle">{{dropdown_goodsName}}</button>
-        <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isGoodsNameDropdownOpen }">
-          <input type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')">
-          <a *ngFor="let item of dropdownItems" (click)="SetDropDownName(item)">{{item}}</a>
-        </div>
-     </div> 
-  </div> -->
-
-    
-
-
 
 </div>
   
