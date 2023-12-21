@@ -9,7 +9,8 @@ import { CompanyService } from 'src/app/services/company.service';
 export class CompanyApprovalComponent {
   btnIndex = -1;
   companies: any;
-
+  imagePath = '';
+  imageTitle = 'No Data Found!';
   constructor(private companyService: CompanyService) {}
   ngOnInit() {
     this.getData();
@@ -25,5 +26,10 @@ export class CompanyApprovalComponent {
         console.log(error);
       },
     });
+  }
+  showImage(path: any, title: any) {
+    console.log(path, title);
+    this.imagePath = path.split('src')[1];
+    this.imageTitle = title;
   }
 }
