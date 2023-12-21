@@ -10,6 +10,7 @@ export class CompanyService {
   createCompanyURL = `${this.URL}/api/CompanyRegistration/CreateCompany`;
   payMethodCompanyURL = `${this.URL}/api/HK_Gets/PreferredPaymentMethods`;
   preferredBankNamesURL = `${this.URL}/api/HK_Gets/PreferredBankNames`;
+  GetCompaniesBasedOnStatusURL = `${this.URL}/api/CompanyRegistration/GetCompaniesBasedOnStatus`;
   constructor(private http: HttpClient) {}
   createCompany(companyData: any) {
     return this.http.post(this.createCompanyURL, companyData);
@@ -20,6 +21,11 @@ export class CompanyService {
   PreferredBankNames(preferredPM: any) {
     return this.http.get(this.preferredBankNamesURL, {
       params: { preferredPM },
+    });
+  }
+  GetCompaniesBasedOnStatus(status: any) {
+    return this.http.get(this.GetCompaniesBasedOnStatusURL, {
+      params: { status },
     });
   }
 }

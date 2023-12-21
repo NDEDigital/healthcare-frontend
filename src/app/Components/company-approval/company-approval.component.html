@@ -1,27 +1,32 @@
 <div class="container">
-  <div class="bg-white d-flex justify-content-center p-2 border border-1 rounded">
+  <div
+    class="bg-white d-flex justify-content-center p-2 border border-1 rounded"
+  >
     <h1 class="companyApproval_header_text">Company Approval</h1>
   </div>
   <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2">
     <div>
       <button
         class="custom-btn new-btn active"
-        [ngClass]="{ active: btnIndex === 1 }"
-        (click)="btnIndex = 1"
+        [ngClass]="{ active: btnIndex === -1 }"
+        (click)="btnIndex = -1"
+        (click)="getData()"
       >
         New
       </button>
       <button
         class="custom-btn btn-active"
-        [ngClass]="{ active: btnIndex === 2 }"
-        (click)="btnIndex = 2"
+        [ngClass]="{ active: btnIndex === 1 }"
+        (click)="btnIndex = 1"
+        (click)="getData()"
       >
         Active
       </button>
       <button
         class="custom-btn btn-inactive"
-        [ngClass]="{ active: btnIndex === 3 }"
-        (click)="btnIndex = 3"
+        [ngClass]="{ active: btnIndex === 0 }"
+        (click)="btnIndex = 0"
+        (click)="getData()"
       >
         Inactive
       </button>
