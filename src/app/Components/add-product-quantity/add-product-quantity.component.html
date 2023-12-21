@@ -1,0 +1,147 @@
+<div class="addQuantityBody">
+    <div class="addQuantity_header bg-white d-flex justify-content-center p-2">
+      <h1 class="addQuantity_header_text">Add Product Quantity</h1>
+    </div>
+
+
+  
+     <!--  field -->
+     <div class="field-div  p-3 mt-3">
+         <!-- master field -->
+      <div class="master-field">
+        <form [formGroup]="masterForm">
+          <div class=" row m-1">
+            <div class=" col " >
+              <!-- Master form -->
+              <div class="form-group">
+                <div class="row m-1">
+                  <div class="col-5">
+                    <label for="website">Portal Received Code</label>
+                  </div>
+                  <div class="col-7">
+                    <input type="text" class="disable" id="portalReceivedCode" formControlName="portalReceivedCode"  readonly />
+                  </div>
+                </div>                      
+              </div>
+              <div class="form-group">
+                <div class="row m-1">
+                  <div class="col-5">
+                    <label for="website">Portal Received Date</label>
+                  </div>
+                  <div class="col-7">
+                    <input type="date"  class="disable"  id="portalReceivedDate"    formControlName="portalReceivedDate" readonly  />
+                  </div>
+                </div>                       
+              </div>
+            </div>
+            <div class=" col" >
+              <div class="form-group">
+                <div class="row m-1">
+                  <div class="col-4">
+                    <label for="website">Challan No</label>
+                  </div>
+                  <div class="col-8">                  
+                    <input type="text" id="challanNo"   formControlName="challanNo"   />
+                  </div>
+                </div>                
+              </div>
+              <div class="form-group">
+                <div class="row m-1">
+                  <div class="col-4">
+                    <label for="website">Challan Date</label>
+                  </div>
+                  <div class="col-8">
+                    <input type="date" id="challanDate"   formControlName="challanDate"   />
+                  </div>
+                </div>              
+              </div> 
+            </div>
+            <div class=" col" >
+              <div class="form-group">
+                <div class="row">
+                  <div class="col-4">
+                    <label for="website">Remarks</label>
+                  </div>
+                  <div class="col-8">
+                    <input type="text" id="remarks"    formControlName="remarks"  />
+                  </div>
+                </div>                          
+              </div>       
+            </div>    
+        </div>
+        </form> 
+      </div>
+
+
+      <div class="table-responsive mt-5  details-table">
+        <form [formGroup]="form"  >
+          <table formArrayName="rows" width="5rem" class="   " >
+            <!-- Table header -->
+            <thead>
+              <tr class="details-header ">
+                <th >Product Name</th>
+
+                <th>Specification</th>
+                <th>Unit</th>
+                <th>Price</th>
+                <th>Receive Qty</th>
+                <th>Available Qty</th>
+                <th> Remarks</th>
+                <th> Action</th>
+              </tr>
+            </thead>
+            <!-- Table body - rows -->
+            <tbody>
+              <tr  class="border border-1 details-row "  *ngFor="let row of rowsFormArray.controls; let i = index;" [formGroupName]="i">
+       
+                <!-- <td><input formControlName="productName" placeholder="ProductName"></td> -->
+                <td><div class="dropdown mx-2" (click)="toggleDropdown(i)" >
+                  <button class="dropbtn dropdown-toggle">{{ selectedProductNames[i] || 'Select Product' }}</button>
+                  <!-- <input type="button" class="custom-button dropdown-toggle" [formControlName]="'selectedProduct'" value="{{ selectedProductNames[i] || 'Select Product' }}"> -->
+
+                   <!-- dropdown -->
+                   <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isDropdownVisible(i) }">
+                    <!-- search field -->
+                    <input type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')">
+                    <a *ngFor="let item of productDertailsData; let j = index" (click)="SetDropDownName(item, i)">{{item.productName}}</a>
+                  </div>
+                </div></td>
+              
+                <!-- Add input fields for other columns -->
+                <td><input formControlName="specification" placeholder="Specification" readonly class="center-placeholder"></td>
+                <td><input formControlName="unit" placeholder="Unit" readonly class="center-placeholder"></td>
+                <td><input formControlName="price" placeholder="Price" readonly class="center-placeholder"></td>
+                <td><input formControlName="receiveQty" placeholder="Receive Qty" class="non-readonly-input"></td>
+                <td><input formControlName="availableQty" placeholder="Available Qty" readonly class="center-placeholder"></td>
+                <td><input formControlName="Remarks" placeholder="Remarks" class="non-readonly-input"  ></td>
+                <td><button type="button" class="btn btn-secondary py-1 px-2  m-1" (click)="removeRow(i)"  >Remove</button></td>
+              </tr>
+            </tbody>
+          </table>
+        </form>   
+      </div>
+         
+         <!-- button div -->
+       <div class="div-button justify-content-between d-flex">
+         <div class="icons">
+          <i class="fa-solid fa-plus" (click)="addRow()"></i>
+         
+         </div>
+         <div class=" submit-button ">
+          <button
+            type="button"
+            class="btn  approved py-1 px-2 m-1"
+            (click)="submit()" >
+            Submit
+          </button>
+          <button
+            type="button"
+            class="btn  btn-secondary   py-1 px-2  m-1">
+            Cancell
+          </button>
+         </div>
+       </div>
+     </div>
+
+</div>
+  
