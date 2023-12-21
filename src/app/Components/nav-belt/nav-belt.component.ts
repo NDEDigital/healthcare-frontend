@@ -58,16 +58,17 @@ export class NavBeltComponent implements OnInit {
     });
   }
 
-  setSelectData(groupName: string, groupCode: string) {
+  setSelectData(groupCode: string, groupName: string) {
 
     this.sharedService.setNavSelectData(groupCode, groupName);
-    this.router.navigate(['/productsPageComponent']);
+
 
     this.dataUpdated.emit();
     // Update active entry
     this.activeEntry = groupName;
 
     localStorage.setItem('activeEntry', this.activeEntry);
+    this.router.navigate(['/productsPageComponent']);
     // console.log(this.activeEntry, 'activeEntry');
   }
 

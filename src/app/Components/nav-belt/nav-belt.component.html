@@ -5,7 +5,7 @@
       *ngFor="let entry of products | keyvalue"
       class="nav_item d-flex flex-column  mt-2   p-1"
       (click)="setSelectData(entry.key, entry.value)"
-      [class.active]="entry.key === activeEntry"
+      [class.active]="entry.value === activeEntry"
     >
       <div class="navbelt_image mb-2">
         <img src="/assets/images/medical/{{ entry.key }}.jpg" alt="" />
