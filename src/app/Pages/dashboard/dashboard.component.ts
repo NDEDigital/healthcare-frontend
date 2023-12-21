@@ -51,6 +51,7 @@ export class DashboardComponent {
   sidebarCol7Title = 'Add Groups';
   sidebarCol8Title = 'Company Approval';
   sidebarCol9Title = 'Price & Discounts';
+  sidebarCol10Title = 'Product Approval';
   sidebarCol4Link = '/payment';
   sidebarCol2Link = '/addProduct';
   sidebarCol3Link = '/ordersOverview';
@@ -76,7 +77,7 @@ export class DashboardComponent {
   productDetails: any = [];
   isAdminOrderString: string = '';
   checkSidebar: string = '';
- 
+
   loading: boolean = false;
   // SellerQuantity: boolean = false;
   productOthersSales: boolean = false;
