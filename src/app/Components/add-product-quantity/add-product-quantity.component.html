@@ -93,11 +93,12 @@
             <!-- Table body - rows -->
             <tbody>
               <tr  class="border border-1  "  *ngFor="let row of rowsFormArray.controls; let i = index;" [formGroupName]="i">
+       
                 <!-- <td><input formControlName="productName" placeholder="ProductName"></td> -->
-                <td><div class="dropdown mx-2" (click)="toggleDropdown('groupName')">
-                  <button class="dropbtn dropdown-toggle"   formControlName="ProductName">{{dropdown_groupName}}</button>
+                <td><div class="dropdown mx-2" (click)="toggleDropdown(i)">
+                  <button class="dropbtn dropdown-toggle">{{ selectedProductNames[i] || 'Select Product' }}</button>
                    <!-- dropdown -->
-                  <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isGroupNameDropdownOpen }">
+                   <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isDropdownVisible(i) }">
                     <!-- search field -->
                     <input type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')">
                     <a *ngFor="let item of productDertailsData; let j = index" (click)="SetDropDownName(item, i)">{{item.productName}}</a>

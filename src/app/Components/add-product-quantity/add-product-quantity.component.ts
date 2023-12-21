@@ -10,7 +10,9 @@ import { AddProductService } from 'src/app/services/add-product.service';
 export class AddProductQuantityComponent {
   isGoodsNameDropdownOpen: boolean = false
   isGroupNameDropdownOpen: boolean = false
-  dropdown_groupName: string = "Product Name"; // Set an initial value
+  dropdown_ProductName: string = "Product Name"; // Set an initial value
+  selectedProductNames: string[] = []; // Initialize an array to hold selected product names for each row
+
   selectedProduct :any;
   masterForm: FormGroup;
   form!: FormGroup;
@@ -30,9 +32,7 @@ export class AddProductQuantityComponent {
       challanNo: ['', Validators.required],
       challanDate: ['', Validators.required],
       remarks: [''],
-    });
-
-    
+    }); 
   }
  
 
@@ -49,19 +49,22 @@ export class AddProductQuantityComponent {
 
   addRow() {
     const newRow = this.fb.group({
-      productName: ['Product Name'], // Initialize productName control
+      productName: [''],
       specification: [''],
       unit: [''],
+      unitId: [''],
       price: [''],
       receiveQty: [''],
       availableQty: [''],
       Remarks: [''],
+      isDropdownOpen: [false], // Ensure isDropdownOpen is initialized for each row
       // ... other fields
     });
   
     // Access the FormArray and push the new FormGroup
     (this.form.get('rows') as FormArray).push(newRow);
   }
+  
   
 
   removeRow(index: number) {
@@ -90,13 +93,36 @@ export class AddProductQuantityComponent {
    
   }
 
+  // Inside your component class
+isDropdownVisible(rowIndex: number): boolean {
+  const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
+  const isDropdownOpen = rowGroup.get('isDropdownOpen');
+  return isDropdownOpen?.value === true;
+}
 
-  toggleDropdown(type: string): void {
-    this.isGroupNameDropdownOpen = (type === 'groupName') ? !this.isGroupNameDropdownOpen : false;
-    if(this.isGroupNameDropdownOpen){
-      this.getDetailsData();
+
+  // toggleDropdown(type: string): void {
+  //   this.isGroupNameDropdownOpen = (type === 'groupName') ? !this.isGroupNameDropdownOpen : false;
+  //   if(this.isGroupNameDropdownOpen){
+  //     this.getDetailsData();
+  //   }
+  // }
+  toggleDropdown( rowIndex: number): void {
+    // Close all dropdowns
+    for (let i = 0; i < this.rowsFormArray.length; i++) {
+      if (i !== rowIndex) {
+        const rowGroup = this.rowsFormArray.at(i) as FormGroup;
+        rowGroup.patchValue({ isDropdownOpen: false });
+      }
     }
+  
+    // Toggle the dropdown for the clicked row
+    const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
+    const currentValue = rowGroup.get('isDropdownOpen')?.value || false;
+    rowGroup.patchValue({ isDropdownOpen: !currentValue });
+    this.getDetailsData();
   }
+  
 
   getDetailsData(){
     this.addProductService.GetProductDetailsData('CMP-23-0002') .subscribe({
@@ -124,21 +150,40 @@ export class AddProductQuantityComponent {
     });
   }
 
+  // SetDropDownName(selectedItem: any, rowIndex: number) {
+  //   this.selectedProduct = selectedItem;
+  //   this.dropdown_ProductName = selectedItem.productName;
+  //   // Get the form control for the specified row index
+  //   const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
+  //   // Set the values for the specific row
+  //   rowGroup.patchValue({
+  //     productName: selectedItem.productName,
+  //     specification: selectedItem.specification,
+  //     unit: selectedItem.unit,
+  //     price: selectedItem.price,
+  //     unitId: selectedItem.unitId,
+  //     receiveQty:'',
+  //     availableQty: selectedItem.availableQty,
+  //     Remarks: '',
+  //   });
+  // }
   SetDropDownName(selectedItem: any, rowIndex: number) {
     this.selectedProduct = selectedItem;
-    this.dropdown_groupName = selectedItem.productName;
-    // Get the form control for the specified row index
+    
     const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
-    // Set the values for the specific row
     rowGroup.patchValue({
       productName: selectedItem.productName,
       specification: selectedItem.specification,
       unit: selectedItem.unit,
-      price: selectedItem.productName,
+      price: selectedItem.price,
       receiveQty:'',
       availableQty: selectedItem.availableQty,
       Remarks: '',
     });
+  
+    this.selectedProductNames[rowIndex] = selectedItem.productName; // Store selected product name for this row
   }
+  
+  
   
 }
