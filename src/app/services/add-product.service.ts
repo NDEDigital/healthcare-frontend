@@ -18,7 +18,7 @@ export class AddProductService {
 
   getUnitURL = `${this.URL}/api/HK_Gets/GetUnitList`;
 
-
+ GetProductDataURL = `${this.URL}/GetSellerProductForAdminApproval`;
   createProductListURL = `${this.URL}/api/ProductList/CreateProductList`;
   constructor(private http: HttpClient) {
    }
@@ -37,6 +37,13 @@ export class AddProductService {
 insertPortalReceived(portalData: any): Observable<any> {
  return this.http.post<any>(`${this.postData}`, portalData);
 }
+// seller product data 
+getProductData( status : string){
+  return this.http.get(this.GetProductDataURL, {
+    params: { status },
+  });
+}
+
 
   getProductGroups(){
     return this.http.get(this.getProductGropURL);
