@@ -50,6 +50,7 @@ export class DashboardComponent {
   // sidebarCol6Title = 'Other Sales';
   sidebarCol7Title = 'Add Groups';
   sidebarCol8Title = 'Company Approval';
+  sidebarCol9Title = 'Price & Discounts';
   sidebarCol4Link = '/payment';
   sidebarCol2Link = '/addProduct';
   sidebarCol3Link = '/ordersOverview';
@@ -75,9 +76,8 @@ export class DashboardComponent {
   productDetails: any = [];
   isAdminOrderString: string = '';
   checkSidebar: string = '';
-  // isBuyerOrder = false;
-  // isSellerOrder = false;
-  loading: boolean = true;
+ 
+  loading: boolean = false;
   // SellerQuantity: boolean = false;
   productOthersSales: boolean = false;
   private subscription: Subscription;
@@ -383,35 +383,34 @@ export class DashboardComponent {
   }
   // Functions to Get Dashboard Contents
   getDashboardContents() {
-    console.log(
-      this.sellerCode,
-      this.status,
-      this.searchedProductName,
-      this.searchedCompanyName,
-      this.searchedDate
-    );
-
-    this.dashboardService
-      .getDashboardContents(
-        this.sellerCode,
-        this.status,
-        this.searchedProductName,
-        this.searchedCompanyName,
-        this.searchedDate
-      )
-      .subscribe((response: any) => {
-        console.log(response, 'data');
-        console.log(response.products, 'data');
-        console.log(response.isAdmin, 'response.isAdmin');
-        this.products = response.products;
-        this.filteredProducts = [...this.products];
-        // this.isAdmin = response.isAdmin;
-        this.newCount = response.newCount;
-        this.editedCount = response.editedCount;
-        this.approvedCount = response.approvedCount;
-        this.rejectedCount = response.rejectedCount;
-        this.loading = false;
-      });
+    // console.log(
+    //   this.sellerCode,
+    //   this.status,
+    //   this.searchedProductName,
+    //   this.searchedCompanyName,
+    //   this.searchedDate
+    // );
+    // this.dashboardService
+    //   .getDashboardContents(
+    //     this.sellerCode,
+    //     this.status,
+    //     this.searchedProductName,
+    //     this.searchedCompanyName,
+    //     this.searchedDate
+    //   )
+    //   .subscribe((response: any) => {
+    //     console.log(response, 'data');
+    //     console.log(response.products, 'data');
+    //     console.log(response.isAdmin, 'response.isAdmin');
+    //     this.products = response.products;
+    //     this.filteredProducts = [...this.products];
+    //     // this.isAdmin = response.isAdmin;
+    //     this.newCount = response.newCount;
+    //     this.editedCount = response.editedCount;
+    //     this.approvedCount = response.approvedCount;
+    //     this.rejectedCount = response.rejectedCount;
+    //     this.loading = false;
+    //   });
   }
 
   handleCheckboxChange(event: any) {

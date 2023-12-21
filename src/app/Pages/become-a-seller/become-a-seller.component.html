@@ -215,11 +215,19 @@
   aria-hidden="true"
 >
   <div class="modal-dialog">
-    <div class="modal-content border border-danger">
-      <div class="modal-header fs-5 fw-bold text-danger">
-        <h1 class="modal-title fs-5" id="userExistModalLabel">
-          {{ alertMsg }}
+    <div class="modal-content border">
+      <div class="modal-header fs-5 fw-bold">
+        <h1
+          class="modal-title fs-5"
+          [ngClass]="{
+            'text-danger': modalColor === false,
+            'text-success': modalColor === true
+          }"
+          id="userExistModalLabel"
+        >
+          {{ alertTitile }}
         </h1>
+
         <button
           type="button"
           class="btn-close"
@@ -228,7 +236,7 @@
         ></button>
       </div>
       <div class="modal-body">
-        Please login or use another phone number to register!
+        {{ alertmsg }}
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">

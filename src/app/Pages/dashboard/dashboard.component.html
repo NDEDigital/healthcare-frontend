@@ -319,6 +319,24 @@
           </a>
         </div>
       </div>
+      <div *ngIf="isAdmin" class="sidebar_delimiter"></div>
+      <div
+        *ngIf="isSeller"
+        class="sidebar_item d-flex justify-content-between p-1 py-3"
+      >
+        <div class="d-flex">
+          <a
+            class="d-flex menu_link"
+            [ngClass]="{ active: SidebarIndex === 9 }"
+            (click)="SidebarIndex = 9"
+          >
+            <span class="title_icon text-start me-2"
+              ><i class="fa-solid fa-cart-shopping"></i
+            ></span>
+            <h5>{{ sidebarCol9Title }}</h5>
+          </a>
+        </div>
+      </div>
       <div class="sidebar_delimiter"></div>
     </div>
   </div>
@@ -618,11 +636,14 @@
       <app-add-products></app-add-products>
     </section>
     <!-- Add groups fields here -->
-    <section class="addgroups " *ngIf="SidebarIndex === 7">
+    <section class="addgroups" *ngIf="SidebarIndex === 7">
       <app-add-groups></app-add-groups>
     </section>
     <section class="companyApproval" *ngIf="SidebarIndex === 8">
       <app-company-approval></app-company-approval>
+    </section>
+    <section class="priceNdiscounts" *ngIf="SidebarIndex === 9">
+      <app-add-price-discounts></app-add-price-discounts>
     </section>
   </div>
   <!-- </div> -->
