@@ -11,7 +11,7 @@ export class CompanyApprovalComponent {
   companies: any;
   imagePath = '';
   imageTitle = 'No Data Found!';
-  selectedCompanyCodeValue: number | undefined;
+  selectedCompanyCodeValues: { [key: string]: number } = {};
 
   constructor(private companyService: CompanyService) {}
 
@@ -40,15 +40,33 @@ export class CompanyApprovalComponent {
 
   updateCompany(companyCode: any, Isactive: any) {
     console.log(companyCode, Isactive);
-    const selectedCompany = this.companies.find(
-      (cmp: any) => cmp.companyCode === companyCode
+    // const selectedCompany = this.companies.find(
+    //   (cmp: any) => cmp.companyCode === companyCode
+    // );
+    // if (selectedCompany) {
+    //   this.selectedCompanyCodeValue = selectedCompany.companyCode;
+    //   console.log(
+    //     'Selected Company Code Value:',
+    //     this.selectedCompanyCodeValue
+    //   );
+    // }
+    console.log(
+      'Selected Company Code Value:',
+      this.selectedCompanyCodeValues[companyCode]
     );
-    if (selectedCompany) {
-      this.selectedCompanyCodeValue = selectedCompany.companyCode;
-      console.log(
-        'Selected Company Code Value:',
-        this.selectedCompanyCodeValue
-      );
-    }
+    const cmp = {
+      companyCode: companyCode,
+      isActive: Isactive,
+      maxUser: this.selectedCompanyCodeValues[companyCode] || 0,
+    };
+    this.companyService.UpdateCompany(cmp).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.getData();
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
   }
 }

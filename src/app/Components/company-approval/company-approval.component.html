@@ -85,7 +85,7 @@
       <div class="col tableBody">{{ cmp.preferredPaymentMethodName }}</div>
       <div class="col tableBody">
         <input
-          [(ngModel)]="cmp.companyCode"
+        [(ngModel)]="selectedCompanyCodeValues[cmp.companyCode]"
           type="number"
           class="border border-1 p-2 w-75"
         />

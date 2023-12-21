@@ -11,6 +11,7 @@ export class CompanyService {
   payMethodCompanyURL = `${this.URL}/api/HK_Gets/PreferredPaymentMethods`;
   preferredBankNamesURL = `${this.URL}/api/HK_Gets/PreferredBankNames`;
   GetCompaniesBasedOnStatusURL = `${this.URL}/api/CompanyRegistration/GetCompaniesBasedOnStatus`;
+  UpdateCompanyURL = `${this.URL}/api/CompanyRegistration/UpdateCompany`;
   constructor(private http: HttpClient) {}
   createCompany(companyData: any) {
     return this.http.post(this.createCompanyURL, companyData);
@@ -18,6 +19,7 @@ export class CompanyService {
   getpayMethod() {
     return this.http.get(this.payMethodCompanyURL);
   }
+
   PreferredBankNames(preferredPM: any) {
     return this.http.get(this.preferredBankNamesURL, {
       params: { preferredPM },
@@ -27,5 +29,9 @@ export class CompanyService {
     return this.http.get(this.GetCompaniesBasedOnStatusURL, {
       params: { status },
     });
+  }
+  UpdateCompany(companyDto: any) {
+    console.log('Data sent to server:', companyDto);
+    return this.http.put(this.UpdateCompanyURL, companyDto);
   }
 }
