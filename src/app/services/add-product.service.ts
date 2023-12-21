@@ -3,7 +3,7 @@ import { API_URL } from '../config';
 import { HttpClient } from '@angular/common/http';
 import { Observable } from 'rxjs'; // Import Observable from 'rxjs'
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class AddProductService {
   URL = API_URL;
@@ -18,25 +18,27 @@ export class AddProductService {
 
   getUnitURL = `${this.URL}/api/HK_Gets/GetUnitList`;
 
- GetProductDataURL = `${this.URL}/GetSellerProductForAdminApproval`;
-  createProductListURL = `${this.URL}/api/ProductList/CreateProductList`;
-  constructor(private http: HttpClient) {
-   }
+ GetProductDataURL = `${this.URL}/GetSellerProductForAdminApproval`;  getAllproducts = `${this.URL}/api/ProductList/GetProductList`;
 
-   createProductGroup(productData: any) {
+  createProductListURL = `${this.URL}/api/ProductList/CreateProductList`;
+
+
+  CreateSellerProductPriceURL = `${this.URL}/ProductQuantity/CreateSellerProductPriceAndOffer`
+  constructor(private http: HttpClient) {}
+
+  createProductGroup(productData: any) {
     return this.http.post(this.createProductGroupURL, productData);
   }
 
   // get dfetails data
- GetProductDetailsData(CompanyCode: any) {
+  GetProductDetailsData(CompanyCode: any) {
+    return this.http.get(`${this.getdetailsData}/${CompanyCode}`);
+  }
 
- return this.http.get(`${this.getdetailsData}/${CompanyCode}`);
-}
-
-// post data
-insertPortalReceived(portalData: any): Observable<any> {
- return this.http.post<any>(`${this.postData}`, portalData);
-}
+  // post data
+  insertPortalReceived(portalData: any): Observable<any> {
+    return this.http.post<any>(`${this.postData}`, portalData);
+  }
 // seller product data 
 getProductData( status : string){
   return this.http.get(this.GetProductDataURL, {
@@ -45,11 +47,11 @@ getProductData( status : string){
 }
 
 
-  getProductGroups(){
+  getProductGroups() {
     return this.http.get(this.getProductGropURL);
   }
 
-  getUnitGroups(){
+  getUnitGroups() {
     return this.http.get(this.getUnitURL);
   }
 
@@ -57,5 +59,12 @@ getProductData( status : string){
     return this.http.post(this.createProductListURL, productListData);
   }
 
+  getallProducts(){
+    return this.http.get(this.getAllproducts);
+  }
+
+  createSellerProductPrice(productListInsertData: any) {
+    return this.http.post(this.CreateSellerProductPriceURL, productListInsertData);
+  }
 
 }

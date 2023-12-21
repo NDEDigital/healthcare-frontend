@@ -1,1 +1,155 @@
-<p>add-price-discounts works!</p>
+<div class="container containgFields mt-5 mb-5 rounded">
+  <h2 class="register_title">Add Price & Discounts</h2>
+  <hr />
+  <form [formGroup]="addPriceDiscountForm">
+    <div class="form-group">
+      <label for="productId"
+        ><span class="text-danger">*</span>Product Name</label
+      >
+      <select
+        id="productId"
+        formControlName="productId"
+        [class.error]="isFieldInvalid('productId')"
+      >
+        <option class="d-none" value="" disabled>Select Product Name</option>
+        <option *ngFor="let prod of products" [value]="prod.productId">
+          {{ prod.productName }}
+        </option>
+      </select>
+      <span class="text-danger" *ngIf="isFieldInvalid('productId')"
+        >Product Name is required.</span
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="price"><span class="text-danger">*</span>Price</label>
+      <input
+        type="text"
+        id="price"
+        formControlName="price"
+        [class.error]="isFieldInvalid('price')"
+      />
+      <span class="text-danger" *ngIf="isFieldInvalid('price')"
+        >Price is required.</span
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="discountAmount"> Discount Amount </label>
+      <input type="text" id="discountAmount" formControlName="discountAmount" />
+    </div>
+
+    <div class="form-group" [ngClass]="{ hidden: !isDiscountAmountGiven() }">
+      <label for="discountPct">Discount Percentage </label>
+      <input
+        type="text"
+        id="discountPct"
+        class="readOnlyInput"
+        formControlName="discountPct"
+        readonly
+      />
+    </div>
+
+    <div class="row" [ngClass]="{ hidden: !isDiscountAmountGiven() }">
+      <div class="form-group col-12 col-md-6">
+        <label for="effectivateDate">Effectivate Date</label>
+        <input
+          type="date"
+          id="effectivateDate"
+          formControlName="effectivateDate"
+          class="w-100 p-2 border border-1 rounded-1"
+        />
+      </div>
+
+      <div class="form-group col-12 col-md-6">
+        <label for="endDate">End Date</label>
+        <input
+          type="date"
+          id="endDate"
+          formControlName="endDate"
+          class="w-100 p-2 border border-1 rounded-1"
+        />
+      </div>
+    </div>
+
+    <div class="form-group">
+      <label for="productImage"
+        ><span class="text-danger">*</span>Upload Product Image
+      </label>
+
+      <input
+        type="file"
+        class="form-control"
+        id="productImage"
+        formControlName="productImage"
+        [class.error]="isFieldInvalid('productImage')"
+        #ProductImageInput
+      />
+      <span class="text-danger" *ngIf="isFieldInvalid('productImage')"
+        >Product Image is required.</span
+      >
+    </div>
+
+    <div class="form-group">
+      <label for="totalPrice">Total Price</label>
+      <input
+        type="text"
+        id="totalPrice"
+        class="readOnlyInput"
+        formControlName="totalPrice"
+        readonly
+      />
+    </div>
+
+    <button
+      type="submit"
+      class="button mt-3"
+      id="sign-in-button"
+      (click)="onSubmit()"
+    >
+      Submit
+    </button>
+  </form>
+</div>
+
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#prodExistModal"
+  #prdouctExistModalBTN
+>
+  Launch demo modal
+</button>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="prodExistModal"
+  tabindex="-1"
+  aria-labelledby="userExistModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header fs-5 fw-bold">
+        <h1 class="modal-title fs-5" id="userExistModalLabel">product Modal</h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p
+          class="fs-5 fw-semibold"
+          [class.text-success]="!isError"
+          [class.text-danger]="isError"
+        >
+          {{ alertMsg }}
+        </p>
+      </div>
+    </div>
+  </div>
+</div>
