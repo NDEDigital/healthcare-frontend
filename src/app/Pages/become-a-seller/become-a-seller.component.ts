@@ -14,8 +14,10 @@ export class BecomeASellerComponent {
   @ViewChild('CompanyImageInput') CompanyImageInput!: ElementRef;
   @ViewChild('TradeLicenseInput') TradeLicenseInput!: ElementRef;
   compnay: any;
-  alertMsg: string = '';
+  alertTitile: string = 'alertTitile';
+  alertmsg: string = 'alertmsg';
   companyResistrationForm!: FormGroup;
+  modalColor: boolean = false;
   // payment
   paymentMethods: any;
   bankInfo: any;
@@ -23,9 +25,7 @@ export class BecomeASellerComponent {
   showBankingInfo: boolean = false; // Variable to control the visibility of banking information fields
   showMobileBankingInfo: boolean = false;
 
-  constructor(
-    private companyService: CompanyService
-  ) {}
+  constructor(private companyService: CompanyService) {}
 
   ngOnInit() {
     this.companyResistrationForm = new FormGroup({
@@ -126,11 +126,18 @@ export class BecomeASellerComponent {
       this.companyService.createCompany(formData).subscribe({
         next: (response: any) => {
           console.log(response);
+          this.companyResistrationForm.reset();
+          this.alertTitile = response.message;
+          this.alertmsg = 'Your company is Registered! Wait for the approval mail for further, Thank you.';
+          this.modalColor = true;
+          this.UserExistModalBTN.nativeElement.click();
         },
         error: (error: any) => {
           console.log(error);
 
-          this.alertMsg = error.error.message;
+          this.alertTitile = error.error.message;
+          this.alertmsg =
+            'The information you gave is already registered! Please try login or recheck your informations!';
           this.UserExistModalBTN.nativeElement.click();
         },
       });

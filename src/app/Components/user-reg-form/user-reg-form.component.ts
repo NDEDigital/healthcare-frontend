@@ -18,6 +18,7 @@ import { UserDataService } from 'src/app/services/user-data.service';
 export class UserRegFormComponent {
   @ViewChild('userExistModalBTN') UserExistModalBTN!: ElementRef;
   userResistrationForm!: FormGroup;
+  alertTitle: string = '';
   alertMsg: string = '';
   user: any;
 
@@ -161,7 +162,9 @@ export class UserRegFormComponent {
         },
         error: (error: any) => {
           console.log(error);
-          this.alertMsg = error.error.message;
+          this.alertTitle = 'Error!!';
+            this.alertMsg = error.error.message;
+        
           this.UserExistModalBTN.nativeElement.click();
         },
       });
