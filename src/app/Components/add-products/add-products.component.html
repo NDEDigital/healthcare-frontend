@@ -82,18 +82,19 @@
     </div>
 
     <div class="form-group">
-      <label for="imageFile"
+      <label for="productImage"
         ><span class="text-danger">*</span>Upload Product Image
       </label>
 
       <input
         type="file"
         class="form-control"
-        id="imageFile"
-        formControlName="imageFile"
+        id="productImage"
+        formControlName="productImage"
+        [class.error]="isFieldInvalid('productImage')"
+        #ProductImageInput
       />
-
-      <span class="text-danger" *ngIf="isFieldInvalid('imageFile')"
+      <span class="text-danger" *ngIf="isFieldInvalid('productImage')"
         >Product Image is required.</span
       >
     </div>
@@ -107,48 +108,49 @@
       Submit
     </button>
 
-    <!-- invisible btn -->
-    <button
-      type="button"
-      class="btn btn-primary d-none"
-      data-bs-toggle="modal"
-      data-bs-target="#addProductModal"
-      #userExistModalBTN
-    >
-      Launch demo modal
-    </button>
 
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="addProductModal"
-      tabindex="-1"
-      aria-labelledby="addProductModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header modal-heading">
-            <h1 class="modal-title fs-5 text-light" id="addProductModalLabel">
-              Add Product Groups Name
-            </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
-          </div>
-          <div class="modal-body">
-            <p class="fs-5">
-              Successfully added <span class="fw-bold fs-5">this product </span>
-            </p>
-            <p class="text-danger fs-5">
-              Faild to added <span class="fw-bold fs-5">this product</span>
-            </p>
-          </div>
-        </div>
-      </div>
-    </div>
   </form>
 </div>
+
+
+<!-- Button trigger modal -->
+<button
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#prodExistModal"
+  #prdouctExistModalBTN
+>
+  Launch demo modal
+</button>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="prodExistModal"
+  tabindex="-1"
+  aria-labelledby="userExistModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content ">
+      <div class="modal-header fs-5 fw-bold">
+        <h1 class="modal-title fs-5" id="userExistModalLabel">
+            product Modal
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p class="fs-5 fw-semibold"
+           [class.text-success]="!isError"
+           [class.text-danger]="isError">{{ alertMsg }}</p>
+    </div>
+
+    </div>
+  </div>
+</div>
+
