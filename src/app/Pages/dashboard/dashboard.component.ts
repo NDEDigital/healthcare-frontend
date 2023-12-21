@@ -155,7 +155,7 @@ export class DashboardComponent {
 
       console.log(this.isAdmin, 'isAdmin');
       if (this.isAdmin == true) {
-        this.sidebarCol1Title = 'Product Approval';
+        this.sidebarCol1Title = 'Product Approval old';
         // this.sidebarCol2Link = '/becomeASeller'; // userList
       }
     }, 15);
