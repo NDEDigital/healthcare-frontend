@@ -11,7 +11,7 @@
         formControlName="productId"
         [class.error]="isFieldInvalid('productId')"
       >
-        <option value="" disabled>Select Product Name</option>
+        <option class="d-none" value="" disabled>Select Product Name</option>
         <option *ngFor="let prod of products" [value]="prod.productId">
           {{ prod.productName }}
         </option>

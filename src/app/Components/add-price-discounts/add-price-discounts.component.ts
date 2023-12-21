@@ -157,12 +157,9 @@ export class AddPriceDiscountsComponent {
       formData.append('addedBy', 'user');
       formData.append('addedPC', '0.0.0.0');
 
-      let userIDstring = localStorage.getItem('code');
-      let userID;
-      if (userIDstring) {
-        userID = parseInt(userIDstring, 10);
-        console.log(userID, 'userID....');
-        formData.append('userId', userID.toString());
+      let userID = localStorage.getItem('code');
+      if (userID) {
+        formData.append('userId', userID);
       }
       formData.append('companyCode', 'companyCode');
 
