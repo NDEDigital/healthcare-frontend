@@ -76,8 +76,7 @@ export class DashboardComponent {
   productDetails: any = [];
   isAdminOrderString: string = '';
   checkSidebar: string = '';
-  // isBuyerOrder = false;
-  // isSellerOrder = false;
+ 
   loading: boolean = false;
   // SellerQuantity: boolean = false;
   productOthersSales: boolean = false;
