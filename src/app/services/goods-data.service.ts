@@ -46,7 +46,7 @@ export class GoodsDataService {
 
   getNavData() {
     return this.http.get<any[]>(this.navUrl).pipe(
-      tap((response: any[]) => {
+      tap((response: any[]) => {  
         this.navData = response;
       })
     );

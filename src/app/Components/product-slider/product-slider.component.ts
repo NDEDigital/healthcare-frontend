@@ -141,36 +141,43 @@ export class ProductSliderComponent {
           if (finObj) {
             let obj = {
               companyName: this.goods[i].companyName,
-              groupCode: this.goods[i].groupCode,
-              goodsId: this.goods[i].goodsId,
-              groupName: this.goods[i].groupName,                
-              goodsName: this.goods[i].goodsName,
+              groupCode: this.goods[i].productGroupID,
+              goodsId: this.goods[i].productId,
+              groupName: this.goods[i].productGroupName,                
+              goodsName: this.goods[i].productName,
               specification: this.goods[i].specification,
-              approveSalesQty: this.goods[i].approveSalesQty,
-              sellerCode: this.goods[i].sellerCode,
-              quantityUnit :  this.goods[i].quantityUnit,
+              approveSalesQty: this.goods[i].availableQty,
+              sellerCode: this.goods[i].sellerId,
+              unitId:this.goods[i].unitId,
+              quantityUnit :  this.goods[i].unit,
               imagePath :  this.goods[i].imagePath,
               price: this.goods[i].price,
+              discountAmount: this.goods[i].discountAmount,
+              discountPct: this.goods[i].discountPct,
+
             
             };
             finObj.push(obj);
 
-            this.products3.set(this.goods[i].groupName, finObj);
+            this.products3.set(this.goods[i].productGroupName, finObj);
           } else {
             let obj = {
               companyName: this.goods[i].companyName,
-              groupCode: this.goods[i].groupCode,
-              goodsId: this.goods[i].goodsId,
-              groupName: this.goods[i].groupName,                
-              goodsName: this.goods[i].goodsName,
+              groupCode: this.goods[i].productGroupID,
+              goodsId: this.goods[i].productId,
+              groupName: this.goods[i].productGroupName,                
+              goodsName: this.goods[i].productName,
               specification: this.goods[i].specification,
-              approveSalesQty: this.goods[i].approveSalesQty,
-              sellerCode: this.goods[i].sellerCode,
-              quantityUnit :  this.goods[i].quantityUnit,
+              approveSalesQty: this.goods[i].availableQty,
+              sellerCode: this.goods[i].sellerId,
+              unitId:this.goods[i].unitId,
+              quantityUnit :  this.goods[i].unit,
               imagePath :  this.goods[i].imagePath,
               price: this.goods[i].price,
+              discountAmount: this.goods[i].discountAmount,
+              discountPct: this.goods[i].discountPct,
             };
-            this.products3.set(this.goods[i].groupName, [obj]);
+            this.products3.set(this.goods[i].productGroupName, [obj]);
           }
         }
 
@@ -244,18 +251,18 @@ export class ProductSliderComponent {
         // console.log(this.goods, 'allGoods');
 
         for (let i = 0; i < this.goods.length; i++) {
-          let key = this.goods[i].groupName;
+          let key = this.goods[i].productGroupName;
           let finObj = this.products3.get(key);
           if (this.goods[i].approveSalesQty === '0') continue;
 
           if (finObj) {
             let product = finObj.find(
-              (p: any) => p.goodsId === this.goods[i].goodsId
+              (p: any) => p.goodsId === this.goods[i].productId
             );
             if (product) {
               // product.stockQty = this.goods[i].stockQty;
               // product.salesQty = this.goods[i].salesQty;
-              product.approveSalesQty = this.goods[i].approveSalesQty;
+              product.approveSalesQty = this.goods[i].availableQty;
             } else {
               let obj = {
                 // groupName: this.goods[i].groupName,
@@ -265,7 +272,7 @@ export class ProductSliderComponent {
                 // specification: this.goods[i].specification,
                 // stockQty: this.goods[i].stockQty,
                 // salesQty: this.goods[i].salesQty,
-                approveSalesQty: this.goods[i].approveSalesQty,
+                approveSalesQty: this.goods[i].availableQty,
               };
               finObj.push(obj);
             }
@@ -278,7 +285,7 @@ export class ProductSliderComponent {
               // specification: this.goods[i].specification,
               // stockQty: this.goods[i].stockQty,
               // salesQty: this.goods[i].salesQty,
-              approveSalesQty: this.goods[i].approveSalesQty,
+              approveSalesQty: this.goods[i].availableQty,
             };
             this.products3.set(key, [obj]);
           }
