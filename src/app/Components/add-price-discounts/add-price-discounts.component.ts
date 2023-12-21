@@ -134,9 +134,11 @@ export class AddPriceDiscountsComponent {
       formData.append('addedBy', 'user');
       formData.append('addedPC', '0.0.0.0');
 
+      // const userID =  localStorage.getItem('');
+
       // Append additional fields
       formData.append('userId', '1');
-      formData.append('companyCode', 'HC-23-12-00001');
+      // formData.append('companyCode', 'HC-23-12-00001');
 
 
 
