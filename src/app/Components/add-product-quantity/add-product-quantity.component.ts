@@ -17,7 +17,7 @@ export class AddProductQuantityComponent {
   masterForm: FormGroup;
   form!: FormGroup;
   productDertailsData:any;
-  masterdata: any;
+  portaldata: any;
  
  
   constructor(private fb: FormBuilder , private addProductService :AddProductService) {
@@ -76,26 +76,12 @@ export class AddProductQuantityComponent {
     console.log(formData);
     // Process or submit the form data as needed
   }
-  // submit() {
-  //   this.masterdata = {
-  //     PortalReceivedCode: this.masterForm.value.portalReceivedCode,
-  //     PortalReceivedDate: this.masterForm.value.portalReceivedDate,
-  //     ChallanNo: this.masterForm.value.challanNo,
-  //     ChallanDate: this.masterForm.value.challanDate,
-  //     Remarks: this.masterForm.value.remarks,
-  //   };
-  //   console.log(" masterdata", this.masterdata)
-  //   const formData = this.form.value;
-  //   console.log(" detailsdata ",formData);
-  //   // Access the values from the FormArray
-   
-  // }
 
   submit() {
     const formData = this.form.value;
     console.log("formData", formData)
   
-    this.masterdata = {
+    this.portaldata = {
       portalReceivedCode: this.masterForm.value.portalReceivedCode,
       portalReceivedDate: this.masterForm.value.portalReceivedDate,
       challanNo: this.masterForm.value.challanNo,
@@ -119,8 +105,23 @@ export class AddProductQuantityComponent {
       }))
     };
   
-    console.log("masterdata", this.masterdata);
-    // Call a service method to submit data to an API or perform further actions
+    console.log("masterdata", this.portaldata);
+
+    // API call
+    this.addProductService.insertPortalReceived(this.portaldata).subscribe({
+      next: (response) => {
+        console.log('Response:', response);
+        // Handle success response
+        this.masterForm.reset(); // Reset the masterForm
+        this.form.reset(); // Reset the nested form (rows)
+      },
+      error: (error) => {
+        console.error('Error:', error);
+        // Handle error
+      }
+    });
+
+     
   }
   
 

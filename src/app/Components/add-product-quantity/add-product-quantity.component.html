@@ -75,10 +75,10 @@
 
       <div class="table-responsive mt-5  details-table">
         <form [formGroup]="form"  >
-          <table formArrayName="rows" width="5rem" >
+          <table formArrayName="rows" width="5rem" class="   " >
             <!-- Table header -->
             <thead>
-              <tr class="details-header">
+              <tr class="details-header ">
                 <th >Product Name</th>
 
                 <th>Specification</th>
@@ -92,7 +92,7 @@
             </thead>
             <!-- Table body - rows -->
             <tbody>
-              <tr  class="border border-1  "  *ngFor="let row of rowsFormArray.controls; let i = index;" [formGroupName]="i">
+              <tr  class="border border-1 details-row "  *ngFor="let row of rowsFormArray.controls; let i = index;" [formGroupName]="i">
        
                 <!-- <td><input formControlName="productName" placeholder="ProductName"></td> -->
                 <td><div class="dropdown mx-2" (click)="toggleDropdown(i)" >
@@ -108,13 +108,13 @@
                 </div></td>
               
                 <!-- Add input fields for other columns -->
-                <td><input formControlName="specification" placeholder="Specification" readonly></td>
-                <td><input formControlName="unit" placeholder="Unit" readonly></td>
-                <td><input formControlName="price" placeholder="Price" readonly></td>
+                <td><input formControlName="specification" placeholder="Specification" readonly class="center-placeholder"></td>
+                <td><input formControlName="unit" placeholder="Unit" readonly class="center-placeholder"></td>
+                <td><input formControlName="price" placeholder="Price" readonly class="center-placeholder"></td>
                 <td><input formControlName="receiveQty" placeholder="Receive Qty" class="non-readonly-input"></td>
-                <td><input formControlName="availableQty" placeholder="Available Qty" readonly></td>
-                <td><input formControlName="Remarks" placeholder="Remarks" class="non-readonly-input"></td>
-                <td><button type="button" class="btn  btn-secondary   py-1 px-2  m-1" (click)="removeRow(i)">Remove</button></td>
+                <td><input formControlName="availableQty" placeholder="Available Qty" readonly class="center-placeholder"></td>
+                <td><input formControlName="Remarks" placeholder="Remarks" class="non-readonly-input"  ></td>
+                <td><button type="button" class="btn btn-secondary py-1 px-2  m-1" (click)="removeRow(i)"  >Remove</button></td>
               </tr>
             </tbody>
           </table>
