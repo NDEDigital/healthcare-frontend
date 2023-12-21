@@ -54,7 +54,7 @@ export class AddProductQuantityComponent {
       price: [''],
       receiveQty: [''],
       availableQty: [''],
-      Remarks: [''],
+      remarks: [''],
       isDropdownOpen: [false], // Ensure isDropdownOpen is initialized for each row
       // ... other fields
     });
@@ -82,28 +82,34 @@ export class AddProductQuantityComponent {
     console.log("formData", formData)
   
     this.portaldata = {
-      portalReceivedCode: this.masterForm.value.portalReceivedCode,
-      portalReceivedDate: this.masterForm.value.portalReceivedDate,
+      // portalReceivedCode: this.masterForm.value.portalReceivedCode,
+      // portalReceivedDate: this.masterForm.value.portalReceivedDate,
       challanNo: this.masterForm.value.challanNo,
-      challanDate: this.masterForm.value.challanDate,
       remarks: this.masterForm.value.remarks,
       userId: 1,
       companyCode: "CMP-23-0009",
       addedBy: "string",
       addedPC: "string",
       portalReceivedDetailslist: formData.rows.map((row: any) => ({
-        productGroupId:row.productId, // Replace with appropriate values
-        productId: row.productId, // Replace with appropriate values
+        productGroupId: row.productId,
+        productId: row.productId,
         specification: row.specification,
         receivedQty: parseInt(row.receiveQty, 10),
         unitId: parseInt(row.unitId, 10),
         price: row.price,
+        remarks: row.remarks,
         totalPrice: parseInt(row.receiveQty, 10) * row.price,
-        userId: 2, // Replace with appropriate values
+        userId: 2,
         addedBy: "string",
         addedPC: "string"
       }))
     };
+    
+    // Check if challanDate exists and is not empty before adding it to portaldata
+    if (this.masterForm.value.challanDate) {
+      this.portaldata.challanDate = this.masterForm.value.challanDate;
+    }
+    
   
     console.log("masterdata", this.portaldata);
 
@@ -114,6 +120,9 @@ export class AddProductQuantityComponent {
         // Handle success response
         this.masterForm.reset(); // Reset the masterForm
         this.form.reset(); // Reset the nested form (rows)
+        while (this.rowsFormArray.length > 0) {
+          this.removeRow(0);
+        }
       },
       error: (error) => {
         console.error('Error:', error);
@@ -191,7 +200,7 @@ isDropdownVisible(rowIndex: number): boolean {
       price: selectedItem.price,
       receiveQty:'',
       availableQty: selectedItem.availableQty,
-      Remarks: '',
+      remarks: '',
     });
   
     this.selectedProductNames[rowIndex] = selectedItem.productName; // Store selected product name for this row

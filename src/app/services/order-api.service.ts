@@ -115,8 +115,7 @@ export class OrderApiService {
       if (qt === undefined) {
         qt = 0;
       }
-     
-      
+       
       const detailData: OrderDetail = {
         goodsId: parseInt(entry.goodsId),
         goodsName: entry.goodsName,
@@ -139,8 +138,8 @@ export class OrderApiService {
     return this.http.post<any>(this.orderPostUrl, orderData, this.httpOptions);
   }
   // get user info for order
-  getUserInfo(userCode: any) {
-    return this.http.get(this.getUserInfoURL, { params: { userCode } });
+  getUserInfo(UserId: any) {
+    return this.http.get(this.getUserInfoURL, { params: { UserId } });
   }
   getAllOrderForBuyer(
     buyerCode: any,
