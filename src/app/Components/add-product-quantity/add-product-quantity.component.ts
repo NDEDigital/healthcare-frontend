@@ -80,7 +80,6 @@ export class AddProductQuantityComponent {
   submit() {
     const formData = this.form.value;
     console.log("formData", formData)
-  
     this.portaldata = {
       // portalReceivedCode: this.masterForm.value.portalReceivedCode,
       // portalReceivedDate: this.masterForm.value.portalReceivedDate,
