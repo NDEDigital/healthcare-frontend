@@ -50,6 +50,7 @@ export class DashboardComponent {
   // sidebarCol6Title = 'Other Sales';
   sidebarCol7Title = 'Add Groups';
   sidebarCol8Title = 'Company Approval';
+  sidebarCol9Title = 'Price & Discounts';
   sidebarCol4Link = '/payment';
   sidebarCol2Link = '/addProduct';
   sidebarCol3Link = '/ordersOverview';
