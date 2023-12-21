@@ -11,10 +11,14 @@ export class CompanyApprovalComponent {
   companies: any;
   imagePath = '';
   imageTitle = 'No Data Found!';
+  selectedCompanyCodeValue: number | undefined;
+
   constructor(private companyService: CompanyService) {}
+
   ngOnInit() {
     this.getData();
   }
+
   getData() {
     this.companyService.GetCompaniesBasedOnStatus(this.btnIndex).subscribe({
       next: (response: any) => {
@@ -27,9 +31,24 @@ export class CompanyApprovalComponent {
       },
     });
   }
+
   showImage(path: any, title: any) {
     console.log(path, title);
     this.imagePath = path.split('src')[1];
     this.imageTitle = title;
+  }
+
+  updateCompany(companyCode: any, Isactive: any) {
+    console.log(companyCode, Isactive);
+    const selectedCompany = this.companies.find(
+      (cmp: any) => cmp.companyCode === companyCode
+    );
+    if (selectedCompany) {
+      this.selectedCompanyCodeValue = selectedCompany.companyCode;
+      console.log(
+        'Selected Company Code Value:',
+        this.selectedCompanyCodeValue
+      );
+    }
   }
 }
