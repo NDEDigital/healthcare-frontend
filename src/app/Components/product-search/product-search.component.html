@@ -1,41 +1,46 @@
-<div class="product-card d-flex justify-content-around  mt-3 mb-3 p-3">
-     <div class="card-img">
-          <img class="img-fluid product-img rounded" [src]="productData.imagePath.substring(productData.imagePath.indexOf('assets'))" alt="Not Uploaded Yet">
-     </div>
-     <div class="brief-des ">
-          <div>
-               <div class="d-flex justify-content-between">
-                   <h6 class="m-0 p-0 h6-clamp title-txt">{{productData.goodsName}}</h6>
-                         <button class="" (click)="viewDetail()">
-                          <svg
-                            xmlns="http://www.w3.org/2000/svg"
-                            width="16"
-                            height="16"
-                            fill="currentColor"
-                            class="bi bi-info-square"
-                            viewBox="0 0 16 16"
-                          >
-                            <path
-                              d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
-                            />
-                            <path
-                              d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
-                            />
-                          </svg>
-                        </button>
-                 </div>
-                   <h5 class="m-0"> <span class="tk">৳</span>{{productData.price}}/Ton</h5>
-                   <p>1Ton (MOQ)</p>
-               
-               <div>
-                   <p class="fw-bolder">{{productData.companyName}}</p>
-               </div>
+<div class="product-card d-flex justify-content-around mt-3 mb-3 p-3">
+  <div class="card-img">
+    <img
+      class="img-fluid product-img rounded"
+      [src]="productData.imagePath ? productData.imagePath.split('src')[1] : ''"
+      alt="Not Uploaded Yet"
+    />
+  </div>
+  <div class="brief-des">
+    <div>
+      <div class="d-flex justify-content-between">
+        <h6 class="m-0 p-0 h6-clamp title-txt">{{ productData.goodsName }}</h6>
+        <button class="" (click)="viewDetail()">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="16"
+            height="16"
+            fill="currentColor"
+            class="bi bi-info-square"
+            viewBox="0 0 16 16"
+          >
+            <path
+              d="M14 1a1 1 0 0 1 1 1v12a1 1 0 0 1-1 1H2a1 1 0 0 1-1-1V2a1 1 0 0 1 1-1h12zM2 0a2 2 0 0 0-2 2v12a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V2a2 2 0 0 0-2-2H2z"
+            />
+            <path
+              d="m8.93 6.588-2.29.287-.082.38.45.083c.294.07.352.176.288.469l-.738 3.468c-.194.897.105 1.319.808 1.319.545 0 1.178-.252 1.465-.598l.088-.416c-.2.176-.492.246-.686.246-.275 0-.375-.193-.304-.533L8.93 6.588zM9 4.5a1 1 0 1 1-2 0 1 1 0 0 1 2 0z"
+            />
+          </svg>
+        </button>
+      </div>
+      <h5 class="m-0"><span class="tk">৳</span>{{ productData.price }}/Ton</h5>
+      <p>1Ton (MOQ)</p>
 
-            </div>
+      <div>
+        <p class="fw-bolder">{{ productData.companyName }}</p>
+      </div>
+    </div>
 
-            <div class="">
-                  <!-- <button class="col-lg-5  col-md-5 col-sm-12 btn col-10 suplier-btn" (click)="goContactSupplier()">Contact Supplier</button> -->
-                  <button (click)="sendData()" class="btn btn-secondary compare-btn ">{{compare}}</button>
-            </div>
-     </div>
+    <div class="">
+      <!-- <button class="col-lg-5  col-md-5 col-sm-12 btn col-10 suplier-btn" (click)="goContactSupplier()">Contact Supplier</button> -->
+      <button (click)="sendData()" class="btn btn-secondary compare-btn">
+        {{ compare }}
+      </button>
+    </div>
+  </div>
 </div>
