@@ -153,9 +153,7 @@
                 class="d-flex justify-content-around align-items-center bg-light"
               >
                 <img
-                  [src]="
-                    data.imagePath.substring(data.imagePath.indexOf('assets'))
-                  "
+                  [src]="data.imagePath ? data.imagePath.split('src')[1] : ''"
                   class="img-fluid compare-img"
                   [alt]=""
                 />
