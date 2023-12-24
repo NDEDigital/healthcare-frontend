@@ -23,10 +23,9 @@ export class GoodsDataService {
   page: number = 0;
   searchKey: string = 'a';
   sortedKey: string = 'NAME';
-  URL =API_URL;
+  URL = API_URL;
   // URL = 'https://localhost:7006'; // LocalURL
   //URL = 'http://172.16.5.18:8081'; // liveURL
-
 
   getGoodsListURL = `${this.URL}/api/Goods/GetGoodsList`;
   sellersProductListURL = `${this.URL}/GetProduct`;
@@ -37,7 +36,7 @@ export class GoodsDataService {
   constructor(private http: HttpClient) {}
 
   getSearchResult() {
-    this.searchProuct = `${this.URL}/api/ProductSearch/search?SearchKeyword=${this.searchKey}&Offset=${this.page}&NextCount=${this.item}&SortDirection=${this.sortedKey}`;
+    this.searchProuct = `${this.URL}/api/ProductSearch/GetSearchedProduct?productName=${this.searchKey}&sortDirection=${this.sortedKey}&nextCount=${this.item}&offset=${this.page}`;
     console.log(this.searchKey, 'ddddd', this.searchProuct);
     return this.http
       .get<any[]>(this.searchProuct)
@@ -46,7 +45,7 @@ export class GoodsDataService {
 
   getNavData() {
     return this.http.get<any[]>(this.navUrl).pipe(
-      tap((response: any[]) => {  
+      tap((response: any[]) => {
         this.navData = response;
       })
     );
@@ -101,22 +100,20 @@ export class GoodsDataService {
     console.log(this.groupCode, 'groupCode', this.groupName, 'groupname');
 
     const encodedGroupName = encodeURIComponent(this.groupName);
-    console.log("encodedGroupName ",encodedGroupName)
+    console.log('encodedGroupName ', encodedGroupName);
     const productCompany = `${this.URL}/api/Goods/GetProductCompany/${this.groupCode}`;
-     console.log(productCompany," produ");
-     
+    console.log(productCompany, ' produ');
 
     return this.http.get<any[]>(productCompany).pipe(
       tap((response: any[]) => {
         this.companyList = response;
-         console.log(this.companyList, 'companyList');
+        console.log(this.companyList, 'companyList');
       }),
       catchError((error: any) => {
         // console.error('Error:', error);
         return throwError(() => error);
       })
     );
-    
   }
 
   getProductList(companyCode: string) {
@@ -126,7 +123,7 @@ export class GoodsDataService {
     this.companyCode = sessionStorage.getItem('companyCode') || '';
     this.groupName = localStorage.getItem('activeEntry') || '';
     this.groupCode = sessionStorage.getItem('groupCode') || '';
-  
+
     const productCompany = `${this.URL}/api/Goods/GetProductList?CompanyCode=${this.companyCode}&ProductGroupCode=${this.groupCode}`;
 
     return this.http.get<any[]>(productCompany).pipe(

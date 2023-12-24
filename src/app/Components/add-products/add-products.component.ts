@@ -16,8 +16,21 @@ export class AddProductsComponent implements OnInit {
   units: any[] = [];
   alertMsg: string = '';
   isError: boolean = false;
+  showProductDiv: boolean = false;
+  productList: any;
+  btnIndex = -1;
 
   constructor(private productService: AddProductService) {}
+
+  toggleAddProductDiv(): void {
+    this.showProductDiv = !this.showProductDiv;
+    this.btnIndex = -1;
+    this.getProducts(-1);
+  }
+
+  showApprovalGrid(): void {
+    this.showProductDiv = false;
+  }
 
   ngOnInit() {
     this.addProductForm = new FormGroup({
@@ -32,6 +45,7 @@ export class AddProductsComponent implements OnInit {
     // Fetch product groups when the component is initialized
     this.getProductGroups();
     this.getUnit();
+    this.getProducts(-1);
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -64,24 +78,23 @@ export class AddProductsComponent implements OnInit {
   }
 
   onSubmit(): void {
+    Object.values(this.addProductForm.controls).forEach((control) => {
+      control.markAsTouched();
+      control.markAsDirty();
+    });
+
     if (this.addProductForm.valid) {
       // Create FormData object
       const formData = new FormData();
 
-
       Object.keys(this.addProductForm.value).forEach((key) => {
         let value = this.addProductForm.value[key];
         if (key === 'productId' || key === 'unitId') {
-          
           value = String(Math.floor(Number(value)));
           console.log(value);
-
         }
         formData.append(key, value);
       });
-
-
-
 
       formData.append(
         'imageFile',
@@ -92,11 +105,9 @@ export class AddProductsComponent implements OnInit {
       formData.append('addedBy', 'user');
       formData.append('addedPC', '0.0.0.0');
 
-
       for (let pair of (formData as any).entries()) {
         console.log(`${pair[0]}: `, pair[1]);
       }
-
 
       this.productService.createProductList(formData).subscribe({
         next: (response: any) => {
@@ -105,6 +116,8 @@ export class AddProductsComponent implements OnInit {
           this.isError = false; // Set isError to false for a success message
           this.PrdouctExistModalBTN.nativeElement.click();
           this.addProductForm.reset();
+          this.showProductDiv = false;
+          this.toggleAddProductDiv();
         },
         error: (error: any) => {
           console.log(error);
@@ -118,6 +131,16 @@ export class AddProductsComponent implements OnInit {
     }
   }
 
-
-
+  getProducts(status: any) {
+    this.productService.GetProductListByStatus(status).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.productList = response;
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.alertMsg = error.error.message;
+      },
+    });
+  }
 }

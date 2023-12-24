@@ -15,15 +15,18 @@ export class AddProductService {
   createProductGroupURL = `${this.URL}/api/ProductGroups/CreateProductGroups`;
 
   getProductGropURL = `${this.URL}/api/ProductGroups/GetProductGroupsList`;
+  GetProductGroupsListByStatusURL = `${this.URL}/api/ProductGroups/GetProductGroupsListByStatus`;
+  GetProductListByStatusURL = `${this.URL}/api/ProductList/GetProductListByStatus`;
 
   getUnitURL = `${this.URL}/api/HK_Gets/GetUnitList`;
 
- GetProductDataURL = `${this.URL}/GetSellerProductForAdminApproval`;  getAllproducts = `${this.URL}/api/ProductList/GetProductList`;
+  GetProductDataURL = `${this.URL}/GetSellerProductForAdminApproval`;
+  getAllproducts = `${this.URL}/api/ProductList/GetProductList`;
 
   createProductListURL = `${this.URL}/api/ProductList/CreateProductList`;
+  updateProductURL = `${this.URL}/SellerProductStatusUpdate`;
 
-
-  CreateSellerProductPriceURL = `${this.URL}/ProductQuantity/CreateSellerProductPriceAndOffer`
+  CreateSellerProductPriceURL = `${this.URL}/ProductQuantity/CreateSellerProductPriceAndOffer`;
   constructor(private http: HttpClient) {}
 
   createProductGroup(productData: any) {
@@ -39,13 +42,30 @@ export class AddProductService {
   insertPortalReceived(portalData: any): Observable<any> {
     return this.http.post<any>(`${this.postData}`, portalData);
   }
-// seller product data 
-getProductData( status : string){
-  return this.http.get(this.GetProductDataURL, {
-    params: { status },
-  });
-}
-
+  // seller product data
+  getProductData(status: string) {
+    return this.http.get(this.GetProductDataURL, {
+      params: { status },
+    });
+  }
+  GetProductGroupsListByStatus(status: any) {
+    if (status === -1) {
+      return this.http.get(this.GetProductGroupsListByStatusURL);
+    } else {
+      return this.http.get(this.GetProductGroupsListByStatusURL, {
+        params: { status },
+      });
+    }
+  }
+  GetProductListByStatus(status: any) {
+    if (status === -1) {
+      return this.http.get(this.GetProductListByStatusURL);
+    } else {
+      return this.http.get(this.GetProductListByStatusURL, {
+        params: { status },
+      });
+    }
+  }
 
   getProductGroups() {
     return this.http.get(this.getProductGropURL);
@@ -55,16 +75,21 @@ getProductData( status : string){
     return this.http.get(this.getUnitURL);
   }
 
-  createProductList(productListData: any) {
-    return this.http.post(this.createProductListURL, productListData);
+  createProductList(productStatus: any) {
+    return this.http.post(this.createProductListURL, productStatus);
+  }
+  updateProduct(productListData: any) {
+    return this.http.put(this.updateProductURL, productListData);
   }
 
-  getallProducts(){
+  getallProducts() {
     return this.http.get(this.getAllproducts);
   }
 
   createSellerProductPrice(productListInsertData: any) {
-    return this.http.post(this.CreateSellerProductPriceURL, productListInsertData);
+    return this.http.post(
+      this.CreateSellerProductPriceURL,
+      productListInsertData
+    );
   }
-
 }
