@@ -23,14 +23,14 @@ export class AddPriceDiscountsComponent {
   isDisabled: boolean = true;
   alertMsg: string = '';
   isError: boolean = false;
-  showProductDiv: boolean = false;
+  showPriceProductDiv: boolean = false;
 
   toggleAddProductPriceDiv(): void {
-    this.showProductDiv = !this.showProductDiv;
+    this.showPriceProductDiv = !this.showPriceProductDiv;
   }
 
   showProductPriceGrid(): void {
-    this.showProductDiv = false;
+    this.showPriceProductDiv = false;
   }
 
   constructor(private productService: AddProductService) {}

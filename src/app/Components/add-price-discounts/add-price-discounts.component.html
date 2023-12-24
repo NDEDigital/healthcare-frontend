@@ -1,5 +1,5 @@
 <!-- approval grid  -->
-<div *ngIf="!showProductDiv" class="container approval-grid">
+<div *ngIf="!showPriceProductDiv" class="container approval-grid">
   <div class="bg-white p-2 border border-1 rounded">
     <div class="d-flex justify-content-center">
       <h1 class="companyApproval_header_text">Price and Discounts</h1>
@@ -19,7 +19,7 @@
         class="custom-btn addproduct-btn"
         (click)="toggleAddProductPriceDiv()"
       >
-        {{ showProductDiv ? "Show Approval Grid" : "Add Price" }}
+        {{ showPriceProductDiv ? "Show Approval Grid" : "Add Price" }}
       </button>
     </div>
   </div>
@@ -47,7 +47,7 @@
 
 <!-- price and discount form  -->
 
-<div *ngIf="showProductDiv" class="container containgFields mt-5 mb-5 rounded">
+<div *ngIf="showPriceProductDiv" class="container containgFields mt-5 mb-5 rounded">
   <!-- <h2 class="register_title">Add Price & Discounts</h2> -->
   <div class="d-flex justify-content-between align-items-center">
     <!-- Back Button on the left -->
