@@ -38,37 +38,62 @@ export class ProductApprovalComponent {
     this.imagePath = path.split('src')[1];
     this.imageTitle = title;
   }
-  updateProduct(usID: any, cCode: any, su: any, status: any) {}
-
-  updateCompany(companyCode: any, Isactive: any) {
-    console.log(companyCode, Isactive);
-    // const selectedCompany = this.productsData.find(
-    //   (cmp: any) => cmp.companyCode === companyCode
-    // );
-    // if (selectedCompany) {
-    //   this.selectedCompanyCodeValue = selectedCompany.companyCode;
-    //   console.log(
-    //     'Selected Company Code Value:',
-    //     this.selectedCompanyCodeValue
-    //   );
-    // }
-    console.log(
-      'Selected Company Code Value:',
-      this.selectedCompanyCodeValues[companyCode]
-    );
-    const cmp = {
-      companyCode: companyCode,
-      isActive: Isactive,
-      maxUser: this.selectedCompanyCodeValues[companyCode] || 0,
+  updateProduct(UserId: any, CompanyCode: any, ProductId: any, Status: any) {
+    console.log(UserId, CompanyCode, ProductId, Status);
+    const productStatus = {
+      UserId,
+      CompanyCode,
+      ProductId,
+      Status,
     };
-    // this.companyService.UpdateCompany(cmp).subscribe({
-    //   next: (response: any) => {
-    //     console.log(response);
-    //     this.getData();
-    //   },
-    //   error: (error: any) => {
-    //     console.log(error);
-    //   },
-    // });
+    this.productService.updateProduct(productStatus).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        // this.productsData = response;
+        // console.log(this.productsData);
+        if ((this.btnIndex = -1)) {
+          this.getData('Pending');
+        } else if ((this.btnIndex = 1)) {
+          this.getData('Approved');
+        } else {
+          this.getData('Rejected');
+        }
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
   }
+
+  // updateCompany(companyCode: any, Isactive: any) {
+  //   console.log(companyCode, Isactive);
+  //   // const selectedCompany = this.productsData.find(
+  //   //   (cmp: any) => cmp.companyCode === companyCode
+  //   // );
+  //   // if (selectedCompany) {
+  //   //   this.selectedCompanyCodeValue = selectedCompany.companyCode;
+  //   //   console.log(
+  //   //     'Selected Company Code Value:',
+  //   //     this.selectedCompanyCodeValue
+  //   //   );
+  //   // }
+  //   console.log(
+  //     'Selected Company Code Value:',
+  //     this.selectedCompanyCodeValues[companyCode]
+  //   );
+  //   const cmp = {
+  //     companyCode: companyCode,
+  //     isActive: Isactive,
+  //     maxUser: this.selectedCompanyCodeValues[companyCode] || 0,
+  //   };
+  //   // this.companyService.UpdateCompany(cmp).subscribe({
+  //   //   next: (response: any) => {
+  //   //     console.log(response);
+  //   //     this.getData();
+  //   //   },
+  //   //   error: (error: any) => {
+  //   //     console.log(error);
+  //   //   },
+  //   // });
+  // }
 }

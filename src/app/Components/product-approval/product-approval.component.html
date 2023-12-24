@@ -60,7 +60,7 @@
         <!-- {{ row.imagePath }} -->
         <img
           class="product_image"
-          [src]="row.imagePath.split('src')[1]"
+          [src]="row.imagePath ? row.imagePath.split('src')[1] : ''"
           alt="no image was uploaded!"
         />
       </div>
@@ -121,7 +121,7 @@
                   row.userId,
                   row.companyCode,
                   row.productId,
-                  'Approved'
+                  'Rejected'
                 )
               "
             >
