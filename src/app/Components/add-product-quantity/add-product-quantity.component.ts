@@ -61,13 +61,28 @@ export class AddProductQuantityComponent {
   
     // Access the FormArray and push the new FormGroup
     (this.form.get('rows') as FormArray).push(newRow);
+    this.selectedProductNames[this.selectedProductNames.length] = 'select product';
   }
   
   
 
   removeRow(index: number) {
+    
     // Remove a specific row from the FormArray by index
     (this.form.get('rows') as FormArray).removeAt(index);
+
+ 
+    const selectedProductNames = this.selectedProductNames;
+    console.log(" before selectedProductNames ",selectedProductNames)
+    // Remove the corresponding selected product name from selectedProductNames array
+    if (selectedProductNames[index]) {
+      selectedProductNames.splice(index, 1);
+      // You might need to update other indexes of selectedProductNames
+      // if there are further changes to the array's indexes.
+    }
+
+    console.log(" after selectedProductNames ",selectedProductNames)
+    
   }
 
   onSubmit() {
@@ -122,6 +137,7 @@ export class AddProductQuantityComponent {
         this.form.reset(); // Reset the nested form (rows)
         while (this.rowsFormArray.length > 0) {
           this.removeRow(0);
+          this.selectedProductNames=[] // clearing the array
         }
       },
       error: (error) => {
@@ -160,7 +176,9 @@ isDropdownVisible(rowIndex: number): boolean {
   
 
   getDetailsData(){
-    this.addProductService.GetProductDetailsData('CMP-23-0002') .subscribe({
+
+    const userID = localStorage.getItem('code')
+    this.addProductService.GetProductDetailsData(userID) .subscribe({
       next: (response) => {
          console.log( response)
          this.productDertailsData = response;
@@ -204,6 +222,7 @@ isDropdownVisible(rowIndex: number): boolean {
     });
   
     this.selectedProductNames[rowIndex] = selectedItem.productName; // Store selected product name for this row
+    console.log(" product name ",    this.selectedProductNames)
   }
   
   
