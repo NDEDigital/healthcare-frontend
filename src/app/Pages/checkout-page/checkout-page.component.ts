@@ -163,8 +163,8 @@ export class CheckoutPageComponent {
     );
   }
   getUserInfo() {
-    // const userCode = localStorage.getItem('code');
-    const userId = 1
+    const userId = localStorage.getItem('code');
+ 
     this.orderService.getUserInfo(userId).subscribe({
       next: (response: any) => {
         this.userData = response.user;
