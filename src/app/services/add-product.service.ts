@@ -22,8 +22,7 @@ export class AddProductService {
 
   createProductListURL = `${this.URL}/api/ProductList/CreateProductList`;
 
-
-  CreateSellerProductPriceURL = `${this.URL}/ProductQuantity/CreateSellerProductPriceAndOffer`
+  CreateSellerProductPriceURL = `${this.URL}/ProductQuantity/CreateSellerProductPriceAndOffer`;
   constructor(private http: HttpClient) {}
 
   createProductGroup(productData: any) {
@@ -52,12 +51,14 @@ export class AddProductService {
     return this.http.post(this.createProductListURL, productListData);
   }
 
-  getallProducts(){
+  getallProducts() {
     return this.http.get(this.getAllproducts);
   }
 
   createSellerProductPrice(productListInsertData: any) {
-    return this.http.post(this.CreateSellerProductPriceURL, productListInsertData);
+    return this.http.post(
+      this.CreateSellerProductPriceURL,
+      productListInsertData
+    );
   }
-
 }

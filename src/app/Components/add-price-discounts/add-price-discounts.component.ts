@@ -112,7 +112,10 @@ export class AddPriceDiscountsComponent {
   }
 
   onSubmit(): void {
-    // console.log('Form Data:', this.addPriceDiscountForm.value);
+    Object.values(this.addPriceDiscountForm.controls).forEach((control) => {
+      control.markAsTouched();
+      control.markAsDirty();
+    });
 
     if (this.addPriceDiscountForm.valid) {
       // Create FormData object

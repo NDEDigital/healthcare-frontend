@@ -64,24 +64,23 @@ export class AddProductsComponent implements OnInit {
   }
 
   onSubmit(): void {
+    Object.values(this.addProductForm.controls).forEach((control) => {
+      control.markAsTouched();
+      control.markAsDirty();
+    });
+
     if (this.addProductForm.valid) {
       // Create FormData object
       const formData = new FormData();
 
-
       Object.keys(this.addProductForm.value).forEach((key) => {
         let value = this.addProductForm.value[key];
         if (key === 'productId' || key === 'unitId') {
-          
           value = String(Math.floor(Number(value)));
           console.log(value);
-
         }
         formData.append(key, value);
       });
-
-
-
 
       formData.append(
         'imageFile',
@@ -92,11 +91,9 @@ export class AddProductsComponent implements OnInit {
       formData.append('addedBy', 'user');
       formData.append('addedPC', '0.0.0.0');
 
-
       for (let pair of (formData as any).entries()) {
         console.log(`${pair[0]}: `, pair[1]);
       }
-
 
       this.productService.createProductList(formData).subscribe({
         next: (response: any) => {
@@ -117,7 +114,4 @@ export class AddProductsComponent implements OnInit {
       console.log('Form is not valid');
     }
   }
-
-
-
 }
