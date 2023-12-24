@@ -25,6 +25,13 @@ export class AddPriceDiscountsComponent {
   isError: boolean = false;
   showPriceProductDiv: boolean = false;
 
+
+  isDiscountEntered(): boolean {
+    const discountAmount = this.addPriceDiscountForm.get('discountAmount')?.value;
+    const discountPct = this.addPriceDiscountForm.get('discountPct')?.value;
+    return !!(discountAmount || discountPct);
+  }
+
   toggleAddProductPriceDiv(): void {
     this.showPriceProductDiv = !this.showPriceProductDiv;
   }
@@ -58,8 +65,8 @@ export class AddPriceDiscountsComponent {
       .get('discountAmount')
       ?.valueChanges.subscribe(() => {});
 
-    this.setupFormValueChanges();
     this.getProducts();
+    this.setupFormValueChanges();
   }
 
   getProducts() {
