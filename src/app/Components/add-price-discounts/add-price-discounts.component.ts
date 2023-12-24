@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { FormControl, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
 import { AddProductService } from 'src/app/services/add-product.service';
 
 @Component({
@@ -60,13 +60,93 @@ export class AddPriceDiscountsComponent {
 
   setupFormValueChanges() {
     const form = this.addPriceDiscountForm;
-    form.get('price')?.valueChanges.subscribe(() => this.calculateTotalPrice());
-    form
-      .get('discountAmount')
-      ?.valueChanges.subscribe(() => this.calculateTotalPrice());
-    form
-      .get('discountPct')
-      ?.valueChanges.subscribe(() => this.calculateTotalPrice());
+
+    // For Discount Amount and Percentage
+    form.get('discountAmount')?.valueChanges.subscribe((value) => {
+      this.calculateDiscountPct(value, 'amount');
+    });
+    form.get('discountPct')?.valueChanges.subscribe((value) => {
+      this.calculateDiscountAmount(value, 'percentage');
+    });
+
+    // For dynamically setting validators
+    const discountAmountControl = form.get('discountAmount');
+    const discountPctControl = form.get('discountPct');
+
+    discountAmountControl?.valueChanges.subscribe(() => {
+      this.updateDateFieldValidators();
+    });
+
+    discountPctControl?.valueChanges.subscribe(() => {
+      this.updateDateFieldValidators();
+    });
+  }
+
+
+  updateDateFieldValidators() {
+    const discountAmount = this.addPriceDiscountForm.get('discountAmount')?.value;
+    const discountPct = this.addPriceDiscountForm.get('discountPct')?.value;
+
+    const effectivateDateControl = this.addPriceDiscountForm.get('effectivateDate');
+    const endDateControl = this.addPriceDiscountForm.get('endDate');
+
+    if (discountAmount || discountPct) {
+      effectivateDateControl?.setValidators([Validators.required, this.presentOrFutureDateValidator()]);
+      endDateControl?.setValidators([Validators.required, this.futureDateValidator()]);
+    } else {
+      effectivateDateControl?.clearValidators();
+      endDateControl?.clearValidators();
+    }
+
+    effectivateDateControl?.updateValueAndValidity();
+    endDateControl?.updateValueAndValidity();
+  }
+
+
+
+  presentOrFutureDateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const selectedDate = new Date(control.value);
+      const currentDate = new Date();
+      currentDate.setHours(0, 0, 0, 0); // Reset time part to compare only date
+
+      return selectedDate >= currentDate ? null : { invalidDate: true };
+    };
+  }
+
+  futureDateValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const endDate = new Date(control.value);
+      const effectiveDate = new Date(this.addPriceDiscountForm.get('effectivateDate')?.value);
+
+      return endDate > effectiveDate ? null : { invalidEndDate: true };
+    };
+  }
+
+  calculateDiscountPct(value: any, source: string) {
+    if (source === 'amount') {
+      const price =
+        parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
+      const discountAmount = parseFloat(value) || 0;
+      const discountPct = price !== 0 ? (discountAmount / price) * 100 : 0;
+      this.addPriceDiscountForm
+        .get('discountPct')
+        ?.setValue(discountPct.toFixed(2), { emitEvent: false });
+    }
+    this.calculateTotalPrice();
+  }
+
+  calculateDiscountAmount(value: any, source: string) {
+    if (source === 'percentage') {
+      const price =
+        parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
+      const discountPct = parseFloat(value) || 0;
+      const discountAmount = (discountPct / 100) * price;
+      this.addPriceDiscountForm
+        .get('discountAmount')
+        ?.setValue(discountAmount.toFixed(2), { emitEvent: false });
+    }
+    this.calculateTotalPrice();
   }
 
   calculateTotalPrice() {
@@ -103,12 +183,6 @@ export class AddPriceDiscountsComponent {
     this.addPriceDiscountForm
       .get('totalPrice')
       ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
-  }
-
-  isDiscountAmountGiven(): boolean {
-    const discountAmount =
-      this.addPriceDiscountForm.get('discountAmount')?.value;
-    return !!discountAmount; // returns true if discountAmount has a value, false otherwise
   }
 
   onSubmit(): void {

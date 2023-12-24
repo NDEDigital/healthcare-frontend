@@ -1,4 +1,3 @@
-
 .head {
   background-color: var(--color-primary);
   height: 100px;
@@ -132,15 +131,14 @@ select {
   font-weight: 500;
 }
 
-.modal-heading{
+.modal-heading {
   background-color: var(--color-primary);
 }
 
-.readOnlyInput{
+/* .readOnlyInput{
   background-color: #e0dede;
-}
+} */
 
 .hidden {
   display: none;
 }
-
