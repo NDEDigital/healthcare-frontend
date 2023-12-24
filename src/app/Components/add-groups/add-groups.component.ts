@@ -25,6 +25,8 @@ export class AddGroupsComponent {
 
   toggleAddProductGroupDiv(): void {
     this.showProductDiv = !this.showProductDiv;
+    this.btnIndex = -1;
+    this.getProductGroup(-1);
   }
 
   showApprovalProductGrid(): void {
@@ -65,6 +67,7 @@ export class AddGroupsComponent {
           this.addGroupForm.reset();
           this.alertMsg = 'Successfully added this Product Group';
           this.UserExistModalBTN.nativeElement.click();
+          this.toggleAddProductGroupDiv();
         },
         error: (error: any) => {
           console.log(error);
