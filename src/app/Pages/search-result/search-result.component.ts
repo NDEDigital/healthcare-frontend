@@ -10,7 +10,8 @@ import { SharedService } from 'src/app/services/shared.service';
 })
 export class SearchResultComponent {
   //Variable declaration section
-  searchData: any;
+  searchData: any[] = [];
+  goods: any;
   totalPages: number = 1;
   searchKey: string = '';
   currentPage: number = 1;
@@ -49,10 +50,34 @@ export class SearchResultComponent {
     }
     this.searchKey = this.goodsDataService.searchKey;
     this.goodsDataService.getSearchResult().subscribe((data: any[]) => {
-      this.searchData = data;
-    
-      if (this.searchData) {
+      this.goods = data;
+      // this.searchData = data;
+      for (let i = 0; i < this.goods.length; i++) {
+        let obj = {
+          companyName: this.goods[i].companyName,
+          groupCode: this.goods[i].productGroupID,
+          goodsId: this.goods[i].productId,
+          groupName: this.goods[i].productGroupName,
+          goodsName: this.goods[i].productName,
+          specification: this.goods[i].specification,
+          approveSalesQty: this.goods[i].availableQty,
+          sellerCode: this.goods[i].sellerId,
+          unitId: this.goods[i].unitId,
+          quantityUnit: this.goods[i].unit,
+          imagePath: this.goods[i].imagePath,
+          price: this.goods[i].price,
+          discountAmount: this.goods[i].discountAmount,
+          discountPct: this.goods[i].discountPct,
+          totalCount: this.goods[i].totalCount,
+        };
+        console.log(obj, this.searchData, 's data');
+
+        this.searchData.push(obj);
+      }
+      if (this.searchData.length > 0) {
         this.compareValues = Array(20).fill('Compare product');
+        console.log(this.searchData, 'sda');
+
         this.totalPages = Math.ceil(this.searchData[0].totalCount / 20);
       }
       this.dataLoadDone();
@@ -183,7 +208,7 @@ export class SearchResultComponent {
     this.sharedService.setCompareData(this.compareData);
     this.router.navigate(['/compare']);
   }
- 
+
   removeCompareSelectData(indx: number) {
     for (let i = 0; i < this.searchData.length; i++) {
       if (this.compareData[indx] === this.searchData[i]) {
