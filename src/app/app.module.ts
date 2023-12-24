@@ -67,6 +67,7 @@ import { UserRegistrationComponent } from './Pages/user-registration/user-regist
 import { CompanyApprovalComponent } from './Components/company-approval/company-approval.component';
 import { AddPriceDiscountsComponent } from './Components/add-price-discounts/add-price-discounts.component';
 import { ProductApprovalComponent } from './Components/product-approval/product-approval.component';
+import { OrderFlowComponent } from './Components/order-flow/order-flow.component';
 
 @NgModule({
   declarations: [
@@ -126,6 +127,7 @@ import { ProductApprovalComponent } from './Components/product-approval/product-
     CompanyApprovalComponent,
     AddPriceDiscountsComponent,
     ProductApprovalComponent,
+    OrderFlowComponent,
   ],
   imports: [
     BrowserModule,
