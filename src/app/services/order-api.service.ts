@@ -7,7 +7,7 @@ import { API_URL } from '../config';
 interface OrderMaster {
   orderNo: string;
   orderDate: string;
-  buyerCode: string;
+  userId: string;
   address: string;
   paymentMethod: string;
   numberOfItem: number;
@@ -98,7 +98,7 @@ export class OrderApiService {
     const masterData: OrderMaster = {
       orderNo: '',
       orderDate: '' + this.getDateTime(),
-      buyerCode: this.buyerCode,
+      userId: this.buyerCode,
       address: this.address,
       paymentMethod: 'CashOnDelivery',
       numberOfItem: this.cartDataDetail.size,
