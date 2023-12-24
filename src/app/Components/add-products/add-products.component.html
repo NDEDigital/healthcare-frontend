@@ -1,37 +1,23 @@
-
 <!-- approval grid  -->
 
-<div class="container">
-  <div
-    class="bg-white d-flex justify-content-center p-2 border border-1 rounded"
-  >
-    <h1 class="companyApproval_header_text">Add Product Table</h1>
+<div *ngIf="!showProductDiv" class="container approval-grid">
+  <div class="bg-white p-2 border border-1 rounded">
+    <div class="d-flex justify-content-center">
+      <h1 class="companyApproval_header_text">Add Product Table</h1>
+    </div>
   </div>
-  <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2 d-flex justify-content-between">
+  <div
+    class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2 d-flex justify-content-between"
+  >
     <div class="headerbtns">
-      <button
-        class="custom-btn new-btn active"
-
-      >
-        New
-      </button>
-      <button
-        class="custom-btn btn-active"
-
-      >
-        Active
-      </button>
-      <button
-        class="custom-btn btn-inactive"
-
-      >
-        Inactive
-      </button>
+      <button class="custom-btn new-btn active">New</button>
+      <button class="custom-btn btn-active">Active</button>
+      <button class="custom-btn btn-inactive">Inactive</button>
     </div>
 
     <div>
-      <button class="custom-btn addproduct-btn">
-        Add product
+      <button class="custom-btn addproduct-btn" (click)="toggleAddProductDiv()">
+        {{ showProductDiv ? "Show Approval Grid" : "Add Product" }}
       </button>
     </div>
   </div>
@@ -52,25 +38,17 @@
 
     <!-- table body -->
 
-    <section
-      class="row tablebodyRow fw-semibold"
-
-    >
+    <section class="row tablebodyRow fw-semibold">
       <div class="col tableBody">#</div>
       <div class="col tableBody"></div>
-      <div class="col tableBody">
-
-      </div>
       <div class="col tableBody"></div>
-      <div class="col tableBody">
-
-      </div>
+      <div class="col tableBody"></div>
+      <div class="col tableBody"></div>
       <div class="col tableBody">
         <button
           class="custom-btn btn-trade-company"
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
-
         >
           view
         </button>
@@ -80,18 +58,13 @@
           class="custom-btn btn-trade-company"
           data-bs-toggle="modal"
           data-bs-target="#staticBackdrop"
-
         >
           view
         </button>
       </div>
       <div class="col tableBody"></div>
       <div class="col tableBody">
-        <input
-
-          type="number"
-          class="border border-1 p-2 w-75"
-        />
+        <input type="number" class="border border-1 p-2 w-75" />
       </div>
       <div class="col tableBody">
         <div class="d-flex justify-content-center align-items-center">
@@ -104,7 +77,6 @@
                 fill="green"
                 class="bi bi-check2 me-3"
                 viewBox="0 0 16 16"
-
               >
                 <path
                   d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
@@ -113,10 +85,7 @@
             </button>
           </div>
           <div>
-            <button
-              class="actionBtn"
-
-            >
+            <button class="actionBtn">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
@@ -147,9 +116,10 @@
         <div class="modal-dialog modal-xl">
           <div class="modal-content">
             <div class="modal-header modal-heading">
-              <h1 class="modal-title text-light fs-5" id="staticBackdropLabel">
-
-              </h1>
+              <h1
+                class="modal-title text-light fs-5"
+                id="staticBackdropLabel"
+              ></h1>
               <button
                 type="button"
                 class="btn-close"
@@ -158,7 +128,7 @@
               ></button>
             </div>
             <div class="modal-body">
-              <img  alt="no image was uploaded!" />
+              <img alt="no image was uploaded!" />
             </div>
             <!-- <div class="modal-footer">
               <button
@@ -177,12 +147,30 @@
   </div>
 </div>
 
-
 <!-- add product -->
 
 <!-- add product form design  -->
-<div class="container containgFields mt-5 mb-5 rounded">
-  <h2 class="register_title">Add Product</h2>
+<div *ngIf="showProductDiv" class="container containgFields mt-5 mb-5 rounded">
+  <div class="d-flex justify-content-center">
+    <div class="d-flex align-items-center me-5" (click)="showApprovalGrid()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="25"
+        height="25"
+        fill="currentColor"
+        class="bi bi-arrow-left"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+        />
+      </svg>
+    </div>
+
+    <h2 class="register_title">Add Product</h2>
+  </div>
+
   <hr />
   <form [formGroup]="addProductForm">
     <div class="form-group">
@@ -290,11 +278,8 @@
     >
       Submit
     </button>
-
-
   </form>
 </div>
-
 
 <!-- Button trigger modal -->
 <button
@@ -315,11 +300,9 @@
   aria-hidden="true"
 >
   <div class="modal-dialog">
-    <div class="modal-content ">
+    <div class="modal-content">
       <div class="modal-header fs-5 fw-bold">
-        <h1 class="modal-title fs-5" id="userExistModalLabel">
-            product Modal
-        </h1>
+        <h1 class="modal-title fs-5" id="userExistModalLabel">product Modal</h1>
         <button
           type="button"
           class="btn-close"
@@ -328,12 +311,14 @@
         ></button>
       </div>
       <div class="modal-body">
-        <p class="fs-5 fw-semibold"
-           [class.text-success]="!isError"
-           [class.text-danger]="isError">{{ alertMsg }}</p>
-    </div>
-
+        <p
+          class="fs-5 fw-semibold"
+          [class.text-success]="!isError"
+          [class.text-danger]="isError"
+        >
+          {{ alertMsg }}
+        </p>
+      </div>
     </div>
   </div>
 </div>
-

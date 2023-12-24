@@ -16,9 +16,21 @@ export class AddProductsComponent implements OnInit {
   units: any[] = [];
   alertMsg: string = '';
   isError: boolean = false;
+  showProductDiv: boolean = false;
+
 
   constructor(private productService: AddProductService) {}
 
+  toggleAddProductDiv(): void {
+    this.showProductDiv = !this.showProductDiv;
+  }
+
+
+  showApprovalGrid(): void {
+    this.showProductDiv = false;
+  }
+
+  
   ngOnInit() {
     this.addProductForm = new FormGroup({
       productGroupID: new FormControl('', Validators.required),
@@ -102,6 +114,8 @@ export class AddProductsComponent implements OnInit {
           this.isError = false; // Set isError to false for a success message
           this.PrdouctExistModalBTN.nativeElement.click();
           this.addProductForm.reset();
+          this.showProductDiv = false;
+
         },
         error: (error: any) => {
           console.log(error);
