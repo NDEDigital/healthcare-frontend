@@ -1,12 +1,12 @@
 import { Component } from '@angular/core';
-import { CompanyService } from 'src/app/services/company.service';
 import { AddProductService } from 'src/app/services/add-product.service';
+
 @Component({
-  selector: 'app-product-approval',
-  templateUrl: './product-approval.component.html',
-  styleUrls: ['./product-approval.component.css'],
+  selector: 'app-order-flow',
+  templateUrl: './order-flow.component.html',
+  styleUrls: ['./order-flow.component.css'],
 })
-export class ProductApprovalComponent {
+export class OrderFlowComponent {
   btnIndex = -1;
   productsData: any;
   imagePath = '';
@@ -64,36 +64,4 @@ export class ProductApprovalComponent {
       },
     });
   }
-
-  // updateCompany(companyCode: any, Isactive: any) {
-  //   console.log(companyCode, Isactive);
-  //   // const selectedCompany = this.productsData.find(
-  //   //   (cmp: any) => cmp.companyCode === companyCode
-  //   // );
-  //   // if (selectedCompany) {
-  //   //   this.selectedCompanyCodeValue = selectedCompany.companyCode;
-  //   //   console.log(
-  //   //     'Selected Company Code Value:',
-  //   //     this.selectedCompanyCodeValue
-  //   //   );
-  //   // }
-  //   console.log(
-  //     'Selected Company Code Value:',
-  //     this.selectedCompanyCodeValues[companyCode]
-  //   );
-  //   const cmp = {
-  //     companyCode: companyCode,
-  //     isActive: Isactive,
-  //     maxUser: this.selectedCompanyCodeValues[companyCode] || 0,
-  //   };
-  //   // this.companyService.UpdateCompany(cmp).subscribe({
-  //   //   next: (response: any) => {
-  //   //     console.log(response);
-  //   //     this.getData();
-  //   //   },
-  //   //   error: (error: any) => {
-  //   //     console.log(error);
-  //   //   },
-  //   // });
-  // }
 }

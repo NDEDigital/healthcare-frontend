@@ -28,6 +28,9 @@ body {
   font-family: "Poppins", sans-serif;
   /* background: var(--background-color) !important; */
 }
+img {
+  font-size: 0.9rem;
+}
 .color-primary {
   color: var(--color-primary) !important;
 }
@@ -135,7 +138,6 @@ body {
     padding: 0.4rem 0.6rem;
   }
 }
-
 
 /* Media Queries */
 @media (max-width: 1700px) {
