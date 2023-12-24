@@ -80,6 +80,11 @@ export class AddPriceDiscountsComponent {
     discountPctControl?.valueChanges.subscribe(() => {
       this.updateDateFieldValidators();
     });
+
+      // Subscribe to changes in Price
+  form.get('price')?.valueChanges.subscribe(() => {
+    this.calculateTotalPrice();
+  });
   }
 
 
@@ -179,10 +184,13 @@ export class AddPriceDiscountsComponent {
       }
     }
 
+    // const totalPrice = Math.max(price - calculatedDiscount, 0); // Total price should not be negative
+    // this.addPriceDiscountForm
+    //   .get('totalPrice')
+    //   ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
+
     const totalPrice = Math.max(price - calculatedDiscount, 0); // Total price should not be negative
-    this.addPriceDiscountForm
-      .get('totalPrice')
-      ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
+    this.addPriceDiscountForm.get('totalPrice')?.setValue(totalPrice.toFixed(2), { emitEvent: false });
   }
 
   onSubmit(): void {
