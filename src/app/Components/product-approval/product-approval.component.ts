@@ -4,13 +4,13 @@ import { AddProductService } from 'src/app/services/add-product.service';
 @Component({
   selector: 'app-product-approval',
   templateUrl: './product-approval.component.html',
-  styleUrls: ['./product-approval.component.css']
+  styleUrls: ['./product-approval.component.css'],
 })
 export class ProductApprovalComponent {
   btnIndex = -1;
   productsData: any;
   imagePath = '';
-  status = "Pending" ;
+  status = 'Pending';
   imageTitle = 'No Data Found!';
   selectedCompanyCodeValues: { [key: string]: number } = {};
 
@@ -38,9 +38,7 @@ export class ProductApprovalComponent {
     this.imagePath = path.split('src')[1];
     this.imageTitle = title;
   }
-  updateProduct(s:any,sj:any,su:any,sy:any ){
-
-  }
+  updateProduct(usID: any, cCode: any, su: any, status: any) {}
 
   updateCompany(companyCode: any, Isactive: any) {
     console.log(companyCode, Isactive);
