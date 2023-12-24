@@ -19,19 +19,17 @@ export class AddGroupsComponent {
   addGroupForm!: FormGroup;
   alertMsg = '';
   showProductDiv: boolean = false;
-
+  groupList: any;
+  btnIndex = -1;
   constructor(private addProductService: AddProductService) {}
-
 
   toggleAddProductGroupDiv(): void {
     this.showProductDiv = !this.showProductDiv;
   }
 
-
   showApprovalProductGrid(): void {
     this.showProductDiv = false;
   }
-
 
   ngOnInit() {
     this.addGroupForm = new FormGroup({
@@ -39,6 +37,7 @@ export class AddGroupsComponent {
       productGroupPrefix: new FormControl('', Validators.required),
       productGroupDetails: new FormControl(''),
     });
+    this.getProductGroup(-1);
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -76,5 +75,19 @@ export class AddGroupsComponent {
     } else {
       console.log('Form is not valid');
     }
+  }
+
+  getProductGroup(status: any) {
+    this.addProductService.GetProductGroupsListByStatus(status).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.groupList = response;
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.alertMsg = error.error.message;
+        this.UserExistModalBTN.nativeElement.click();
+      },
+    });
   }
 }

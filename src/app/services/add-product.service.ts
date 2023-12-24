@@ -15,6 +15,7 @@ export class AddProductService {
   createProductGroupURL = `${this.URL}/api/ProductGroups/CreateProductGroups`;
 
   getProductGropURL = `${this.URL}/api/ProductGroups/GetProductGroupsList`;
+  GetProductGroupsListByStatusURL = `${this.URL}/api/ProductGroups/GetProductGroupsListByStatus`;
 
   getUnitURL = `${this.URL}/api/HK_Gets/GetUnitList`;
 
@@ -45,6 +46,15 @@ export class AddProductService {
     return this.http.get(this.GetProductDataURL, {
       params: { status },
     });
+  }
+  GetProductGroupsListByStatus(status: any) {
+    if (status === -1) {
+      return this.http.get(this.GetProductGroupsListByStatusURL);
+    } else {
+      return this.http.get(this.GetProductGroupsListByStatusURL, {
+        params: { status },
+      });
+    }
   }
 
   getProductGroups() {

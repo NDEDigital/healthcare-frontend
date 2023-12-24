@@ -1,4 +1,3 @@
-
 <!-- approval grid  -->
 <div *ngIf="!showProductDiv" class="container approval-grid">
   <div class="bg-white p-2 border border-1 rounded">
@@ -10,13 +9,37 @@
     class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2 d-flex justify-content-between"
   >
     <div class="headerbtns">
-      <button class="custom-btn new-btn active">New</button>
-      <button class="custom-btn btn-active">Active</button>
-      <button class="custom-btn btn-inactive">Inactive</button>
+      <button
+        class="custom-btn new-btn active"
+        (click)="getProductGroup(-1)"
+        [ngClass]="{ active: btnIndex === -1 }"
+        (click)="btnIndex = -1"
+      >
+        New
+      </button>
+      <button
+        class="custom-btn btn-active"
+        (click)="getProductGroup(1)"
+        [ngClass]="{ active: btnIndex === 1 }"
+        (click)="btnIndex = 1"
+      >
+        Active
+      </button>
+      <button
+        class="custom-btn btn-inactive"
+        (click)="getProductGroup(0)"
+        [ngClass]="{ active: btnIndex === 0 }"
+        (click)="btnIndex = 0"
+      >
+        Inactive
+      </button>
     </div>
 
     <div>
-      <button class="custom-btn addproduct-btn" (click)="toggleAddProductGroupDiv()">
+      <button
+        class="custom-btn addproduct-btn"
+        (click)="toggleAddProductGroupDiv()"
+      >
         {{ showProductDiv ? "Show Approval Grid" : "Add Group" }}
       </button>
     </div>
@@ -24,48 +47,34 @@
   <div class="scrollable-table border border-1 bg-light">
     <!-- TABLE header -->
     <div class="row headerRow sticky-top fw-bolder">
-      <div class="col tableHeader">Index</div>
-      <div class="col tableHeader">Company Code</div>
-      <div class="col tableHeader">Company Name</div>
-      <div class="col tableHeader">Tax Id. Number</div>
-      <div class="col tableHeader">Foundation Date</div>
-      <div class="col tableHeader">Trade Licence File</div>
+      <div class="col tableHeader">Product Group ID</div>
+      <div class="col tableHeader">Product Group Code</div>
+      <div class="col tableHeader">Product Group Name</div>
+      <div class="col tableHeader">Product Group Prefix</div>
+      <div class="col tableHeader">Product Group Details</div>
+      <div class="col tableHeader">Is Active</div>
       <div class="col tableHeader">Company Image</div>
-      <div class="col tableHeader">Prefered Method</div>
-      <div class="col tableHeader">Max User</div>
+      <div class="col tableHeader">Date Added</div>
       <div class="col tableHeader">Action</div>
     </div>
 
     <!-- table body -->
 
-    <section class="row tablebodyRow fw-semibold">
-      <div class="col tableBody">#</div>
-      <div class="col tableBody"></div>
-      <div class="col tableBody"></div>
-      <div class="col tableBody"></div>
-      <div class="col tableBody"></div>
+    <section
+      class="row tablebodyRow fw-semibold"
+      *ngFor="let group of groupList; let i = index"
+    >
+      <div class="col tableBody">#{{ i + 1 }}</div>
+      <div class="col tableBody">{{ group.productGroupID }}</div>
+      <div class="col tableBody">{{ group.productGroupCode }}</div>
+      <div class="col tableBody">{{ group.productGroupName }}</div>
+      <div class="col tableBody">{{ group.productGroupPrefix }}</div>
+      <div class="col tableBody">{{ group.productGroupDetails }}</div>
+      <div class="col tableBody">{{ group.isActive }}</div>
       <div class="col tableBody">
-        <button
-          class="custom-btn btn-trade-company"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-        >
-          view
-        </button>
+        {{ group.dateAdded | date : "dd MMM yyyy" }}
       </div>
-      <div class="col tableBody">
-        <button
-          class="custom-btn btn-trade-company"
-          data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
-        >
-          view
-        </button>
-      </div>
-      <div class="col tableBody"></div>
-      <div class="col tableBody">
-        <input type="number" class="border border-1 p-2 w-75" />
-      </div>
+
       <div class="col tableBody">
         <div class="d-flex justify-content-center align-items-center">
           <div>
@@ -77,6 +86,7 @@
                 fill="green"
                 class="bi bi-check2 me-3"
                 viewBox="0 0 16 16"
+                *ngIf="btnIndex === 0"
               >
                 <path
                   d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
@@ -93,6 +103,7 @@
                 fill="red"
                 class="bi bi-x-lg fw-bolder"
                 viewBox="0 0 16 16"
+                *ngIf="btnIndex === 1"
               >
                 <path
                   d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
@@ -146,7 +157,6 @@
     </section>
   </div>
 </div>
-
 
 <!-- add group form design  -->
 <div *ngIf="showProductDiv" class="container containgFields mt-5 mb-5 rounded">
