@@ -50,8 +50,12 @@
   width: 8rem;
   border: 1px solid var(--color-primary-dark);
 }
-
-.headerbtns .btn-active {
+.headerbtns .custom-btn.active {
+  background-color: var(--color-primary-dark) !important ;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  color: #ebf8ff !important;
+}
+/* .headerbtns .btn-active {
   border: 1px solid #78ac8b;
 }
 .headerbtns .btn-inactive {
@@ -76,7 +80,7 @@
 
 .btn-trade-company {
   width: 4rem !important;
-}
+} */
 
 .actionBtn {
   cursor: pointer;
