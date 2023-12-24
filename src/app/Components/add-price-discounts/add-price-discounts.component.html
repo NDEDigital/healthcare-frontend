@@ -1,5 +1,78 @@
-<div class="container containgFields mt-5 mb-5 rounded">
-  <h2 class="register_title">Add Price & Discounts</h2>
+<!-- approval grid  -->
+<div *ngIf="!showProductDiv" class="container approval-grid">
+  <div class="bg-white p-2 border border-1 rounded">
+    <div class="d-flex justify-content-center">
+      <h1 class="companyApproval_header_text">Price and Discounts</h1>
+    </div>
+  </div>
+  <div
+    class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2 d-flex justify-content-between"
+  >
+    <div class="headerbtns">
+      <button class="custom-btn new-btn active">New</button>
+      <button class="custom-btn btn-active">Active</button>
+      <button class="custom-btn btn-inactive">Inactive</button>
+    </div>
+
+    <div>
+      <button
+        class="custom-btn addproduct-btn"
+        (click)="toggleAddProductPriceDiv()"
+      >
+        {{ showProductDiv ? "Show Approval Grid" : "Add Price" }}
+      </button>
+    </div>
+  </div>
+  <div class="scrollable-table border border-1 bg-light">
+    <!-- TABLE header -->
+    <div class="row headerRow sticky-top fw-bolder">
+      <div class="col tableHeader">Index</div>
+      <div class="col tableHeader">Group Code</div>
+      <div class="col tableHeader">Group Name</div>
+      <div class="col tableHeader">Group Prefix</div>
+      <div class="col tableHeader">Group Details</div>
+    </div>
+
+    <!-- table body -->
+
+    <section class="row tablebodyRow fw-semibold">
+      <div class="col tableBody">#</div>
+      <div class="col tableBody"></div>
+      <div class="col tableBody"></div>
+      <div class="col tableBody"></div>
+      <div class="col tableBody"></div>
+    </section>
+  </div>
+</div>
+
+<!-- price and discount form  -->
+
+<div *ngIf="showProductDiv" class="container containgFields mt-5 mb-5 rounded">
+  <!-- <h2 class="register_title">Add Price & Discounts</h2> -->
+  <div class="d-flex justify-content-between align-items-center">
+    <!-- Back Button on the left -->
+    <div class="d-flex align-items-center" (click)="showProductPriceGrid()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="25"
+        height="25"
+        fill="currentColor"
+        class="bi bi-arrow-left"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+        />
+      </svg>
+    </div>
+
+    <!-- Title in the middle -->
+    <h2 class="register_title">Add Price & Discounts</h2>
+
+    <!-- Placeholder for right alignment -->
+    <div></div>
+  </div>
   <hr />
   <form [formGroup]="addPriceDiscountForm">
     <div class="form-group">

@@ -1,5 +1,12 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { AddProductService } from 'src/app/services/add-product.service';
 
 @Component({
@@ -16,6 +23,15 @@ export class AddPriceDiscountsComponent {
   isDisabled: boolean = true;
   alertMsg: string = '';
   isError: boolean = false;
+  showProductDiv: boolean = false;
+
+  toggleAddProductPriceDiv(): void {
+    this.showProductDiv = !this.showProductDiv;
+  }
+
+  showProductPriceGrid(): void {
+    this.showProductDiv = false;
+  }
 
   constructor(private productService: AddProductService) {}
 
@@ -81,23 +97,30 @@ export class AddPriceDiscountsComponent {
       this.updateDateFieldValidators();
     });
 
-      // Subscribe to changes in Price
-  form.get('price')?.valueChanges.subscribe(() => {
-    this.calculateTotalPrice();
-  });
+    // Subscribe to changes in Price
+    form.get('price')?.valueChanges.subscribe(() => {
+      this.calculateTotalPrice();
+    });
   }
 
-
   updateDateFieldValidators() {
-    const discountAmount = this.addPriceDiscountForm.get('discountAmount')?.value;
+    const discountAmount =
+      this.addPriceDiscountForm.get('discountAmount')?.value;
     const discountPct = this.addPriceDiscountForm.get('discountPct')?.value;
 
-    const effectivateDateControl = this.addPriceDiscountForm.get('effectivateDate');
+    const effectivateDateControl =
+      this.addPriceDiscountForm.get('effectivateDate');
     const endDateControl = this.addPriceDiscountForm.get('endDate');
 
     if (discountAmount || discountPct) {
-      effectivateDateControl?.setValidators([Validators.required, this.presentOrFutureDateValidator()]);
-      endDateControl?.setValidators([Validators.required, this.futureDateValidator()]);
+      effectivateDateControl?.setValidators([
+        Validators.required,
+        this.presentOrFutureDateValidator(),
+      ]);
+      endDateControl?.setValidators([
+        Validators.required,
+        this.futureDateValidator(),
+      ]);
     } else {
       effectivateDateControl?.clearValidators();
       endDateControl?.clearValidators();
@@ -106,8 +129,6 @@ export class AddPriceDiscountsComponent {
     effectivateDateControl?.updateValueAndValidity();
     endDateControl?.updateValueAndValidity();
   }
-
-
 
   presentOrFutureDateValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -122,7 +143,9 @@ export class AddPriceDiscountsComponent {
   futureDateValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const endDate = new Date(control.value);
-      const effectiveDate = new Date(this.addPriceDiscountForm.get('effectivateDate')?.value);
+      const effectiveDate = new Date(
+        this.addPriceDiscountForm.get('effectivateDate')?.value
+      );
 
       return endDate > effectiveDate ? null : { invalidEndDate: true };
     };
@@ -190,7 +213,9 @@ export class AddPriceDiscountsComponent {
     //   ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
 
     const totalPrice = Math.max(price - calculatedDiscount, 0); // Total price should not be negative
-    this.addPriceDiscountForm.get('totalPrice')?.setValue(totalPrice.toFixed(2), { emitEvent: false });
+    this.addPriceDiscountForm
+      .get('totalPrice')
+      ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
   }
 
   onSubmit(): void {
