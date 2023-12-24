@@ -89,7 +89,7 @@ export class GoodsDataService {
     );
   }
 
-  getProductCompanyList(groupCode: string, groupName: string) {
+  getProductCompanyList(groupCode: string) {
     // this.groupCode = groupCode;
     // this.groupName = groupName;
     // console.log( this.groupCode, "dsdsds");
@@ -102,18 +102,21 @@ export class GoodsDataService {
 
     const encodedGroupName = encodeURIComponent(this.groupName);
     console.log("encodedGroupName ",encodedGroupName)
-    const productCompany = `${this.URL}/api/Goods/GetProductCompany?GroupCode=${this.groupCode}&GroupName=${encodedGroupName}`;
+    const productCompany = `${this.URL}/api/Goods/GetProductCompany/${this.groupCode}`;
+     console.log(productCompany," produ");
+     
 
-    return this.http.post<any[]>(productCompany, null).pipe(
+    return this.http.get<any[]>(productCompany).pipe(
       tap((response: any[]) => {
         this.companyList = response;
-        // console.log(this.companyList, 'companyList');
+         console.log(this.companyList, 'companyList');
       }),
       catchError((error: any) => {
         // console.error('Error:', error);
-        return throwError(error);
+        return throwError(() => error);
       })
     );
+    
   }
 
   getProductList(companyCode: string) {
@@ -122,9 +125,9 @@ export class GoodsDataService {
 
     this.companyCode = sessionStorage.getItem('companyCode') || '';
     this.groupName = localStorage.getItem('activeEntry') || '';
-
-    const encodedGroupName = encodeURIComponent(this.groupName);
-    const productCompany = `${this.URL}/api/Goods/GetProductList?CompanyCode=${this.companyCode}&GroupName=${encodedGroupName}`;
+    this.groupCode = sessionStorage.getItem('groupCode') || '';
+  
+    const productCompany = `${this.URL}/api/Goods/GetProductList?CompanyCode=${this.companyCode}&ProductGroupCode=${this.groupCode}`;
 
     return this.http.get<any[]>(productCompany).pipe(
       tap((response: any[]) => {

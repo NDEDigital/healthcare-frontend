@@ -13,8 +13,9 @@ declare var bootstrap: any;
 })
 export class ProductComponent {
   products: any[] = [];
-  products2: any[] = [];
-
+  products2: any;
+  goods:any;
+  
   productType = new Map();
   GroupdCode: string = '';
   productSize = new Map();
@@ -31,6 +32,8 @@ export class ProductComponent {
     private cartDataService: CartDataService,
     private route: Router
   ) {
+
+    
     this.role = localStorage.getItem('role');
     if (this.role === 'seller' || this.role === 'admin') {
       this.isBuyer = false;
@@ -38,28 +41,76 @@ export class ProductComponent {
     this.goodsData
       .getProductList(this.sharedService.companyCode)
       .subscribe((data: any[]) => {
+             this.goods = data;
       
-        
-        this.products = data;
+         for(let i =0;i<this.goods.length;i++){
+          let obj = {
+            companyName: this.goods[i].companyName,
+            groupCode: this.goods[i].productGroupID,
+            goodsId: this.goods[i].productId,
+            groupName: this.goods[i].productGroupName,                
+            goodsName: this.goods[i].productName,
+            specification: this.goods[i].specification,
+            approveSalesQty: this.goods[i].availableQty,
+            sellerCode: this.goods[i].sellerId,
+            unitId:this.goods[i].unitId,
+            quantityUnit :  this.goods[i].unit,
+            imagePath :  this.goods[i].imagePath,
+            price: this.goods[i].price,
+            discountAmount: this.goods[i].discountAmount,
+            discountPct: this.goods[i].discountPct,
+          };
+              this.products.push(obj);
+         }
+       
+         
+        // this.products = goods;
         this.filteredProducts = [...this.products];
+        this.loading = false;
+        console.log(this.filteredProducts,"u");
+        
       });
 
-    this.interval = setInterval(() => {
-      this.goodsData
-        .getProductList(this.sharedService.companyCode)
-        .subscribe((data: any[]) => {
-          data.forEach((newProduct: any) => {
-            const existingProduct = this.filteredProducts.find(
-              (product: any) => product.goodsId === newProduct.goodsId
-            );
-            if (existingProduct) {
-              existingProduct.approveSalesQty = newProduct.approveSalesQty;
-              existingProduct.stockQty = newProduct.stockQty;
-            }
-          });
-        });
-    }, 5000);
+    // this.interval = setInterval(() => {
+    //   this.goodsData
+    //     .getProductList(this.sharedService.companyCode)
+    //     .subscribe((data: any[]) => {
+    //       console.log(data,"lala");
+          
+    //       data.forEach((newProduct: any) => {        
+    //           let obj = {
+    //             companyName: newProduct.companyName,
+    //             groupCode: newProduct.productGroupID,
+    //             goodsId: newProduct.productId,
+    //             groupName: newProduct.productGroupName,                
+    //             goodsName: newProduct.productName,
+    //             specification: newProduct.specification,
+    //             approveSalesQty: newProduct.availableQty,
+    //             sellerCode: newProduct.sellerId,
+    //             unitId:newProduct.unitId,
+    //             quantityUnit :  newProduct.unit,
+    //             imagePath :  newProduct.imagePath,
+    //             price: newProduct.price,
+    //             discountAmount: newProduct.discountAmount,
+    //             discountPct: newProduct.discountPct,
+    //           };
+             
+              
+    //           this.products2.push(obj); 
+    //           console.log(this.products2,"sssd",obj);  
+              
+    //         // const existingProduct = this.filteredProducts.find(
+    //         //   (product: any) => product.goodsId === this.products2.goodsId
+    //         // );
+    //         // if (existingProduct) {
+    //         //   existingProduct.approveSalesQty = this.products2.approveSalesQty;
+    //         //   existingProduct.stockQty = newProduct.stockQty;
+    //         // }
+    //       });
+    //     });
+    // }, 5000);
   }
+
   sortedProductSize: [string, number][] = [];
   private interval: any;
 
@@ -90,29 +141,63 @@ export class ProductComponent {
     this.cartDataService.initializeAndLoadData();
     this.setServiceData();
 
-    this.goodsData
-      .getProductList(this.sharedService.companyCode)
-      .subscribe((data: any[]) => {
-        this.products = data;
-        this.filteredProducts = [...this.products];
-        this.loading = false;
-      });
+    // this.goodsData
+    //   .getProductList(this.sharedService.companyCode)
+    //   .subscribe((data: any[]) => {
+    //     this.products = data;
+    //     this.filteredProducts = [...this.products];
+    //     this.loading = false;
+    //   });
+      // this.goodsData
+      // .getProductList(this.sharedService.companyCode)
+      // .subscribe((data: any[]) => {
+      //        this.goods = data;
+      
+      //    for(let i =0;i<this.goods.length;i++){
+      //     let obj = {
+      //       companyName: this.goods[i].companyName,
+      //       groupCode: this.goods[i].productGroupID,
+      //       goodsId: this.goods[i].productId,
+      //       groupName: this.goods[i].productGroupName,                
+      //       goodsName: this.goods[i].productName,
+      //       specification: this.goods[i].specification,
+      //       approveSalesQty: this.goods[i].availableQty,
+      //       sellerCode: this.goods[i].sellerId,
+      //       unitId:this.goods[i].unitId,
+      //       quantityUnit :  this.goods[i].unit,
+      //       imagePath :  this.goods[i].imagePath,
+      //       price: this.goods[i].price,
+      //       discountAmount: this.goods[i].discountAmount,
+      //       discountPct: this.goods[i].discountPct,
+      //     };
+      //         this.products.push(obj);
+      //    }
+       
+         
+      //   // this.products = goods;
+      //   this.filteredProducts = [...this.products];
+      //   this.loading = false;
+      //   console.log(this.filteredProducts,"u");
+        
+      // });
 
-    this.interval = setInterval(() => {
-      this.goodsData
-        .getProductList(this.sharedService.companyCode)
-        .subscribe((data: any[]) => {
-          data.forEach((newProduct: any) => {
-            const existingProduct = this.filteredProducts.find(
-              (product: any) => product.goodsId === newProduct.goodsId
-            );
-            if (existingProduct) {
-              existingProduct.approveSalesQty = newProduct.approveSalesQty;
-              existingProduct.stockQty = newProduct.stockQty;
-            }
-          });
-        });
-    }, 5000);
+
+      
+    // this.interval = setInterval(() => {
+    //   this.goodsData
+    //     .getProductList(this.sharedService.companyCode)
+    //     .subscribe((data: any[]) => {
+    //       data.forEach((newProduct: any) => {
+    //         const existingProduct = this.filteredProducts.find(
+    //           (product: any) => product.goodsId === newProduct.goodsId
+    //         );
+    //         if (existingProduct) {
+    //           existingProduct.approveSalesQty = newProduct.approveSalesQty;
+    //           existingProduct.stockQty = newProduct.stockQty;
+    //         }
+    //       });
+    //     });
+    // }, 5000);
   }
   ngAfterViewInit() {
     this.bsModal = new bootstrap.Modal(this.modalElement.nativeElement);

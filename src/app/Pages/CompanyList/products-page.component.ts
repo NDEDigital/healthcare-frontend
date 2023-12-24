@@ -29,22 +29,22 @@ export class ProductsPageComponent {
     //   this.products = data;
     // });
     this.callApi();
-    console.log(this.groupName, this.groupCode, 'products');
+    // console.log(this.groupName, this.groupCode, 'products');
   }
 
   handleDataUpdated() {
     this.callApi();
-    console.log(this.groupName, this.groupCode, 'products inside handleUpdate');
+    // console.log(this.groupName, this.groupCode, 'products inside handleUpdate');
   }
 
   callApi() {
     this.groupCode = sessionStorage.getItem('groupCode') || '';
     this.groupName = sessionStorage.getItem('groupName') || '';
-    console.log(this.groupName, this.groupCode, 'products inside callapi');
+    // console.log(this.groupName, this.groupCode, 'products inside callapi');
     setTimeout(() => {
       if (this.groupCode != '') {
         this.goodsData
-          .getProductCompanyList(this.groupCode, this.groupName)
+          .getProductCompanyList(this.groupCode)
           .subscribe((data: any) => {
             console.log(data, 'data');
 

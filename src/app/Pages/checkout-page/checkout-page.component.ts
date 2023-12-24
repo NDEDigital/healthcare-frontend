@@ -56,9 +56,11 @@ export class CheckoutPageComponent {
     this.cartDataQt = cartData.cartDataQt;
     this.totalPrice = this.cartDataService.getTotalPrice();
     this.getUserInfo();
-    setTimeout(() => {
-      this.setUserInfo();
-    }, 30);
+    // setTimeout(() => {
+    //   console.log(" usaer dataaaaaaaaaa",this.userData )
+    //    this.setUserInfo();
+    
+    // }, 90);
 
     // by tushar
     if (this.message) {
@@ -161,12 +163,14 @@ export class CheckoutPageComponent {
     );
   }
   getUserInfo() {
-    const userCode = localStorage.getItem('code');
-    this.orderService.getUserInfo(userCode).subscribe({
+    // const userCode = localStorage.getItem('code');
+    const userId = 1
+    this.orderService.getUserInfo(userId).subscribe({
       next: (response: any) => {
         this.userData = response.user;
         console.log(  " user Data" ,this.userData);
         this.userName = this.userData.fullName;
+        this.setUserInfo()
       },
       error: (error: any) => {
         // Handle the error
