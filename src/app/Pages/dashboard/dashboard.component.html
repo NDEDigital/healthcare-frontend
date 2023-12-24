@@ -627,9 +627,9 @@
       <app-add-product-quantity></app-add-product-quantity>
     </section>
 
-    <section class="admin_order_body" *ngIf="isAdmin && SidebarIndex === 3">
+    <!-- <section class="admin_order_body" *ngIf="isAdmin && SidebarIndex === 3">
       <app-admin-order></app-admin-order>
-    </section>
+    </section> -->
 
     <!-- sellers inventory -->
     <section class="seller_inventory_body" *ngIf="SidebarIndex === 4">
@@ -637,8 +637,10 @@
     </section>
     <!-- sellers inventory end-->
 
-    <section class="seller_order_body" *ngIf="isSeller && SidebarIndex === 3">
-      <app-orders-overview></app-orders-overview>
+    <!-- <section class="order_body" *ngIf="isSeller && SidebarIndex === 3"> -->
+    <section class="order_body" *ngIf="SidebarIndex === 3">
+      <!-- <app-orders-overview></app-orders-overview> -->
+      <app-order-flow></app-order-flow>
     </section>
 
     <!-- Add products fields here -->
