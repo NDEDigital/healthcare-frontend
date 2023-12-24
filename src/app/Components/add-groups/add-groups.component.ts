@@ -18,7 +18,20 @@ export class AddGroupsComponent {
 
   addGroupForm!: FormGroup;
   alertMsg = '';
+  showProductDiv: boolean = false;
+
   constructor(private addProductService: AddProductService) {}
+
+
+  toggleAddProductGroupDiv(): void {
+    this.showProductDiv = !this.showProductDiv;
+  }
+
+
+  showApprovalProductGrid(): void {
+    this.showProductDiv = false;
+  }
+
 
   ngOnInit() {
     this.addGroupForm = new FormGroup({
