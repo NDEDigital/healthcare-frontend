@@ -34,6 +34,8 @@ export class AddPriceDiscountsComponent {
 
   toggleAddProductPriceDiv(): void {
     this.showPriceProductDiv = !this.showPriceProductDiv;
+     this.addPriceDiscountForm.reset();
+
   }
 
   showProductPriceGrid(): void {
