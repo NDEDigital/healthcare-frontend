@@ -1,4 +1,5 @@
 <app-header [cartCount] = "cartCount"></app-header>
+
 <section class="cart-detail">
 
     <div class="d-flex m-3 ">
@@ -9,7 +10,7 @@
             </div>
              <hr>
         <ng-container *ngFor="let entry of cartDataDetail| keyvalue; let i = index">
-        <div class="d-flex ps-5"> 
+        <div class="d-flex ps-5">
          <div>
              <!-- <img class="product-img" src="/assets/images/hc1.jpg" alt=""> -->
              <img
@@ -41,11 +42,11 @@
                 >Save for later</span> -->
              </div>
          </div>
-         </div>  
-        
+         </div>
+
           <hr *ngIf="i !== cartDataDetail.size - 1">
-        </ng-container>  
-             
+        </ng-container>
+
              <div *ngIf = "cartDataDetail.size === 0" class="text-center  py-5">
             <button (click)="productPage()" class="btn btn-warning">Go to Product</button>
              </div>
@@ -55,11 +56,11 @@
              <div class="container-fluid cart-product">
             <div class="ps-3 pt-3">
                 <h3 class="mb-0">Saved for later ({{saveLaterData.size}} item)</h3>
-               
+
             </div>
              <hr>
         <ng-container *ngFor="let entry of saveLaterData| keyvalue; let i = index">
-        <div class="d-flex ps-5"> 
+        <div class="d-flex ps-5">
          <div>
              <img class="product-img" src="/assets/images/hc1.jpg" alt="">
          </div>
@@ -76,13 +77,13 @@
                 <span class="ms-3 cursor"
                 (click) = "moveToCart(entry.key,entry.value)"
                 >Move to Cart </span>
-               
+
              </div>
          </div>
-         </div>  
-        
+         </div>
+
           <hr *ngIf="i !== cartDataDetail.size - 1">
-        </ng-container>  
+        </ng-container>
 
         </div>
         </div> -->
@@ -98,7 +99,12 @@
                 <p>Ads promotional things</p>
          </div>
         </div>
-    </div> 
-    
+    </div>
+
 </section>
+
+<div class="base-footer">
+  <app-footer></app-footer>
+</div>
+
 
