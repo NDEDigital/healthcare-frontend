@@ -35,7 +35,10 @@ export class HeaderComponent {
   user$ = this.sharedService.user$;
   errorMessage: any;
   user: any;
-  isBuyer: boolean;
+  isBuyer: boolean = false;
+  isAdmin: boolean = false;
+  isSeller: boolean = false;
+
   private subscription: Subscription;
   isCategoriesVisible = false;
   goods: any;
@@ -61,12 +64,23 @@ export class HeaderComponent {
   ) {
     //this.isBuyer = JSON.parse(localStorage.getItem('isB') || 'false');
     const role = localStorage.getItem('role');
+    if (role === 'admin') {
+      this.isAdmin = true;
+      this.isBuyer = false;
+      this.isSeller = false;
+    }
+    if (role === 'seller') {
+      this.isSeller = true;
+      this.isBuyer = false;
+      this.isAdmin = false;
+    }
+
     if (role === 'buyer') {
       this.isBuyer = true;
-    } else {
-      this.isBuyer = false;
+      this.isAdmin = false;
+      this.isSeller = false;
     }
-    console.log(this.isBuyer, 'is Buyer');
+
     // console.log(this.isBuyer, 'isBuyer');
 
     // console.log(this.sharedService.user$, ' lol');

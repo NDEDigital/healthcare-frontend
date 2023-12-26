@@ -1,4 +1,3 @@
-/* header text design*/
 .companyApproval_header_text {
   color: var(--color-primary);
 }
@@ -48,10 +47,15 @@
   background: #f0faff;
   color: rgb(3, 20, 43);
   font-weight: 500;
+  width: 8rem;
   border: 1px solid var(--color-primary-dark);
 }
-
-.headerbtns .btn-active {
+.headerbtns .custom-btn.active {
+  background-color: var(--color-primary-dark) !important ;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  color: #ebf8ff !important;
+}
+/* .headerbtns .btn-active {
   border: 1px solid #78ac8b;
 }
 .headerbtns .btn-inactive {
@@ -76,11 +80,15 @@
 
 .btn-trade-company {
   width: 4rem !important;
-}
+} */
 
 .actionBtn {
   cursor: pointer;
   background: none;
   border: none;
+  font-size: 0.5rem;
 }
-
+.product_image {
+  height: 4rem;
+  width: 6rem;
+}

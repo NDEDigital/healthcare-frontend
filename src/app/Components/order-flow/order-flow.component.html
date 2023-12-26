@@ -2,12 +2,12 @@
   <div
     class="bg-white d-flex justify-content-center p-2 border border-1 rounded"
   >
-    <h1 class="companyApproval_header_text">Product Approval</h1>
+    <h1 class="companyApproval_header_text">Orders Overview</h1>
   </div>
   <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2">
     <div class="headerbtns">
       <button
-        class="custom-btn new-btn active"
+        class="custom-btn"
         [ngClass]="{ active: btnIndex === -1 }"
         (click)="btnIndex = -1"
         (click)="getData('Pending')"
@@ -15,7 +15,7 @@
         New
       </button>
       <button
-        class="custom-btn btn-active"
+        class="custom-btn"
         [ngClass]="{ active: btnIndex === 1 }"
         (click)="btnIndex = 1"
         (click)="getData('Approved')"
@@ -23,12 +23,76 @@
         Approved
       </button>
       <button
-        class="custom-btn btn-inactive"
+        class="custom-btn"
         [ngClass]="{ active: btnIndex === 0 }"
         (click)="btnIndex = 0"
-        (click)="getData('Rejected')"
+        (click)="getData('Cancelled')"
       >
         Cancelled
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 2 }"
+        (click)="btnIndex = 2"
+        (click)="getData('Rejected')"
+      >
+        Rejected
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 3 }"
+        (click)="btnIndex = 3"
+        (click)="getData('Processing')"
+      >
+        Processing
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 4 }"
+        (click)="btnIndex = 4"
+        (click)="getData('ReadyToShip')"
+      >
+        Ready To Ship
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 5 }"
+        (click)="btnIndex = 5"
+        (click)="getData('ToDeliver')"
+      >
+        To Deliver
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 6 }"
+        (click)="btnIndex = 6"
+        (click)="getData('Delivered')"
+      >
+        Delivered
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 7 }"
+        (click)="btnIndex = 7"
+        (click)="getData('Reviewed')"
+      >
+        Reviewed
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 8 }"
+        (click)="btnIndex = 8"
+        (click)="getData('ToReturn')"
+      >
+        To Return
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 9 }"
+        (click)="btnIndex = 9"
+        (click)="getData('Returned')"
+      >
+        Returned
       </button>
     </div>
   </div>
@@ -141,36 +205,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Modal for tadeLicence -->
-      <!-- <div
-        class="modal fade"
-        id="staticBackdrop"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
-        aria-hidden="true"
-      >
-        <div class="modal-dialog modal-xl">
-          <div class="modal-content">
-            <div class="modal-header modal-heading">
-              <h1 class="modal-title text-light fs-5" id="staticBackdropLabel">
-                {{ imageTitle }}
-              </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body">
-              <img [src]="imagePath" alt="no image was uploaded!" />
-            </div>
-          </div>
-        </div>
-      </div> -->
     </section>
   </div>
 </div>

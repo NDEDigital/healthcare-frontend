@@ -34,41 +34,51 @@
       >
     </div>
 
-    <div class="form-group">
-      <label for="discountAmount"> Discount Amount </label>
-      <input type="text" id="discountAmount" formControlName="discountAmount" />
+    <div class="row">
+      <div class="form-group col-12 col-md-6">
+        <label for="discountAmount"> Discount Amount </label>
+        <input
+          type="text"
+          id="discountAmount"
+          formControlName="discountAmount"
+        />
+      </div>
+
+      <div class="form-group col-12 col-md-6">
+        <label for="discountPct">Discount Percentage </label>
+        <input type="text" id="discountPct" formControlName="discountPct" />
+      </div>
     </div>
 
-    <div class="form-group" [ngClass]="{ hidden: !isDiscountAmountGiven() }">
-      <label for="discountPct">Discount Percentage </label>
-      <input
-        type="text"
-        id="discountPct"
-        class="readOnlyInput"
-        formControlName="discountPct"
-        readonly
-      />
-    </div>
-
-    <div class="row" [ngClass]="{ hidden: !isDiscountAmountGiven() }">
+    <div class="row">
       <div class="form-group col-12 col-md-6">
         <label for="effectivateDate">Effectivate Date</label>
         <input
-          type="date"
+          type="datetime-local"
           id="effectivateDate"
           formControlName="effectivateDate"
           class="w-100 p-2 border border-1 rounded-1"
+          [class.error]="isFieldInvalid('effectivateDate')"
         />
+
+        <span class="text-danger" *ngIf="isFieldInvalid('effectivateDate')"
+          >Effectivate Date is required.</span
+        >
       </div>
 
       <div class="form-group col-12 col-md-6">
         <label for="endDate">End Date</label>
         <input
-          type="date"
+          type="datetime-local"
           id="endDate"
           formControlName="endDate"
           class="w-100 p-2 border border-1 rounded-1"
+          [class.error]="isFieldInvalid('endDate')"
         />
+
+        <span class="text-danger" *ngIf="isFieldInvalid('endDate')"
+          >End Date is required.</span
+        >
       </div>
     </div>
 
