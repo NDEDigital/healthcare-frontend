@@ -175,6 +175,7 @@ export class AddPriceDiscountsComponent {
         .get('discountPct')
         ?.setValue(discountPct.toFixed(2), { emitEvent: false });
     }
+    this.calculateTotalPrice();
   }
 
   calculateDiscountAmount(value: any) {
@@ -186,49 +187,63 @@ export class AddPriceDiscountsComponent {
         .get('discountAmount')
         ?.setValue(discountAmount.toFixed(2), { emitEvent: false });
     }
+    this.calculateTotalPrice();
   }
 
 
+  // calculateTotalPrice() {
+  //   const price =
+  //     parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
+  //   let discountAmount = parseFloat(
+  //     this.addPriceDiscountForm.get('discountAmount')?.value
+  //   );
+  //   let discountPct = parseFloat(
+  //     this.addPriceDiscountForm.get('discountPct')?.value
+  //   );
+
+  //   // Check if discountAmount and discountPct are NaN, set them to 0 if they are
+  //   discountAmount = isNaN(discountAmount) ? 0 : discountAmount;
+  //   discountPct = isNaN(discountPct) ? 0 : discountPct;
+
+  //   let calculatedDiscount = 0;
+
+  //   if (price > 0) {
+  //     if (discountAmount > 0) {
+  //       // Calculate and update discount percentage if discount amount is provided
+  //       discountPct = (discountAmount / price) * 100;
+  //       this.addPriceDiscountForm
+  //         .get('discountPct')
+  //         ?.setValue(discountPct.toFixed(2), { emitEvent: false });
+  //       calculatedDiscount = discountAmount;
+  //     } else if (discountPct > 0) {
+  //       // Calculate and update discount amount if discount percentage is provided
+  //       calculatedDiscount = (price * discountPct) / 100;
+  //     }
+  //   }
+
+  //   // const totalPrice = Math.max(price - calculatedDiscount, 0); // Total price should not be negative
+  //   // this.addPriceDiscountForm
+  //   //   .get('totalPrice')
+  //   //   ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
+
+  //   const totalPrice = Math.max(price - calculatedDiscount, 0); // Total price should not be negative
+  //   this.addPriceDiscountForm
+  //     .get('totalPrice')
+  //     ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
+  // }
+
   calculateTotalPrice() {
-    const price =
-      parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
-    let discountAmount = parseFloat(
-      this.addPriceDiscountForm.get('discountAmount')?.value
-    );
-    let discountPct = parseFloat(
-      this.addPriceDiscountForm.get('discountPct')?.value
-    );
+    const price = parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
+    let discountAmount = parseFloat(this.addPriceDiscountForm.get('discountAmount')?.value) || 0;
+    let discountPct = parseFloat(this.addPriceDiscountForm.get('discountPct')?.value) || 0;
 
-    // Check if discountAmount and discountPct are NaN, set them to 0 if they are
-    discountAmount = isNaN(discountAmount) ? 0 : discountAmount;
-    discountPct = isNaN(discountPct) ? 0 : discountPct;
-
-    let calculatedDiscount = 0;
-
-    if (price > 0) {
-      if (discountAmount > 0) {
-        // Calculate and update discount percentage if discount amount is provided
-        discountPct = (discountAmount / price) * 100;
-        this.addPriceDiscountForm
-          .get('discountPct')
-          ?.setValue(discountPct.toFixed(2), { emitEvent: false });
-        calculatedDiscount = discountAmount;
-      } else if (discountPct > 0) {
-        // Calculate and update discount amount if discount percentage is provided
-        calculatedDiscount = (price * discountPct) / 100;
-      }
-    }
-
-    // const totalPrice = Math.max(price - calculatedDiscount, 0); // Total price should not be negative
-    // this.addPriceDiscountForm
-    //   .get('totalPrice')
-    //   ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
-
+    let calculatedDiscount = discountAmount > 0 ? discountAmount : (price * discountPct) / 100;
     const totalPrice = Math.max(price - calculatedDiscount, 0); // Total price should not be negative
     this.addPriceDiscountForm
       .get('totalPrice')
       ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
   }
+
 
   onSubmit(): void {
     Object.values(this.addPriceDiscountForm.controls).forEach((control) => {
