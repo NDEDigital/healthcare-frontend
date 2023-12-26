@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpParams  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AdminOrderModel } from '../Model/AdminOrderModel';
@@ -17,6 +17,24 @@ export class AdminOrderDataGetService {
   constructor(private http: HttpClient) {}
 
 
+  // master data
+  getOrderMasterData(status?: string): Observable<any[]> {
+    let url = `${this.baseUrl}/GetOrderMasterData`;
+    if (status) {
+      url += `?status=${status}`;
+    }
+    return this.http.get<any[]>(url);
+  }
+
+  // details data
+  getOrderDetailData(orderMasterId: number, status?: string): Observable<any[]> {
+    let url = `${this.baseUrl}/GetOrderDetailData`;
+    let params = new HttpParams().set('OrderMasterId', orderMasterId.toString());
+    if (status) {
+      params = params.set('status', status);
+    }
+    return this.http.get<any[]>(url, { params });
+  }
 
   // get data
   GetOrderData(pageNumber: number, pageSize: number,  status: string, searchby: string , serchValue: string  ): Observable<AdminOrderModel[]> {
