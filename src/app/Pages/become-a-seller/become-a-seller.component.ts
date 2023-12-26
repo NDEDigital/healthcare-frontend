@@ -1,8 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyService } from 'src/app/services/company.service';
-import { EmailService } from 'src/app/services/email.service';
-import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-become-a-seller',
@@ -30,6 +28,10 @@ export class BecomeASellerComponent {
   ngOnInit() {
     this.companyResistrationForm = new FormGroup({
       companyName: new FormControl('', Validators.required),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'),
+      ]),
       companyFoundationDate: new FormControl('', Validators.required),
       businessRegistrationNumber: new FormControl('', Validators.required),
       taxIdentificationNumber: new FormControl('', Validators.required),
@@ -128,7 +130,8 @@ export class BecomeASellerComponent {
           console.log(response);
           this.companyResistrationForm.reset();
           this.alertTitile = response.message;
-          this.alertmsg = 'Your company is Registered! Wait for the approval mail for further, Thank you.';
+          this.alertmsg =
+            'Your company is Registered! Wait for the approval mail for further, Thank you.';
           this.modalColor = true;
           this.UserExistModalBTN.nativeElement.click();
         },
