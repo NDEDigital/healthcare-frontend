@@ -51,6 +51,10 @@
       <div class="col tableHeader">Product ID</div>
       <div class="col tableHeader">Product Name</div>
       <div class="col tableHeader">Product Image</div>
+      <div class="col tableHeader">Product price</div>
+      <div class="col tableHeader">Product discountAmount</div>
+      <div class="col tableHeader">Product discountPct</div>
+      <div class="col tableHeader">Product totalPrice</div>
       <div class="col tableHeader">Added Date</div>
     </div>
 
@@ -70,6 +74,11 @@
           alt="no image was uploaded!"
         />
       </div>
+      <div class="col tableBody">{{ product.price }}</div>
+      <div class="col tableBody">{{ product.discountAmount }}</div>
+      <div class="col tableBody">{{ product.discountPct }}</div>
+      <div class="col tableBody">{{ product.totalPrice }}</div>
+
       <div class="col tableBody">
         {{ product.addedDate | date : "dd MMM yyyy" }}
       </div>
