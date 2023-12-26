@@ -35,6 +35,7 @@ export class AddPriceDiscountsComponent {
 
   toggleAddProductPriceDiv(): void {
     this.showPriceProductDiv = !this.showPriceProductDiv;
+    this.addPriceDiscountForm.reset();
     this.btnIndex = -1;
     this.getProducts(-1);
   }
@@ -100,12 +101,19 @@ export class AddPriceDiscountsComponent {
     const form = this.addPriceDiscountForm;
 
     // For Discount Amount and Percentage
+
     form.get('discountAmount')?.valueChanges.subscribe((value) => {
-      this.calculateDiscountPct(value, 'amount');
+      if (value) {
+        this.calculateDiscountPct(value);
+      }
     });
+
     form.get('discountPct')?.valueChanges.subscribe((value) => {
-      this.calculateDiscountAmount(value, 'percentage');
+      if (value) {
+        this.calculateDiscountAmount(value);
+      }
     });
+
 
     // For dynamically setting validators
     const discountAmountControl = form.get('discountAmount');
@@ -173,31 +181,28 @@ export class AddPriceDiscountsComponent {
     };
   }
 
-  calculateDiscountPct(value: any, source: string) {
-    if (source === 'amount') {
-      const price =
-        parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
-      const discountAmount = parseFloat(value) || 0;
-      const discountPct = price !== 0 ? (discountAmount / price) * 100 : 0;
+  calculateDiscountPct(value: any) {
+    const price = parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
+    const discountAmount = parseFloat(value) || 0;
+    if (price > 0 && discountAmount > 0) {
+      const discountPct = (discountAmount / price) * 100;
       this.addPriceDiscountForm
         .get('discountPct')
         ?.setValue(discountPct.toFixed(2), { emitEvent: false });
     }
-    this.calculateTotalPrice();
   }
 
-  calculateDiscountAmount(value: any, source: string) {
-    if (source === 'percentage') {
-      const price =
-        parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
-      const discountPct = parseFloat(value) || 0;
+  calculateDiscountAmount(value: any) {
+    const price = parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
+    const discountPct = parseFloat(value) || 0;
+    if (price > 0 && discountPct > 0) {
       const discountAmount = (discountPct / 100) * price;
       this.addPriceDiscountForm
         .get('discountAmount')
         ?.setValue(discountAmount.toFixed(2), { emitEvent: false });
     }
-    this.calculateTotalPrice();
   }
+
 
   calculateTotalPrice() {
     const price =
@@ -261,7 +266,7 @@ export class AddPriceDiscountsComponent {
             value = numberValue.toFixed(2);
           } else {
             // If value is not a number, use a default value (e.g., '0.00') or skip appending
-            value = '0.00';
+            value = '';
           }
         }
 
