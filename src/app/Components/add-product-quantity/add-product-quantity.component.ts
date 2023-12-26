@@ -18,7 +18,7 @@ export class AddProductQuantityComponent {
   form!: FormGroup;
   productDertailsData:any;
   portaldata: any;
- 
+  ModalText = "Give some entry"
  
   constructor(private fb: FormBuilder , private addProductService :AddProductService) {
     this.masterForm = this.fb.group({
@@ -44,16 +44,16 @@ export class AddProductQuantityComponent {
 
   addRow() {
     const newRow = this.fb.group({
-      productName: [''],
-      productId: [''],
-      productGroupId: [''],
+      productName: ['',Validators.required],
+      productId: ['' ],
+      productGroupId: ['' ],
  
-      specification: [''],
-      unit: [''],
+      specification: ['',Validators.required],
+      unit: ['',Validators.required],
       unitId: [''],
-      price: [''],
-      receiveQty: [''],
-      availableQty: [''],
+      price: ['',Validators.required],
+      receiveQty: ['',Validators.required],
+      availableQty: ['',Validators.required],
       remarks: [''],
       isDropdownOpen: [false], // Ensure isDropdownOpen is initialized for each row
       // ... other fields
@@ -93,59 +93,71 @@ export class AddProductQuantityComponent {
   }
 
   submit() {
-    const formData = this.form.value;
-    console.log("formData", formData)
-  
-    this.portaldata = {
-      // portalReceivedCode: this.masterForm.value.portalReceivedCode,
-      // portalReceivedDate: this.masterForm.value.portalReceivedDate,
-      challanNo: this.masterForm.value.challanNo,
-      remarks: this.masterForm.value.remarks,
-      userId: 1,
-      companyCode: "CMP-23-0009",
-      addedBy: "string",
-      addedPC: "string",
-      portalReceivedDetailslist: formData.rows.map((row: any) => ({
-        productGroupId: row.productId,
-        productId: row.productId,
-        specification: row.specification,
-        receivedQty: parseInt(row.receiveQty, 10),
-        unitId: parseInt(row.unitId, 10),
-        price: row.price,
-        remarks: row.remarks,
-        totalPrice: parseInt(row.receiveQty, 10) * row.price,
-        userId: 2,
+
+    if (this.form.valid && this.rowsFormArray.length) {
+      // Perform actions for a valid form
+      console.log('Form is valid. Submitting...');
+
+      const formData = this.form.value;
+      console.log("formData", formData)
+      
+    
+      this.portaldata = {
+        // portalReceivedCode: this.masterForm.value.portalReceivedCode,
+        // portalReceivedDate: this.masterForm.value.portalReceivedDate,
+        challanNo: this.masterForm.value.challanNo,
+        remarks: this.masterForm.value.remarks,
+        userId: 1,
+        companyCode: "CMP-23-0009",
         addedBy: "string",
-        addedPC: "string"
-      }))
-    };
-    
-    // Check if challanDate exists and is not empty before adding it to portaldata
-    if (this.masterForm.value.challanDate) {
-      this.portaldata.challanDate = this.masterForm.value.challanDate;
-    }
-    
-  
-    console.log("masterdata", this.portaldata);
-
-    // API call
-    this.addProductService.insertPortalReceived(this.portaldata).subscribe({
-      next: (response) => {
-        console.log('Response:', response);
-        // Handle success response
-        this.masterForm.reset(); // Reset the masterForm
-        this.form.reset(); // Reset the nested form (rows)
-        while (this.rowsFormArray.length > 0) {
-          this.removeRow(0);
-          this.selectedProductNames=[] // clearing the array
-        }
-      },
-      error: (error) => {
-        console.error('Error:', error);
-        // Handle error
+        addedPC: "string",
+        portalReceivedDetailslist: formData.rows.map((row: any) => ({
+          productGroupId: row.productId,
+          productId: row.productId,
+          specification: row.specification,
+          receivedQty: parseInt(row.receiveQty, 10),
+          unitId: parseInt(row.unitId, 10),
+          price: row.price,
+          remarks: row.remarks,
+          totalPrice: parseInt(row.receiveQty, 10) * row.price,
+          userId: 2,
+          addedBy: "string",
+          addedPC: "string"
+        }))
+      };
+      
+      // Check if challanDate exists and is not empty before adding it to portaldata
+      if (this.masterForm.value.challanDate) {
+        this.portaldata.challanDate = this.masterForm.value.challanDate;
       }
-    });
-
+      
+    
+      console.log("masterdata", this.portaldata);
+  
+      // API call
+      this.addProductService.insertPortalReceived(this.portaldata).subscribe({
+        next: (response) => {
+          console.log('Response:', response);
+          // Handle success response
+          this.masterForm.reset(); // Reset the masterForm
+          this.form.reset(); // Reset the nested form (rows)
+          while (this.rowsFormArray.length > 0) {
+            this.removeRow(0);
+            this.selectedProductNames=[] // clearing the array
+          }
+        },
+        error: (error) => {
+          console.error('Error:', error);
+          // Handle error
+        }
+      });
+  
+      // Further submission logic here
+    }
+    else {
+      console.log(" form invalid")
+    }
+  
      
   }
   

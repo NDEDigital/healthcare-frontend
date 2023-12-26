@@ -48,6 +48,9 @@ export class AddProductsComponent implements OnInit {
     this.getProducts(-1);
   }
 
+
+  
+
   isFieldInvalid(fieldName: string): boolean {
     const field = this.addProductForm.get(fieldName);
     return field ? field.invalid && (field.dirty || field.touched) : false;

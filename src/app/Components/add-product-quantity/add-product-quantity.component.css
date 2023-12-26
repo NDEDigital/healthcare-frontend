@@ -74,6 +74,24 @@
      font-size: 500;
   }
 
+  /* modal */
+  .modal-header {
+    background-color:  #4592a0;
+    color: white;
+  }
+  
+  .modal-header .btn-close {
+    background-color: snow;
+  }
+  .btn-Approved {
+    background-color:  #4592a0;
+    color: white;
+  }
+  .btn-cancel{
+    background-color: #302f2f;
+    color: #fff;
+  }
+
   /* Dropdown Button */
 .dropbtn {
     background-color: #fff !important;

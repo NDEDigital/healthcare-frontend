@@ -1,4 +1,4 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient,HttpParams  } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AdminOrderModel } from '../Model/AdminOrderModel';
@@ -17,6 +17,24 @@ export class AdminOrderDataGetService {
   constructor(private http: HttpClient) {}
 
 
+  // master data
+  getOrderMasterData(status?: string): Observable<any[]> {
+    let url = `${this.baseUrl}/GetOrderMasterData`;
+    if (status) {
+      url += `?status=${status}`;
+    }
+    return this.http.get<any[]>(url);
+  }
+
+  // details data
+  getOrderDetailData(orderMasterId: number, status?: string): Observable<any[]> {
+    let url = `${this.baseUrl}/GetOrderDetailData`;
+    let params = new HttpParams().set('OrderMasterId', orderMasterId.toString());
+    if (status) {
+      params = params.set('status', status);
+    }
+    return this.http.get<any[]>(url, { params });
+  }
 
   // get data
   GetOrderData(pageNumber: number, pageSize: number,  status: string, searchby: string , serchValue: string  ): Observable<AdminOrderModel[]> {
@@ -38,17 +56,21 @@ GetOrderDataSearch(pageNumber: number, pageSize: number,  status: string, search
 
 
   //  update status
-  updateOrderStatus(orderMasterId: string,detailsApprovedId: string,detailsCancelledId: string,  StatusValue: string) {
-    console.log(" orderMasterId,detailsApprovedId,detailsCancelledId,StatusValue ,,,,,,,,,,,", orderMasterId,detailsApprovedId,detailsCancelledId,StatusValue)
-
+  updateOrderStatus(orderMasterId: string, detailsCancelledId: string | null, status: string): Observable<any> {
+    console.log(" orderMasterId, detailsCancelledId, status",orderMasterId, detailsCancelledId, status)
     const url = `${this.baseUrl}/AdminOrderUpdateStatus`;
-    const formData = new FormData();
-    formData.append('orderMasterId', orderMasterId);
-    formData.append('detailsApprovedId', detailsApprovedId);
-    formData.append('detailsCancelledId', detailsCancelledId);
-    formData.append('status', StatusValue);
-    return this.http.put(url, formData);
+    let params = new HttpParams().set('orderMasterId', orderMasterId);
+
+    if (detailsCancelledId) {
+      params = params.set('detailsCancelledId', detailsCancelledId);
+    }
+
+    params = params.set('status', status);
+
+    return this.http.put<any>(url, {}, { params });
   }
+
+
 
   // getDataByDate
 

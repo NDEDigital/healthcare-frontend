@@ -1,21 +1,22 @@
 <div class="order_body">
   <div class="order_status">
-    <button
+    <!-- <button
       type="button"
       class="order_status_button"
       [ngClass]="{ selected_button: selectedButtonIndex === 'All' }"
       (click)="statusChange('All', 'All')"
     >
-      <!-- All Orders -->
+  
       All Orders ({{ statusData["totalRowCount"] }})
-    </button>
+    </button> -->
     <button
       type="button"
       class="order_status_button"
       [ngClass]="{ selected_button_pending: selectedButtonIndex === 'Pending' }"
       (click)="statusChange('Pending', 'Pending')"
     >
-      Pending ({{ statusData["pendingCount"] }})
+    Pending 
+      <!-- Pending ({{ statusData["pendingCount"] }}) -->
     </button>
     <button
       type="button"
@@ -25,7 +26,8 @@
       }"
       (click)="statusChange('Approved', 'Approved')"
     >
-      Approved ({{ statusData["approvedCount"] }})
+    Approved 
+      <!-- Approved ({{ statusData["approvedCount"] }}) -->
     </button>
 
     <button
@@ -36,9 +38,10 @@
       }"
       (click)="statusChange('Delivered', 'Delivered')"
     >
-      Delivered ({{ statusData["deliveredCount"] }})
+    Delivered 
+      <!-- Delivered ({{ statusData["deliveredCount"] }}) -->
     </button>
-    <button
+    <!-- <button
       type="button"
       class="order_status_button"
       [ngClass]="{
@@ -46,6 +49,7 @@
       }"
       (click)="statusChange('ToReturn', 'to Return')"
     >
+ 
       To Return ({{ statusData["toReturnCount"] }})
     </button>
     <button
@@ -56,8 +60,9 @@
       }"
       (click)="statusChange('Returned', 'Returned')"
     >
+ 
       Returned ({{ statusData["returnedCount"] }})
-    </button>
+    </button> -->
     <button
       type="button"
       class="order_status_button"
@@ -66,7 +71,8 @@
       }"
       (click)="statusChange('Cancelled', 'Cancelled')"
     >
-      Cancelled ({{ statusData["cancelledCount"] }})
+    Cancelled 
+      <!-- Cancelled ({{ statusData["cancelledCount"] }}) -->
     </button>
   </div>
 

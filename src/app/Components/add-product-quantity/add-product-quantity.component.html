@@ -130,18 +130,62 @@
          <div class=" submit-button ">
           <button
             type="button"
+            data-bs-toggle="modal"
+            data-bs-target="#exampleModal"
             class="btn  approved py-1 px-2 m-1"
-            (click)="submit()" >
+   >
             Submit
           </button>
-          <button
-            type="button"
-            class="btn  btn-secondary   py-1 px-2  m-1">
-            Cancell
-          </button>
+
          </div>
        </div>
      </div>
+
+     <!-- modal -->
+     <div
+     class="modal fade"
+     id="exampleModal"
+     tabindex="-1"
+     aria-labelledby="exampleModalLabel"
+     aria-hidden="true"
+   >
+     <div class="modal-dialog">
+       <div class="modal-content">
+         <div class="modal-header">
+           <h1 class="modal-title fs-5" id="exampleModalLabel">Massage</h1>
+           <button
+             type="button"
+             class="btn-close  "
+             data-bs-dismiss="modal"
+             aria-label="Close"
+             
+           ></button>
+         </div>
+         <div class="modal-body">
+           {{ ModalText }}
+         </div>
+         <div class="modal-footer">
+           <button
+             type="button"
+             class="btn btn-cancel"
+             data-bs-dismiss="modal"
+             
+           >
+             Close
+           </button>
+           <button
+             type="button"
+             class="btn  btn-Approved"
+             data-bs-dismiss="modal"
+    
+             (click)="submit()" 
+           >
+             Save changes
+           </button>
+         </div>
+       </div>
+     </div>
+   </div>
 
 </div>
   

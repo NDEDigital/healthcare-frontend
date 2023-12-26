@@ -18,7 +18,7 @@ export class AdminOrderComponent {
   @ViewChild(PaginationComponent) pagination: PaginationComponent;
   ModalText: string = 'No product is selected!';
 
-  selectedButtonIndex: string = 'All'; // Default selected index is 0
+  selectedButtonIndex: string = 'Pending'; // Default selected index is 0
   returnProduct = false;
   detailsCancelledArray: any = [];
   checked: any = false;
@@ -43,7 +43,7 @@ export class AdminOrderComponent {
   searchby: string = 'OrderNo';
   orderData: any = [];
   orderDataHeaders: any = [];
-  status: any = 'All';
+  status: any = 'Pending';
   searchValue: string = '';
   RowsCount: number = 0;
   TotalRow: number = 0;
@@ -81,30 +81,58 @@ export class AdminOrderComponent {
   }
   searchTerm$ = new Subject<string>();
   ngOnInit() {
-  
+
+   
+    this.getMAsterData('New');
+    this.getOrderDetails(3);
     this.loadData();
     console.log(' SearchTerm valuee on init', this.searchTerm$);
-    this.searchTerm$
-      .pipe(
-        debounceTime(500), // Delay for 500 milliseconds
-        distinctUntilChanged(), // Only emit when the search term changes
-        switchMap((term: string) =>
-          this.service.GetOrderData(
-            this.selectedPageIndex,
-            this.selectedValue,
-            this.status,
-            this.searchby,
-            term
-          )
-        )
-      )
-      .subscribe((results) => {
-        // Handle the search results here
-        console.log('retrive search results', results);
-        this.dataDistribute(results);
-      });
+    // this.searchTerm$
+    //   .pipe(
+    //     debounceTime(500), // Delay for 500 milliseconds
+    //     distinctUntilChanged(), // Only emit when the search term changes
+    //     switchMap((term: string) =>
+    //       this.service.GetOrderData(
+    //         this.selectedPageIndex,
+    //         this.selectedValue,
+    //         this.status,
+    //         this.searchby,
+    //         term
+    //       )
+    //     )
+    //   )
+    //   .subscribe((results) => {
+    //     // Handle the search results here
+    //     console.log('retrive search results', results);
+    //     this.dataDistribute(results);
+    //   });
   }
 
+
+  getOrderDetails(orderMasterId: number): void {
+    this.service.getOrderDetailData(orderMasterId, status)
+      .subscribe(
+        (data: any[]) => {
+ 
+          console.log('Order Details:', data);
+        },
+        error => {
+          console.error('Error fetching order details:', error);
+        }
+      );
+  }
+  getMAsterData(status: string ): void {
+    this.service.getOrderMasterData(status)
+      .subscribe(
+        (data: any[]) => {
+
+          console.log('Orders:', data);
+        },
+        error => {
+          console.error('Error fetching orders:', error);
+        }
+      );
+  }
   private reloadPagination() {
     if (this.pagination) {
       this.pagination.reloadData(); // You need to create this method in your pagination component
@@ -132,37 +160,30 @@ export class AdminOrderComponent {
   }
 
   GetData() {
-    console.log(
-      'this.selectedPageIndex,this.selectedValue,this.status,',
-      this.selectedPageIndex,
-      this.selectedValue,
-      this.status
-    );
-    this.service
-      .getDataByDate(
-        this.selectedPageIndex,
-        this.selectedValue,
-        this.status,
-        this.searchby,
-        this.searchValue,
-        this.fromDate,
-        this.toDate
-      )
-      .subscribe((data: any) => {
-        console.log(' load dataaaaaa', data); // Use a type if possible for better type checking
 
+    this.service.getOrderMasterData(this.status)
+    .subscribe(
+      (data: any[]) => {
+
+        console.log('Orders:', data);
         this.dataDistribute(data);
-        const allcheck =
-          this.elementRef.nativeElement.querySelector('.check_all_Master');
-        allcheck.checked = false;
-      });
+        // const allcheck =
+        //   this.elementRef.nativeElement.querySelector('.check_all_Master');
+        // allcheck.checked = false;
+      },
+      error => {
+        console.error('Error fetching orders:', error);
+      }
+    );
+   
   }
 
   dataDistribute(data: any) {
-    this.statusData = data.statusCount;
+    // this.statusData = data.statusCount;
 
-    this.ordersData = data.ordersData;
-    this.ordersData =    this.ordersData.map((item: any) => ({ ...item, isChecked: false }));  
+    // this.ordersData = data.ordersData;
+
+    this.ordersData = data.map((item: any) => ({ ...item, isChecked: false }));  
     console.log('load orderData  ', this.ordersData, this.statusData);
     this.AdminOrderData = data;
 
@@ -181,6 +202,8 @@ export class AdminOrderComponent {
   }
 
   GetDetailsData(orderMasterId: any, index: any) {
+
+    console.log(" orderMasterId",orderMasterId)
     // Toggle the rotation state ot icon
     // this.isIconRotatedMap ={};
     // this.showPendingDetails = true;
@@ -197,7 +220,7 @@ export class AdminOrderComponent {
       !this.isIconRotatedMap[orderMasterId];
 
     if (this.detailsData.length === 0) {
-      this.service.GetDetatilsData(orderMasterId).subscribe((data: any) => {
+      this.service.getOrderDetailData(orderMasterId).subscribe((data: any) => {
     
         this.detailsData = data;
         // Add the isChecked property with a default value of false to each object
@@ -265,12 +288,12 @@ export class AdminOrderComponent {
   }
 
   //   ****************** UPDATE STATUS *************
-  actionBtn(masterId: any, approvedId: any, cancelledId: any, str: string) {
-    //console.log('actionBtn called with id:', id, 'and str:', str);
+  actionBtn(masterId: any, cancelledId: any, str: string) {
+ 
     console.log(
-      'masterId,approvedId,cancelledId,str',
+      'masterId,cancelledId,str',
       masterId,
-      approvedId,
+
       cancelledId,
       str
     );
@@ -278,7 +301,6 @@ export class AdminOrderComponent {
     this.service
       .updateOrderStatus(
         masterId.toString(),
-        approvedId.toString(),
         cancelledId.toString(),
         str
       )
@@ -618,7 +640,6 @@ export class AdminOrderComponent {
       if (this.masterCheckId != '') {
         this.actionBtn(
           this.masterId,
-          this.detailsCheckedId,
           this.detailsUnCheckedId,
           this.checkedStatus
         );
