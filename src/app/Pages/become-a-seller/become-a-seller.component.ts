@@ -1,8 +1,6 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyService } from 'src/app/services/company.service';
-import { EmailService } from 'src/app/services/email.service';
-import { UserDataService } from 'src/app/services/user-data.service';
 
 @Component({
   selector: 'app-become-a-seller',
