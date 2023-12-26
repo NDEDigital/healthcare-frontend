@@ -238,3 +238,7 @@ select {
 /* .marginBackBtn{
   margin-left: 10rem;
 } */
+.product_image {
+  width: 6rem;
+  height: 4rem;
+}
