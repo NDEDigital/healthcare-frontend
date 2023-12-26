@@ -78,9 +78,9 @@
       <div class="col tableBody">{{ product.discountAmount }}</div>
       <div class="col tableBody">{{ product.discountPct }}</div>
       <div class="col tableBody">{{ product.totalPrice }}</div>
-
       <div class="col tableBody">
-        {{ product.addedDate | date : "dd MMM yyyy" }}
+        {{ product.addedDate | date : "dd MMM yyyy" }},<br />
+        {{ product.addedDate | date : "hh:mm a" }}
       </div>
 
       <!-- <div class="col tableBody">{{ product.productSubName }}</div>
