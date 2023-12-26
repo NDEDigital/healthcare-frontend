@@ -24,11 +24,13 @@ interface OrderDetail {
   price: number;
   deliveryCharge: number;
   specification: string;
-  productGroupCode: string;
+  productGroupId: string;
   userId: number;
   unitId:number;
   discountAmount:number;
   netPrice:number;
+  addedBy: string;
+  addedPC: string;
 }
 
 // interface OrderData {
@@ -122,12 +124,14 @@ export class OrderApiService {
         price: parseFloat(entry.price),
         deliveryCharge: 100,
         specification: entry.specification,
-        productGroupCode: entry.groupCode.toString(),
+        productGroupId: entry.groupCode.toString(),
         userId: parseInt(entry.sellerCode),
         unitId: entry.unitId,
         discountAmount: entry.discountAmount,
         discountPct:entry.discountPct,
-        netPrice:0
+        netPrice:0,
+        addedBy:this.buyerCode,
+        addedPC: "0.0.0.0",
       };
       this.orderdata.orderDetailsList.push(detailData);
     }
