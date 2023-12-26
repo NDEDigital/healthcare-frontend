@@ -35,12 +35,6 @@ export class AddPriceDiscountsComponent {
   toggleAddProductPriceDiv(): void {
     this.showPriceProductDiv = !this.showPriceProductDiv;
     this.addPriceDiscountForm.reset();
-    setTimeout(() => {
-      this.addPriceDiscountForm.patchValue({
-        discountAmount: '',
-        discountPct: '',
-      });
-    });
   }
 
   showProductPriceGrid(): void {
@@ -92,9 +86,11 @@ export class AddPriceDiscountsComponent {
     const form = this.addPriceDiscountForm;
 
     // For Discount Amount and Percentage
+
     form.get('discountAmount')?.valueChanges.subscribe((value) => {
       this.calculateDiscountPct(value, 'amount');
     });
+
     form.get('discountPct')?.valueChanges.subscribe((value) => {
       this.calculateDiscountAmount(value, 'percentage');
     });
