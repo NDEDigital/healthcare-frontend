@@ -1,7 +1,11 @@
 .profile_photo {
   font-size: 2rem;
 }
-
+.role {
+  font-size: 1rem;
+  font-weight: 500;
+  color: rgb(19, 153, 60);
+}
 .background_photo {
   background-image: url(/assets/images/profile_background.jpg);
   height: 10rem;

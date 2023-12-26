@@ -14,6 +14,7 @@
       <div class="user_info header_user-info p-2">
         <p class="info_field fs-3">
           <span class="text-muted" hidden>Full Name:</span> {{ user.fullName }}
+          <span class="role mt-2">({{ Role }})</span>
         </p>
         <p class="info_field">
           <span class="text-muted" hidden>Country/Region:</span>
@@ -114,7 +115,7 @@
         </div>
       </div>
     </div>
-    <div
+    <!-- <div
       class="profile_details rounded p-2 pb-4 bg-"
       [class.border-highlight]="editMode2 === 'companyInfo'"
     >
@@ -163,17 +164,7 @@
             value="{{ user.productCategory }}"
             readonly
           />
-          <!-- <input
-            #productCategory
-            [class.editable]="editMode2 === 'companyInfo'"
-            [readonly]="editMode2 !== 'companyInfo'"
-            type="text"
-           class="col-8  rounded"
-            value="{{ user.productCategory }}"
-            [class.p-2]="editMode2 === 'companyInfo'"
-            (focus)="onInputFocus(productCategory)"
-            (blur)="onInputBlur(productCategory)"
-          /> -->
+
         </p>
         <p class="row info_field">
           <span class="col-4 text-muted text-end">Years In Business:</span>
@@ -233,18 +224,6 @@
             readonly
             value="{{ user.preferredPaymentMethod }}"
           />
-          <!-- <input
-            #preferredPaymentMethod
-            [class.editable]="editMode2 === 'companyInfo'"
-            [readonly]="editMode2 !== 'companyInfo'"
-            type="text"
-           class="col-8  rounded"
-           [class.p-2]="editMode2 === 'companyInfo'"
-            value="{{ user.preferredPaymentMethod }}"
-            (focus)="onInputFocus(preferredPaymentMethod)"
-            (blur)="onInputBlur(preferredPaymentMethod)"
-          />
-        </p> -->
         </p>
 
         <div
@@ -259,7 +238,7 @@
           </button>
         </div>
       </div>
-    </div>
+    </div> -->
   </form>
 </section>
 
