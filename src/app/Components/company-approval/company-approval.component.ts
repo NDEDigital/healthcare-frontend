@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CompanyService } from 'src/app/services/company.service';
 import { EmailService } from 'src/app/services/email.service';
 
@@ -13,7 +13,9 @@ export class CompanyApprovalComponent {
   imagePath = '';
   imageTitle = 'No Data Found!';
   selectedCompanyCodeValues: { [key: string]: any } = {};
-
+  @ViewChild('msgModalBTN') msgModalBTN!: ElementRef;
+  alertTitle: string = '';
+  alertMsg: string = '';
   constructor(
     private companyService: CompanyService,
     private emailService: EmailService
@@ -81,6 +83,15 @@ export class CompanyApprovalComponent {
         this.getData();
         this.sendEmailToCompany(companyEmail, companyCode, userCnt, Isactive);
         this.selectedCompanyCodeValues[companyCode] = null;
+
+        if (Isactive) {
+          this.alertTitle = 'Success!';
+          this.alertMsg = 'Company is approved sucessfully.';
+        } else {
+          this.alertTitle = 'Rejected!';
+          this.alertMsg = 'Company is rejected.';
+        }
+        this.msgModalBTN.nativeElement.click();
       },
       error: (error: any) => {
         console.log(error);
