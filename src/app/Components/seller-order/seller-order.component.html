@@ -1,0 +1,210 @@
+<div class="">
+    <div
+      class="bg-white d-flex justify-content-center p-2 border border-1 rounded"
+    >
+      <h1 class="companyApproval_header_text">Product Approval</h1>
+    </div>
+    <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2">
+      <div class="headerbtns">
+        <button
+          class="custom-btn new-btn active"
+          [ngClass]="{ active: btnIndex === -1 }"
+          (click)="btnIndex = -1"
+          (click)="getData('')"
+        >
+          All
+        </button>
+        <button
+          class="custom-btn btn-active"
+          [ngClass]="{ active: btnIndex === 1 }"
+          (click)="btnIndex = 1"
+          (click)="getData('Approved')"
+        >
+          Pending
+        </button>
+        <button
+          class="custom-btn btn-processing"
+          [ngClass]="{ active: btnIndex === 0 }"
+          (click)="btnIndex = 0"
+          (click)="getData('Processing')"
+        >
+        Processing 
+        </button>
+        <button
+        class="custom-btn btn-toShip"
+        [ngClass]="{ active: btnIndex === 2}"
+        (click)="btnIndex = 0"
+        (click)="getData('Ready To Ship')"
+      >
+   
+       Ready To Ship 
+      </button>
+      <button
+      class="custom-btn btn-Shipped"
+      [ngClass]="{ active: btnIndex === 3 }"
+      (click)="btnIndex = 0"
+      (click)="getData('Shipped')"
+    >
+    Shipped 
+    </button>
+    <button
+    class="custom-btn btn-Delivered"
+    [ngClass]="{ active: btnIndex === 4}"
+    (click)="btnIndex = 0"
+    (click)="getData('Delivered')">
+    Delivered  
+    </button>
+
+      </div>
+    </div>
+    <div class="scrollable-table border border-1 bg-light">
+      <!-- TABLE header -->
+      <div class="row headerRow sticky-top fw-bolder">
+        <div class="col tableHeader" *ngIf="status != ''">
+         <div class="form-check">
+            <input class="form-check-input checkall" type="checkbox" value="" id="flexCheckDefault" >
+          </div>
+        </div>
+        <div class="col tableHeader">Image</div>
+        <div class="col tableHeader">ProductName</div>
+        <div class="col tableHeader">Full Name</div>
+        <div class="col tableHeader">Company Name</div>
+        <div class="col tableHeader">Discount Amount</div>
+        <div class="col tableHeader">Discount %</div>
+        <div class="col tableHeader">Effective Date</div>
+        <div class="col tableHeader">End Date</div>
+        <div class="col tableHeader">Price</div>
+  
+        <div class="col tableHeader" *ngIf="status != ''">Action</div>
+      </div>
+  
+      <!-- table body -->
+  
+      <section
+        class="row tablebodyRow fw-semibold"
+        *ngFor="let row of productsData; let i = index"
+      >
+        <div class="col tableBody" *ngIf="status != ''">
+          <div class="form-check">
+            <input class="form-check-input" type="checkbox" value="" id="flexCheckDefault">
+          </div>
+        </div>
+        <div class="col tableBody">
+          <!-- {{ row.imagePath }} -->
+          <img
+            class="product_image"
+            [src]="row.imagePath ? row.imagePath.split('src')[1] : ''"
+            alt="no image was uploaded!"
+          />
+        </div>
+        <div class="col tableBody">
+          {{ row.productName }}
+        </div>
+        <div class="col tableBody">{{ row.fullName }}</div>
+        <div class="col tableBody">
+          {{ row.companyName }}
+        </div>
+        <div class="col tableBody">
+          {{ row.discountAmount }}
+        </div>
+        <div class="col tableBody">
+          {{ row.discountPct }}
+        </div>
+        <div class="col tableBody">
+          {{ row.effectivateDate | date : "dd MMM yyyy" }}
+        </div>
+        <div class="col tableBody">
+          {{ row.endDate | date : "dd MMM yyyy" }}
+        </div>
+        <div class="col tableBody">
+          {{ row.price }}
+        </div>
+        <div class="col tableBody"  *ngIf="status != ''">
+          <div class="d-flex justify-content-center align-items-center" > 
+            <div>
+              <button class="actionBtn" >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="green"
+                  class="bi bi-check2 me-3"
+                  viewBox="0 0 16 16"
+                  (click)="
+                    updateProduct(
+                      row.userId,
+                      row.companyCode,
+                      row.productId,
+                      'Approved'
+                    )
+                  "
+                >
+                  <path
+                    d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div>
+              <button
+                class="actionBtn"
+                *ngIf="btnIndex != 0"
+                (click)="
+                  updateProduct(
+                    row.userId,
+                    row.companyCode,
+                    row.productId,
+                    'Rejected'
+                  )
+                "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="20"
+                  height="20"
+                  fill="red"
+                  class="bi bi-x-lg fw-bolder"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Modal for tadeLicence -->
+        <!-- <div
+          class="modal fade"
+          id="staticBackdrop"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="staticBackdropLabel"
+          aria-hidden="true"
+        >
+          <div class="modal-dialog modal-xl">
+            <div class="modal-content">
+              <div class="modal-header modal-heading">
+                <h1 class="modal-title text-light fs-5" id="staticBackdropLabel">
+                  {{ imageTitle }}
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body">
+                <img [src]="imagePath" alt="no image was uploaded!" />
+              </div>
+            </div>
+          </div>
+        </div> -->
+      </section>
+    </div>
+  </div>
+  

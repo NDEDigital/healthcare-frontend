@@ -18,7 +18,7 @@ export class AddProductQuantityComponent {
   form!: FormGroup;
   productDertailsData:any;
   portaldata: any;
-  ModalText = "Give some entry"
+  // ModalText = "Give some entry"
  
   constructor(private fb: FormBuilder , private addProductService :AddProductService) {
     this.masterForm = this.fb.group({
@@ -91,10 +91,13 @@ export class AddProductQuantityComponent {
     console.log(formData);
     // Process or submit the form data as needed
   }
-
+  isFormValid(): boolean {
+    return this.form.valid;
+  }
   submit() {
 
     if (this.form.valid && this.rowsFormArray.length) {
+ 
       // Perform actions for a valid form
       console.log('Form is valid. Submitting...');
 
