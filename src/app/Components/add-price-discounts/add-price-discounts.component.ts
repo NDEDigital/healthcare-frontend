@@ -83,19 +83,20 @@ export class AddPriceDiscountsComponent {
 
     this.getProducts(-1);
     this.setupFormValueChanges();
+    this.getProductList();
   }
 
-  // getProductList() {
-  //   this.productService.getallProducts().subscribe(
-  //     (data: any) => {
-  //       this.products = data;
-  //       console.log('Products :', this.products);
-  //     },
-  //     (error) => {
-  //       console.error('Error fetching product groups:', error);
-  //     }
-  //   );
-  // }
+  getProductList() {
+    this.productService.getallProducts().subscribe(
+      (data: any) => {
+        this.products = data;
+        console.log('Products :', this.products);
+      },
+      (error) => {
+        console.error('Error fetching product groups:', error);
+      }
+    );
+  }
 
   setupFormValueChanges() {
     const form = this.addPriceDiscountForm;
@@ -113,7 +114,6 @@ export class AddPriceDiscountsComponent {
         this.calculateDiscountAmount(value);
       }
     });
-
 
     // For dynamically setting validators
     const discountAmountControl = form.get('discountAmount');
@@ -182,7 +182,8 @@ export class AddPriceDiscountsComponent {
   }
 
   calculateDiscountPct(value: any) {
-    const price = parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
+    const price =
+      parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
     const discountAmount = parseFloat(value) || 0;
     if (price > 0 && discountAmount > 0) {
       const discountPct = (discountAmount / price) * 100;
@@ -193,7 +194,8 @@ export class AddPriceDiscountsComponent {
   }
 
   calculateDiscountAmount(value: any) {
-    const price = parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
+    const price =
+      parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
     const discountPct = parseFloat(value) || 0;
     if (price > 0 && discountPct > 0) {
       const discountAmount = (discountPct / 100) * price;
@@ -202,7 +204,6 @@ export class AddPriceDiscountsComponent {
         ?.setValue(discountAmount.toFixed(2), { emitEvent: false });
     }
   }
-
 
   calculateTotalPrice() {
     const price =
