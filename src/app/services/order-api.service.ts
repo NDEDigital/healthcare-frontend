@@ -5,16 +5,15 @@ import { CartDataService } from './cart-data.service';
 import { API_URL } from '../config';
 
 interface OrderMaster {
-
-  orderDate: string;
   userId: number;
   address: string;
   paymentMethod: string;
   numberOfItem: number;
   totalPrice: number;
-  status: string;
   phoneNumber: string;
   deliveryCharge: number;
+  addedBy: string;
+  addedPC: string;
   orderDetailsList: OrderDetail[];
 }
 
@@ -27,7 +26,6 @@ interface OrderDetail {
   specification: string;
   productGroupCode: string;
   userId: number;
-  status: string;
   unitId:number;
   discountAmount:number;
   netPrice:number;
@@ -44,7 +42,7 @@ interface OrderDetail {
   providedIn: 'root',
 })
 export class OrderApiService {
-  orderData!: OrderMaster;
+  orderdata!: OrderMaster;
   constructor(
     private http: HttpClient,
     private cartDataService: CartDataService
@@ -97,16 +95,16 @@ export class OrderApiService {
 
     this.buyerCode = localStorage.getItem('code');
      
-    this.orderData = {
-      orderDate: '' + this.getDateTime(),
+    this.orderdata = {
       userId: parseInt(this.buyerCode),
       address: this.address,
       paymentMethod: 'CashOnDelivery',
       numberOfItem: this.cartDataDetail.size,
       totalPrice: this.totalPriceWithDeliveryCharge,
-      status: 'Pending',
       phoneNumber: this.phone,
       deliveryCharge: 100,
+      addedBy: "me",
+      addedPC:"me",
       orderDetailsList: []
     };
 
@@ -124,21 +122,20 @@ export class OrderApiService {
         price: parseFloat(entry.price),
         deliveryCharge: 100,
         specification: entry.specification,
-        productGroupCode: entry.groupCode,
+        productGroupCode: entry.groupCode.toString(),
         userId: parseInt(entry.sellerCode),
-        status: 'Pending',
         unitId: entry.unitId,
         discountAmount: entry.discountAmount,
         discountPct:entry.discountPct,
-        netPrice:0,
+        netPrice:0
       };
-      this.orderData.orderDetailsList.push(detailData);
+      this.orderdata.orderDetailsList.push(detailData);
     }
   }
   insertOrderData() {
     this.setData();
-    console.log(' orderData', this.orderData);
-    return this.http.post<any>(this.orderPostUrl, this.orderData, this.httpOptions);
+    console.log(' orderdata', this.orderdata);
+    return this.http.post<any>(this.orderPostUrl, this.orderdata, this.httpOptions);
   }
   // get user info for order
   getUserInfo(UserId: any) {
