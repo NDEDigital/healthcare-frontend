@@ -17,20 +17,21 @@ export class AddProductsComponent implements OnInit {
   alertMsg: string = '';
   isError: boolean = false;
   showProductDiv: boolean = false;
-
+  productList: any;
+  btnIndex = -1;
 
   constructor(private productService: AddProductService) {}
 
   toggleAddProductDiv(): void {
     this.showProductDiv = !this.showProductDiv;
+    this.btnIndex = -1;
+    this.getProducts(-1);
   }
-
 
   showApprovalGrid(): void {
     this.showProductDiv = false;
   }
 
-  
   ngOnInit() {
     this.addProductForm = new FormGroup({
       productGroupID: new FormControl('', Validators.required),
@@ -44,6 +45,7 @@ export class AddProductsComponent implements OnInit {
     // Fetch product groups when the component is initialized
     this.getProductGroups();
     this.getUnit();
+    this.getProducts(-1);
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -115,7 +117,7 @@ export class AddProductsComponent implements OnInit {
           this.PrdouctExistModalBTN.nativeElement.click();
           this.addProductForm.reset();
           this.showProductDiv = false;
-
+          this.toggleAddProductDiv();
         },
         error: (error: any) => {
           console.log(error);
@@ -127,5 +129,18 @@ export class AddProductsComponent implements OnInit {
     } else {
       console.log('Form is not valid');
     }
+  }
+
+  getProducts(status: any) {
+    this.productService.GetProductListByStatus(status).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.productList = response;
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.alertMsg = error.error.message;
+      },
+    });
   }
 }
