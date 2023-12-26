@@ -12,7 +12,7 @@ export class CompanyApprovalComponent {
   companies: any;
   imagePath = '';
   imageTitle = 'No Data Found!';
-  selectedCompanyCodeValues: { [key: string]: number } = {};
+  selectedCompanyCodeValues: { [key: string]: any } = {};
 
   constructor(
     private companyService: CompanyService,
@@ -64,6 +64,12 @@ export class CompanyApprovalComponent {
       this.selectedCompanyCodeValues[companyCode]
     );
     const userCnt = this.selectedCompanyCodeValues[companyCode] || maxUser;
+    if (userCnt < 0) {
+      // Handle the invalid input (e.g., display an error message)
+      alert('Please enter a non-negative value for the user count.');
+      return; // Prevent further processing
+    }
+
     const cmp = {
       companyCode: companyCode,
       isActive: Isactive,
@@ -74,6 +80,7 @@ export class CompanyApprovalComponent {
         console.log(response);
         this.getData();
         this.sendEmailToCompany(companyEmail, companyCode, userCnt, Isactive);
+        this.selectedCompanyCodeValues[companyCode] = null;
       },
       error: (error: any) => {
         console.log(error);
