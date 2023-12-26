@@ -24,20 +24,33 @@ export class AddPriceDiscountsComponent {
   alertMsg: string = '';
   isError: boolean = false;
   showPriceProductDiv: boolean = false;
-
-
+  productList: any;
+  btnIndex = -1;
   isDiscountEntered(): boolean {
-    const discountAmount = this.addPriceDiscountForm.get('discountAmount')?.value;
+    const discountAmount =
+      this.addPriceDiscountForm.get('discountAmount')?.value;
     const discountPct = this.addPriceDiscountForm.get('discountPct')?.value;
     return !!(discountAmount || discountPct);
   }
 
   toggleAddProductPriceDiv(): void {
     this.showPriceProductDiv = !this.showPriceProductDiv;
-     this.addPriceDiscountForm.reset();
-
+    this.btnIndex = -1;
+    this.getProducts(-1);
   }
-
+  getProducts(status: any) {
+    let userID = localStorage.getItem('code');
+    this.productService.GetProductsByStatus(userID, status).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.productList = response;
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.alertMsg = error.error.message;
+      },
+    });
+  }
   showProductPriceGrid(): void {
     this.showPriceProductDiv = false;
   }
@@ -67,21 +80,21 @@ export class AddPriceDiscountsComponent {
       .get('discountAmount')
       ?.valueChanges.subscribe(() => {});
 
-    this.getProducts();
+    this.getProducts(-1);
     this.setupFormValueChanges();
   }
 
-  getProducts() {
-    this.productService.getallProducts().subscribe(
-      (data: any) => {
-        this.products = data;
-        console.log('Products :', this.products);
-      },
-      (error) => {
-        console.error('Error fetching product groups:', error);
-      }
-    );
-  }
+  // getProductList() {
+  //   this.productService.getallProducts().subscribe(
+  //     (data: any) => {
+  //       this.products = data;
+  //       console.log('Products :', this.products);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching product groups:', error);
+  //     }
+  //   );
+  // }
 
   setupFormValueChanges() {
     const form = this.addPriceDiscountForm;
