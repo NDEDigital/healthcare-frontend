@@ -9,9 +9,30 @@
     class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2 d-flex justify-content-between"
   >
     <div class="headerbtns">
-      <button class="custom-btn new-btn active">New</button>
-      <button class="custom-btn btn-active">Active</button>
-      <button class="custom-btn btn-inactive">Inactive</button>
+      <button
+        class="custom-btn new-btn active"
+        (click)="getProducts(-1)"
+        [ngClass]="{ active: btnIndex === -1 }"
+        (click)="btnIndex = -1"
+      >
+        New
+      </button>
+      <button
+        class="custom-btn btn-active"
+        (click)="getProducts(1)"
+        [ngClass]="{ active: btnIndex === 1 }"
+        (click)="btnIndex = 1"
+      >
+        Active
+      </button>
+      <button
+        class="custom-btn btn-inactive"
+        (click)="getProducts(0)"
+        [ngClass]="{ active: btnIndex === 0 }"
+        (click)="btnIndex = 0"
+      >
+        Inactive
+      </button>
     </div>
 
     <div>
@@ -47,7 +68,10 @@
 
 <!-- price and discount form  -->
 
-<div *ngIf="showPriceProductDiv" class="container containgFields mt-5 mb-5 rounded">
+<div
+  *ngIf="showPriceProductDiv"
+  class="container containgFields mt-5 mb-5 rounded"
+>
   <!-- <h2 class="register_title">Add Price & Discounts</h2> -->
   <div class="d-flex justify-content-between align-items-center">
     <!-- Back Button on the left -->
