@@ -25,15 +25,22 @@ export class AddPriceDiscountsComponent {
   isError: boolean = false;
   showPriceProductDiv: boolean = false;
 
-
   isDiscountEntered(): boolean {
-    const discountAmount = this.addPriceDiscountForm.get('discountAmount')?.value;
+    const discountAmount =
+      this.addPriceDiscountForm.get('discountAmount')?.value;
     const discountPct = this.addPriceDiscountForm.get('discountPct')?.value;
     return !!(discountAmount || discountPct);
   }
 
   toggleAddProductPriceDiv(): void {
     this.showPriceProductDiv = !this.showPriceProductDiv;
+    this.addPriceDiscountForm.reset();
+    setTimeout(() => {
+      this.addPriceDiscountForm.patchValue({
+        discountAmount: '',
+        discountPct: '',
+      });
+    });
   }
 
   showProductPriceGrid(): void {
@@ -246,7 +253,7 @@ export class AddPriceDiscountsComponent {
             value = numberValue.toFixed(2);
           } else {
             // If value is not a number, use a default value (e.g., '0.00') or skip appending
-            value = '0.00';
+            value = '';
           }
         }
 
