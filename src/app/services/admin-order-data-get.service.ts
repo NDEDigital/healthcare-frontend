@@ -56,17 +56,21 @@ GetOrderDataSearch(pageNumber: number, pageSize: number,  status: string, search
 
 
   //  update status
-  updateOrderStatus(orderMasterId: string,detailsApprovedId: string,detailsCancelledId: string,  StatusValue: string) {
-    console.log(" orderMasterId,detailsApprovedId,detailsCancelledId,StatusValue ,,,,,,,,,,,", orderMasterId,detailsApprovedId,detailsCancelledId,StatusValue)
-
+  updateOrderStatus(orderMasterId: string, detailsCancelledId: string | null, status: string): Observable<any> {
+    console.log(" orderMasterId, detailsCancelledId, status",orderMasterId, detailsCancelledId, status)
     const url = `${this.baseUrl}/AdminOrderUpdateStatus`;
-    const formData = new FormData();
-    formData.append('orderMasterId', orderMasterId);
-    formData.append('detailsApprovedId', detailsApprovedId);
-    formData.append('detailsCancelledId', detailsCancelledId);
-    formData.append('status', StatusValue);
-    return this.http.put(url, formData);
+    let params = new HttpParams().set('orderMasterId', orderMasterId);
+
+    if (detailsCancelledId) {
+      params = params.set('detailsCancelledId', detailsCancelledId);
+    }
+
+    params = params.set('status', status);
+
+    return this.http.put<any>(url, {}, { params });
   }
+
+
 
   // getDataByDate
 

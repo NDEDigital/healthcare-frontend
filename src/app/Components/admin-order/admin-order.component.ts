@@ -18,7 +18,7 @@ export class AdminOrderComponent {
   @ViewChild(PaginationComponent) pagination: PaginationComponent;
   ModalText: string = 'No product is selected!';
 
-  selectedButtonIndex: string = 'All'; // Default selected index is 0
+  selectedButtonIndex: string = 'Pending'; // Default selected index is 0
   returnProduct = false;
   detailsCancelledArray: any = [];
   checked: any = false;
@@ -81,8 +81,10 @@ export class AdminOrderComponent {
   }
   searchTerm$ = new Subject<string>();
   ngOnInit() {
+
+   
     this.getMAsterData('New');
-   // this.getOrderDetails(5);
+    this.getOrderDetails(3);
     this.loadData();
     console.log(' SearchTerm valuee on init', this.searchTerm$);
     // this.searchTerm$
@@ -200,6 +202,8 @@ export class AdminOrderComponent {
   }
 
   GetDetailsData(orderMasterId: any, index: any) {
+
+    console.log(" orderMasterId",orderMasterId)
     // Toggle the rotation state ot icon
     // this.isIconRotatedMap ={};
     // this.showPendingDetails = true;
@@ -284,12 +288,12 @@ export class AdminOrderComponent {
   }
 
   //   ****************** UPDATE STATUS *************
-  actionBtn(masterId: any, approvedId: any, cancelledId: any, str: string) {
-    //console.log('actionBtn called with id:', id, 'and str:', str);
+  actionBtn(masterId: any, cancelledId: any, str: string) {
+ 
     console.log(
-      'masterId,approvedId,cancelledId,str',
+      'masterId,cancelledId,str',
       masterId,
-      approvedId,
+
       cancelledId,
       str
     );
@@ -297,7 +301,6 @@ export class AdminOrderComponent {
     this.service
       .updateOrderStatus(
         masterId.toString(),
-        approvedId.toString(),
         cancelledId.toString(),
         str
       )
@@ -637,7 +640,6 @@ export class AdminOrderComponent {
       if (this.masterCheckId != '') {
         this.actionBtn(
           this.masterId,
-          this.detailsCheckedId,
           this.detailsUnCheckedId,
           this.checkedStatus
         );
