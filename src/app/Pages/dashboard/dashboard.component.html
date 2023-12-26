@@ -214,20 +214,23 @@
       </a>
 
       <div class="sidebar_delimiter"></div>
-      <div class="sidebar_item d-flex justify-content-between p-1 py-3">
-        <div class="d-flex">
-          <a
-            class="d-flex menu_link"
-            [ngClass]="{ active: SidebarIndex === 3 }"
-            (click)="SidebarIndex = 3"
-          >
-            <span class="title_icon text-start me-2"
-              ><i class="fa-solid fa-cart-shopping"></i
-            ></span>
-            <h5>{{ sidebarCol3Title }}</h5>
-          </a>
+      <div *ngIf="isAdmin">
+        <div   class="sidebar_item d-flex justify-content-between p-1 py-3">
+          <div class="d-flex">
+            <a
+              class="d-flex menu_link"
+              [ngClass]="{ active: SidebarIndex === 3 }"
+              (click)="SidebarIndex = 3"
+            >
+              <span class="title_icon text-start me-2"
+                ><i class="fa-solid fa-cart-shopping"></i
+              ></span>
+              <h5>{{ sidebarCol3Title }}</h5>
+            </a>
+          </div>
         </div>
       </div>
+ 
 
       <div class="sidebar_delimiter"></div>
       <div *ngIf="!isAdmin">
@@ -300,6 +303,26 @@
           </a>
         </div>
       </div>
+
+      <div class="sidebar_delimiter"></div>
+      <div *ngIf="isSeller">
+        <div class="sidebar_item d-flex justify-content-between p-1 py-3">
+          <div class="d-flex">
+            <a
+              class="d-flex menu_link"
+              [ngClass]="{ active: SidebarIndex === 6 }"
+              (click)="SidebarIndex = 6"
+            >
+              <span class="title_icon text-start me-2"
+                ><i class="fa-solid fa-cart-shopping"></i
+              ></span>
+              <h5>{{ sidebarCol6Title }}</h5>
+            </a>
+          </div>
+        </div>
+        <div *ngIf="isSeller" class="sidebar_delimiter"></div>
+      </div>
+
       <div *ngIf="isAdmin" class="sidebar_delimiter"></div>
 
       <div
@@ -661,7 +684,11 @@
     <section class="productApproval" *ngIf="SidebarIndex === 10">
       <app-product-approval></app-product-approval>
     </section>
+    <section class="sellerOrder" *ngIf="SidebarIndex === 6">
+      <app-seller-order></app-seller-order>
+    </section>
   </div>
+
   <!-- </div> -->
 
   <!--  ------ admin-order component call ------ -->

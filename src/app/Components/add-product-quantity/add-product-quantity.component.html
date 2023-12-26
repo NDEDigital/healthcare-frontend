@@ -2,9 +2,6 @@
     <div class="addQuantity_header bg-white d-flex justify-content-center p-2">
       <h1 class="addQuantity_header_text">Add Product Quantity</h1>
     </div>
-
-
-  
      <!--  field -->
      <div class="field-div  p-3 mt-3">
          <!-- master field -->
@@ -133,6 +130,7 @@
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             class="btn  approved py-1 px-2 m-1"
+    
    >
             Submit
           </button>
@@ -162,7 +160,12 @@
            ></button>
          </div>
          <div class="modal-body">
-           {{ ModalText }}
+        <span  *ngIf="!isFormValid() || rowsFormArray.length==0">
+          Give some entry
+        </span>
+        <span  *ngIf="isFormValid() && rowsFormArray.length>0 ">
+          Want to submit?
+        </span>
          </div>
          <div class="modal-footer">
            <button

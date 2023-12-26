@@ -47,7 +47,7 @@ export class DashboardComponent {
   sidebarCol3Title = 'Orders';
   sidebarCol4Title = 'Inventory';
   sidebarCol5Title = 'Add Quantity';
-  // sidebarCol6Title = 'Other Sales';
+  sidebarCol6Title = 'Product Order';
   sidebarCol7Title = 'Add Groups';
   sidebarCol8Title = 'Company Approval';
   sidebarCol9Title = 'Price & Discounts';

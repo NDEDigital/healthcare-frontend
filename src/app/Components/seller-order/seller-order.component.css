@@ -1,0 +1,93 @@
+/* header text design*/
+.companyApproval_header_text {
+    color: var(--color-primary);
+  }
+  
+  /* table design */
+  
+  .headerRow,
+  .tablebodyRow {
+    flex-wrap: nowrap;
+  }
+  .scrollable-table {
+    height: 35rem; /* Adjust the height as needed */
+    overflow-y: scroll;
+    overflow-x: auto;
+  }
+  .headerRow {
+    text-align: center;
+  }
+  .tablebodyRow {
+    text-align: center;
+  }
+  .tableHeader,
+  .tableBody {
+    min-width: 10rem;
+  }
+  
+  .tableBody {
+    background-color: white;
+    padding: 0.7rem;
+    border-bottom: 1px solid var(--color-gray);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .tableHeader {
+    background-color: #e5f1f7;
+    padding: 0.8rem;
+    border-bottom: 1px solid var(--color-gray);
+  }
+  
+  /* modal heading */
+  .modal-heading {
+    background-color: var(--color-primary);
+  }
+  .headerbtns .custom-btn {
+    background: #f0faff;
+    color: rgb(3, 20, 43);
+    font-weight: 500;
+    width: 8rem;
+    border: 1px solid var(--color-primary-dark);
+  }
+  
+  .headerbtns .btn-active {
+    border: 1px solid #78ac8b;
+  }
+  .headerbtns .btn-inactive {
+    border: 1px solid #a4a554;
+  }
+  
+  .headerbtns .new-btn.active {
+    background-color: var(--color-primary-dark) !important ;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #ebf8ff !important;
+  }
+  .btn-active.active {
+    background-color: #78ac8b !important ;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #ebf8ff !important;
+  }
+  .btn-inactive.active {
+    background-color: #a4a554 !important ;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #ebf8ff !important;
+  }
+  
+  .btn-trade-company {
+    width: 4rem !important;
+  }
+  
+  .actionBtn {
+    cursor: pointer;
+    background: none;
+    border: none;
+    font-size: 0.5rem;
+  }
+  
+  .product_image {
+    height: 4rem;
+    width: 6rem;
+  }
+  

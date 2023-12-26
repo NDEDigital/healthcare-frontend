@@ -68,6 +68,7 @@ import { CompanyApprovalComponent } from './Components/company-approval/company-
 import { AddPriceDiscountsComponent } from './Components/add-price-discounts/add-price-discounts.component';
 import { ProductApprovalComponent } from './Components/product-approval/product-approval.component';
 import { OrderFlowComponent } from './Components/order-flow/order-flow.component';
+import { SellerOrderComponent } from './Components/seller-order/seller-order.component';
 
 @NgModule({
   declarations: [
@@ -128,6 +129,7 @@ import { OrderFlowComponent } from './Components/order-flow/order-flow.component
     AddPriceDiscountsComponent,
     ProductApprovalComponent,
     OrderFlowComponent,
+    SellerOrderComponent,
   ],
   imports: [
     BrowserModule,
