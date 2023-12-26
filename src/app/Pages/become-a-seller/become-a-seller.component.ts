@@ -30,6 +30,10 @@ export class BecomeASellerComponent {
   ngOnInit() {
     this.companyResistrationForm = new FormGroup({
       companyName: new FormControl('', Validators.required),
+      email: new FormControl('', [
+        Validators.required,
+        Validators.pattern('^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\\.[a-zA-Z]{2,}$'),
+      ]),
       companyFoundationDate: new FormControl('', Validators.required),
       businessRegistrationNumber: new FormControl('', Validators.required),
       taxIdentificationNumber: new FormControl('', Validators.required),
@@ -128,7 +132,8 @@ export class BecomeASellerComponent {
           console.log(response);
           this.companyResistrationForm.reset();
           this.alertTitile = response.message;
-          this.alertmsg = 'Your company is Registered! Wait for the approval mail for further, Thank you.';
+          this.alertmsg =
+            'Your company is Registered! Wait for the approval mail for further, Thank you.';
           this.modalColor = true;
           this.UserExistModalBTN.nativeElement.click();
         },
