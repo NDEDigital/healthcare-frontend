@@ -99,6 +99,15 @@ body {
    font-weight: bold;
 } */
 
+/*  for stickey footer */
+
+.base-footer {
+  position: fixed;
+  left: 0;
+  bottom: 0;
+  width: 100%;
+}
+
 .product:hover {
   border: 1px solid #c3c8cc;
   box-shadow: 0 0.1rem 0.6rem #7e9eb8;

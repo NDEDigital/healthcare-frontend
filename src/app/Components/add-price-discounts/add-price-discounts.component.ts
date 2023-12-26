@@ -1,5 +1,12 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators, ValidatorFn, AbstractControl, ValidationErrors } from '@angular/forms';
+import {
+  FormControl,
+  FormGroup,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { AddProductService } from 'src/app/services/add-product.service';
 
 @Component({
@@ -16,6 +23,37 @@ export class AddPriceDiscountsComponent {
   isDisabled: boolean = true;
   alertMsg: string = '';
   isError: boolean = false;
+  showPriceProductDiv: boolean = false;
+  productList: any;
+  btnIndex = -1;
+  isDiscountEntered(): boolean {
+    const discountAmount =
+      this.addPriceDiscountForm.get('discountAmount')?.value;
+    const discountPct = this.addPriceDiscountForm.get('discountPct')?.value;
+    return !!(discountAmount || discountPct);
+  }
+
+  toggleAddProductPriceDiv(): void {
+    this.showPriceProductDiv = !this.showPriceProductDiv;
+    this.btnIndex = -1;
+    this.getProducts(-1);
+  }
+  getProducts(status: any) {
+    let userID = localStorage.getItem('code');
+    this.productService.GetProductsByStatus(userID, status).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.productList = response;
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.alertMsg = error.error.message;
+      },
+    });
+  }
+  showProductPriceGrid(): void {
+    this.showPriceProductDiv = false;
+  }
 
   constructor(private productService: AddProductService) {}
 
@@ -42,21 +80,21 @@ export class AddPriceDiscountsComponent {
       .get('discountAmount')
       ?.valueChanges.subscribe(() => {});
 
+    this.getProducts(-1);
     this.setupFormValueChanges();
-    this.getProducts();
   }
 
-  getProducts() {
-    this.productService.getallProducts().subscribe(
-      (data: any) => {
-        this.products = data;
-        console.log('Products :', this.products);
-      },
-      (error) => {
-        console.error('Error fetching product groups:', error);
-      }
-    );
-  }
+  // getProductList() {
+  //   this.productService.getallProducts().subscribe(
+  //     (data: any) => {
+  //       this.products = data;
+  //       console.log('Products :', this.products);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching product groups:', error);
+  //     }
+  //   );
+  // }
 
   setupFormValueChanges() {
     const form = this.addPriceDiscountForm;
@@ -81,23 +119,30 @@ export class AddPriceDiscountsComponent {
       this.updateDateFieldValidators();
     });
 
-      // Subscribe to changes in Price
-  form.get('price')?.valueChanges.subscribe(() => {
-    this.calculateTotalPrice();
-  });
+    // Subscribe to changes in Price
+    form.get('price')?.valueChanges.subscribe(() => {
+      this.calculateTotalPrice();
+    });
   }
 
-
   updateDateFieldValidators() {
-    const discountAmount = this.addPriceDiscountForm.get('discountAmount')?.value;
+    const discountAmount =
+      this.addPriceDiscountForm.get('discountAmount')?.value;
     const discountPct = this.addPriceDiscountForm.get('discountPct')?.value;
 
-    const effectivateDateControl = this.addPriceDiscountForm.get('effectivateDate');
+    const effectivateDateControl =
+      this.addPriceDiscountForm.get('effectivateDate');
     const endDateControl = this.addPriceDiscountForm.get('endDate');
 
     if (discountAmount || discountPct) {
-      effectivateDateControl?.setValidators([Validators.required, this.presentOrFutureDateValidator()]);
-      endDateControl?.setValidators([Validators.required, this.futureDateValidator()]);
+      effectivateDateControl?.setValidators([
+        Validators.required,
+        this.presentOrFutureDateValidator(),
+      ]);
+      endDateControl?.setValidators([
+        Validators.required,
+        this.futureDateValidator(),
+      ]);
     } else {
       effectivateDateControl?.clearValidators();
       endDateControl?.clearValidators();
@@ -106,8 +151,6 @@ export class AddPriceDiscountsComponent {
     effectivateDateControl?.updateValueAndValidity();
     endDateControl?.updateValueAndValidity();
   }
-
-
 
   presentOrFutureDateValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
@@ -122,7 +165,9 @@ export class AddPriceDiscountsComponent {
   futureDateValidator(): ValidatorFn {
     return (control: AbstractControl): ValidationErrors | null => {
       const endDate = new Date(control.value);
-      const effectiveDate = new Date(this.addPriceDiscountForm.get('effectivateDate')?.value);
+      const effectiveDate = new Date(
+        this.addPriceDiscountForm.get('effectivateDate')?.value
+      );
 
       return endDate > effectiveDate ? null : { invalidEndDate: true };
     };
@@ -190,7 +235,9 @@ export class AddPriceDiscountsComponent {
     //   ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
 
     const totalPrice = Math.max(price - calculatedDiscount, 0); // Total price should not be negative
-    this.addPriceDiscountForm.get('totalPrice')?.setValue(totalPrice.toFixed(2), { emitEvent: false });
+    this.addPriceDiscountForm
+      .get('totalPrice')
+      ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
   }
 
   onSubmit(): void {

@@ -1,5 +1,127 @@
-<div class="container containgFields mt-5 mb-5 rounded">
-  <h2 class="register_title">Add Price & Discounts</h2>
+<!-- approval grid  -->
+<div *ngIf="!showPriceProductDiv" class="container approval-grid">
+  <div class="bg-white p-2 border border-1 rounded">
+    <div class="d-flex justify-content-center">
+      <h1 class="companyApproval_header_text">Price and Discounts</h1>
+    </div>
+  </div>
+  <div
+    class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2 d-flex justify-content-between"
+  >
+    <div class="headerbtns">
+      <button
+        class="custom-btn new-btn active"
+        (click)="getProducts(-1)"
+        [ngClass]="{ active: btnIndex === -1 }"
+        (click)="btnIndex = -1"
+      >
+        New
+      </button>
+      <button
+        class="custom-btn btn-active"
+        (click)="getProducts(1)"
+        [ngClass]="{ active: btnIndex === 1 }"
+        (click)="btnIndex = 1"
+      >
+        Active
+      </button>
+      <button
+        class="custom-btn btn-inactive"
+        (click)="getProducts(0)"
+        [ngClass]="{ active: btnIndex === 0 }"
+        (click)="btnIndex = 0"
+      >
+        Inactive
+      </button>
+    </div>
+
+    <div>
+      <button
+        class="custom-btn addproduct-btn"
+        (click)="toggleAddProductPriceDiv()"
+      >
+        {{ showPriceProductDiv ? "Show Approval Grid" : "Add Price" }}
+      </button>
+    </div>
+  </div>
+  <div class="scrollable-table border border-1 bg-light">
+    <!-- TABLE header -->
+    <div class="row headerRow sticky-top fw-bolder">
+      <div class="col tableHeader">Index</div>
+      <div class="col tableHeader">Product ID</div>
+      <div class="col tableHeader">Product Name</div>
+      <div class="col tableHeader">Product Image</div>
+      <div class="col tableHeader">Product price</div>
+      <div class="col tableHeader">Product discountAmount</div>
+      <div class="col tableHeader">Product discountPct</div>
+      <div class="col tableHeader">Product totalPrice</div>
+      <div class="col tableHeader">Added Date</div>
+    </div>
+
+    <!-- table body -->
+
+    <section
+      class="row tablebodyRow fw-semibold"
+      *ngFor="let product of productList; let i = index"
+    >
+      <div class="col tableBody">#{{ i + 1 }}</div>
+      <div class="col tableBody">{{ product.productId }}</div>
+      <div class="col tableBody">{{ product.productName }}</div>
+      <div class="col tableBody">
+        <img
+          class="product_image"
+          [src]="product.imagePath ? product.imagePath.split('src')[1] : ''"
+          alt="no image was uploaded!"
+        />
+      </div>
+      <div class="col tableBody">{{ product.price }}</div>
+      <div class="col tableBody">{{ product.discountAmount }}</div>
+      <div class="col tableBody">{{ product.discountPct }}</div>
+      <div class="col tableBody">{{ product.totalPrice }}</div>
+
+      <div class="col tableBody">
+        {{ product.addedDate | date : "dd MMM yyyy" }}
+      </div>
+
+      <!-- <div class="col tableBody">{{ product.productSubName }}</div>
+      <div class="col tableBody">
+        {{ product.addedDate | date : "dd MMM yyyy" }}
+      </div> -->
+    </section>
+  </div>
+</div>
+
+<!-- price and discount form  -->
+
+<div
+  *ngIf="showPriceProductDiv"
+  class="container containgFields mt-5 mb-5 rounded"
+>
+  <!-- <h2 class="register_title">Add Price & Discounts</h2> -->
+  <div class="d-flex justify-content-between align-items-center">
+    <!-- Back Button on the left -->
+    <div class="d-flex align-items-center" (click)="showProductPriceGrid()">
+      <svg
+        xmlns="http://www.w3.org/2000/svg"
+        width="25"
+        height="25"
+        fill="currentColor"
+        class="bi bi-arrow-left"
+        viewBox="0 0 16 16"
+      >
+        <path
+          fill-rule="evenodd"
+          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
+        />
+      </svg>
+    </div>
+
+    <!-- Title in the middle -->
+    <h2 class="register_title">Add Price & Discounts</h2>
+
+    <!-- Placeholder for right alignment -->
+    <div></div>
+  </div>
   <hr />
   <form [formGroup]="addPriceDiscountForm">
     <div class="form-group">
@@ -50,7 +172,7 @@
       </div>
     </div>
 
-    <div class="row">
+    <div class="row" *ngIf="isDiscountEntered()">
       <div class="form-group col-12 col-md-6">
         <label for="effectivateDate">Effectivate Date</label>
         <input

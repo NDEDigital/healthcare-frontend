@@ -18,7 +18,7 @@ hr{
     margin-top: 0;
 }
 .full-detail{
-   
+
     width: 80%;
 }
 .product-img{
@@ -49,3 +49,21 @@ button{
 .cursor{
      cursor: pointer;
 }
+
+/*  for stickey footer */
+
+.base-footer{
+  position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+}
+/* .base-footer{
+  position: absolute;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+} */
+
+
+

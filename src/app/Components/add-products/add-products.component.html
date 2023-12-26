@@ -46,6 +46,13 @@
     <!-- TABLE header -->
     <div class="row headerRow sticky-top fw-bolder">
       <div class="col tableHeader">Index</div>
+      <div class="col tableHeader">productId</div>
+      <div class="col tableHeader">Unit Id</div>
+      <div class="col tableHeader">Product Group ID</div>
+      <div class="col tableHeader">Product Name</div>
+      <div class="col tableHeader">Product SubName</div>
+      <div class="col tableHeader">Specification</div>
+      <div class="col tableHeader">Image</div>
       <div class="col tableHeader">Date Added</div>
       <div class="col tableHeader">Action</div>
     </div>
@@ -62,6 +69,7 @@
       <div class="col tableBody">{{ product.unitId }}</div>
       <div class="col tableBody">{{ product.productGroupID }}</div>
       <div class="col tableBody">{{ product.productName }}</div>
+      <div class="col tableBody">{{ product.productSubName }}</div>
       <div class="col tableBody">{{ product.specification }}</div>
       <div class="col tableBody">
         <img
@@ -70,7 +78,6 @@
           alt="no image was uploaded!"
         />
       </div>
-      <div class="col tableBody">{{ product.productSubName }}</div>
       <div class="col tableBody">
         {{ product.addedDate | date : "dd MMM yyyy" }}
       </div>
