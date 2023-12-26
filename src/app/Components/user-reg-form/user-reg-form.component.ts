@@ -163,8 +163,8 @@ export class UserRegFormComponent {
         error: (error: any) => {
           console.log(error);
           this.alertTitle = 'Error!!';
-            this.alertMsg = error.error.message;
-        
+          this.alertMsg = error.error.message;
+
           this.UserExistModalBTN.nativeElement.click();
         },
       });
