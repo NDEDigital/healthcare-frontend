@@ -78,10 +78,12 @@
         {{ row.discountPct }}
       </div>
       <div class="col tableBody">
-        {{ row.effectivateDate | date : "dd MMM yyyy" }}
+        {{ row.effectivateDate | date : "dd MMM yyyy" }},<br />
+        {{ row.effectivateDate | date : "hh:mm a" }}
       </div>
       <div class="col tableBody">
-        {{ row.endDate | date : "dd MMM yyyy" }}
+        {{ row.endDate | date : "dd MMM yyyy" }},<br />
+        {{ row.endDate | date : "hh:mm a" }}
       </div>
       <div class="col tableBody">
         {{ row.price }}

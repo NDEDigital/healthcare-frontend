@@ -43,7 +43,7 @@ export class AddPriceDiscountsComponent {
     let userID = localStorage.getItem('code');
     this.productService.GetProductsByStatus(userID, status).subscribe({
       next: (response: any) => {
-        console.log(response);
+        console.log(response, 'get products');
         this.productList = response;
       },
       error: (error: any) => {
