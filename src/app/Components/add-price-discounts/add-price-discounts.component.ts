@@ -27,10 +27,18 @@ export class AddPriceDiscountsComponent {
   productList: any;
   btnIndex = -1;
   isDiscountEntered(): boolean {
-    const discountAmount =
-      this.addPriceDiscountForm.get('discountAmount')?.value;
-    const discountPct = this.addPriceDiscountForm.get('discountPct')?.value;
-    return !!(discountAmount || discountPct);
+    const discountAmount = parseFloat(
+      this.addPriceDiscountForm.get('discountAmount')?.value
+    );
+    const discountPct = parseFloat(
+      this.addPriceDiscountForm.get('discountPct')?.value
+    );
+
+    // Check if either discountAmount or discountPct is greater than 0
+    return (
+      (!isNaN(discountAmount) && discountAmount > 0) ||
+      (!isNaN(discountPct) && discountPct > 0)
+    );
   }
 
   toggleAddProductPriceDiv(): void {
@@ -63,12 +71,31 @@ export class AddPriceDiscountsComponent {
     return field ? field.invalid && (field.dirty || field.touched) : false;
   }
 
+  nonNegativeNumberValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      return value !== null && !isNaN(value) && value >= 0
+        ? null
+        : { nonNegativeNumber: true };
+    };
+  }
+
   ngOnInit() {
     this.addPriceDiscountForm = new FormGroup({
       productId: new FormControl('', Validators.required),
-      price: new FormControl('', Validators.required),
-      discountAmount: new FormControl(''),
-      discountPct: new FormControl(''),
+      price: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^\d*\.?\d+$/),
+        this.nonNegativeNumberValidator(),
+      ]),
+      discountAmount: new FormControl('', [
+        Validators.pattern(/^\d*\.?\d+$/),
+        this.nonNegativeNumberValidator(),
+      ]),
+      discountPct: new FormControl('', [
+        Validators.pattern(/^\d*\.?\d+$/),
+        this.nonNegativeNumberValidator(),
+      ]),
       effectivateDate: new FormControl(''),
       endDate: new FormControl(''),
       productImage: new FormControl('', Validators.required),
@@ -98,46 +125,79 @@ export class AddPriceDiscountsComponent {
     );
   }
 
+  // setupFormValueChanges() {
+  //   const form = this.addPriceDiscountForm;
+
+  //   // For Discount Amount and Percentage
+
+  //   form.get('discountAmount')?.valueChanges.subscribe((value) => {
+  //     if (value) {
+  //       this.calculateDiscountPct(value);
+  //     }
+  //   });
+
+  //   form.get('discountPct')?.valueChanges.subscribe((value) => {
+  //     if (value) {
+  //       this.calculateDiscountAmount(value);
+  //     }
+
+  //     discountAmountControl?.valueChanges.subscribe(() => {
+  //       this.updateDateFieldValidators();
+  //     });
+
+  //     discountPctControl?.valueChanges.subscribe(() => {
+  //       this.updateDateFieldValidators();
+  //     });
+  //   });
+
+  //   // For dynamically setting validators
+  //   const discountAmountControl = form.get('discountAmount');
+  //   const discountPctControl = form.get('discountPct');
+
+  //   discountAmountControl?.valueChanges.subscribe(() => {
+  //     this.updateDateFieldValidators();
+  //   });
+
+  //   discountPctControl?.valueChanges.subscribe(() => {
+  //     this.updateDateFieldValidators();
+  //   });
+
+  //   // Subscribe to changes in Price
+  //   form.get('price')?.valueChanges.subscribe(() => {
+  //     this.calculateTotalPrice();
+  //   });
+  // }
+
   setupFormValueChanges() {
     const form = this.addPriceDiscountForm;
-
-    // For Discount Amount and Percentage
-
-    form.get('discountAmount')?.valueChanges.subscribe((value) => {
-      if (value) {
-        this.calculateDiscountPct(value);
-      }
-    });
-
-    form.get('discountPct')?.valueChanges.subscribe((value) => {
-      if (value) {
-        this.calculateDiscountAmount(value);
-      }
-
-      discountAmountControl?.valueChanges.subscribe(() => {
-        this.updateDateFieldValidators();
-      });
-
-      discountPctControl?.valueChanges.subscribe(() => {
-        this.updateDateFieldValidators();
-      });
-    });
-
-    // For dynamically setting validators
+    const priceControl = form.get('price');
     const discountAmountControl = form.get('discountAmount');
     const discountPctControl = form.get('discountPct');
 
+    // Subscribe to changes in discount amount
+    discountAmountControl?.valueChanges.subscribe((value) => {
+      this.calculateDiscountPct(value);
+      this.calculateTotalPrice();
+    });
+
+    // Subscribe to changes in discount percentage
+    discountPctControl?.valueChanges.subscribe((value) => {
+      this.calculateDiscountAmount(value);
+      this.calculateTotalPrice();
+    });
+
+    // Subscribe to changes in Price
+    priceControl?.valueChanges.subscribe(() => {
+      this.calculateTotalPrice();
+    });
+
+    // For dynamically setting validators
     discountAmountControl?.valueChanges.subscribe(() => {
       this.updateDateFieldValidators();
     });
 
     discountPctControl?.valueChanges.subscribe(() => {
       this.updateDateFieldValidators();
-    });
-
-    // Subscribe to changes in Price
-    form.get('price')?.valueChanges.subscribe(() => {
-      this.calculateTotalPrice();
     });
   }
 
@@ -192,26 +252,40 @@ export class AddPriceDiscountsComponent {
   calculateDiscountPct(value: any) {
     const price =
       parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
-    const discountAmount = parseFloat(value) || 0;
-    if (price > 0 && discountAmount > 0) {
+    let discountAmount = parseFloat(value) || 0;
+
+    // Set discountPct to 0 if discountAmount is 0
+    if (discountAmount === 0) {
+      this.addPriceDiscountForm
+        .get('discountPct')
+        ?.setValue('0.00', { emitEvent: false });
+    } else if (price > 0 && discountAmount > 0) {
       const discountPct = (discountAmount / price) * 100;
       this.addPriceDiscountForm
         .get('discountPct')
         ?.setValue(discountPct.toFixed(2), { emitEvent: false });
     }
+
     this.calculateTotalPrice();
   }
 
   calculateDiscountAmount(value: any) {
     const price =
       parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
-    const discountPct = parseFloat(value) || 0;
-    if (price > 0 && discountPct > 0) {
+    let discountPct = parseFloat(value) || 0;
+
+    // Set discountAmount to 0 if discountPct is 0
+    if (discountPct === 0) {
+      this.addPriceDiscountForm
+        .get('discountAmount')
+        ?.setValue('0.00', { emitEvent: false });
+    } else if (price > 0 && discountPct > 0) {
       const discountAmount = (discountPct / 100) * price;
       this.addPriceDiscountForm
         .get('discountAmount')
         ?.setValue(discountAmount.toFixed(2), { emitEvent: false });
     }
+
     this.calculateTotalPrice();
   }
 
