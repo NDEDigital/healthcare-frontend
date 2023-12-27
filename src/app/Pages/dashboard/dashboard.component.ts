@@ -58,7 +58,7 @@ export class DashboardComponent {
   activeButton: string | null = 'new';
   status: string | null = 'new';
   // sellerInventory: boolean = false;
-  SidebarIndex = 1;
+  SidebarIndex = 2;
   newCount = 0;
   editedCount = 0;
   approvedCount = 0;

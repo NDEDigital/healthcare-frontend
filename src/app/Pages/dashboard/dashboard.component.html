@@ -197,7 +197,7 @@
     </div>
 
     <div class="offcanvas-body mt-4">
-      <div class="sidebar_delimiter"></div>
+      <!-- <div class="sidebar_delimiter"></div>
       <a class="sidebar_item d-flex justify-content-between p-1 py-3">
         <div class="d-flex">
           <a
@@ -211,29 +211,11 @@
             <h5>{{ sidebarCol1Title }}</h5>
           </a>
         </div>
-      </a>
+      </a> -->
 
       <div class="sidebar_delimiter"></div>
-      <div *ngIf="isAdmin">
-        <div   class="sidebar_item d-flex justify-content-between p-1 py-3">
-          <div class="d-flex">
-            <a
-              class="d-flex menu_link"
-              [ngClass]="{ active: SidebarIndex === 3 }"
-              (click)="SidebarIndex = 3"
-            >
-              <span class="title_icon text-start me-2"
-                ><i class="fa-solid fa-cart-shopping"></i
-              ></span>
-              <h5>{{ sidebarCol3Title }}</h5>
-            </a>
-          </div>
-        </div>
-      </div>
- 
 
-      <div class="sidebar_delimiter"></div>
-      <div *ngIf="!isAdmin">
+      <div *ngIf="isSeller">
         <div class="sidebar_item d-flex justify-content-between p-1 py-3">
           <div class="d-flex">
             <a
@@ -250,7 +232,7 @@
         </div>
         <div *ngIf="isSeller" class="sidebar_delimiter"></div>
       </div>
-      <div *ngIf="!isAdmin">
+      <div *ngIf="isSeller">
         <div class="sidebar_item d-flex justify-content-between p-1 py-3">
           <div class="d-flex">
             <a
@@ -304,7 +286,8 @@
         </div>
       </div>
 
-      <div class="sidebar_delimiter"></div>
+      <div *ngIf="isAdmin" class="sidebar_delimiter"></div>
+
       <div *ngIf="isSeller">
         <div class="sidebar_item d-flex justify-content-between p-1 py-3">
           <div class="d-flex">
@@ -320,10 +303,11 @@
             </a>
           </div>
         </div>
-        <div *ngIf="isSeller" class="sidebar_delimiter"></div>
+
+        <!-- <div *ngIf="isSeller" class="sidebar_delimiter"></div> -->
       </div>
 
-      <div *ngIf="isAdmin" class="sidebar_delimiter"></div>
+      <div *ngIf="isSeller" class="sidebar_delimiter"></div>
 
       <div
         *ngIf="isAdmin"
@@ -378,273 +362,29 @@
           </a>
         </div>
       </div>
+      <div *ngIf="isAdmin" class="sidebar_delimiter"></div>
+      <div *ngIf="isAdmin">
+        <div class="sidebar_item d-flex justify-content-between p-1 py-3">
+          <div class="d-flex">
+            <a
+              class="d-flex menu_link"
+              [ngClass]="{ active: SidebarIndex === 3 }"
+              (click)="SidebarIndex = 3"
+            >
+              <span class="title_icon text-start me-2"
+                ><i class="fa-solid fa-cart-shopping"></i
+              ></span>
+              <h5>{{ sidebarCol3Title }}</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+
       <div class="sidebar_delimiter"></div>
     </div>
   </div>
   <!-- ================  end of sidebar =============  -->
   <div class="dashboard_body px-5 py-2">
-    <div *ngIf="SidebarIndex === 1">
-      <div class="dashboard_body-header sticky-top">
-        <nav class="navbar bg-white rounded border border-1">
-          <div class="container-fluid" *ngIf="!isAdmin">
-            <div class="body_title"><h3>Product List</h3></div>
-            <form class="seachbar" role="search">
-              <input
-                class="form-control bg-light me-2"
-                type="search"
-                placeholder="Search by title..."
-                aria-label="Search"
-                (keyup)="searchProducts($event)"
-              />
-              <!-- <button class="btn btn-outline-success" type="submit">
-              Search
-            </button> -->
-            </form>
-          </div>
-          <!-- for admin -->
-          <div class="container-fluid" *ngIf="isAdmin">
-            <div class="container header_buttons">
-              <button
-                type="button"
-                class="btn fw-bold text-primary mx-2"
-                [class.active]="activeButton === 'new'"
-                (click)="setActiveButton('new')"
-              >
-                New <span>({{ newCount }})</span>
-              </button>
-              <button
-                type="button"
-                class="btn fw-bold text-warning mx-2"
-                [class.active]="activeButton === 'edited'"
-                (click)="setActiveButton('edited')"
-              >
-                Edited <span>({{ editedCount }})</span>
-              </button>
-              <button
-                type="button"
-                class="btn fw-bold text-success mx-2"
-                [class.active]="activeButton === 'approved'"
-                (click)="setActiveButton('approved')"
-              >
-                Approved<span>({{ approvedCount }})</span>
-              </button>
-              <button
-                type="button"
-                class="btn fw-bold text-danger mx-2"
-                [class.active]="activeButton === 'rejected'"
-                (click)="setActiveButton('rejected')"
-              >
-                Rejected <span>({{ rejectedCount }})</span>
-              </button>
-            </div>
-          </div>
-        </nav>
-      </div>
-      <!-- Product approval for admin -->
-      <section class="products_for_approval" *ngIf="isAdmin">
-        <div class="approval_container mt-2 rounded border border-1 bg-white">
-          <div class="sticky-top">
-            <div class="approval_container-row row bg-light p-0 m-0">
-              <div class="col-1 product_col checkbox_col fw-bold">
-                <div class="form-check">
-                  <input
-                    class="form-check-input"
-                    type="checkbox"
-                    value=""
-                    id="selectAllCheckbox"
-                    [(ngModel)]="selectAllChecked"
-                    (change)="selectAllProducts()"
-                  />
-                  <label
-                    class="form-check-label d-flex"
-                    for="selectAllCheckbox"
-                  >
-                    Select All
-                  </label>
-                </div>
-              </div>
-              <div class="col-1 product_col image_col fw-bold">
-                Product Image
-              </div>
-              <div class="col-1 product_col text-col fw-bold">Product Name</div>
-              <div class="col-1 product_col text-col fw-bold">Company Name</div>
-              <div class="col-1 product_col text-col fw-bold">
-                Added Date
-                <div class="date_icons d-grid ms-1">
-                  <i class="bi bi-caret-up-fill" (click)="sortDate('asc')"></i>
-                  <i
-                    class="bi bi-caret-down-fill"
-                    (click)="sortDate('desc')"
-                  ></i>
-                </div>
-              </div>
-              <div class="col-1 product_col text-col fw-bold">
-                <!-- Others -->
-              </div>
-            </div>
-
-            <form
-              class="approval_container-row row bg-white p-0 m-0"
-              id="approvalForm"
-            >
-              <div class="col-1 product_col checkbox_col fw-bold"></div>
-              <div class="col-1 product_col image_col fw-bold"></div>
-              <div class="col-1 product_col text-col fw-bold">
-                <input
-                  class="border border-1 p-1 rounded bg-light d-inline-block text-truncate"
-                  type="text"
-                  placeholder="Search Product"
-                  (keyup)="onProductKeyup($event)"
-                />
-              </div>
-              <div class="col-1 product_col text-col">
-                <input
-                  class="border border-1 p-1 rounded bg-light d-inline-block text-truncate"
-                  type="text"
-                  placeholder="Search Company"
-                  (keyup)="onCompanyKeyup($event)"
-                />
-              </div>
-              <div class="col-1 product_col text-col">
-                <input
-                  class="border border-1 p-1 rounded bg-light"
-                  type="date"
-                  (change)="onDateKeyup($event)"
-                />
-              </div>
-
-              <div class="col-1 product_col text-col">
-                <button
-                  type="button"
-                  class="btn btn-outline-primary rounded"
-                  (click)="clearFields()"
-                >
-                  Clear
-                </button>
-              </div>
-            </form>
-          </div>
-          <section *ngIf="filteredProducts.length <= 0">
-            <h1 class="text-danger text-center">No Product Found!</h1>
-          </section>
-          <section
-            class="product_approval_body"
-            *ngFor="let item of getPaginatedProducts()"
-          >
-            <!-- *ngFor="let item of filteredProducts" -->
-          </section>
-        </div>
-
-        <div class="approval_footer mt-2 me-3 d-flex justify-content-between">
-          <div class="pagination_container d-flex">
-            <nav aria-label="Page navigation example">
-              <ul class="pagination">
-                <li class="page-item" (click)="firstPage()">
-                  <a class="page-link" aria-label="First">
-                    <span aria-hidden="true"
-                      ><i class="fa-solid fa-angles-left"></i> First</span
-                    >
-                  </a>
-                </li>
-                <li class="page-item" (click)="previousPage()">
-                  <a class="page-link" aria-label="Previous">
-                    <span aria-hidden="true"
-                      ><i class="fa-solid fa-angle-left"></i
-                    ></span>
-                  </a>
-                </li>
-                <li class="page-item">
-                  <a class="page-link">Page {{ currentPage + 1 }}</a>
-                </li>
-                <li class="page-item" (click)="nextPage()">
-                  <a class="page-link" aria-label="Next">
-                    <span aria-hidden="true"
-                      ><i class="fa-solid fa-angle-right"></i
-                    ></span>
-                  </a>
-                </li>
-                <li class="page-item" (click)="lastPage()">
-                  <a class="page-link" aria-label="Last">
-                    <span aria-hidden="true"
-                      >Last <i class="fa-solid fa-angles-right"></i
-                    ></span>
-                  </a>
-                </li>
-              </ul>
-            </nav>
-            <div
-              class="selectRows d-flex align-items-center h-75 mx-1 fw-bold text-muted"
-            >
-              <span>Show</span>
-              <select
-                class="form-select mx-1"
-                (change)="onRowCountChange($event)"
-              >
-                <option value="1">1</option>
-                <option value="2">2</option>
-                <option value="4" selected>4</option>
-              </select>
-              <span>Rows</span>
-            </div>
-          </div>
-          <div class="approval_btns">
-            <button
-              type="button"
-              class="btn fw-bold rounded btn-outline-success mx-2"
-              [attr.data-bs-target]="
-                selectedCheckboxIds.length > 0
-                  ? '#approvalModal'
-                  : '#noProductSelectedModal'
-              "
-              data-bs-toggle="modal"
-              (click)="approvalModalStatus('approve')"
-              *ngIf="
-                status === 'new' || status === 'edited' || status === 'rejected'
-              "
-            >
-              <!-- (click)="updateStatus('approved')" (click)="updateStatus('rejected')"-->
-              Approve
-            </button>
-            <button
-              type="button"
-              class="btn fw-bold rounded btn-outline-danger mx-2"
-              [attr.data-bs-target]="
-                selectedCheckboxIds.length > 0
-                  ? '#approvalModal'
-                  : '#noProductSelectedModal'
-              "
-              data-bs-toggle="modal"
-              (click)="approvalModalStatus('reject')"
-              *ngIf="status === 'new' || status === 'edited'"
-            >
-              Reject
-            </button>
-          </div>
-        </div>
-      </section>
-
-      <!-- sellers Products -->
-      <section class="mt-2 row" *ngIf="filteredProducts.length > 0 && !isAdmin">
-        <div
-          class="col-xxl-3 col-xl-4 col-lg-6 col-lg-6 col-6"
-          *ngFor="let item of filteredProducts; let i = index"
-        >
-          <div class="mb-5 me-3">
-            <app-product-card
-              [index]="i"
-              [title]="item.goodsName"
-              [quantity]="item.approveSalesQty"
-              [imageSRC]="item.imagePath"
-              [item]="item"
-            ></app-product-card>
-          </div>
-        </div>
-      </section>
-      <section *ngIf="filteredProducts.length <= 0 && !isAdmin">
-        <h1 class="text-danger text-center">No Product Found!</h1>
-      </section>
-    </div>
-
     <!-- Sellers Add Quantity -->
     <section *ngIf="SidebarIndex === 5" class="seller_inventory_body">
       <app-add-product-quantity></app-add-product-quantity>
