@@ -1,9 +1,15 @@
 <!-- <div class="delimeter"> -->
-<div class="navbelt_container d-flex flex-column align-items-center">
-  <div class="d-flex justify-content-around nav-parent" #navItems>
+
+<div
+  class="navbelt_container d-flex flex-column align-items-center justify-content-center"
+>
+  <div
+    class="d-flex justify-content-around nav-parent  w-75 h-100 m-2"
+    #navItems
+  >
     <div
       *ngFor="let entry of products | keyvalue"
-      class="nav_item d-flex flex-column  mt-2   p-1"
+      class="nav_item d-flex flex-column mt-2 p-1"
       (click)="setSelectData(entry.key, entry.value)"
       [class.active]="entry.value === activeEntry"
     >
@@ -16,9 +22,13 @@
     </div>
   </div>
 </div>
-<button type="button" class="slider-btn" (click)="next()">
-  <i class="fa-solid fa-chevron-right"></i>
-</button>
-<button type="button" class="slider-btn" (click)="prev()">
-  <i class="fa-solid fa-chevron-left"></i>
-</button>
+
+<div class="button-container">
+  <button type="button" class="slider-btn prevBtnmargin" (click)="prev()">
+    <i class="fa-solid fa-chevron-left"></i>
+  </button>
+
+  <button type="button" class="slider-btn" (click)="next()">
+    <i class="fa-solid fa-chevron-right"></i>
+  </button>
+</div>
