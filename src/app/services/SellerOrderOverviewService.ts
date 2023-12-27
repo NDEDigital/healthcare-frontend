@@ -15,7 +15,7 @@ export class SellerOrderOverviewService {
   updateOrderStatusURL = `${this.URL}/api/Order/updateSellerOrderStatus`;
   updateDetaiilsOrderStatusURL = `${this.URL}/api/Order/updateDetailsOrderStatus`;
    getUsersDataURL = `${this.URL}/api/Order/getBuyerInfo`;
-   SellerInventory = `${this.URL}/api/Order/GetSellerInventory`;
+   SellerInventory = `${this.URL}/GetSellerInventoryDataBySellerId/`;
   // getBuyerDataURL = `${this.URL}/api/Order/GetBuyerOrderData?`;
   // getOrderInfo(sellerId: any) {
   //   // const ordersInfos = of(OrdersInfos);
@@ -144,13 +144,9 @@ export class SellerOrderOverviewService {
     return this.http.get(this.getUsersDataURL, { params: { idList } });
   }
 
-  getSellerInventory(Code: string ,  goodsName: string  ,groupCode: string  )  {
-    return this.http.get<any>(this.SellerInventory, {
-      params: {
-        SellerCode: Code,
-        GoodsName : goodsName,
-        GroupCode : groupCode
-      },
+  getSellerInventory(userId: any   )  {
+    return this.http.get<any>(this.SellerInventory+userId, {
+    
     } );
   }
 }
