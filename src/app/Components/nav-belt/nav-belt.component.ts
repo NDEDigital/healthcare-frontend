@@ -29,6 +29,7 @@ export class NavBeltComponent implements OnInit {
   sliderData = new Map();
   sliderData2 = new Map();
   activeEntry: string = '';
+  imgProduct = new Map();
 
   constructor(
     private goodsData: GoodsDataService,
@@ -54,6 +55,7 @@ export class NavBeltComponent implements OnInit {
       this.goods = data;
       for (let i = 0; i < this.goods.length; i++) {
         this.products.set(this.goods[i].productGroupCode, this.goods[i].productGroupName);
+        this.imgProduct.set(this.goods[i].productGroupCode,this.goods[i].imagePath);
       }
     });
   }
