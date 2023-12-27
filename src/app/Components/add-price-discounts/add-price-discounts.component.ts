@@ -24,7 +24,8 @@ export class AddPriceDiscountsComponent {
   alertMsg: string = '';
   isError: boolean = false;
   showPriceProductDiv: boolean = false;
-
+  productList: any;
+  btnIndex = -1;
   isDiscountEntered(): boolean {
     const discountAmount =
       this.addPriceDiscountForm.get('discountAmount')?.value;
@@ -35,8 +36,22 @@ export class AddPriceDiscountsComponent {
   toggleAddProductPriceDiv(): void {
     this.showPriceProductDiv = !this.showPriceProductDiv;
     this.addPriceDiscountForm.reset();
+    this.btnIndex = -1;
+    this.getProducts(-1);
   }
-
+  getProducts(status: any) {
+    let userID = localStorage.getItem('code');
+    this.productService.GetProductsByStatus(userID, status).subscribe({
+      next: (response: any) => {
+        console.log(response, 'get products');
+        this.productList = response;
+      },
+      error: (error: any) => {
+        console.log(error);
+        this.alertMsg = error.error.message;
+      },
+    });
+  }
   showProductPriceGrid(): void {
     this.showPriceProductDiv = false;
   }
@@ -66,11 +81,12 @@ export class AddPriceDiscountsComponent {
       .get('discountAmount')
       ?.valueChanges.subscribe(() => {});
 
-    this.getProducts();
+    this.getProducts(-1);
     this.setupFormValueChanges();
+    this.getProductList();
   }
 
-  getProducts() {
+  getProductList() {
     this.productService.getallProducts().subscribe(
       (data: any) => {
         this.products = data;

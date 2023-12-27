@@ -27,6 +27,8 @@ export class AddProductService {
   updateProductURL = `${this.URL}/SellerProductStatusUpdate`;
 
   CreateSellerProductPriceURL = `${this.URL}/ProductQuantity/CreateSellerProductPriceAndOffer`;
+  GetProductsByStatusURL = `${this.URL}/ProductQuantity/GetSellerProductsByCompanyCode`;
+
   constructor(private http: HttpClient) {}
 
   createProductGroup(productData: any) {
@@ -65,6 +67,11 @@ export class AddProductService {
         params: { status },
       });
     }
+  }
+  GetProductsByStatus(userID: any, status: any) {
+    return this.http.get(this.GetProductsByStatusURL, {
+      params: { userID, status },
+    });
   }
 
   getProductGroups() {

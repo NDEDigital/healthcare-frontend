@@ -38,6 +38,7 @@
       <div class="col tableHeader">Index</div>
       <div class="col tableHeader">Company Code</div>
       <div class="col tableHeader">Company Name</div>
+      <div class="col tableHeader">Email</div>
       <div class="col tableHeader">Tax Id. Number</div>
       <div class="col tableHeader">Foundation Date</div>
       <div class="col tableHeader">Trade Licence File</div>
@@ -57,6 +58,9 @@
       <div class="col tableBody">{{ cmp.companyCode }}</div>
       <div class="col tableBody">
         {{ cmp.companyName }}
+      </div>
+      <div class="col tableBody">
+        {{ cmp.email }}
       </div>
       <div class="col tableBody">{{ cmp.taxIdentificationNumber }}</div>
       <div class="col tableBody">
@@ -88,12 +92,13 @@
           [(ngModel)]="selectedCompanyCodeValues[cmp.companyCode]"
           type="number"
           class="border border-1 p-2 w-75"
+          min="0"
         />
       </div>
       <div class="col tableBody">
         <div class="d-flex justify-content-center align-items-center">
           <div>
-            <button class="actionBtn" *ngIf="btnIndex != 1">
+            <button class="actionBtn">
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
@@ -101,7 +106,9 @@
                 fill="green"
                 class="bi bi-check2 me-3"
                 viewBox="0 0 16 16"
-                (click)="updateCompany(cmp.companyCode, 1)"
+                (click)="
+                  updateCompany(cmp.email, cmp.companyCode, 1, cmp.maxUser)
+                "
               >
                 <path
                   d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
@@ -113,7 +120,9 @@
             <button
               class="actionBtn"
               *ngIf="btnIndex != 0"
-              (click)="updateCompany(cmp.companyCode, 0)"
+              (click)="
+                updateCompany(cmp.email, cmp.companyCode, 0, cmp.maxUser)
+              "
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -172,5 +181,47 @@
         </div>
       </div>
     </section>
+  </div>
+</div>
+<button
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#msgModal"
+  #msgModalBTN
+>
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="msgModal"
+  tabindex="-1"
+  aria-labelledby="msgModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header fs-5 fw-bold">
+        <h1 class="modal-title fs-5" id="msgModalLabel">
+          {{ alertTitle }}
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        {{ alertMsg }}
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
   </div>
 </div>

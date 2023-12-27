@@ -116,7 +116,6 @@ export class AddProductsComponent implements OnInit {
           this.isError = false; // Set isError to false for a success message
           this.PrdouctExistModalBTN.nativeElement.click();
           this.addProductForm.reset();
-          this.showProductDiv = false;
           this.toggleAddProductDiv();
         },
         error: (error: any) => {

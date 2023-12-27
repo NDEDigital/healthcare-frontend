@@ -14,11 +14,17 @@ export class UserProfileComponent {
   @ViewChild('editBTN')
   editBTN!: ElementRef;
   updateUserForm: FormGroup;
+  Role = '';
   constructor(
     private sharedService: SharedService,
     private userDataService: UserDataService
   ) {
+    let role = localStorage.getItem('role');
+    if (role) {
+      this.Role = role;
+    }
     const userCode = localStorage.getItem('code');
+
     // console.log(userCode, 'code');
     this.userDataService.getSingleUser(userCode).subscribe({
       next: (response: any) => {
