@@ -23,7 +23,7 @@
           Pending
         </button>
         <button
-          class="custom-btn btn-processing"
+          class="custom-btn btn-processing "
           [ngClass]="{ active: btnIndex === 0 }"
           (click)="btnIndex = 0"
           (click)="getData('Processing')"
@@ -33,7 +33,7 @@
         <button
         class="custom-btn btn-toShip"
         [ngClass]="{ active: btnIndex === 2}"
-        (click)="btnIndex = 0"
+        (click)="btnIndex = 2"
         (click)="getData('Ready To Ship')"
       >
    
@@ -42,7 +42,7 @@
       <button
       class="custom-btn btn-Shipped"
       [ngClass]="{ active: btnIndex === 3 }"
-      (click)="btnIndex = 0"
+      (click)="btnIndex = 3"
       (click)="getData('Shipped')"
     >
     Shipped 
@@ -50,7 +50,7 @@
     <button
     class="custom-btn btn-Delivered"
     [ngClass]="{ active: btnIndex === 4}"
-    (click)="btnIndex = 0"
+    (click)="btnIndex = 4"
     (click)="getData('Delivered')">
     Delivered  
     </button>
@@ -70,16 +70,13 @@
               id="flexCheckDefault" >
           </div>
         </div>
-        <div class="col tableHeader">Image</div>
-        <div class="col tableHeader">ProductName</div>
-        <div class="col tableHeader">Full Name</div>
-        <div class="col tableHeader">Company Name</div>
-        <div class="col tableHeader">Discount Amount</div>
-        <div class="col tableHeader">Discount %</div>
-        <div class="col tableHeader">Effective Date</div>
-        <div class="col tableHeader">End Date</div>
-        <div class="col tableHeader">Price</div>
-  
+        <div class="col tableHeader">Product </div>
+        <div class="col tableHeader">Specification</div>
+        <div class="col tableHeader">order No</div>
+        <div class="col tableHeader">Address</div>
+        <div class="col tableHeader">saleQty</div>
+        <div class="col tableHeader">stockQty</div>
+        <div class="col tableHeader">netPrice</div> 
         <div class="col tableHeader" *ngIf="status != ''">Action</div>
       </div>
   
