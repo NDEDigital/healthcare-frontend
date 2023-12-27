@@ -56,9 +56,10 @@
       <thead class="table-header">
         <tr class="text-center">
           <th scope="col">#</th>
-          <th scope="col">Group Code</th>
-          <th scope="col">Goods Name</th>
-          <th scope="col">Goods Id</th>
+          <th scope="col">productGroupName</th>
+          <th scope="col">productName</th>
+          <th scope="col">specification</th>
+          <th scope="col">unit</th>
           <th scope="col">Total Qty</th>
           <th scope="col">Available Qty</th>
           <th scope="col">Sales Qty</th>
@@ -68,12 +69,13 @@
       <tbody *ngFor="let row of inventoryData; let i = index">
         <tr class="text-center">
           <th scope="row">{{ i + 1 }}</th>
-          <td>{{ row.groupCode }}</td>
-          <td>{{ row.goodsName }}</td>
-          <td>{{ row.goodsID }}</td>
-          <td>{{ row.totalQuantity }}</td>
-          <td>{{ row.availableQuantity }}</td>
-          <td>{{ row.salesQuantiy }}</td>
+          <td>{{ row.productGroupName }}</td>
+          <td>{{ row.productName }}</td>
+          <td>{{ row.specification }}</td>
+          <td>{{ row.unit }}</td>
+          <td>{{ row.totalQty }}</td>
+          <td>{{ row.availableQty }}</td>
+          <td>{{ row.saleQty }}</td>
           <td>{{ row.price }}</td>
         </tr>
       </tbody>

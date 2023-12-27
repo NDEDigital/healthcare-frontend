@@ -15,7 +15,7 @@ export class SellerInventoryComponent {
   inventoryData: any = [];
   goodsName: string = '';
   groupCode: string = '';
-  sellerCode: any;
+  sellerId: any;
   constructor(
     private elementRef: ElementRef,
     private SellerService: SellerOrderOverviewService
@@ -61,10 +61,10 @@ export class SellerInventoryComponent {
 
 
 GetData() {
-this.sellerCode = localStorage.getItem('code') || '';
-    console.log(" sellerCode", this.sellerCode)
-    // this.SellerService.getSellerInventory('USR-STL-MDL-23-11-0003').subscribe(
-    this.SellerService.getSellerInventory(    this.sellerCode,this.goodsName, this.groupCode).subscribe(
+this.sellerId = localStorage.getItem('code') || '';
+    console.log(" sellerId", this.sellerId)
+
+    this.SellerService.getSellerInventory( this.sellerId ).subscribe(
       (data: any) => {
         console.log(' load dataaaaaa', data); // Use a type if possible for better type checking
         this.inventoryData = data;
