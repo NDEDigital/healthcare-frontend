@@ -15,6 +15,7 @@ import { AddProductService } from 'src/app/services/add-product.service';
 })
 export class AddGroupsComponent {
   @ViewChild('userExistModalBTN') UserExistModalBTN!: ElementRef;
+  @ViewChild('productGroupImageInput') ProductImageInput!: ElementRef;
 
   addGroupForm!: FormGroup;
   alertMsg = '';
@@ -36,6 +37,7 @@ export class AddGroupsComponent {
   ngOnInit() {
     this.addGroupForm = new FormGroup({
       productGroupName: new FormControl('', Validators.required),
+      productGroupImage: new FormControl('', Validators.required),
       productGroupPrefix: new FormControl('', Validators.required),
       productGroupDetails: new FormControl(''),
     });
@@ -53,24 +55,50 @@ export class AddGroupsComponent {
       control.markAsTouched();
       control.markAsDirty();
     });
-    const formData = {
-      ...this.addGroupForm.value,
-      addedBy: 'user',
-      addedPC: '0.0.0.0',
-    };
+    // const formData = {
+    //   ...this.addGroupForm.value,
+    //   addedBy: 'user',
+    //   addedPC: '0.0.0.0',
+    // };
     if (this.addGroupForm.valid) {
-      console.log('Form Data:', this.addGroupForm.value);
+      // console.log('Form Data:', this.addGroupForm.value);
+      const formData = new FormData();
+
+      Object.keys(this.addGroupForm.value).forEach((key) => {
+        let value = this.addGroupForm.value[key];
+        if (key === 'productId' || key === 'unitId') {
+          value = String(Math.floor(Number(value)));
+          console.log(value);
+        }
+        formData.append(key, value);
+      });
+
+      formData.append(
+        'imageFile',
+        this.ProductImageInput.nativeElement.files[0]
+      );
+
+      // Append additional fields
+      formData.append('addedBy', 'user');
+      formData.append('addedPC', '0.0.0.0');
+
+      for (let pair of (formData as any).entries()) {
+        console.log(`${pair[0]}: `, pair[1]);
+      }
 
       this.addProductService.createProductGroup(formData).subscribe({
         next: (response: any) => {
-          console.log(response);
-          this.addGroupForm.reset();
-          this.alertMsg = 'Successfully added this Product Group';
-          this.UserExistModalBTN.nativeElement.click();
-          this.toggleAddProductGroupDiv();
+          console.log(response, 'successfull');
+          this.alertMsg = response.message;
+          console.log(response.message);
+          setTimeout(() => {
+            this.UserExistModalBTN.nativeElement.click();
+            this.addGroupForm.reset();
+            this.toggleAddProductGroupDiv();
+          }, 50);
         },
         error: (error: any) => {
-          console.log(error);
+          console.log(error, 'error');
           this.alertMsg = error.error.message;
           this.UserExistModalBTN.nativeElement.click();
         },

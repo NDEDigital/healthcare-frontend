@@ -158,7 +158,23 @@
         >Product Group Name is required.</span
       >
     </div>
+    <div class="form-group">
+      <label for="productGroupImage"
+        ><span class="text-danger">*</span>Upload Product Group Image
+      </label>
 
+      <input
+        type="file"
+        class="form-control"
+        id="productGroupImage"
+        formControlName="productGroupImage"
+        [class.error]="isFieldInvalid('productGroupImage')"
+        #productGroupImageInput
+      />
+      <span class="text-danger" *ngIf="isFieldInvalid('productGroupImage')"
+        >Product Image is required.</span
+      >
+    </div>
     <div class="form-group">
       <label for="productGroupPrefix"
         ><span class="text-danger">*</span>Product Group Prefix</label
