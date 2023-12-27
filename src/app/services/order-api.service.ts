@@ -26,9 +26,9 @@ interface OrderDetail {
   specification: string;
   productGroupId: string;
   userId: number;
-  unitId:number;
-  discountAmount:number;
-  netPrice:number;
+  unitId: number;
+  discountAmount: number;
+  netPrice: number;
   addedBy: string;
   addedPC: string;
 }
@@ -38,8 +38,6 @@ interface OrderDetail {
 //   detail: OrderDetail[];
 // }
 
-
-
 @Injectable({
   providedIn: 'root',
 })
@@ -48,9 +46,7 @@ export class OrderApiService {
   constructor(
     private http: HttpClient,
     private cartDataService: CartDataService
-  ) {
-
-  }
+  ) {}
 
   cartDataDetail: Map<string, CartItem> = new Map<string, CartItem>();
   cartDataQt = new Map<string, number>();
@@ -66,6 +62,15 @@ export class OrderApiService {
   getUserInfoURL = `${this.URL}/api/Order/getOrderUserInfo`;
   getAllOrderForBuyerURL = `${this.URL}/api/Order/getAllOrderForBuyer`;
   checkUnderOrderProccessURL = `${this.URL}/api/Order/checkUnderOrderProccess`;
+
+  // ============== new code  ==================
+  getBuyerOrderURL = `${this.URL}/api/Order/GetBuyerOrderBasedOnUserID`;
+
+  getBuyerOrder(userid: any, status: any) {
+    return this.http.get(this.getBuyerOrderURL, {
+      params: { userid, status },
+    });
+  }
 
   httpOptions = {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
@@ -88,15 +93,14 @@ export class OrderApiService {
   }
 
   setData() {
-    
     const cart = this.cartDataService.getCartData();
     this.cartDataDetail = cart.cartDataDetail;
     this.cartDataQt = cart.cartDataQt;
     this.totalPriceWithDeliveryCharge =
-    this.cartDataService.getTotalPrice() + 100;
+      this.cartDataService.getTotalPrice() + 100;
 
     this.buyerCode = localStorage.getItem('code');
-     
+
     this.orderdata = {
       userId: parseInt(this.buyerCode),
       address: this.address,
@@ -105,19 +109,18 @@ export class OrderApiService {
       totalPrice: this.totalPriceWithDeliveryCharge,
       phoneNumber: this.phone,
       deliveryCharge: 100,
-      addedBy: "me",
-      addedPC:"me",
-      orderDetailsList: []
+      addedBy: 'me',
+      addedPC: 'me',
+      orderDetailsList: [],
     };
 
-   
-   
     for (const [key, entry] of this.cartDataDetail.entries()) {
       let qt: number | undefined = this.cartDataQt.get(key);
       if (qt === undefined) {
         qt = 0;
       }
-      qt = qt === undefined ? 0 : (typeof qt === 'string' ? parseInt(qt, 10) : qt);
+      qt =
+        qt === undefined ? 0 : typeof qt === 'string' ? parseInt(qt, 10) : qt;
       const detailData: OrderDetail = {
         productId: parseInt(entry.goodsId),
         qty: qt,
@@ -128,10 +131,10 @@ export class OrderApiService {
         userId: parseInt(entry.sellerCode),
         unitId: entry.unitId,
         discountAmount: entry.discountAmount,
-        discountPct:entry.discountPct,
-        netPrice:0,
-        addedBy:this.buyerCode,
-        addedPC: "0.0.0.0",
+        discountPct: entry.discountPct,
+        netPrice: 0,
+        addedBy: this.buyerCode,
+        addedPC: '0.0.0.0',
       };
       this.orderdata.orderDetailsList.push(detailData);
     }
@@ -139,7 +142,11 @@ export class OrderApiService {
   insertOrderData() {
     this.setData();
     console.log(' orderdata', this.orderdata);
-    return this.http.post<any>(this.orderPostUrl, this.orderdata, this.httpOptions);
+    return this.http.post<any>(
+      this.orderPostUrl,
+      this.orderdata,
+      this.httpOptions
+    );
   }
   // get user info for order
   getUserInfo(UserId: any) {
