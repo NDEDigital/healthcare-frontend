@@ -78,7 +78,7 @@ export class SellerOrderComponent {
       sellerSalesDetailsList: [
         {
           orderNo: product.orderNo,
-          productId: 0,
+          productId: product.productId,
           specification: product.specification,
           stockQty: product.stockQty,
           saleQty: product.saleQty,
