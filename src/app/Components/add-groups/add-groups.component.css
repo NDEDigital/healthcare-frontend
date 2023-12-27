@@ -11,6 +11,10 @@ body {
   margin: 0;
   padding: 0;
 }
+.product_image {
+  width: 6rem;
+  height: 4rem;
+}
 
 .containgFields {
   width: 50rem;
@@ -131,7 +135,7 @@ select {
   font-weight: 500;
 }
 
-.modal-heading{
+.modal-heading {
   background-color: var(--color-primary);
 }
 
@@ -230,7 +234,3 @@ select {
 /* .marginBackBtn{
   margin-left: 10rem;
 } */
-
-
-
-
