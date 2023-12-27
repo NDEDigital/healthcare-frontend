@@ -74,7 +74,44 @@
     box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
     color: #ebf8ff !important;
   }
+  .btn-processing {
+    border: 1px solid green;
+  }
+  .btn-processing.active {
+    background-color: green !important;
+    color: #fff !important; /* Changed text color */
+  }
+
+  .btn-toShip {
+    border: 1px solid rgb(48, 129, 161) !important;
+  }
+  .btn-toShip.active {
+    background-color:rgb(48, 129, 161) !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #ebf8ff !important; 
+  }
   
+ 
+  .btn-Shipped {
+    border: 1px solid rgb(48, 87, 161) !important;
+  }
+  .btn-Shipped.active {
+    background-color: rgb(48, 87, 161) !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #ebf8ff !important; 
+  }
+  
+  .btn-Delivered {
+    border: 1px solid rgb(85, 52, 104) !important;
+  }
+  .btn-Delivered.active {
+    background-color:rgb(85, 52, 104) !important;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+    color: #ebf8ff !important; 
+  }
+  
+
+
   .btn-trade-company {
     width: 4rem !important;
   }
