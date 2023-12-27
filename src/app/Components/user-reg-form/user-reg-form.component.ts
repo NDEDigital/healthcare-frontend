@@ -146,16 +146,16 @@ export class UserRegFormComponent {
       this.user = formData;
       this.userData.createUser(this.user).subscribe({
         next: (response: any) => {
-          this.sharedServiceData.updateLoginStatus(
-            true,
-            response.userId,
-            response.role
-          );
+          // this.sharedServiceData.updateLoginStatus(
+          //   true,
+          //   response.userId,
+          //   response.role
+          // );
           console.log(response, 'done');
 
-          if (response.role === 'buyer') {
-            this.router.navigate(['/']);
-          } else this.router.navigate(['/dashboard']);
+          // if (response.role === 'buyer') {
+          //   this.router.navigate(['/']);
+          // } else this.router.navigate(['/dashboard']);
           // this.sharedServiceData.loggedInUserInfo(response.user);
 
           // window.location.href = '';
