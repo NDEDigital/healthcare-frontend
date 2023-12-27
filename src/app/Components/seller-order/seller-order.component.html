@@ -1,184 +1,193 @@
 <div class="">
-    <div
-      class="bg-white d-flex justify-content-center p-2 border border-1 rounded"
-    >
-      <h1 class="companyApproval_header_text">Product Approval</h1>
-    </div>
-    <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2">
-      <div class="headerbtns">
-        <button
-          class="custom-btn new-btn active"
-          [ngClass]="{ active: btnIndex === -1 }"
-          (click)="btnIndex = -1"
-          (click)="getData('')"
-        >
-          All
-        </button>
-        <button
-          class="custom-btn btn-active"
-          [ngClass]="{ active: btnIndex === 1 }"
-          (click)="btnIndex = 1"
-          (click)="getData('Approved')"
-        >
-          Pending
-        </button>
-        <button
-          class="custom-btn btn-processing "
-          [ngClass]="{ active: btnIndex === 0 }"
-          (click)="btnIndex = 0"
-          (click)="getData('Processing')"
-        >
-        Processing 
-        </button>
-        <button
-        class="custom-btn btn-toShip"
-        [ngClass]="{ active: btnIndex === 2}"
-        (click)="btnIndex = 2"
-        (click)="getData('Ready To Ship')"
+  <div
+    class="bg-white d-flex justify-content-center p-2 border border-1 rounded"
+  >
+    <h1 class="companyApproval_header_text">Product Approval</h1>
+  </div>
+  <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2">
+    <div class="headerbtns">
+      <button
+        class="custom-btn new-btn active"
+        [ngClass]="{ active: btnIndex === -1 }"
+        (click)="btnIndex = -1"
+        (click)="getData('')"
       >
-   
-       Ready To Ship 
+        All
       </button>
       <button
-      class="custom-btn btn-Shipped"
-      [ngClass]="{ active: btnIndex === 3 }"
-      (click)="btnIndex = 3"
-      (click)="getData('Shipped')"
-    >
-    Shipped 
-    </button>
-    <button
-    class="custom-btn btn-Delivered"
-    [ngClass]="{ active: btnIndex === 4}"
-    (click)="btnIndex = 4"
-    (click)="getData('Delivered')">
-    Delivered  
-    </button>
-
-      </div>
+        class="custom-btn btn-active"
+        [ngClass]="{ active: btnIndex === 1 }"
+        (click)="btnIndex = 1"
+        (click)="getData('Approved')"
+      >
+        Pending
+      </button>
+      <button
+        class="custom-btn btn-processing"
+        [ngClass]="{ active: btnIndex === 2 }"
+        (click)="btnIndex = 2"
+        (click)="getData('Processing')"
+      >
+        Processing
+      </button>
+      <button
+        class="custom-btn btn-toShip"
+        [ngClass]="{ active: btnIndex === 3 }"
+        (click)="btnIndex = 3"
+        (click)="getData('ReadyToShip')"
+      >
+        Ready To Ship
+      </button>
+      <button
+        class="custom-btn btn-Shipped"
+        [ngClass]="{ active: btnIndex === 4 }"
+        (click)="btnIndex = 4"
+        (click)="getData('ToDeliver')"
+      >
+        To Deliver
+      </button>
+      <button
+        class="custom-btn btn-Shipped"
+        [ngClass]="{ active: btnIndex === 5 }"
+        (click)="btnIndex = 5"
+        (click)="getData('Delivered')"
+      >
+        Delivered
+      </button>
+      <button
+        class="custom-btn btn-Delivered"
+        [ngClass]="{ active: btnIndex === 6 }"
+        (click)="btnIndex = 6"
+        (click)="getData('Reviewed')"
+      >
+        Reviewed
+      </button>
+      <button
+        class="custom-btn btn-Delivered"
+        [ngClass]="{ active: btnIndex === 7 }"
+        (click)="btnIndex = 7"
+        (click)="getData('ToReturn')"
+      >
+        To Return
+      </button>
+      <button
+        class="custom-btn btn-Delivered"
+        [ngClass]="{ active: btnIndex === 8 }"
+        (click)="btnIndex = 8"
+        (click)="getData('Returned')"
+      >
+        Returned
+      </button>
+      <button
+        class="custom-btn btn-danger"
+        [ngClass]="{ active: btnIndex === 9 }"
+        (click)="btnIndex = 9"
+        (click)="getData('Rejected')"
+      >
+        Rejected
+      </button>
     </div>
-    <div class="scrollable-table border border-1 bg-light">
-      <!-- TABLE header -->
-      <div class="row headerRow sticky-top fw-bolder">
-        <div class="col tableHeader" *ngIf="status != ''">
-         <div class="form-check">
-            <input class="form-check-input checkall"
+  </div>
+  <div class="scrollable-table border border-1 bg-light">
+    <!-- TABLE header -->
+    <div class="row headerRow sticky-top fw-bolder">
+      <!-- <div class="col tableHeader" *ngIf="status != ''">
+        <div class="form-check">
+          <input
+            class="form-check-input checkall"
             [checked]="headerCheckboxChecked"
             (change)="toggleAllCheckboxes()"
-             type="checkbox"
-              value=""
-              id="flexCheckDefault" >
-          </div>
-        </div>
-        <div class="col tableHeader">Product </div>
-        <div class="col tableHeader">Specification</div>
-        <div class="col tableHeader">order No</div>
-        <div class="col tableHeader">Address</div>
-        <div class="col tableHeader">saleQty</div>
-        <div class="col tableHeader">stockQty</div>
-        <div class="col tableHeader">netPrice</div> 
-        <div class="col tableHeader" *ngIf="status != ''">Action</div>
-      </div>
-  
-      <!-- table body -->
-  
-      <section
-        class="row tablebodyRow fw-semibold"
-        *ngFor="let row of sellerOrderData; let i = index"
-      >
-        <div class="col tableBody" *ngIf="status != ''">
-          <div class="form-check">
-            <input class="form-check-input" [checked]="row.checked" type="checkbox" value="" id="flexCheckDefault">
-          </div>
-        </div>
-        <div class="col tableBody">
-          <!-- {{ row.imagePath }} -->
-          <img
-            class="product_image"
-            [src]="row.imagePath ? row.imagePath.split('src')[1] : ''"
-            alt="no image was uploaded!"
+            type="checkbox"
+            value=""
+            id="flexCheckDefault"
           />
         </div>
-        <div class="col tableBody">
-          {{ row.productName }}
-        </div>
-        <div class="col tableBody">{{ row.fullName }}</div>
-        <div class="col tableBody">
-          {{ row.companyName }}
-        </div>
-        <div class="col tableBody">
-          {{ row.discountAmount }}
-        </div>
-        <div class="col tableBody">
-          {{ row.discountPct }}
-        </div>
-        <div class="col tableBody">
-          {{ row.effectivateDate | date : "dd MMM yyyy" }}
-        </div>
-        <div class="col tableBody">
-          {{ row.endDate | date : "dd MMM yyyy" }}
-        </div>
-        <div class="col tableBody">
-          {{ row.price }}
-        </div>
-        <div class="col tableBody"  *ngIf="status != ''">
-          <div class="d-flex justify-content-center align-items-center" > 
-            <div>
-              <button class="actionBtn" >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="25"
-                  height="25"
-                  fill="green"
-                  class="bi bi-check2 me-3"
-                  viewBox="0 0 16 16"
-                  (click)="
-                    updateProduct(
-                      row.userId,
-                      row.companyCode,
-                      row.productId,
-                      'Approved'
-                    )
-                  "
-                >
-                  <path
-                    d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
-                  />
-                </svg>
-              </button>
-            </div>
-            <div>
-              <button
-                class="actionBtn"
-                *ngIf="btnIndex != 0"
-                (click)="
-                  updateProduct(
-                    row.userId,
-                    row.companyCode,
-                    row.productId,
-                    'Rejected'
-                  )
-                "
+      </div> -->
+      <div class="col tableHeader">Index</div>
+      <div class="col tableHeader">order No</div>
+      <div class="col tableHeader">Product Name</div>
+      <div class="col tableHeader">Buyer Name</div>
+      <div class="col tableHeader">Specification</div>
+      <div class="col tableHeader">Address</div>
+      <div class="col tableHeader">netPrice</div>
+      <div class="col tableHeader">stockQty</div>
+      <div class="col tableHeader">saleQty</div>
+      <div class="col tableHeader" *ngIf="status != ''">Action</div>
+    </div>
+
+    <!-- table body -->
+
+    <section
+      class="row tablebodyRow fw-semibold"
+      *ngFor="let row of sellerOrderData; let i = index"
+    >
+      <div class="col tableBody">#{{ i + 1 }}</div>
+      <div class="col tableBody">
+        {{ row.orderNo }}
+      </div>
+      <div class="col tableBody">
+        {{ row.productName }}
+      </div>
+      <div class="col tableBody">{{ row.buyerName }}</div>
+      <div class="col tableBody">{{ row.specification }}</div>
+
+      <div class="col tableBody">
+        {{ row.address }}
+      </div>
+      <div class="col tableBody">
+        {{ row.netPrice }}
+      </div>
+      <div class="col tableBody">
+        {{ row.stockQty }}
+      </div>
+      <div class="col tableBody">
+        {{ row.saleQty }}
+      </div>
+
+      <div class="col tableBody" *ngIf="status != ''">
+        <div class="d-flex justify-content-center align-items-center">
+          <div>
+            <button class="actionBtn">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="green"
+                class="bi bi-check2 me-3"
+                viewBox="0 0 16 16"
+                (click)="updateOrder(row.orderDetailId, row)"
               >
-                <svg
-                  xmlns="http://www.w3.org/2000/svg"
-                  width="20"
-                  height="20"
-                  fill="red"
-                  class="bi bi-x-lg fw-bolder"
-                  viewBox="0 0 16 16"
-                >
-                  <path
-                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
-                  />
-                </svg>
-              </button>
-            </div>
+                <path
+                  d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div>
+            <button
+              class="actionBtn"
+              *ngIf="btnIndex != 0"
+              (click)="updateOrder(row.orderDetailId, row)"
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="red"
+                class="bi bi-x-lg fw-bolder"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+                />
+              </svg>
+            </button>
           </div>
         </div>
-  
-        <!-- Modal for tadeLicence -->
-        <!-- <div
+      </div>
+
+      <!-- Modal for tadeLicence -->
+      <!-- <div
           class="modal fade"
           id="staticBackdrop"
           data-bs-backdrop="static"
@@ -206,7 +215,6 @@
             </div>
           </div>
         </div> -->
-      </section>
-    </div>
+    </section>
   </div>
-  
+</div>

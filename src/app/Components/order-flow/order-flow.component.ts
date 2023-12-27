@@ -1,5 +1,6 @@
 import { Component } from '@angular/core';
 import { AddProductService } from 'src/app/services/add-product.service';
+import { OrderApiService } from 'src/app/services/order-api.service';
 
 @Component({
   selector: 'app-order-flow',
@@ -14,14 +15,20 @@ export class OrderFlowComponent {
   imageTitle = 'No Data Found!';
   selectedCompanyCodeValues: { [key: string]: number } = {};
 
-  constructor(private productService: AddProductService) {}
+  constructor(
+    private productService: AddProductService,
+    private orderApi: OrderApiService
+  ) {}
 
   ngOnInit() {
     this.getData(this.status);
   }
 
   getData(status: string) {
-    this.productService.getProductData(status).subscribe({
+    let uidS = localStorage.getItem('code');
+    let userID;
+    if (uidS) userID = parseInt(uidS, 10);
+    this.orderApi.getBuyerOrder(userID, status).subscribe({
       next: (response: any) => {
         console.log(response);
         this.productsData = response;

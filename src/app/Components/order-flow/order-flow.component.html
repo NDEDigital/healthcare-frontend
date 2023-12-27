@@ -12,9 +12,9 @@
         (click)="btnIndex = -1"
         (click)="getData('Pending')"
       >
-        New
+        Pending
       </button>
-      <button
+      <!-- <button
         class="custom-btn"
         [ngClass]="{ active: btnIndex === 1 }"
         (click)="btnIndex = 1"
@@ -29,15 +29,8 @@
         (click)="getData('Cancelled')"
       >
         Cancelled
-      </button>
-      <button
-        class="custom-btn"
-        [ngClass]="{ active: btnIndex === 2 }"
-        (click)="btnIndex = 2"
-        (click)="getData('Rejected')"
-      >
-        Rejected
-      </button>
+      </button> -->
+
       <button
         class="custom-btn"
         [ngClass]="{ active: btnIndex === 3 }"
@@ -94,23 +87,27 @@
       >
         Returned
       </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 2 }"
+        (click)="btnIndex = 2"
+        (click)="getData('Rejected')"
+      >
+        Rejected
+      </button>
     </div>
   </div>
   <div class="scrollable-table border border-1 bg-light">
     <!-- TABLE header -->
     <div class="row headerRow sticky-top fw-bolder">
-      <div class="col tableHeader"></div>
-      <div class="col tableHeader">Image</div>
-      <div class="col tableHeader">ProductName</div>
-      <div class="col tableHeader">Full Name</div>
-      <div class="col tableHeader">Company Name</div>
-      <div class="col tableHeader">Discount Amount</div>
-      <div class="col tableHeader">Discount %</div>
-      <div class="col tableHeader">Effective Date</div>
-      <div class="col tableHeader">End Date</div>
-      <div class="col tableHeader">Price</div>
+      <div class="col tableHeader">Index</div>
+      <div class="col tableHeader">Order No</div>
+      <div class="col tableHeader">Buyer Name</div>
+      <div class="col tableHeader">Order Date</div>
+      <div class="col tableHeader">Address</div>
+      <div class="col tableHeader">Status</div>
 
-      <div class="col tableHeader">Action</div>
+      <!-- <div class="col tableHeader">Action</div> -->
     </div>
 
     <!-- table body -->
@@ -121,36 +118,23 @@
     >
       <div class="col tableBody">#{{ i + 1 }}</div>
       <div class="col tableBody">
-        <!-- {{ row.imagePath }} -->
-        <img
-          class="product_image"
-          [src]="row.imagePath ? row.imagePath.split('src')[1] : ''"
-          alt="no image was uploaded!"
-        />
+        {{ row.orderNo }}
       </div>
       <div class="col tableBody">
-        {{ row.productName }}
+        {{ row.buyerName }}
       </div>
-      <div class="col tableBody">{{ row.fullName }}</div>
+
       <div class="col tableBody">
-        {{ row.companyName }}
+        {{ row.orderDate | date : "dd MMM yyyy" }}
       </div>
+
       <div class="col tableBody">
-        {{ row.discountAmount }}
-      </div>
-      <div class="col tableBody">
-        {{ row.discountPct }}
+        {{ row.address }}
       </div>
       <div class="col tableBody">
-        {{ row.effectivateDate | date : "dd MMM yyyy" }}
+        {{ row.sellerStatus }}
       </div>
-      <div class="col tableBody">
-        {{ row.endDate | date : "dd MMM yyyy" }}
-      </div>
-      <div class="col tableBody">
-        {{ row.price }}
-      </div>
-      <div class="col tableBody">
+      <!-- <div class="col tableBody">
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button class="actionBtn" *ngIf="btnIndex != 1">
@@ -204,7 +188,7 @@
             </button>
           </div>
         </div>
-      </div>
+      </div> -->
     </section>
   </div>
 </div>

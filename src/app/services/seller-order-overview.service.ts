@@ -20,12 +20,50 @@ export class SellerOrderOverviewService {
   getInvoiceForSellerURL = `${this.URL}/api/Invoice/GetInvoiceDataForSeller`;
   // seller
   sellerOrderUpdate = `${this.URL}/api/Order/UpdateSellerOrderDetailsStatus`;
-  getSellerOrderData = `${this.URL}/api/Order/GetSellerOrderBasedOnUserID`;
 
+  // ========== new code ==========
+  getSellerOrderData = `${this.URL}/api/Order/GetSellerOrderBasedOnUserID`;
+  UpdateSellerOrderDetailsStatusURL = `${this.URL}/api/Order/UpdateSellerOrderDetailsStatus`;
+
+  // get data
+  getsellerOrderData(userId: string, status?: string): Observable<any[]> {
+    let params = new HttpParams().set('userid', userId);
+    if (status) {
+      params = params.set('status', status);
+    }
+    const url = `${this.getSellerOrderData}`;
+    return this.http.get<any[]>(url, { params });
+  }
+  UpdateSellerOrderDetailsStatus(
+    orderdetailsIds: string,
+    status: string,
+    sellerSalesMasterDto: any
+  ) {
+    console.log('Data sent to server:', '1', status, sellerSalesMasterDto);
+    const updateOrder = {
+      orderdetailsIds: orderdetailsIds,
+      status: status,
+      sellerSalesMasterDto: sellerSalesMasterDto,
+    };
+    console.log(updateOrder, 'updateOrder');
+
+    return this.http.put(this.UpdateSellerOrderDetailsStatusURL, updateOrder);
+  }
+
+  // ======================== OLD code =====================
 
   //  update status
-  updatesellerOrderStatus(orderMasterId: string, detailsCancelledId: string | null, status: string): Observable<any> {
-    console.log(" orderMasterId, detailsCancelledId, status",orderMasterId, detailsCancelledId, status)
+  updatesellerOrderStatus(
+    orderMasterId: string,
+    detailsCancelledId: string | null,
+    status: string
+  ): Observable<any> {
+    console.log(
+      ' orderMasterId, detailsCancelledId, status',
+      orderMasterId,
+      detailsCancelledId,
+      status
+    );
     const url = `${this.sellerOrderUpdate}`;
     let params = new HttpParams().set('orderMasterId', orderMasterId);
 
@@ -37,18 +75,6 @@ export class SellerOrderOverviewService {
 
     return this.http.put<any>(url, {}, { params });
   }
-
-
-
-// get data
-getsellerOrderData(userId: string, status?: string): Observable<any[]> {
-  let params = new HttpParams().set('userid', userId);
-  if (status) {
-    params = params.set('status', status);
-  }
-  const url = `${this.getSellerOrderData}`;
-  return this.http.get<any[]>(url, { params });
-}
 
   getOrderInfo(
     sellerId: any,
@@ -100,7 +126,6 @@ getsellerOrderData(userId: string, status?: string): Observable<any[]> {
     });
   }
 
-
   updateOrderStatus(OrderMasterIds: string, StatusValue: string) {
     console.log(OrderMasterIds, StatusValue, 'dsadsaasd');
 
@@ -117,7 +142,4 @@ getsellerOrderData(userId: string, status?: string): Observable<any[]> {
       params: { sellerCode, OrderID },
     });
   }
-
-
-
 }
