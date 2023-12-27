@@ -145,6 +145,7 @@
               <option
                 *ngFor="let method of paymentMethods"
                 [value]="method.pmid"
+                [id]="method.pmName"
               >
                 {{ method.pmName }}
               </option>

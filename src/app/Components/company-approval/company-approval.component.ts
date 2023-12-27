@@ -68,7 +68,9 @@ export class CompanyApprovalComponent {
     const userCnt = this.selectedCompanyCodeValues[companyCode] || maxUser;
     if (userCnt < 0) {
       // Handle the invalid input (e.g., display an error message)
-      alert('Please enter a non-negative value for the user count.');
+      this.alertTitle = 'Error!';
+      this.alertMsg = 'Please enter a non-negative value for the user count.';
+      this.msgModalBTN.nativeElement.click();
       return; // Prevent further processing
     }
 
