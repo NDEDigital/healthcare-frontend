@@ -129,7 +129,7 @@ export class OrderApiService {
         unitId: entry.unitId,
         discountAmount: entry.discountAmount,
         discountPct:entry.discountPct,
-        netPrice:0,
+        netPrice: entry.netPrice,
         addedBy:this.buyerCode,
         addedPC: "0.0.0.0",
       };

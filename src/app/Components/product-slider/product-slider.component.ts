@@ -154,7 +154,7 @@ export class ProductSliderComponent {
               price: this.goods[i].price,
               discountAmount: this.goods[i].discountAmount,
               discountPct: this.goods[i].discountPct,
-
+              netPrice: this.goods[i].totalPrice
             
             };
             finObj.push(obj);
@@ -176,6 +176,7 @@ export class ProductSliderComponent {
               price: this.goods[i].price,
               discountAmount: this.goods[i].discountAmount,
               discountPct: this.goods[i].discountPct,
+              netPrice: this.goods[i].totalPrice
             };
             this.products3.set(this.goods[i].productGroupName, [obj]);
           }

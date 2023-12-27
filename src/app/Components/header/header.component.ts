@@ -176,7 +176,7 @@ export class HeaderComponent {
     this.goodsData.getNavData().subscribe((data: any[]) => {
       this.goods = data;
       for (let i = 0; i < this.goods.length; i++) {
-        this.products.set(this.goods[i].groupName, this.goods[i].groupCode);
+        this.products.set(this.goods[i].productGroupName, this.goods[i].productGroupCode);
       }
     });
     setTimeout(() => {}, 100);

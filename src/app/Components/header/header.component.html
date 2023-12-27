@@ -550,7 +550,8 @@
         class="searchbar_container d-flex align-items-center justify-content-between"
       >
         <!-- // category -->
-        <div class="dropdown me-4" *ngIf="isCategoriesVisible">
+        <div class="dropdown-container">
+        <div class="dropdown me-4  " *ngIf="isCategoriesVisible">
           <button
             class="dropdown-toggle catergoriesButton"
             type="button"
@@ -567,7 +568,7 @@
             ></span>
             <span class="fw-semibold"> Categories</span>
           </button>
-          <ul class="dropdown-menu">
+          <ul class="dropdown-menu border border-danger">
             <li
               *ngFor="let product of products | keyvalue"
               (click)="setSelectData(product.key, product.value)"
@@ -580,6 +581,7 @@
             </li>
           </ul>
         </div>
+      </div>
 
         <!--  category end-->
         <div
