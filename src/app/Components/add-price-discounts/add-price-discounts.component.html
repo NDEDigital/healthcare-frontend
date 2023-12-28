@@ -146,13 +146,14 @@
     <div class="form-group">
       <label for="price"><span class="text-danger">*</span>Price</label>
       <input
-        type="text"
+        type="number"
         id="price"
         formControlName="price"
+        class="w-100 p-1 rounded-1 border border-1"
         [class.error]="isFieldInvalid('price')"
       />
       <span class="text-danger" *ngIf="isFieldInvalid('price')"
-        >Price is required.</span
+        >Price is not valid.</span
       >
     </div>
 
@@ -160,15 +161,29 @@
       <div class="form-group col-12 col-md-6">
         <label for="discountAmount"> Discount Amount </label>
         <input
-          type="text"
+          type="number"
           id="discountAmount"
           formControlName="discountAmount"
+          class="w-100 p-1 rounded-1 border border-1"
+          [class.error]="isFieldInvalid('discountAmount')"
         />
+        <span class="text-danger" *ngIf="isFieldInvalid('discountAmount')"
+        >Give 0 or positive number, it is not valid.</span
+      >
       </div>
 
       <div class="form-group col-12 col-md-6">
-        <label for="discountPct">Discount Percentage </label>
-        <input type="text" id="discountPct" formControlName="discountPct" />
+        <label for="discountPct">Discount Percentage (%) </label>
+        <input
+          type="number"
+          id="discountPct"
+          class="w-100 p-1 rounded-1 border border-1"
+          formControlName="discountPct"
+          [class.error]="isFieldInvalid('discountPct')"
+        />
+        <span class="text-danger" *ngIf="isFieldInvalid('discountPct')"
+        >Give 0 or positive number, it is not valid.</span
+      >
       </div>
     </div>
 

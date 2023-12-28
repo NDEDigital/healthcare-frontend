@@ -27,10 +27,18 @@ export class AddPriceDiscountsComponent {
   productList: any;
   btnIndex = -1;
   isDiscountEntered(): boolean {
-    const discountAmount =
-      this.addPriceDiscountForm.get('discountAmount')?.value;
-    const discountPct = this.addPriceDiscountForm.get('discountPct')?.value;
-    return !!(discountAmount || discountPct);
+    const discountAmount = parseFloat(
+      this.addPriceDiscountForm.get('discountAmount')?.value
+    );
+    const discountPct = parseFloat(
+      this.addPriceDiscountForm.get('discountPct')?.value
+    );
+
+    // Check if either discountAmount or discountPct is greater than 0
+    return (
+      (!isNaN(discountAmount) && discountAmount > 0) ||
+      (!isNaN(discountPct) && discountPct > 0)
+    );
   }
 
   toggleAddProductPriceDiv(): void {
@@ -63,12 +71,31 @@ export class AddPriceDiscountsComponent {
     return field ? field.invalid && (field.dirty || field.touched) : false;
   }
 
+  nonNegativeNumberValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      return value !== null && !isNaN(value) && value >= 0
+        ? null
+        : { nonNegativeNumber: true };
+    };
+  }
+
   ngOnInit() {
     this.addPriceDiscountForm = new FormGroup({
       productId: new FormControl('', Validators.required),
-      price: new FormControl('', Validators.required),
-      discountAmount: new FormControl(''),
-      discountPct: new FormControl(''),
+      price: new FormControl('', [
+        Validators.required,
+        Validators.pattern(/^\d*\.?\d+$/),
+        this.nonNegativeNumberValidator(),
+      ]),
+      discountAmount: new FormControl('0.00', [
+        Validators.pattern(/^\d*\.?\d+$/),
+        this.nonNegativeNumberValidator(),
+      ]),
+      discountPct: new FormControl('0.00', [
+        Validators.pattern(/^\d*\.?\d+$/),
+        this.nonNegativeNumberValidator(),
+      ]),
       effectivateDate: new FormControl(''),
       endDate: new FormControl(''),
       productImage: new FormControl('', Validators.required),
@@ -84,6 +111,7 @@ export class AddPriceDiscountsComponent {
     this.getProducts(-1);
     this.setupFormValueChanges();
     this.getProductList();
+
   }
 
   getProductList() {
@@ -98,35 +126,67 @@ export class AddPriceDiscountsComponent {
     );
   }
 
+
+  // setupFormValueChanges() {
+  //   const form = this.addPriceDiscountForm;
+  //   const priceControl = form.get('price');
+  //   const discountAmountControl = form.get('discountAmount');
+  //   const discountPctControl = form.get('discountPct');
+
+  //   // Subscribe to changes in discount amount
+  //   discountAmountControl?.valueChanges.subscribe((value) => {
+  //     this.calculateDiscountPct(value);
+  //     this.calculateTotalPrice();
+  //   });
+
+  //   // Subscribe to changes in discount percentage
+  //   discountPctControl?.valueChanges.subscribe((value) => {
+  //     this.calculateDiscountAmount(value);
+  //     this.calculateTotalPrice();
+  //   });
+
+  //   // Subscribe to changes in Price
+  //   priceControl?.valueChanges.subscribe(() => {
+  //     this.calculateTotalPrice();
+  //   });
+
+  //   // For dynamically setting validators
+  //   discountAmountControl?.valueChanges.subscribe(() => {
+  //     this.updateDateFieldValidators();
+  //   });
+
+  //   discountPctControl?.valueChanges.subscribe(() => {
+  //     this.updateDateFieldValidators();
+  //   });
+  // }
+
   setupFormValueChanges() {
     const form = this.addPriceDiscountForm;
-
-    // For Discount Amount and Percentage
-
-    form.get('discountAmount')?.valueChanges.subscribe((value) => {
-      if (value) {
-        this.calculateDiscountPct(value);
-      }
-    });
-
-    form.get('discountPct')?.valueChanges.subscribe((value) => {
-      if (value) {
-        this.calculateDiscountAmount(value);
-      }
-
-      discountAmountControl?.valueChanges.subscribe(() => {
-        this.updateDateFieldValidators();
-      });
-
-      discountPctControl?.valueChanges.subscribe(() => {
-        this.updateDateFieldValidators();
-      });
-    });
-
-    // For dynamically setting validators
+    const priceControl = form.get('price');
     const discountAmountControl = form.get('discountAmount');
     const discountPctControl = form.get('discountPct');
 
+    // Subscribe to changes in discount amount
+    discountAmountControl?.valueChanges.subscribe((value) => {
+      this.calculateDiscountPct(value);
+      this.calculateTotalPrice();
+    });
+
+    // Subscribe to changes in discount percentage
+    discountPctControl?.valueChanges.subscribe((value) => {
+      this.calculateDiscountAmount(value);
+      this.calculateTotalPrice();
+    });
+
+    // Subscribe to changes in Price
+    priceControl?.valueChanges.subscribe((value) => {
+      if(value) {
+        discountPctControl?.setValue('0', { emitEvent: false });
+      }
+      this.calculateTotalPrice();
+    });
+
+    // For dynamically setting validators
     discountAmountControl?.valueChanges.subscribe(() => {
       this.updateDateFieldValidators();
     });
@@ -134,23 +194,26 @@ export class AddPriceDiscountsComponent {
     discountPctControl?.valueChanges.subscribe(() => {
       this.updateDateFieldValidators();
     });
-
-    // Subscribe to changes in Price
-    form.get('price')?.valueChanges.subscribe(() => {
-      this.calculateTotalPrice();
-    });
   }
 
   updateDateFieldValidators() {
-    const discountAmount =
+    const discountAmountValue =
       this.addPriceDiscountForm.get('discountAmount')?.value;
-    const discountPct = this.addPriceDiscountForm.get('discountPct')?.value;
+    const discountPctValue =
+      this.addPriceDiscountForm.get('discountPct')?.value;
+
+    const discountAmount = parseFloat(discountAmountValue);
+    const discountPct = parseFloat(discountPctValue);
 
     const effectivateDateControl =
       this.addPriceDiscountForm.get('effectivateDate');
     const endDateControl = this.addPriceDiscountForm.get('endDate');
 
-    if (discountAmount || discountPct) {
+    // Check if either discountAmount or discountPct is greater than 0
+    if (
+      (!isNaN(discountAmount) && discountAmount > 0) ||
+      (!isNaN(discountPct) && discountPct > 0)
+    ) {
       effectivateDateControl?.setValidators([
         Validators.required,
         this.presentOrFutureDateValidator(),
@@ -192,69 +255,42 @@ export class AddPriceDiscountsComponent {
   calculateDiscountPct(value: any) {
     const price =
       parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
-    const discountAmount = parseFloat(value) || 0;
-    if (price > 0 && discountAmount > 0) {
+    let discountAmount = parseFloat(value) || 0;
+
+    // Set discountPct to 0 if discountAmount is 0
+    if (discountAmount === 0) {
+      this.addPriceDiscountForm
+        .get('discountPct')
+        ?.setValue('0.00', { emitEvent: false });
+    } else if (price > 0 && discountAmount > 0) {
       const discountPct = (discountAmount / price) * 100;
       this.addPriceDiscountForm
         .get('discountPct')
         ?.setValue(discountPct.toFixed(2), { emitEvent: false });
     }
+
     this.calculateTotalPrice();
   }
 
   calculateDiscountAmount(value: any) {
     const price =
       parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
-    const discountPct = parseFloat(value) || 0;
-    if (price > 0 && discountPct > 0) {
+    let discountPct = parseFloat(value) || 0;
+
+    // Set discountAmount to 0 if discountPct is 0
+    if (discountPct === 0) {
+      this.addPriceDiscountForm
+        .get('discountAmount')
+        ?.setValue('0.00', { emitEvent: false });
+    } else if (price > 0 && discountPct > 0) {
       const discountAmount = (discountPct / 100) * price;
       this.addPriceDiscountForm
         .get('discountAmount')
         ?.setValue(discountAmount.toFixed(2), { emitEvent: false });
     }
+
     this.calculateTotalPrice();
   }
-
-  // calculateTotalPrice() {
-  //   const price =
-  //     parseFloat(this.addPriceDiscountForm.get('price')?.value) || 0;
-  //   let discountAmount = parseFloat(
-  //     this.addPriceDiscountForm.get('discountAmount')?.value
-  //   );
-  //   let discountPct = parseFloat(
-  //     this.addPriceDiscountForm.get('discountPct')?.value
-  //   );
-
-  //   // Check if discountAmount and discountPct are NaN, set them to 0 if they are
-  //   discountAmount = isNaN(discountAmount) ? 0 : discountAmount;
-  //   discountPct = isNaN(discountPct) ? 0 : discountPct;
-
-  //   let calculatedDiscount = 0;
-
-  //   if (price > 0) {
-  //     if (discountAmount > 0) {
-  //       // Calculate and update discount percentage if discount amount is provided
-  //       discountPct = (discountAmount / price) * 100;
-  //       this.addPriceDiscountForm
-  //         .get('discountPct')
-  //         ?.setValue(discountPct.toFixed(2), { emitEvent: false });
-  //       calculatedDiscount = discountAmount;
-  //     } else if (discountPct > 0) {
-  //       // Calculate and update discount amount if discount percentage is provided
-  //       calculatedDiscount = (price * discountPct) / 100;
-  //     }
-  //   }
-
-  //   // const totalPrice = Math.max(price - calculatedDiscount, 0); // Total price should not be negative
-  //   // this.addPriceDiscountForm
-  //   //   .get('totalPrice')
-  //   //   ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
-
-  //   const totalPrice = Math.max(price - calculatedDiscount, 0); // Total price should not be negative
-  //   this.addPriceDiscountForm
-  //     .get('totalPrice')
-  //     ?.setValue(totalPrice.toFixed(2), { emitEvent: false });
-  // }
 
   calculateTotalPrice() {
     const price =
@@ -286,29 +322,18 @@ export class AddPriceDiscountsComponent {
       //   let value = this.addPriceDiscountForm.value[key];
 
       //   if (key === 'discountAmount' || key === 'discountPct') {
-      //     // Check if the value is a valid number
+      //     // Check if the value is a valid number, otherwise set to '0.00'
       //     const numberValue = parseFloat(value);
-      //     if (!isNaN(numberValue)) {
-      //       // Convert valid numbers to string with two decimal places
-      //       value = numberValue.toFixed(2);
-      //     } else {
-      //       // If value is not a number, use a default value (e.g., '0.00') or skip appending
-      //       value = '';
-      //     }
-      //   }
-
-      //   if (key === 'productId' || key === 'userId') {
+      //     value = !isNaN(numberValue) ? numberValue.toFixed(2) : '0.00';
+      //   } else if (key === 'effectivateDate' || key === 'endDate') {
+      //     // If date is null, set to empty string
+      //     value = value || '';
+      //   } else if (key === 'productId' || key === 'userId') {
       //     value = String(Math.floor(Number(value)));
-      //     console.log(value);
-      //   }
-
-      //   if (
-      //     key === 'price' ||
-      //     key === 'discountAmount' ||
-      //     key === 'discountPct'
-      //   ) {
+      //   } else if (key === 'price') {
       //     value = parseFloat(value).toFixed(2);
       //   }
+
       //   formData.append(key, value);
       // });
 
@@ -316,9 +341,19 @@ export class AddPriceDiscountsComponent {
         let value = this.addPriceDiscountForm.value[key];
 
         if (key === 'discountAmount' || key === 'discountPct') {
-          // Check if the value is a valid number, otherwise set to '0.00'
-          const numberValue = parseFloat(value);
-          value = !isNaN(numberValue) ? numberValue.toFixed(2) : '0.00';
+          // Parse the value as a float and check if it's NaN or zero
+
+          // const numberValue = parseFloat(value);
+          // if (isNaN(numberValue) || numberValue === 0 ) {
+          //   value = '0.00'; // Set to '0.00' if the value is NaN or zero
+          // } else {
+          //   value = numberValue.toFixed(2); // Format valid numbers to two decimal places
+          // }
+
+          value =
+            value === '' || isNaN(parseFloat(value)) || parseFloat(value) === 0
+              ? '0.00'
+              : parseFloat(value).toFixed(2);
         } else if (key === 'effectivateDate' || key === 'endDate') {
           // If date is null, set to empty string
           value = value || '';
