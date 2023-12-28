@@ -125,7 +125,8 @@
       </div>
 
       <div class="col tableBody">
-        {{ row.orderDate | date : "dd MMM yyyy" }}
+        {{ row.orderDate | date : "dd MMM yyyy" }},<br />
+        {{ row.orderDate | date : "hh:mm a" }}
       </div>
 
       <div class="col tableBody">

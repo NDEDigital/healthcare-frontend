@@ -53,6 +53,8 @@ export class NavBeltComponent implements OnInit {
   loadData(): void {
     this.goodsData.getNavData().subscribe((data: any[]) => {
       this.goods = data;
+      console.log(this.goods);
+
       for (let i = 0; i < this.goods.length; i++) {
         this.products.set(this.goods[i].productGroupCode, this.goods[i].productGroupName);
         this.imgProduct.set(this.goods[i].productGroupCode,this.goods[i].imagePath);
@@ -61,9 +63,7 @@ export class NavBeltComponent implements OnInit {
   }
 
   setSelectData(groupCode: string, groupName: string) {
-
     this.sharedService.setNavSelectData(groupCode, groupName);
-
 
     this.dataUpdated.emit();
     // Update active entry
