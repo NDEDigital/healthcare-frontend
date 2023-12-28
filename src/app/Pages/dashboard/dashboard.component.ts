@@ -58,7 +58,7 @@ export class DashboardComponent {
   activeButton: string | null = 'new';
   status: string | null = 'new';
   // sellerInventory: boolean = false;
-  SidebarIndex = 2;
+  SidebarIndex = 4;
   newCount = 0;
   editedCount = 0;
   approvedCount = 0;
@@ -93,6 +93,7 @@ export class DashboardComponent {
     private userDataService: UserDataService,
     private emailService: EmailService
   ) {
+
     this.sellerCode = localStorage.getItem('code');
     fetch('https://api.ipify.org?format=json')
       .then((response) => response.json())
@@ -156,6 +157,7 @@ export class DashboardComponent {
       console.log(this.isAdmin, 'isAdmin');
       if (this.isAdmin == true) {
         this.sidebarCol1Title = 'Product Approval old';
+        this.SidebarIndex = 2;
         // this.sidebarCol2Link = '/becomeASeller'; // userList
       }
     }, 15);
@@ -416,18 +418,17 @@ export class DashboardComponent {
   }
 
   handleCheckboxChange(event: any) {
-    console.log(' Check box event  ', event);
+  
     this.selectedCheckboxIds = event;
-    console.log(this.selectedCheckboxIds, 'event selectedCheckboxIds');
-    console.log(event);
+  
   }
   handleStatusChange(status: any) {
-    console.log('Status Change:', status);
+  
     this.updateStatus(status);
   }
   handleShowProductDetailsID(ID: any) {
-    console.log('ID Change:', ID);
-    console.log(this.products);
+   
+   
 
     // Use the find method to search for the product with the given ID
     const selectedProduct = this.products.find(
@@ -437,8 +438,7 @@ export class DashboardComponent {
     if (selectedProduct) {
       // If the product is found, set it as the selectedProduct
       this.productDetails = selectedProduct;
-      console.log(this.productDetails, 'productDetails:');
-      console.log(this.productDetails.productName);
+ 
 
       // Open the product details modal
       this.productDetailsModalBTN.nativeElement.click();

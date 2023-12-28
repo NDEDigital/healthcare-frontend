@@ -98,11 +98,10 @@ export class AddProductQuantityComponent {
 
     if (this.form.valid && this.rowsFormArray.length) {
  
-      // Perform actions for a valid form
-      console.log('Form is valid. Submitting...');
+   
 
       const formData = this.form.value;
-      console.log("formData", formData)
+   
       
     
       this.portaldata = {
@@ -110,7 +109,7 @@ export class AddProductQuantityComponent {
         // portalReceivedDate: this.masterForm.value.portalReceivedDate,
         challanNo: this.masterForm.value.challanNo,
         remarks: this.masterForm.value.remarks,
-        userId: 1,
+        userId: localStorage.getItem('code'),
         companyCode: "CMP-23-0009",
         addedBy: "string",
         addedPC: "string",
@@ -123,7 +122,7 @@ export class AddProductQuantityComponent {
           price: row.price,
           remarks: row.remarks,
           totalPrice: parseInt(row.receiveQty, 10) * row.price,
-          userId: 2,
+          userId: localStorage.getItem('code'),
           addedBy: "string",
           addedPC: "string"
         }))
@@ -135,7 +134,7 @@ export class AddProductQuantityComponent {
       }
       
     
-      console.log("masterdata", this.portaldata);
+      
   
       // API call
       this.addProductService.insertPortalReceived(this.portaldata).subscribe({

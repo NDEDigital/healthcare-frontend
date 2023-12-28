@@ -135,7 +135,7 @@ export class ProductSliderComponent {
 
         for (let i = 0; i < this.goods.length; i++) {
           let finObj = this.products3.get(this.goods[i].groupName);
-
+          
           if (this.goods[i].approveSalesQty === '0') continue;
 
           if (finObj) {
@@ -180,6 +180,8 @@ export class ProductSliderComponent {
             };
             this.products3.set(this.goods[i].productGroupName, [obj]);
           }
+          console.log(this.products3," ut");
+          
         }
 
         // console.log(this.products3, ' products3');
@@ -245,7 +247,7 @@ export class ProductSliderComponent {
   // }
 
   updateQuantity() {
-    this.intervalId = setInterval(() => {
+    // this.intervalId = setInterval(() => {
       this.goodsDataObj.getCarouselData().subscribe((data: any[]) => {
         console.log(' data error ');
         this.goods = data;
@@ -291,7 +293,7 @@ export class ProductSliderComponent {
             this.products3.set(key, [obj]);
           }
         }
-        console.log(this.products3, ' product3');
+      
         // catchError((error: any) => {
         //   console.error('Error:', error);
         //   if (error.status === 401) {
@@ -303,7 +305,7 @@ export class ProductSliderComponent {
 
         // console.log(this.products3, 'products3');
       });
-    }, 5000);
+    // }, 5000);
   }
 
   ngOnDestroy() {

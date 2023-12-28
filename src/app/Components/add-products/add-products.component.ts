@@ -20,7 +20,10 @@ export class AddProductsComponent implements OnInit {
   productList: any;
   btnIndex = -1;
 
-  constructor(private productService: AddProductService) {}
+
+  constructor(private productService: AddProductService) {
+       
+  }
 
   toggleAddProductDiv(): void {
     this.showProductDiv = !this.showProductDiv;
@@ -46,6 +49,7 @@ export class AddProductsComponent implements OnInit {
     this.getProductGroups();
     this.getUnit();
     this.getProducts(-1);
+
   }
 
   isFieldInvalid(fieldName: string): boolean {

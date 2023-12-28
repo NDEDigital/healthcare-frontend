@@ -94,6 +94,11 @@ input[type="number"] {
   flex-wrap: wrap;
   justify-content: space-evenly;
 }
+.logo {
+  font-size: 2.2rem;
+  color: white;
+  text-decoration: none;
+}
 
 .allUser,
 .sellerNbothOnly {
