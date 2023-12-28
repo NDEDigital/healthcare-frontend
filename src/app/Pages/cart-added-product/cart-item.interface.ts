@@ -26,6 +26,7 @@ export interface CartItem {
   quantityUnit:string;
   discountAmount:number;
   discountPct:number;
+  netPrice:number;
 
 }
 // companyName: this.goods[i].companyName,

@@ -69,6 +69,7 @@ export class SearchResultComponent {
           discountAmount: this.goods[i].discountAmount,
           discountPct: this.goods[i].discountPct,
           totalCount: this.goods[i].totalCount,
+          netPrice: this.goods[i].totalPrice
         };
         console.log(obj, this.searchData, 's data');
 

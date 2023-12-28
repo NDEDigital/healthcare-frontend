@@ -59,6 +59,7 @@ export class ProductComponent {
             price: this.goods[i].price,
             discountAmount: this.goods[i].discountAmount,
             discountPct: this.goods[i].discountPct,
+            netPrice: this.goods[i].totalPrice
           };
               this.products.push(obj);
          }

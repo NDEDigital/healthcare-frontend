@@ -21,7 +21,6 @@
   padding: 3px;
   cursor: pointer;
 }
-
 .navbelt_image img {
   width: 5rem;
   height: 5rem;
@@ -40,9 +39,7 @@
   transition: 1s cubic-bezier(0.075, 0.82, 0.165, 1);
 }
 .slider-btn {
-
   display: block;
-
   top: 6.3rem;
   position: absolute;
   font-size: 1.7rem;
@@ -73,24 +70,17 @@
 /* .prevBtnmargin {
   margin-left: 12.5rem;
 } */
-
 .slider-btn:first-of-type {
   left: 10%;
-
 }
-
 .slider-btn:nth-child(2) {
   right: 10%;
-
 }
-
 .slider-btn:hover {
   color: white;
   background: var(--color-primary);
 }
-
 /* Your existing media queries and other CSS */
-
 /*  */
 @media (max-width: 1400px) {
   .navbelt_items {
@@ -100,15 +90,12 @@
   .navbelt_image img {
     height: 4rem;
   }
-
   .slider-btn{
     top: 10rem;
   }
-
   .slider-btn:first-of-type {
     left: 8%; /* adjust as needed for medium screens */
   }
-
   .slider-btn:nth-of-type(2) {
     right: 8%; /* adjust as needed for medium screens */
   }
@@ -120,13 +107,11 @@
     overflow: hidden;
     display: block;
   }
-
   .navbelt-item {
     width: 130px;
     display: inline-block;
     position: relative;
   }
-
   .slider-btn {
     display: flex;
   }
@@ -142,11 +127,9 @@
     opacity: 0.8;
     top: 6rem;
   }
-
   .slider-btn:first-of-type {
     left: 8%; /* closer to the edge for small screens */
   }
-
   .slider-btn:nth-of-type(2) {
     right: 8%; /* closer to the edge for small screens */
   }
@@ -162,15 +145,12 @@
   .slider-btn{
     top: 12rem !important;
   }
-
   .slider-btn:first-of-type {
     left: 5%; /* adjust as needed for extra small screens */
   }
-
   .slider-btn:nth-of-type(2) {
     right: 5%; /* adjust as needed for extra small screens */
   }
-
   .navbelt-item {
     width: 100px;
   }

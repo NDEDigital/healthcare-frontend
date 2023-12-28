@@ -4,6 +4,10 @@ html {
 .mod {
   z-index: 1200;
 }
+
+/* Category Scrolable  */
+
+
 .companyName {
   font-size: 2.2rem;
   color: white;
