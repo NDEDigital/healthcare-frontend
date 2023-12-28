@@ -568,7 +568,7 @@
             ></span>
             <span class="fw-semibold"> Categories</span>
           </button>
-          <ul class="dropdown-menu border border-danger">
+          <ul class="dropdown-menu border dropdown-listDesign">
             <li
               *ngFor="let product of products | keyvalue"
               (click)="setSelectData(product.key, product.value)"
