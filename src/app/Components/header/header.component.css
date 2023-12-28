@@ -211,7 +211,7 @@ html {
   position: absolute;
   z-index: 100;
   top: 3.6rem;
- 
+
   box-shadow: 0 0 1rem var(--color-gray);
   /* width: 14.5rem; */
   background: white;
@@ -281,6 +281,14 @@ html {
   font-size: 1rem;
 }
 
+/* dropdown-list */
+
+.dropdown-listDesign{
+  height: 20rem;
+  overflow: auto;
+  inset: 0px auto auto -16px !important;
+}
+
 /* =============== Toggle bar and mbl menu ============== */
 .toggle_menu {
   background: var(--color-primary);
@@ -291,6 +299,7 @@ html {
 .mobile-menu {
   display: none;
 }
+
 
 @media (max-width: 1400px) {
   .col-4 {
@@ -309,6 +318,7 @@ html {
   .logo_container img {
     width: 10rem;
   }
+  
 }
 @media (max-width: 768px) {
 }
