@@ -123,11 +123,10 @@
             </p> -->
               <img
                 class="mt-1 h-70"
-                src="/assets/images/medical/{{
-                  splitProductKey(product.key)
-                }}.jpg"
+                [src]="value.imagepath ? value.imagepath.split('FrontEnd')[1] : ''"
                 alt=""
               />
+             
               <p class="product-title text-wrap">
                 Product Name:
                 <span class="fs-6 text-secondary"
