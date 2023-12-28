@@ -574,7 +574,7 @@ export class OrdersOverviewComponent {
           this.sendEmailToBuyer(
             email,
             `Your Order is ${status}`,
-            `Dear  ${name},\nYour order is ${status} successfully.\nThank you. Stay with Nimpex HealthCare.`
+            `Dear  ${name},\nYour order is ${status} successfully.\nThank you. Stay with NDE Digital Market.`
           );
         }
       },
@@ -607,16 +607,18 @@ export class OrdersOverviewComponent {
   }
   statusCheck() {
     console.log('this.UpdateStatus in status check ', this.UpdateStatus);
-    if (this.UpdateStatus == 'Rejected' || this.UpdateStatus == 'Approved' ||this.UpdateStatus == 'Returned'||this.UpdateStatus == 'Return Cancelled') {
-      if (this.UpdateStatus == 'Approved' ||this.UpdateStatus == 'Returned' ) {
+    if (
+      this.UpdateStatus == 'Rejected' ||
+      this.UpdateStatus == 'Approved' ||
+      this.UpdateStatus == 'Returned' ||
+      this.UpdateStatus == 'Return Cancelled'
+    ) {
+      if (this.UpdateStatus == 'Approved' || this.UpdateStatus == 'Returned') {
         this.getApprove();
       } else {
         this.getReject();
       }
-    }
-
-     else {
-
+    } else {
       this.updateStatusCode(this.detailsId, this.UpdateStatus);
     }
   }

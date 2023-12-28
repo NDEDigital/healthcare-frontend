@@ -116,13 +116,13 @@
     <div class="logo_container col-3 d-flex justify-content-between">
       <!-- <a href="" -->
       <a class="companyName">
-        <span *ngIf="isSeller || isAdmin">Nimpex HealthCare</span>
+        <span *ngIf="isSeller || isAdmin">NDE Digital Market</span>
         <span
           *ngIf="!isSeller || !isAdmin"
           [routerLink]="'/'"
           style="cursor: pointer"
         >
-          Nimpex HealthCare</span
+          NDE Digital Market</span
         >
         <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" />-->
       </a>
@@ -551,37 +551,37 @@
       >
         <!-- // category -->
         <div class="dropdown-container">
-        <div class="dropdown me-4  " *ngIf="isCategoriesVisible">
-          <button
-            class="dropdown-toggle catergoriesButton"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <span
-              ><i
-                class="fa-solid fa-ellipsis-vertical"
-                style="margin-right: 2.5px"
-              ></i
-              ><i class="fa-solid fa-bars"></i
-            ></span>
-            <span class="fw-semibold"> Categories</span>
-          </button>
-          <ul class="dropdown-menu border border-danger">
-            <li
-              *ngFor="let product of products | keyvalue"
-              (click)="setSelectData(product.key, product.value)"
+          <div class="dropdown me-4" *ngIf="isCategoriesVisible">
+            <button
+              class="dropdown-toggle catergoriesButton"
+              type="button"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
             >
-              <a
-                class="dropdown-item"
-                [class.active]="product.key === activeEntry"
-                >{{ product.key }}</a
+              <span
+                ><i
+                  class="fa-solid fa-ellipsis-vertical"
+                  style="margin-right: 2.5px"
+                ></i
+                ><i class="fa-solid fa-bars"></i
+              ></span>
+              <span class="fw-semibold"> Categories</span>
+            </button>
+            <ul class="dropdown-menu border border-danger">
+              <li
+                *ngFor="let product of products | keyvalue"
+                (click)="setSelectData(product.key, product.value)"
               >
-            </li>
-          </ul>
+                <a
+                  class="dropdown-item"
+                  [class.active]="product.key === activeEntry"
+                  >{{ product.key }}</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
 
         <!--  category end-->
         <div
