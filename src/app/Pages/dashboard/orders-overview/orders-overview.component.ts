@@ -55,7 +55,7 @@ export class OrdersOverviewComponent {
     private emailService: EmailService,
     private elementRef: ElementRef
   ) {
-    console.log(this.data, 'cons');
+    //console.log(this.data, 'cons');
     this.pagination = new PaginationComponent();
   }
   ReturnedRowCount: number = 0;
@@ -68,7 +68,7 @@ export class OrdersOverviewComponent {
 
   ngOnInit(): void {
     this.sellerId = localStorage.getItem('code') || '';
-    console.log(this.sellerId, 'skjasdokj');
+    //console.log(this.sellerId, 'skjasdokj');
 
     this.sellerOrderOverviewService
       .getOrderInfo(this.sellerId, this.status, this.pageNum, this.pageSize)
@@ -76,9 +76,9 @@ export class OrdersOverviewComponent {
         next: (response: any) => {
           this.orderinfos = response.orderLst;
           this.countsList = response.countsList;
-          console.log(this.countsList, 'cnt');
+          //console.log(this.countsList, 'cnt');
           this.PendingCount = this.countsList[0].pendingCount;
-          console.log(this.PendingCount, 'ojjodmdlkfm');
+          //console.log(this.PendingCount, 'ojjodmdlkfm');
           this.ProcessingCount = this.countsList[0].processingCount;
           this.ReadyToShipCount = this.countsList[0].readyToShipCount;
           this.ShippedCount = this.countsList[0].shippedCount;
@@ -91,12 +91,12 @@ export class OrdersOverviewComponent {
             { length: Math.ceil(this.AllCount / this.pageSize) },
             (_, index) => index + 1
           );
-          console.log(this.orderinfos);
+          //console.log(this.orderinfos);
           this.filterdata = response.orderLst;
-          console.log(this.filterdata, 'filterdata');
+          //console.log(this.filterdata, 'filterdata');
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
         },
       });
   }
@@ -107,35 +107,35 @@ export class OrdersOverviewComponent {
       .GetReturnData(this.status, this.pageNum, this.pageSize)
       .subscribe({
         next: (data: any) => {
-          console.log(data, 'response return');
+          //console.log(data, 'response return');
           this.returnData = data;
           this.filterdata = data;
           this.ReturnedRowCount = data[0].totalRowCount;
-          console.log(' return total row count ', this.ReturnedRowCount);
+          //console.log(' return total row count ', this.ReturnedRowCount);
 
-          console.log(' filter data of return ', this.filterdata);
-          //  console.log(this.filterdata.groupName, 'filterdata group name');
+          //console.log(' filter data of return ', this.filterdata);
+          //  //console.log(this.filterdata.groupName, 'filterdata group name');
 
           this.data = Array.from(
             { length: Math.ceil(this.ReturnedRowCount / this.pageSize) },
             (_, index) => index + 1
           );
 
-          console.log(
-            this.filterdata[0].groupName,
-            this.data,
-            ' return data size'
-          );
+          // console.log(
+          //   this.filterdata[0].groupName,
+          //   this.data,
+          //   ' return data size'
+          // );
           // this.reloadPagination();
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
         },
       });
   }
   private reloadPagination() {
-    console.log(' reload paginatioon ');
-    console.log(' pagination  data', this.data);
+    //console.log(' reload paginatioon ');
+    //console.log(' pagination  data', this.data);
     if (this.pagination) {
       this.pagination.reloadData();
     }
@@ -144,7 +144,7 @@ export class OrdersOverviewComponent {
     selectedPageIndex: number;
     selectedValue: number;
   }) {
-    console.log(data.selectedPageIndex, data.selectedValue, 'data.....');
+    //console.log(data.selectedPageIndex, data.selectedValue, 'data.....');
     this.pageNum = data.selectedPageIndex;
     this.pageSize = data.selectedValue;
     let t = this.checkStatus();
@@ -174,7 +174,7 @@ export class OrdersOverviewComponent {
   }
   loadData() {
     this.sellerId = localStorage.getItem('code') || '';
-    console.log(this.status, 'skjasdokj');
+    //console.log(this.status, 'skjasdokj');
     this.selectAll = false;
     this.sellerOrderOverviewService
       .getOrderInfo(this.sellerId, this.status, this.pageNum, this.pageSize)
@@ -182,9 +182,9 @@ export class OrdersOverviewComponent {
         next: (response: any) => {
           this.orderinfos = response.orderLst;
           this.countsList = response.countsList;
-          console.log(this.countsList, 'cnt');
+          //console.log(this.countsList, 'cnt');
           this.PendingCount = this.countsList[0].pendingCount;
-          console.log(this.PendingCount, 'ojjodmdlkfm');
+          //console.log(this.PendingCount, 'ojjodmdlkfm');
           this.ProcessingCount = this.countsList[0].processingCount;
           this.ReadyToShipCount = this.countsList[0].readyToShipCount;
           this.ShippedCount = this.countsList[0].shippedCount;
@@ -193,12 +193,12 @@ export class OrdersOverviewComponent {
           this.AllCount = this.countsList[0].allCount;
           this.ToReturnCount = this.countsList[0].toReturnCount;
           this.ReturnedCount = this.countsList[0].returnedCount;
-          console.log(this.orderinfos);
+          //console.log(this.orderinfos);
           this.filterdata = response.orderLst;
-          console.log(this.filterdata, 'filterdata');
+          //console.log(this.filterdata, 'filterdata');
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
         },
       });
   }
@@ -231,7 +231,7 @@ export class OrdersOverviewComponent {
     this.activeNavvItem = 'All';
     this.filterdata = this.orderinfos;
     this.status = 'All';
-    console.log(this.filterdata);
+    //console.log(this.filterdata);
     this.loadData();
     this.reloadPagination();
   }
@@ -304,7 +304,7 @@ export class OrdersOverviewComponent {
   }
 
   async ToReturnProduct() {
-    console.log(' tooooooooooooooooooooo return');
+    //console.log(' tooooooooooooooooooooo return');
     this.returnProduct = true;
     this.status = 'to Return';
     this.activeNavvItem = 'ToReturn';
@@ -338,7 +338,7 @@ export class OrdersOverviewComponent {
     const SearchedStatus = this.searchStatus.trim();
 
     this.sellerId = localStorage.getItem('code') || '';
-    console.log(this.status, 'skjasdokj');
+    //console.log(this.status, 'skjasdokj');
     this.selectAll = false;
     this.sellerOrderOverviewService
       .getSearchedOrderInfo(
@@ -354,9 +354,9 @@ export class OrdersOverviewComponent {
         next: (response: any) => {
           this.orderinfos = response.orderLst;
           this.countsList = response.countsList;
-          console.log(this.countsList, 'cnt');
+          //console.log(this.countsList, 'cnt');
           this.PendingCount = this.countsList[0].pendingCount;
-          console.log(this.PendingCount, 'ojjodmdlkfm');
+          //console.log(this.PendingCount, 'ojjodmdlkfm');
           this.ProcessingCount = this.countsList[0].processingCount;
           this.ReadyToShipCount = this.countsList[0].readyToShipCount;
           this.ShippedCount = this.countsList[0].shippedCount;
@@ -366,17 +366,17 @@ export class OrdersOverviewComponent {
           if (response.orderLst.length > 0) {
             this.TotalRowCount = response.orderLst[0].totalRowCount;
           }
-          console.log(this.TotalRowCount, 'trc');
+          //console.log(this.TotalRowCount, 'trc');
           this.data = Array.from(
             { length: Math.ceil(this.TotalRowCount / this.pageSize) },
             (_, index) => index + 1
           );
-          console.log(this.orderinfos);
+          //console.log(this.orderinfos);
           this.filterdata = response.orderLst;
-          console.log(this.filterdata, 'filterdata');
+          //console.log(this.filterdata, 'filterdata');
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
         },
       });
   }
@@ -395,13 +395,13 @@ export class OrdersOverviewComponent {
   // }
 
   returnButton(detailsId: any, status: string) {
-    console.log(' returned id ', detailsId, status);
+    //console.log(' returned id ', detailsId, status);
 
     this.sellerOrderOverviewService
       .updateDetailsStatus(detailsId.toString(), status)
       .subscribe({
         next: (response) => {
-          console.log(response);
+          //console.log(response);
           this.allProduct();
           this.activeNavvItem = 'All';
           this.status = 'All';
@@ -409,7 +409,7 @@ export class OrdersOverviewComponent {
           this.selectAll = false;
         },
         error: (error) => {
-          console.log(error);
+          //console.log(error);
         },
       });
   }
@@ -421,23 +421,23 @@ export class OrdersOverviewComponent {
       this.activeNavvItem === 'Pending' ||
       this.activeNavvItem === 'ToReturn'
     ) {
-      console.log(this.activeNavvItem);
+      //console.log(this.activeNavvItem);
       if (!this.selectAll) this.filterdata.forEach((c) => (c.selected = false));
       else this.filterdata.forEach((c) => (c.selected = true));
     } else if (this.activeNavvItem === 'Processing') {
-      console.log(this.activeNavvItem);
+      //console.log(this.activeNavvItem);
       if (!this.selectAll) this.filterdata.forEach((c) => (c.selected = false));
       else this.filterdata.forEach((c) => (c.selected = true));
     } else if (this.activeNavvItem === 'Ready to Ship') {
-      console.log(this.activeNavvItem);
+      //console.log(this.activeNavvItem);
       if (!this.selectAll) this.filterdata.forEach((c) => (c.selected = false));
       else this.filterdata.forEach((c) => (c.selected = true));
     } else if (this.activeNavvItem === 'Shipped') {
-      console.log(this.activeNavvItem);
+      //console.log(this.activeNavvItem);
       if (!this.selectAll) this.filterdata.forEach((c) => (c.selected = false));
       else this.filterdata.forEach((c) => (c.selected = true));
     } else {
-      console.log('others');
+      //console.log('others');
       this.selectAll = false;
     }
   }
@@ -488,17 +488,17 @@ export class OrdersOverviewComponent {
 
   getApprove() {
     let selectedCheckboxs = this.selectedCheckbox;
-    console.log('selectedCheckboxs ', selectedCheckboxs);
+    //console.log('selectedCheckboxs ', selectedCheckboxs);
 
     if (selectedCheckboxs.length > 0) {
       if (this.activeNavvItem === 'ToReturn') {
         let allId = selectedCheckboxs.map((checkbox) => checkbox.detailsId);
-        console.log(allId, ' checked ids for Return ');
+        //console.log(allId, ' checked ids for Return ');
         // this.RetunStatusUpdate(allId, 'to Return');
         this.returnButton(allId, 'Returned');
       } else {
         let allId = selectedCheckboxs.map((checkbox) => checkbox.orderMasterId);
-        console.log(allId, ' checked ids ');
+        //console.log(allId, ' checked ids ');
         if (this.activeNavvItem === 'Pending') {
           this.updateStatusCode(allId, 'Processing');
         } else if (this.activeNavvItem === 'Processing') {
@@ -514,14 +514,14 @@ export class OrdersOverviewComponent {
 
   getReject() {
     let selectedCheckboxs = this.selectedCheckbox;
-    console.log('selectedCheckboxs', selectedCheckboxs);
+    //console.log('selectedCheckboxs', selectedCheckboxs);
 
     if (selectedCheckboxs.length > 0) {
       let allId = selectedCheckboxs.map((checkbox) => checkbox.orderMasterId);
-      console.log(allId);
+      //console.log(allId);
       if (this.activeNavvItem === 'ToReturn') {
         let allId = selectedCheckboxs.map((checkbox) => checkbox.detailsId);
-        console.log(allId, ' checked ids ');
+        //console.log(allId, ' checked ids ');
         // this.RetunStatusUpdate(allId, 'to Return');
         this.returnButton(allId, 'Return Cancelled');
       } else {
@@ -544,7 +544,7 @@ export class OrdersOverviewComponent {
       .updateOrderStatus(allId.toString(), str, sellerCode)
       .subscribe({
         next: (response) => {
-          console.log(response, 'check seller response');
+          //console.log(response, 'check seller response');
           this.getUsers(allId, str);
           this.allProduct();
           this.activeNavvItem = 'All';
@@ -553,21 +553,21 @@ export class OrdersOverviewComponent {
           this.selectAll = false;
         },
         error: (error) => {
-          console.log(error);
+          //console.log(error);
         },
       });
   }
   getUsers(idList: any, status: any) {
-    console.log(idList, status);
+    //console.log(idList, status);
     this.sellerOrderOverviewService.getUsersData(idList.toString()).subscribe({
       next: (response: any) => {
-        console.log(response, 'get user data from seller response');
+        //console.log(response, 'get user data from seller response');
         const users = response.users;
         this.toUserList = [...users];
-        console.log(this.toUserList);
+        //console.log(this.toUserList);
 
         for (let user of this.toUserList) {
-          console.log(user, 'User', user.email, user.fullName, status);
+          //console.log(user, 'User', user.email, user.fullName, status);
           const email = user.email.toString();
           const name = user.fullName.toString();
 
@@ -579,18 +579,18 @@ export class OrdersOverviewComponent {
         }
       },
       error: (error) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }
   sendEmailToBuyer(to: any, sub: any, body: any) {
-    console.log(to, sub, body);
+    //console.log(to, sub, body);
     this.emailService.sendEmail(to, sub, body).subscribe({
       next: (response) => {
-        console.log(response, 'email Sent');
+        //console.log(response, 'email Sent');
       },
       error: (error) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }
@@ -599,14 +599,14 @@ export class OrdersOverviewComponent {
     const individual_check = this.elementRef.nativeElement.querySelectorAll(
       '.individual_checkbox'
     );
-    console.log(' individual_check', individual_check);
+    //console.log(' individual_check', individual_check);
 
     for (let i = 0; i < individual_check.length; i++) {
       individual_check[i].checked = false;
     }
   }
   statusCheck() {
-    console.log('this.UpdateStatus in status check ', this.UpdateStatus);
+    //console.log('this.UpdateStatus in status check ', this.UpdateStatus);
     if (this.UpdateStatus == 'Rejected' || this.UpdateStatus == 'Approved' ||this.UpdateStatus == 'Returned'||this.UpdateStatus == 'Return Cancelled') {
       if (this.UpdateStatus == 'Approved' ||this.UpdateStatus == 'Returned' ) {
         this.getApprove();

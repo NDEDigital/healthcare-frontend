@@ -31,7 +31,7 @@ export class LoginComponent {
     });
 
     if (this.loginForm.invalid) {
-      // console.log('invalid');
+      // //console.log('invalid');
       return;
     }
     const loginData = {
@@ -40,14 +40,14 @@ export class LoginComponent {
     };
     this.userData.loginUser(loginData).subscribe({
       next: (response: any) => {
-        console.log('token ', response.token);
-        console.log('newRefreshToken ', response.newRefreshToken);
+        //console.log('token ', response.token);
+        //console.log('newRefreshToken ', response.newRefreshToken);
         // Set the token in local storage
 
         this.userData.SetAccessToken(response.token);
         this.userData.SetRefreshToken(response.newRefreshToken);
         this.refreshToken = response.newRefreshToken;
-        // console.log(response.userId);
+        // //console.log(response.userId);
         this.errorMessage = '';
         this.loginForm.reset();
         // alert(response.message);
@@ -63,20 +63,20 @@ export class LoginComponent {
 
           // const localStorageRefresh = localStorage.getItem('RefreshToken');
 
-          // console.log(' localStorage Refresh', localStorageRefresh);
+          // //console.log(' localStorage Refresh', localStorageRefresh);
 
           // this.userData.RenewToken(this.refreshToken).subscribe({
           //   next: (response) => {
-          //     console.log(' refresh call', response);
+          //     //console.log(' refresh call', response);
           //   },
           //   error: (error) => {
-          //     console.log(error);
+          //     //console.log(error);
           //   },
           // });
         } else this.router.navigate(['/dashboard']);
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
         this.errorMessage = error.error.message;
         // this.errorMessage = " pass word does not match";
         //   alert(" error");

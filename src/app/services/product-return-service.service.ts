@@ -18,14 +18,14 @@ export class ProductReturnServiceService {
   }
 
   insertData(returnData: any): Observable<any> {
-    console.log(' in service ', returnData);
+    //console.log(' in service ', returnData);
     // const formData = new FormData();
     // formData.append('returnData', returnData);
     const url = `${this.baseUrl}/InsertReturnedData`;
     return this.http.post<any>(url, returnData);
   }
   updateStatus(status: string, orderMasterId: string) {
-    console.log(' in service ', status);
+    //console.log(' in service ', status);
     const formData = new FormData();
     formData.append('status', status);
     formData.append('idList', orderMasterId);

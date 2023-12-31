@@ -21,7 +21,7 @@ export class ReviewRatingsService {
     //   RatingValue: rating,
     //   ReviewText: review,
     // };
-    console.log(reviewAndRating, 'rev');
+    //console.log(reviewAndRating, 'rev');
     return this.http.put(this.updateReviewAndRatingURL, reviewAndRating);
   }
 }

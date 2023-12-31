@@ -16,7 +16,7 @@ export class BuyerOrderDetailsComponent implements OnInit {
 
   ngOnInit() {
     const orderString = sessionStorage.getItem('order');
-    console.log();
+    //console.log();
 
     if (orderString !== null) {
       this.order = JSON.parse(orderString);
@@ -35,14 +35,14 @@ export class BuyerOrderDetailsComponent implements OnInit {
       // Add the map to the order object.
       this.packageMap = this.packageMap;
     } else {
-      console.log('Order not found in session storage');
+      //console.log('Order not found in session storage');
     }
-    console.log(this.order);
-    console.log(this.packageMap);
+    //console.log(this.order);
+    //console.log(this.packageMap);
   }
   goToDetail(detail: any) {
     this.item = detail;
-    console.log(detail, 'detail prod');
+    //console.log(detail, 'detail prod');
 
     let obj = {
       approveSalesQty: this.item.quantity,

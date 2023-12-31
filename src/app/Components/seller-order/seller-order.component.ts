@@ -37,17 +37,17 @@ export class SellerOrderComponent {
     if (userId) {
       this.sellerService.getsellerOrderData(userId, status).subscribe({
         next: (response: any) => {
-          console.log(response);
+          //console.log(response);
           this.sellerOrderData = response;
-          console.log(' data ', this.sellerOrderData);
+          //console.log(' data ', this.sellerOrderData);
           this.sellerOrderData = this.sellerOrderData.map((item: any) => ({
             ...item,
             isChecked: false,
           }));
-          console.log('data after', this.sellerOrderData);
+          //console.log('data after', this.sellerOrderData);
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
         },
       });
     }
@@ -58,7 +58,7 @@ export class SellerOrderComponent {
     });
   }
   showImage(path: any, title: any) {
-    console.log(path, title);
+    //console.log(path, title);
     this.imagePath = path.split('src')[1];
     this.imageTitle = title;
   }
@@ -94,12 +94,12 @@ export class SellerOrderComponent {
     let status = 'status';
 
     let detailID = orderdetailsIds.toString();
-    console.log(
-      orderdetailsIds.toString(),
-      this.statusArray[this.btnIndex],
-      status,
-      sellerSalesMasterDto
-    );
+    // console.log(
+    //   orderdetailsIds.toString(),
+    //   this.statusArray[this.btnIndex],
+    //   status,
+    //   sellerSalesMasterDto
+    // );
     this.sellerService
       .UpdateSellerOrderDetailsStatus(
         detailID,
@@ -108,9 +108,9 @@ export class SellerOrderComponent {
       )
       .subscribe({
         next: (response: any) => {
-          console.log(response);
+          //console.log(response);
           // this.productsData = response;
-          // console.log(this.productsData);
+          // //console.log(this.productsData);
           if ((this.btnIndex = -1)) {
             this.getData('Pending');
           } else if ((this.btnIndex = 1)) {
@@ -120,7 +120,7 @@ export class SellerOrderComponent {
           }
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
         },
       });
   }

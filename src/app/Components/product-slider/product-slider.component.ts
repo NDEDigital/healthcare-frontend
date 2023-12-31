@@ -66,13 +66,13 @@ export class ProductSliderComponent {
   // getAllProduct() {
   //   this.products.clear();
   //   this.goodsDataObj.getCarouselData().subscribe((data: any[]) => {
-  //     // console.log(data);
+  //     // //console.log(data);
 
   //     this.goods = data;
-  //     // console.log(this.goods, 'allGoods');
+  //     // //console.log(this.goods, 'allGoods');
   //     for (let i = 0; i < this.goods.length; i++) {
   //       let finObj = this.products3.get(this.goods[i].groupName);
-  //       console.log();
+  //       //console.log();
 
   //       if (this.goods[i].approveSalesQty === '0') continue;
 
@@ -108,18 +108,18 @@ export class ProductSliderComponent {
   //         this.products3.set(this.goods[i].groupName, [obj]);
   //       }
   //     }
-  //     // console.log(this.products3, ' products3');
+  //     // //console.log(this.products3, ' products3');
   //     this.updateQuantity();
 
   //     // this.products3.forEach((product) => {
-  //     //   console.log(product, 'product');
-  //     //   console.log(product[0], 'product[0]');
+  //     //   //console.log(product, 'product');
+  //     //   //console.log(product[0], 'product[0]');
   //     // });
 
   //     // this.products3.forEach((product) => {
-  //     //   console.log(product, 'product');
+  //     //   //console.log(product, 'product');
   //     //   product.forEach((item: Product) => {
-  //     //     console.log(item.goodsName);
+  //     //     //console.log(item.goodsName);
   //     //   });
   //     // });
   //   }
@@ -132,7 +132,7 @@ export class ProductSliderComponent {
     this.goodsDataObj.getCarouselData().subscribe(
       (data: any[]) => {
         this.goods = data;
-             console.log(this.goods);
+             //console.log(this.goods);
              
         for (let i = 0; i < this.goods.length; i++) {
           let finObj = this.products3.get(this.goods[i].productGroupName);
@@ -179,17 +179,17 @@ export class ProductSliderComponent {
               discountPct: this.goods[i].discountPct,
               netPrice: this.goods[i].totalPrice
             };
-            // console.log(obj," uts");
+            // //console.log(obj," uts");
             
             this.products3.set(this.goods[i].productGroupName, [obj]);
              
             
           }
-          // console.log(this.products3," ut");
+          // //console.log(this.products3," ut");
           
         }
 
-        // console.log(this.products3, ' products3');
+        // //console.log(this.products3, ' products3');
          this.updateQuantity();
 
         // Add any other code or logic you need here
@@ -207,9 +207,9 @@ export class ProductSliderComponent {
 
   // updateQuantity() {
   //   this.intervalId = setInterval(() => {
-  //     console.log('Fetching carousel data...');
+  //     //console.log('Fetching carousel data...');
   //     this.goodsDataObj.getCarouselData().subscribe((data: any[]) => {
-  //         console.log('Received carousel data:', data);
+  //         //console.log('Received carousel data:', data);
   //         this.goods = data;
   //         for (let i = 0; i < this.goods.length; i++) {
   //           let key = this.goods[i].groupName;
@@ -235,7 +235,7 @@ export class ProductSliderComponent {
   //             this.products3.set(key, [obj]);
   //           }
   //         }
-  //         console.log(this.products3, ' product3');
+  //         //console.log(this.products3, ' product3');
   //       },
   //       catchError((error: HttpErrorResponse) => {
   //         if (error.status === 401) {
@@ -254,9 +254,9 @@ export class ProductSliderComponent {
   updateQuantity() {
      this.intervalId = setInterval(() => {
       this.goodsDataObj.getCarouselData().subscribe((data: any[]) => {
-        console.log(' data error ');
+        //console.log(' data error ');
         this.goods = data;
-        // console.log(this.goods, 'allGoods');
+        // //console.log(this.goods, 'allGoods');
 
         for (let i = 0; i < this.goods.length; i++) {
           let key = this.goods[i].productGroupName;
@@ -298,18 +298,18 @@ export class ProductSliderComponent {
             this.products3.set(key, [obj]);
           }
         }
-        //  console.log("la");
+        //  //console.log("la");
          
         // catchError((error: any) => {
         //   console.error('Error:', error);
         //   if (error.status === 401) {
-        //     console.log('Error status 401. Retrying after 5 seconds...');
+        //     //console.log('Error status 401. Retrying after 5 seconds...');
         //     setTimeout(() => this.updateQuantity , 3000);
         //   }
         //   return throwError(error);
         // })
 
-        // console.log(this.products3, 'products3');
+        // //console.log(this.products3, 'products3');
       });
     }, 5000);
   }
@@ -320,7 +320,7 @@ export class ProductSliderComponent {
     // this.isMouseOverSlider = Array(this.itemsContainers.length).fill(false);
   }
   // slide(index: number): void {
-  //   // console.log('sliding');
+  //   // //console.log('sliding');
 
   //   if (this.isMouseOverSlider[index]) {
   //     return;
@@ -352,7 +352,7 @@ export class ProductSliderComponent {
   //   }
   // }
   // startAutoSlide(): void {
-  //   // console.log(this.isMouseOverSlider, 'isMouseOverSlider');
+  //   // //console.log(this.isMouseOverSlider, 'isMouseOverSlider');
 
   //   this.isMouseOverSlider.forEach((_, index) => {
   //     this.intervalIds[index] = setInterval(() => {
@@ -390,7 +390,7 @@ export class ProductSliderComponent {
   }
 
   prev(index: number): void {
-    // console.log('prev');
+    // //console.log('prev');
 
     const itemsContainer = this.itemsContainers.toArray()[index].nativeElement;
     const items = Array.from(itemsContainer.children);
@@ -442,7 +442,7 @@ export class ProductSliderComponent {
 
   //   if (windowWidth < 1300) {
   //     this.renderer.removeClass(this.elementRef.nativeElement, 'remove-btn');
-  //     console.log('removed');
+  //     //console.log('removed');
   //   }
   // }
   // =========================================================
@@ -451,7 +451,7 @@ export class ProductSliderComponent {
     const trimmedKey = key.trim();
     const parts = trimmedKey.split('GG');
     const firstHalf = parts[0].trim();
-    // console.log(firstHalf);
+    // //console.log(firstHalf);
     return firstHalf;
   }
 

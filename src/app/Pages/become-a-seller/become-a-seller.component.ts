@@ -69,12 +69,12 @@ export class BecomeASellerComponent {
   getData() {
     this.companyService.getpayMethod().subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.paymentMethods = response;
-        console.log(this.paymentMethods);
+        //console.log(this.paymentMethods);
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }
@@ -116,18 +116,18 @@ export class BecomeASellerComponent {
       this.TradeLicenseInput.nativeElement.files[0]
     );
     formData.forEach((value, key) => {
-      console.log(key, value);
+      //console.log(key, value);
     });
 
     if (
       this.companyResistrationForm.valid &&
       this.companyResistrationForm.get('preferredPaymentMethodID')?.value > 0
     ) {
-      console.log('valid');
+      //console.log('valid');
 
       this.companyService.createCompany(formData).subscribe({
         next: (response: any) => {
-          console.log(response);
+          //console.log(response);
           this.companyResistrationForm.reset();
           this.alertTitile = response.message;
           this.alertmsg =
@@ -136,7 +136,7 @@ export class BecomeASellerComponent {
           this.UserExistModalBTN.nativeElement.click();
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
 
           this.alertTitile = error.error.message;
           this.alertmsg =
@@ -164,12 +164,12 @@ export class BecomeASellerComponent {
     )?.value;
     this.companyService.PreferredBankNames(methodID).subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.bankInfo = response;
-        console.log(this.bankInfo);
+        //console.log(this.bankInfo);
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }
@@ -183,11 +183,11 @@ export class BecomeASellerComponent {
   //     .sendEmail(email, 'Company Registration Successful', message)
   //     .subscribe({
   //       next: (response: any) => {
-  //         console.log(response);
+  //         //console.log(response);
   //         // Handle success
   //       },
   //       error: (error: any) => {
-  //         console.log(error);
+  //         //console.log(error);
   //         // Handle error
   //       },
   //     });

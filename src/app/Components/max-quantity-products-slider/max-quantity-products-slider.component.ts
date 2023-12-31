@@ -46,7 +46,7 @@ export class MaxQuantityProductsSliderComponent {
     const itemsContainer = this.Items.nativeElement;
     const items = Array.from(itemsContainer.children);
     items.forEach((item: any) => {
-      // console.log('for each');
+      // //console.log('for each');
 
       item.style.transition = 'transform .5s ease-in-out';
       item.style.transform = 'translateX(-103%)';
@@ -56,7 +56,7 @@ export class MaxQuantityProductsSliderComponent {
         item.style.transition = 'none';
         item.style.transform = 'translateX(-0.15%)';
         i++;
-        // console.log('next set timeout');
+        // //console.log('next set timeout');
       }, 2000);
     });
   }
@@ -72,13 +72,13 @@ export class MaxQuantityProductsSliderComponent {
     clearInterval(this.intervalId);
   }
   next(): void {
-    // console.log('hello next');
+    // //console.log('hello next');
     const itemsContainer = this.Items.nativeElement;
     itemsContainer.appendChild(itemsContainer.children[0]);
   }
 
   prev(): void {
-    // console.log('hello prev');
+    // //console.log('hello prev');
     const allItems = this.Items.nativeElement.children;
     const firstItem = allItems[0];
     const lastItem = allItems[allItems.length - 1];

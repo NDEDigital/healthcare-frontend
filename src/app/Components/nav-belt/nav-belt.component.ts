@@ -53,7 +53,7 @@ export class NavBeltComponent implements OnInit {
   loadData(): void {
     this.goodsData.getNavData().subscribe((data: any[]) => {
       this.goods = data;
-      console.log(this.goods);
+      //console.log(this.goods);
 
       for (let i = 0; i < this.goods.length; i++) {
         this.products.set(this.goods[i].productGroupCode, this.goods[i].productGroupName);
@@ -71,7 +71,7 @@ export class NavBeltComponent implements OnInit {
 
     localStorage.setItem('activeEntry', this.activeEntry);
     this.router.navigate(['/productsPageComponent']);
-    // console.log(this.activeEntry, 'activeEntry');
+    // //console.log(this.activeEntry, 'activeEntry');
   }
 
   next(): void {
@@ -84,6 +84,6 @@ export class NavBeltComponent implements OnInit {
     const firstNavItem = allNavItems[0];
     const lastNavItem = allNavItems[allNavItems.length - 1];
     this.navItems.nativeElement.insertBefore(lastNavItem, firstNavItem);
-    // console.log('hello prev');
+    // //console.log('hello prev');
   }
 }

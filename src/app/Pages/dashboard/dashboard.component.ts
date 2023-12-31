@@ -99,7 +99,7 @@ export class DashboardComponent {
       .then((response) => response.json())
       .then((data) => {
         this.publicIP = data.ip;
-        // console.log(this.publicIP, 'public ip');
+        // //console.log(this.publicIP, 'public ip');
       });
     this.subscription = this.sharedService.loginStatus$.subscribe(
       (loginStatus) => {
@@ -131,7 +131,7 @@ export class DashboardComponent {
 
   ngOnInit() {
     // const order = sessionStorage.getItem('checkSidebar');
-    // console.log('  admin order clicked ', order);
+    // //console.log('  admin order clicked ', order);
     // if (order == 'active') {
     //   this.isAdminOrder = true;
     //   sessionStorage.setItem('checkSidebar', '');
@@ -154,7 +154,7 @@ export class DashboardComponent {
         this.isBuyer = true;
       }
 
-      console.log(this.isAdmin, 'isAdmin');
+      //console.log(this.isAdmin, 'isAdmin');
       if (this.isAdmin == true) {
         this.sidebarCol1Title = 'Product Approval old';
         this.SidebarIndex = 2;
@@ -173,11 +173,11 @@ export class DashboardComponent {
     const confirmPassword = control.get('confirmPassword')?.value;
     if (password !== confirmPassword) {
       control.get('confirmPassword')?.setErrors({ passwordMismatch: true });
-      // console.log('  Password and Confirm Password must match.');
+      // //console.log('  Password and Confirm Password must match.');
       return { passwordMismatch: true };
     } else {
       control.get('confirmPassword')?.setErrors(null);
-      // console.log('Password and Confirm Password matched!');
+      // //console.log('Password and Confirm Password matched!');
       return null;
     }
   }
@@ -205,15 +205,15 @@ export class DashboardComponent {
     this.pForm.reset();
   }
   formSubmit() {
-    // console.log(this.pForm.get("newPassword"));
-    // console.log(this.pForm.valid ,("this.pForm.valid "));
-    // console.log(this.user.password ,("this.user.password"));
-    // console.log(this.pForm.value.newPassword,("this.pForm.value.newPassword"));
-    // console.log(
+    // //console.log(this.pForm.get("newPassword"));
+    // //console.log(this.pForm.valid ,("this.pForm.valid "));
+    // //console.log(this.user.password ,("this.user.password"));
+    // //console.log(this.pForm.value.newPassword,("this.pForm.value.newPassword"));
+    // //console.log(
     //   this.pForm.value.currentPassword,
     //   'this.pForm.value.currentPassword'
     // );
-    // console.log(this.pForm.get("newPassword"),("this.pForm.get(newPassword)"));
+    // //console.log(this.pForm.get("newPassword"),("this.pForm.get(newPassword)"));
     if (
       // 1
       this.pForm.valid &&
@@ -226,7 +226,7 @@ export class DashboardComponent {
         oldPassword: this.pForm.value.currentPassword,
         newPassword: this.pForm.value.newPassword,
       };
-      console.log(passData, ' passData');
+      //console.log(passData, ' passData');
 
       this.userDataService.updatePass(passData).subscribe({
         next: (response: any) => {
@@ -246,7 +246,7 @@ export class DashboardComponent {
           //  log.password=
         },
         error: (error: any) => {
-          // console.log(error, ' ------error');
+          // //console.log(error, ' ------error');
           this.errorMessage = error.error.message;
           // alert(error.error.message);
         },
@@ -276,7 +276,7 @@ export class DashboardComponent {
     window.location.href = '/login';
   }
   approvalModalStatus(btn: any) {
-    console.log(btn);
+    //console.log(btn);
     if (btn == 'approve') {
       this.modalTitle = 'Approve';
       this.modalStatus = 'approve';
@@ -303,10 +303,10 @@ export class DashboardComponent {
   getPaginatedProducts(): any[] {
     const startIndex = this.currentPage * this.rowsPerPage;
     const endIndex = startIndex + this.rowsPerPage;
-    console.log(
-      'this.filteredProducts.slice(startIndex, endIndex) ',
-      this.filteredProducts.slice(startIndex, endIndex)
-    );
+    // console.log(
+    //   'this.filteredProducts.slice(startIndex, endIndex) ',
+    //   this.filteredProducts.slice(startIndex, endIndex)
+    // );
     return this.filteredProducts.slice(startIndex, endIndex);
   }
 
@@ -334,32 +334,32 @@ export class DashboardComponent {
   // Functions to handle search actions
   onProductKeyup(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    console.log(inputElement.value);
+    //console.log(inputElement.value);
     this.searchedProductName = inputElement.value;
     if (this.searchedProductName != null) {
-      console.log(this.searchedProductName, 'this.searchedProductName');
+      //console.log(this.searchedProductName, 'this.searchedProductName');
 
       this.getDashboardContents();
     }
   }
   onCompanyKeyup(event: Event) {
     const inputElement = event.target as HTMLInputElement;
-    console.log(inputElement.value);
+    //console.log(inputElement.value);
     this.searchedCompanyName = inputElement.value;
     if (this.searchedCompanyName != null) {
-      console.log(this.searchedCompanyName, 'this.searchedCompanyName');
+      //console.log(this.searchedCompanyName, 'this.searchedCompanyName');
 
       this.getDashboardContents();
     }
   }
   onDateKeyup(event: Event) {
-    console.log('inside date');
+    //console.log('inside date');
 
     const inputElement = event.target as HTMLInputElement;
-    console.log(inputElement.value);
+    //console.log(inputElement.value);
     this.searchedDate = inputElement.value;
     if (this.searchedDate != null) {
-      console.log(this.searchedDate, 'this.searchedDate');
+      //console.log(this.searchedDate, 'this.searchedDate');
 
       this.getDashboardContents();
     }
@@ -367,7 +367,7 @@ export class DashboardComponent {
 
   clearFields() {
     const form = document.getElementById('approvalForm') as HTMLElement;
-    console.log(form);
+    //console.log(form);
     const inputFields = Array.from(form.querySelectorAll('input'));
 
     for (const inputField of inputFields) {
@@ -381,13 +381,13 @@ export class DashboardComponent {
     ) as HTMLInputElement;
     selectAllCheckbox.checked = false;
     this.selectedCheckboxIds = [];
-    console.log(this.selectedCheckboxIds);
+    //console.log(this.selectedCheckboxIds);
 
     this.getDashboardContents();
   }
   // Functions to Get Dashboard Contents
   getDashboardContents() {
-    // console.log(
+    // //console.log(
     //   this.sellerCode,
     //   this.status,
     //   this.searchedProductName,
@@ -403,9 +403,9 @@ export class DashboardComponent {
     //     this.searchedDate
     //   )
     //   .subscribe((response: any) => {
-    //     console.log(response, 'data');
-    //     console.log(response.products, 'data');
-    //     console.log(response.isAdmin, 'response.isAdmin');
+    //     //console.log(response, 'data');
+    //     //console.log(response.products, 'data');
+    //     //console.log(response.isAdmin, 'response.isAdmin');
     //     this.products = response.products;
     //     this.filteredProducts = [...this.products];
     //     // this.isAdmin = response.isAdmin;
@@ -446,12 +446,12 @@ export class DashboardComponent {
   }
 
   updateStatus(status: any) {
-    console.log(status);
-    console.log(this.selectedCheckboxIds, 'selectedCheckboxIds');
+    //console.log(status);
+    //console.log(this.selectedCheckboxIds, 'selectedCheckboxIds');
     if (this.selectedCheckboxIds.length > 0) {
       const productIdsInt = this.selectedCheckboxIds.map((id) => parseInt(id));
-      console.log(' productIdsInt', productIdsInt);
-      console.log(' this.selectedCheckboxIds', this.selectedCheckboxIds);
+      //console.log(' productIdsInt', productIdsInt);
+      //console.log(' this.selectedCheckboxIds', this.selectedCheckboxIds);
       this.dashboardService
         .updateProductStatus(
           this.sellerCode,
@@ -462,7 +462,7 @@ export class DashboardComponent {
         )
         .subscribe({
           next: (response: any) => {
-            console.log(response, 'response');
+            //console.log(response, 'response');
             if (response.cancelEdited === true) {
               const users = response.users;
               this.toUserList = [...users];
@@ -479,10 +479,10 @@ export class DashboardComponent {
                 )
                 .subscribe({
                   next: (response) => {
-                    console.log(response, 'email Sent');
+                    //console.log(response, 'email Sent');
                   },
                   error: (error) => {
-                    console.log(error);
+                    //console.log(error);
                   },
                 });
             }
@@ -505,7 +505,7 @@ export class DashboardComponent {
             this.getDashboardContents();
           },
           error: (error) => {
-            console.log(error, 'Error');
+            //console.log(error, 'Error');
           },
         });
     } else {
@@ -522,13 +522,13 @@ export class DashboardComponent {
     productApprovalCheckboxes.forEach((checkbox: Element) => {
       const checkboxElement = checkbox as HTMLInputElement;
       checkboxElement.checked = this.selectAllChecked;
-      console.log(this.selectAllChecked, 'selectAllChecked');
+      //console.log(this.selectAllChecked, 'selectAllChecked');
 
       if (this.selectAllChecked) {
         this.selectedCheckboxIds.push(checkboxElement.id);
       }
     });
-    console.log(this.selectedCheckboxIds);
+    //console.log(this.selectedCheckboxIds);
   }
   searchProducts(event: Event) {
     const searchTerm = (event.target as HTMLInputElement).value;
@@ -541,30 +541,30 @@ export class DashboardComponent {
   ngDoCheck() {
     if (this.sharedService.deleteProductIndx != -1) {
       this.indx = this.sharedService.deleteProductIndx;
-      // console.log(this.indx, 'indx');
+      // //console.log(this.indx, 'indx');
       this.productID = this.products[this.indx].productId;
-      // console.log(this.productID, 'productID');
+      // //console.log(this.productID, 'productID');
     }
-    // console.log(this.productTitle, 'title');
-    // console.log(this.productTitle['productName']);
+    // //console.log(this.productTitle, 'title');
+    // //console.log(this.productTitle['productName']);
   }
   deleteProd() {
     var storedData = sessionStorage.getItem('deleteData');
     if (storedData) {
       this.productID = JSON.parse(storedData);
       // Now 'parsedData' contains the data you stored in 'editData'
-      console.log(' this.productID', this.productID);
+      //console.log(' this.productID', this.productID);
     }
-    console.log(
-      'this.sellerCode, this.productID',
-      this.sellerCode,
-      this.productID
-    );
+    // console.log(
+    //   'this.sellerCode, this.productID',
+    //   this.sellerCode,
+    //   this.productID
+    // );
     this.dashboardService
       .deleteProduct(this.sellerCode, this.productID)
       .subscribe({
         next: (response) => {
-          // console.log('Product Deleted successfully', response);
+          // //console.log('Product Deleted successfully', response);
           this.closeModal();
 
           window.location.reload();
@@ -598,9 +598,9 @@ export class DashboardComponent {
     this.getDashboardContents();
   }
   sortDate(order: any) {
-    console.log(this.filteredProducts);
+    //console.log(this.filteredProducts);
 
-    console.log(order);
+    //console.log(order);
     this.sortFilteredProducts(order);
   }
   sortFilteredProducts(order: any) {
@@ -619,11 +619,11 @@ export class DashboardComponent {
   }
   closeApproval() {
     this.selectedCheckboxIds = [];
-    console.log(this.selectedCheckboxIds);
+    //console.log(this.selectedCheckboxIds);
   }
   // AdminOrder(orderClicked: boolean) {
   //   const role = localStorage.getItem('role');
-  //   console.log(role, 'role');
+  //   //console.log(role, 'role');
   //   this.sellerInventory = false;
   //   this.SellerQuantity = false;
   //   this.addProducts = false;
@@ -631,13 +631,13 @@ export class DashboardComponent {
 
   //   if (this.isAdmin) {
   //     this.isAdminOrder = orderClicked;
-  //     console.log(this.isAdminOrder, 'isAdminOrder');
+  //     //console.log(this.isAdminOrder, 'isAdminOrder');
   //   } else if (role === 'seller') {
   //     this.isSellerOrder = orderClicked;
-  //     console.log(this.isSellerOrder, 'isSellerOrder');
+  //     //console.log(this.isSellerOrder, 'isSellerOrder');
   //   } else {
   //     this.isBuyerOrder = orderClicked;
-  //     console.log(this.isBuyerOrder, 'isBuyerOrder');
+  //     //console.log(this.isBuyerOrder, 'isBuyerOrder');
   //   }
   // }
 

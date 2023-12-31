@@ -68,7 +68,7 @@ export class ProductComponent {
         // this.products = goods;
         this.filteredProducts = [...this.products];
         this.loading = false;
-        console.log(this.filteredProducts,"u");
+        //console.log(this.filteredProducts,"u");
         
       });
 
@@ -76,7 +76,7 @@ export class ProductComponent {
     //   this.goodsData
     //     .getProductList(this.sharedService.companyCode)
     //     .subscribe((data: any[]) => {
-    //       console.log(data,"lala");
+    //       //console.log(data,"lala");
           
     //       data.forEach((newProduct: any) => {        
     //           let obj = {
@@ -98,7 +98,7 @@ export class ProductComponent {
              
               
     //           this.products2.push(obj); 
-    //           console.log(this.products2,"sssd",obj);  
+    //           //console.log(this.products2,"sssd",obj);  
               
     //         // const existingProduct = this.filteredProducts.find(
     //         //   (product: any) => product.goodsId === this.products2.goodsId
@@ -178,7 +178,7 @@ export class ProductComponent {
       //   // this.products = goods;
       //   this.filteredProducts = [...this.products];
       //   this.loading = false;
-      //   console.log(this.filteredProducts,"u");
+      //   //console.log(this.filteredProducts,"u");
         
       // });
 
@@ -258,7 +258,7 @@ export class ProductComponent {
     const m = str1.length;
     const n = str2.length;
     const dp: number[][] = [];
-    // console.log(m, 'm', n, 'n');
+    // //console.log(m, 'm', n, 'n');
     let maxLength = 0;
 
     for (let i = 0; i <= m; i++) {
@@ -269,7 +269,7 @@ export class ProductComponent {
       for (let j = 1; j <= n; j++) {
         if (str1[i - 1] === str2[j - 1]) {
           dp[i][j] = dp[i - 1][j - 1] + 1;
-          // console.log(dp[i][j], ' dp[i][j]');
+          // //console.log(dp[i][j], ' dp[i][j]');
 
           maxLength = Math.max(maxLength, dp[i][j]);
         }
@@ -290,7 +290,7 @@ export class ProductComponent {
     const trimmedKey = key.trim();
     const parts = trimmedKey.split('GG');
     const firstHalf = parts[0].trim();
-    // console.log(firstHalf);
+    // //console.log(firstHalf);
     return firstHalf;
   }
 

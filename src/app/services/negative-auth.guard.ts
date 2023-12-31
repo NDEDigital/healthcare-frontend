@@ -17,7 +17,7 @@ export class NegativeAuthGuard implements CanActivate {
     this.sharedService.loginStatus$.subscribe((isLoggedIn: boolean) => {
       // Handle the login status value
       this.isLoggedIn = isLoggedIn;
-      // console.log('Login status:', isLoggedIn);
+      // //console.log('Login status:', isLoggedIn);
     });
   }
   canActivate(

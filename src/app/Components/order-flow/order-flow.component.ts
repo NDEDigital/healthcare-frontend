@@ -30,23 +30,23 @@ export class OrderFlowComponent {
     if (uidS) userID = parseInt(uidS, 10);
     this.orderApi.getBuyerOrder(userID, status).subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.productsData = response;
-        console.log(this.productsData);
+        //console.log(this.productsData);
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }
 
   showImage(path: any, title: any) {
-    console.log(path, title);
+    //console.log(path, title);
     this.imagePath = path.split('src')[1];
     this.imageTitle = title;
   }
   updateProduct(UserId: any, CompanyCode: any, ProductId: any, Status: any) {
-    console.log(UserId, CompanyCode, ProductId, Status);
+    //console.log(UserId, CompanyCode, ProductId, Status);
     const productStatus = {
       UserId,
       CompanyCode,
@@ -55,9 +55,9 @@ export class OrderFlowComponent {
     };
     this.productService.updateProduct(productStatus).subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         // this.productsData = response;
-        // console.log(this.productsData);
+        // //console.log(this.productsData);
         if ((this.btnIndex = -1)) {
           this.getData('Pending');
         } else if ((this.btnIndex = 1)) {
@@ -67,7 +67,7 @@ export class OrderFlowComponent {
         }
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }

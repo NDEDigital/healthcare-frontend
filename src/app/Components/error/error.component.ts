@@ -15,14 +15,14 @@ export class ErrorComponent {
     if (newPage >= 1 && newPage <= this.totalPages) {
       this.page = newPage;
       // ... Implement your logic to fetch the data for the new page
-      console.log("a gaya");
+      //console.log("a gaya");
       
     }
   }
 
   // Method to get the range of pages to display in the pagination
   getDisplayPageRange(): number[] {
-     console.log('a gaya2');
+     //console.log('a gaya2');
     const displayRangeSize = 5; // Number of pages to display at a time
     const middlePage = Math.ceil(displayRangeSize / 2);
     let startPage = this.page - middlePage + 1;

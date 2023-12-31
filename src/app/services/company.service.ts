@@ -31,7 +31,7 @@ export class CompanyService {
     });
   }
   UpdateCompany(companyDto: any) {
-    console.log('Data sent to server:', companyDto);
+    //console.log('Data sent to server:', companyDto);
     return this.http.put(this.UpdateCompanyURL, companyDto);
   }
 }

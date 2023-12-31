@@ -141,7 +141,7 @@ export class OrderApiService {
   }
   insertOrderData() {
     this.setData();
-    console.log(' orderdata', this.orderdata);
+    //console.log(' orderdata', this.orderdata);
     return this.http.post<any>(
       this.orderPostUrl,
       this.orderdata,
@@ -158,7 +158,7 @@ export class OrderApiService {
     rowCount: number,
     status: string
   ) {
-    console.log(buyerCode, PageNumber, rowCount, status);
+    //console.log(buyerCode, PageNumber, rowCount, status);
 
     return this.http.get(this.getAllOrderForBuyerURL, {
       params: {

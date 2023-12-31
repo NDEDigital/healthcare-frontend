@@ -27,7 +27,7 @@ export class SellerInventoryComponent {
   setSearchOption(text: string) {
     this.searchInputValue = '';
     this.SearchByname = text;
-    console.log(' this.SearchByname ', this.SearchByname);
+    //console.log(' this.SearchByname ', this.SearchByname);
     this.searchby = text;
     this.placeholder = ' Search by ';
     // clearing search value and call data with out search
@@ -39,7 +39,7 @@ export class SellerInventoryComponent {
   onKeyUp(event: KeyboardEvent) {
     // Check if the pressed key is Enter (keycode 13) or Backspace (keycode 8)
     if (event.keyCode === 13 || event.keyCode === 8) {
-      console.log('  searchInputValue', this.searchInputValue);
+      //console.log('  searchInputValue', this.searchInputValue);
       this.Search();
     }
   }
@@ -62,11 +62,11 @@ export class SellerInventoryComponent {
 
 GetData() {
 this.sellerId = localStorage.getItem('code') || '';
-    console.log(" sellerId", this.sellerId)
+    //console.log(" sellerId", this.sellerId)
 
     this.SellerService.getSellerInventory( this.sellerId ).subscribe(
       (data: any) => {
-        console.log(' load dataaaaaa', data); // Use a type if possible for better type checking
+        //console.log(' load dataaaaaa', data); // Use a type if possible for better type checking
         this.inventoryData = data;
       }
     );
