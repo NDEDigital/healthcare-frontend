@@ -12,8 +12,7 @@ export class SslPaymentService {
     headers: new HttpHeaders({ 'Content-Type': 'application/json' }),
   };
 
- 
-  URL = Payment_API_URL
+  URL = Payment_API_URL;
   paymentAPI = `${this.URL}/api/payment/checkoutSSL`;
   // paymentAPI = 'http://192.168.2.204:96/api/payment/checkoutSSL';
   // paymentDataPostAPI = 'http://192.168.2.204:96/api/Payment';
@@ -49,7 +48,7 @@ export class SslPaymentService {
       .subscribe(
         (response) => {
           console.log('payment redirect link', response);
-         // window.location.href = response;
+          // window.location.href = response;
         },
         (error) => {
           console.error('payment link error', error);

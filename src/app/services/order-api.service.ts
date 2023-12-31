@@ -131,10 +131,10 @@ export class OrderApiService {
         userId: parseInt(entry.sellerCode),
         unitId: entry.unitId,
         discountAmount: entry.discountAmount,
-        discountPct:entry.discountPct,
+        discountPct: entry.discountPct,
         netPrice: entry.netPrice,
-        addedBy:this.buyerCode,
-        addedPC: "0.0.0.0",
+        addedBy: this.buyerCode,
+        addedPC: '0.0.0.0',
       };
       this.orderdata.orderDetailsList.push(detailData);
     }

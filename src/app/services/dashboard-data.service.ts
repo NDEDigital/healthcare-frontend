@@ -6,11 +6,9 @@ import { API_URL } from '../config';
   providedIn: 'root',
 })
 export class DashboardDataService {
-
-  URL = API_URL
+  URL = API_URL;
   // URL = 'https://localhost:7006'; // LocalURL
   // URL = 'http://172.16.5.18:8081'; // liveURL
-
 
   addProductURL = `${this.URL}/AddProduct`;
   updateProductURL = `${this.URL}/UpdateProduct`;

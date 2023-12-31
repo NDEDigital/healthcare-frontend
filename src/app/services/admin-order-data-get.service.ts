@@ -1,4 +1,4 @@
-import { HttpClient,HttpParams  } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { AdminOrderModel } from '../Model/AdminOrderModel';
@@ -16,7 +16,6 @@ export class AdminOrderDataGetService {
   private invoiceUrl = `${this.URL}/api/Invoice`;
   constructor(private http: HttpClient) {}
 
-
   // master data
   getOrderMasterData(status?: string): Observable<any[]> {
     let url = `${this.baseUrl}/GetOrderMasterData`;
@@ -27,9 +26,15 @@ export class AdminOrderDataGetService {
   }
 
   // details data
-  getOrderDetailData(orderMasterId: number, status?: string): Observable<any[]> {
+  getOrderDetailData(
+    orderMasterId: number,
+    status?: string
+  ): Observable<any[]> {
     let url = `${this.baseUrl}/GetOrderDetailData`;
-    let params = new HttpParams().set('OrderMasterId', orderMasterId.toString());
+    let params = new HttpParams().set(
+      'OrderMasterId',
+      orderMasterId.toString()
+    );
     if (status) {
       params = params.set('status', status);
     }
@@ -37,27 +42,44 @@ export class AdminOrderDataGetService {
   }
 
   // get data
-  GetOrderData(pageNumber: number, pageSize: number,  status: string, searchby: string , serchValue: string  ): Observable<AdminOrderModel[]> {
-
+  GetOrderData(
+    pageNumber: number,
+    pageSize: number,
+    status: string,
+    searchby: string,
+    serchValue: string
+  ): Observable<AdminOrderModel[]> {
     const url = `${this.baseUrl}/GetOrderData/${pageNumber}/${pageSize}/${status}/${searchby}/${serchValue}`;
 
     return this.http.get<AdminOrderModel[]>(url);
   }
 
-
-// get data
-GetOrderDataSearch(pageNumber: number, pageSize: number,  status: string, searchby: string , serchValue: string  ): Observable<any> {
-  // console.log(" sent in api status",status);
-  const url = `${this.baseUrl}/GetOrderData/${pageNumber}/${pageSize}/${status}/${searchby}/${serchValue}`;
-  // const url = `${this.baseUrl}/GetOrderData/${pageNumber}/${pageSize}/${status} `;
-  return this.http.get<any>(url);
-}
-
-
+  // get data
+  GetOrderDataSearch(
+    pageNumber: number,
+    pageSize: number,
+    status: string,
+    searchby: string,
+    serchValue: string
+  ): Observable<any> {
+    // console.log(" sent in api status",status);
+    const url = `${this.baseUrl}/GetOrderData/${pageNumber}/${pageSize}/${status}/${searchby}/${serchValue}`;
+    // const url = `${this.baseUrl}/GetOrderData/${pageNumber}/${pageSize}/${status} `;
+    return this.http.get<any>(url);
+  }
 
   //  update status
-  updateOrderStatus(orderMasterId: string, detailsCancelledId: string | null, status: string): Observable<any> {
-    console.log(" orderMasterId, detailsCancelledId, status",orderMasterId, detailsCancelledId, status)
+  updateOrderStatus(
+    orderMasterId: string,
+    detailsCancelledId: string | null,
+    status: string
+  ): Observable<any> {
+    console.log(
+      ' orderMasterId, detailsCancelledId, status',
+      orderMasterId,
+      detailsCancelledId,
+      status
+    );
     const url = `${this.baseUrl}/AdminOrderUpdateStatus`;
     let params = new HttpParams().set('orderMasterId', orderMasterId);
 
@@ -70,44 +92,44 @@ GetOrderDataSearch(pageNumber: number, pageSize: number,  status: string, search
     return this.http.put<any>(url, {}, { params });
   }
 
-
-
   // getDataByDate
 
-  getDataByDate(pageNumber: number, pageSize: number,  status: string, searchby: string , serchValue: string , fromDate: any ,toDate: any ): Observable<AdminOrderModel[]> {
-    console.log(" sent in api status", fromDate, toDate);
+  getDataByDate(
+    pageNumber: number,
+    pageSize: number,
+    status: string,
+    searchby: string,
+    serchValue: string,
+    fromDate: any,
+    toDate: any
+  ): Observable<AdminOrderModel[]> {
+    console.log(' sent in api status', fromDate, toDate);
 
     const formData = new FormData();
     // if (fromDate!=""&& toDate!="" ){
-      formData.append('fromDate', fromDate);
-      formData.append('toDate', toDate);
-
+    formData.append('fromDate', fromDate);
+    formData.append('toDate', toDate);
 
     const url = `${this.baseUrl}/GetOrderDataByDate/${pageNumber}/${pageSize}/${status}/${searchby}/${serchValue}`;
     // const url = `${this.baseUrl}/GetOrderData/${pageNumber}/${pageSize}/${status} `;
-    return this.http.post<AdminOrderModel[]>(url,formData);
+    return this.http.post<AdminOrderModel[]>(url, formData);
   }
 
- // get details data
- GetDetatilsData(OrderMasterId: number): Observable<any> {
-  const formData = new FormData();
+  // get details data
+  GetDetatilsData(OrderMasterId: number): Observable<any> {
+    const formData = new FormData();
 
-  formData.append('OrderMasterId', OrderMasterId.toString()); // Leave it as an integer
+    formData.append('OrderMasterId', OrderMasterId.toString()); // Leave it as an integer
 
-  const url = `${this.baseUrl}/GetDatailsData/`;
-  return this.http.post<any>(url, formData);
-}
-
+    const url = `${this.baseUrl}/GetDatailsData/`;
+    return this.http.post<any>(url, formData);
+  }
 
   // invoice
-  getInvoiceForAdminOrder(  OrderID: number) {
+  getInvoiceForAdminOrder(OrderID: number) {
     console.log('service e aise');
     return this.http.get(`${this.invoiceUrl}/GetInvoiceDataForAdmin`, {
-      params: {   OrderID },
+      params: { OrderID },
     });
   }
-
 }
-
-
-

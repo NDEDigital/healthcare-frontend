@@ -6,7 +6,6 @@ import { API_URL } from '../config';
   providedIn: 'root',
 })
 export class EmailService {
-
   URL = API_URL;
   // URL = 'https://localhost:7006'; //LocalURL
   sendEmailURL = `${this.URL}/api/Email/sendEmail`;

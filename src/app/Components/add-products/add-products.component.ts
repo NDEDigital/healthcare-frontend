@@ -20,10 +20,7 @@ export class AddProductsComponent implements OnInit {
   productList: any;
   btnIndex = -1;
 
-
-  constructor(private productService: AddProductService) {
-       
-  }
+  constructor(private productService: AddProductService) {}
 
   toggleAddProductDiv(): void {
     this.showProductDiv = !this.showProductDiv;
@@ -49,7 +46,6 @@ export class AddProductsComponent implements OnInit {
     this.getProductGroups();
     this.getUnit();
     this.getProducts(-1);
-
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -61,10 +57,10 @@ export class AddProductsComponent implements OnInit {
     this.productService.getProductGroups().subscribe(
       (data: any) => {
         this.productGroups = data;
-        console.log('Product Groups:', this.productGroups);
+        //console.log('Product Groups:', this.productGroups);
       },
       (error) => {
-        console.error('Error fetching product groups:', error);
+        //console.error('Error fetching product groups:', error);
       }
     );
   }
@@ -73,10 +69,10 @@ export class AddProductsComponent implements OnInit {
     this.productService.getUnitGroups().subscribe(
       (data: any) => {
         this.units = data;
-        console.log('unit Groups:', this.units);
+        //console.log('unit Groups:', this.units);
       },
       (error) => {
-        console.error('Error fetching product groups:', error);
+        //console.error('Error fetching product groups:', error);
       }
     );
   }
@@ -95,7 +91,7 @@ export class AddProductsComponent implements OnInit {
         let value = this.addProductForm.value[key];
         if (key === 'productId' || key === 'unitId') {
           value = String(Math.floor(Number(value)));
-          console.log(value);
+          //console.log(value);
         }
         formData.append(key, value);
       });
@@ -110,12 +106,12 @@ export class AddProductsComponent implements OnInit {
       formData.append('addedPC', '0.0.0.0');
 
       for (let pair of (formData as any).entries()) {
-        console.log(`${pair[0]}: `, pair[1]);
+        //console.log(`${pair[0]}: `, pair[1]);
       }
 
       this.productService.createProductList(formData).subscribe({
         next: (response: any) => {
-          console.log(response);
+          //console.log(response);
           this.alertMsg = response.message;
           this.isError = false; // Set isError to false for a success message
           setTimeout(() => {
@@ -125,25 +121,25 @@ export class AddProductsComponent implements OnInit {
           }, 50);
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
           this.alertMsg = error.error.message;
           this.isError = true; // Set isError to true for an error message
           this.PrdouctExistModalBTN.nativeElement.click();
         },
       });
     } else {
-      console.log('Form is not valid');
+      //console.log('Form is not valid');
     }
   }
 
   getProducts(status: any) {
     this.productService.GetProductListByStatus(status).subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.productList = response;
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
         this.alertMsg = error.error.message;
       },
     });

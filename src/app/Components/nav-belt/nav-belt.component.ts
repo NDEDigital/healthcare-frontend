@@ -56,8 +56,14 @@ export class NavBeltComponent implements OnInit {
       console.log(this.goods);
 
       for (let i = 0; i < this.goods.length; i++) {
-        this.products.set(this.goods[i].productGroupCode, this.goods[i].productGroupName);
-        this.imgProduct.set(this.goods[i].productGroupCode,this.goods[i].imagePath);
+        this.products.set(
+          this.goods[i].productGroupCode,
+          this.goods[i].productGroupName
+        );
+        this.imgProduct.set(
+          this.goods[i].productGroupCode,
+          this.goods[i].imagePath
+        );
       }
     });
   }

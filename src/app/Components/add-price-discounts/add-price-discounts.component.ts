@@ -51,11 +51,11 @@ export class AddPriceDiscountsComponent {
     let userID = localStorage.getItem('code');
     this.productService.GetProductsByStatus(userID, status).subscribe({
       next: (response: any) => {
-        console.log(response, 'get products');
+        //console.log(response, 'get products');
         this.productList = response;
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
         this.alertMsg = error.error.message;
       },
     });
@@ -111,21 +111,19 @@ export class AddPriceDiscountsComponent {
     this.getProducts(-1);
     this.setupFormValueChanges();
     this.getProductList();
-
   }
 
   getProductList() {
     this.productService.getallProducts().subscribe(
       (data: any) => {
         this.products = data;
-        console.log('Products :', this.products);
+        //console.log('Products :', this.products);
       },
       (error) => {
-        console.error('Error fetching product groups:', error);
+        //console.error('Error fetching product groups:', error);
       }
     );
   }
-
 
   // setupFormValueChanges() {
   //   const form = this.addPriceDiscountForm;
@@ -180,7 +178,7 @@ export class AddPriceDiscountsComponent {
 
     // Subscribe to changes in Price
     priceControl?.valueChanges.subscribe((value) => {
-      if(value) {
+      if (value) {
         discountPctControl?.setValue('0', { emitEvent: false });
       }
       this.calculateTotalPrice();
@@ -382,26 +380,26 @@ export class AddPriceDiscountsComponent {
       formData.append('companyCode', 'companyCode');
 
       for (let pair of (formData as any).entries()) {
-        console.log(`${pair[0]}: `, pair[1]);
+        //console.log(`${pair[0]}: `, pair[1]);
       }
 
       this.productService.createSellerProductPrice(formData).subscribe({
         next: (response: any) => {
-          console.log(response);
+          //console.log(response);
           this.alertMsg = response.message;
           this.isError = false; // Set isError to false for a success message
           this.PrdouctExistModalBTN.nativeElement.click();
           this.addPriceDiscountForm.reset();
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
           this.alertMsg = error.error.message;
           this.isError = true; // Set isError to true for an error message
           this.PrdouctExistModalBTN.nativeElement.click();
         },
       });
     } else {
-      console.log('Form is not valid');
+      //console.log('Form is not valid');
     }
   }
 }

@@ -6,8 +6,8 @@ import { Component, ElementRef, Input, ViewChild } from '@angular/core';
   styleUrls: ['./clients-list-slider.component.css'],
 })
 export class ClientsListSliderComponent {
-  @ViewChild('Items', { static: true }) Items!: ElementRef; 
-  @Input() clients:any;
+  @ViewChild('Items', { static: true }) Items!: ElementRef;
+  @Input() clients: any;
   private intervalId: any;
   isMouseOverSlider = false;
   onMouseEnter() {

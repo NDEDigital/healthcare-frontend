@@ -12,7 +12,7 @@ export class SellerInvoiceComponent {
   invoice: any = [];
   constructor(private orderService: SellerOrderOverviewService) {}
   ngOnInit() {
-    console.log('aise');
+    //console.log('aise');
 
     const userCode = localStorage.getItem('code');
     const orderIDString = sessionStorage.getItem('orderID');
@@ -24,11 +24,11 @@ export class SellerInvoiceComponent {
     }
     this.orderService.getInvoiceForSeller(userCode, this.orderID).subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.invoice = response.invoice;
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }

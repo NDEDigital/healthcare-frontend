@@ -26,11 +26,10 @@ export class CompareProductComponent {
   // selected product for compare
 
   removeCompareProduct(indx: number) {
-    console.log(indx," indx");
-    
+    //console.log(indx, ' indx');
+
     this.compareData.splice(indx, 1);
     this.updateFirstSecondThird();
-    
   }
   // slider
   // previousSlide(): void {
@@ -68,14 +67,14 @@ export class CompareProductComponent {
       this.second--;
       this.third--;
     }
-     this.updateStatus();
+    this.updateStatus();
   }
-  
+
   updateStatus(): void {
     if (!this.compareData.length) {
       this.backColor = 'gray';
       this.forWardColor = 'gray';
-      console.log('digonto');
+      //console.log('digonto');
     } else {
       if (this.first == 0) {
         this.backColor = 'gray';

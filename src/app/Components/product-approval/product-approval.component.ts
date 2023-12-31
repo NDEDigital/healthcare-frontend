@@ -23,23 +23,23 @@ export class ProductApprovalComponent {
   getData(status: string) {
     this.productService.getProductData(status).subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.productsData = response;
-        console.log(this.productsData);
+        //console.log(this.productsData);
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }
 
   showImage(path: any, title: any) {
-    console.log(path, title);
+    //console.log(path, title);
     this.imagePath = path.split('src')[1];
     this.imageTitle = title;
   }
   updateProduct(UserId: any, CompanyCode: any, ProductId: any, Status: any) {
-    console.log(UserId, CompanyCode, ProductId, Status);
+    //console.log(UserId, CompanyCode, ProductId, Status);
     const productStatus = {
       UserId,
       CompanyCode,
@@ -48,9 +48,9 @@ export class ProductApprovalComponent {
     };
     this.productService.updateProduct(productStatus).subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         // this.productsData = response;
-        // console.log(this.productsData);
+        // //console.log(this.productsData);
         if ((this.btnIndex = -1)) {
           this.getData('Pending');
         } else if ((this.btnIndex = 1)) {
@@ -60,24 +60,24 @@ export class ProductApprovalComponent {
         }
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }
 
   // updateCompany(companyCode: any, Isactive: any) {
-  //   console.log(companyCode, Isactive);
+  //   //console.log(companyCode, Isactive);
   //   // const selectedCompany = this.productsData.find(
   //   //   (cmp: any) => cmp.companyCode === companyCode
   //   // );
   //   // if (selectedCompany) {
   //   //   this.selectedCompanyCodeValue = selectedCompany.companyCode;
-  //   //   console.log(
+  //   //   //console.log(
   //   //     'Selected Company Code Value:',
   //   //     this.selectedCompanyCodeValue
   //   //   );
   //   // }
-  //   console.log(
+  //   //console.log(
   //     'Selected Company Code Value:',
   //     this.selectedCompanyCodeValues[companyCode]
   //   );
@@ -88,11 +88,11 @@ export class ProductApprovalComponent {
   //   };
   //   // this.companyService.UpdateCompany(cmp).subscribe({
   //   //   next: (response: any) => {
-  //   //     console.log(response);
+  //   //     //console.log(response);
   //   //     this.getData();
   //   //   },
   //   //   error: (error: any) => {
-  //   //     console.log(error);
+  //   //     //console.log(error);
   //   //   },
   //   // });
   // }

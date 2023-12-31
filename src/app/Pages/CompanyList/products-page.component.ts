@@ -25,30 +25,30 @@ export class ProductsPageComponent {
     // this.goodsData.getProductCompanyList().pipe(
     //   switchMap(() => this.goodsData.getProductCompanyList())
     // ).subscribe((data: any) => {
-    //   console.log(data);
+    //   //console.log(data);
     //   this.products = data;
     // });
     this.callApi();
-    // console.log(this.groupName, this.groupCode, 'products');
+    // //console.log(this.groupName, this.groupCode, 'products');
   }
 
   handleDataUpdated() {
     this.callApi();
-    // console.log(this.groupName, this.groupCode, 'products inside handleUpdate');
+    // //console.log(this.groupName, this.groupCode, 'products inside handleUpdate');
   }
 
   callApi() {
     this.groupCode = sessionStorage.getItem('groupCode') || '';
     this.groupName = sessionStorage.getItem('groupName') || '';
-    // console.log(this.groupName, this.groupCode, 'products inside callapi');
+    // //console.log(this.groupName, this.groupCode, 'products inside callapi');
     setTimeout(() => {
       if (this.groupCode != '') {
         this.goodsData
           .getProductCompanyList(this.groupCode)
           .subscribe((data: any) => {
-            console.log(data, 'data');
+            //console.log(data, 'data');
 
-            console.log(this.sharedService.groupCode);
+            //console.log(this.sharedService.groupCode);
 
             this.companyList = data;
           });
@@ -70,14 +70,14 @@ export class ProductsPageComponent {
     //     )
     //   )
     //   .subscribe((data: any) => {
-    //     console.log(data);
+    //     //console.log(data);
     //     this.companyList = data;
     //   });
   }
 
   productCardClick(companyCode: string) {
     this.sharedService.setCompanyCode(companyCode);
-    // console.log(companyCode, 'companyCode');
+    // //console.log(companyCode, 'companyCode');
 
     this.router.navigate(['/product']);
     // window.location.href = '/product';

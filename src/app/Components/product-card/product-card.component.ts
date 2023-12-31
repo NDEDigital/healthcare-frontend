@@ -30,12 +30,10 @@ export class ProductCardComponent {
   ) {}
 
   ngOnInit() {
-    console.log(" data ",this.item);
-    console.log();
+    //console.log(' data ', this.item);
+    //console.log();
   }
   goToDetail() {
-  
-
     let obj = {
       approveSalesQty: this.item.approveSalesQty,
       companyName: this.item.companyName,
@@ -49,9 +47,8 @@ export class ProductCardComponent {
       sellerCode: this.item.sellerCode,
       specification: this.item.specification,
       stockQty: this.item.quantity,
-    
     };
-    console.log(" obj",obj)
+    //console.log(' obj', obj);
     sessionStorage.setItem('productData', JSON.stringify(obj));
     // this.route.navigate(['/productDetails']);
     window.open('/productDetails', '_blank');
@@ -59,7 +56,7 @@ export class ProductCardComponent {
   // edit(indx: number) {
   //   // this.sharedService.editData(this.dashboard.products[indx]);
   //   // this.router.navigate(['/addProduct']);
-  //   console.log(this.dashboard.products[indx].productId);
+  //   //console.log(this.dashboard.products[indx].productId);
   //   // this.isUnderOrderProccess(indx);
   //   if (!this.isActiveOrder) {
   //     sessionStorage.setItem(
@@ -76,9 +73,9 @@ export class ProductCardComponent {
   // }
   // delete(indx: number) {
   //   //this.sharedService.deleteData(indx);
-  //   console.log(this.dashboard.products[indx].productId);
+  //   //console.log(this.dashboard.products[indx].productId);
   //   // this.isUnderOrderProccess(indx);
-  //   // console.log(this.isActiveOrder);
+  //   // //console.log(this.isActiveOrder);
   //   // this.isActiveOrder;
   //   // if (!this.isActiveOrder) {
   //   //   sessionStorage.setItem(
@@ -97,13 +94,11 @@ export class ProductCardComponent {
     const groupCode = this.dashboard.products[indx].groupCode;
     this.OrderService.checkUnderOrderProccess(goodsId, groupCode).subscribe(
       (response: any) => {
-        console.log(response.isUnderOrderProccess);
+        //console.log(response.isUnderOrderProccess);
         this.isActiveOrder = response.isUnderOrderProccess;
         if (!this.isActiveOrder) {
           if (status === 'delete') {
-
-
-            console.log(" delete id ",this.dashboard.products[indx].goodsId )
+            //console.log(' delete id ', this.dashboard.products[indx].goodsId);
             sessionStorage.setItem(
               'deleteData',
               JSON.stringify(this.dashboard.products[indx].goodsId)

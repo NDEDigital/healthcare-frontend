@@ -1,4 +1,9 @@
-import { ChangeDetectorRef, Component, EventEmitter, Output } from '@angular/core';
+import {
+  ChangeDetectorRef,
+  Component,
+  EventEmitter,
+  Output,
+} from '@angular/core';
 
 @Component({
   selector: 'app-otp-modal',
@@ -18,7 +23,7 @@ export class OtpModalComponent {
     if (this.otpValue !== null && this.otpValue.toString().length === 6) {
       this.error = false;
       console.log('OTP:', this.otpValue);
-       this.dataChanged.emit(this.otpValue.toString());
+      this.dataChanged.emit(this.otpValue.toString());
     } else {
       this.error = true;
     }

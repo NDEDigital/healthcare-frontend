@@ -75,11 +75,11 @@ export class UserRegFormComponent {
     const confirmPassword = control.get('confirmPassword')?.value;
     if (password !== confirmPassword) {
       control.get('confirmPassword')?.setErrors({ passwordMismatch: true });
-      // console.log('  Password and Confirm Password must match.');
+      // //console.log('  Password and Confirm Password must match.');
       return { passwordMismatch: true };
     } else {
       control.get('confirmPassword')?.setErrors(null);
-      // console.log('Password and Confirm Password matched!');
+      // //console.log('Password and Confirm Password matched!');
       return null;
     }
   }
@@ -107,13 +107,13 @@ export class UserRegFormComponent {
     const passwordControl = this.userResistrationForm.get('password');
 
     if (passwordControl?.hasError('required')) {
-      // console.log('Password is required');
+      // //console.log('Password is required');
       return 'Password is required';
     } else if (passwordControl?.hasError('minlength')) {
-      // console.log('minLength');
+      // //console.log('minLength');
       return 'Password Should be at least 8';
     } else if (passwordControl?.hasError('maxlength')) {
-      // console.log('maxLength');
+      // //console.log('maxLength');
 
       return 'Password can be at the max 15 characters long';
     }
@@ -125,7 +125,7 @@ export class UserRegFormComponent {
     Object.values(this.userResistrationForm.controls).forEach((control) => {
       control.markAsTouched();
       control.markAsDirty();
-      // console.log(control);
+      // //console.log(control);
     });
     if (this.userResistrationForm.valid) {
       const formData = {
@@ -141,7 +141,7 @@ export class UserRegFormComponent {
       if (this.userResistrationForm.value.trade === 'Buyer') {
         delete formData.companyCode;
       }
-      console.log('Form Data:', formData);
+      //console.log('Form Data:', formData);
 
       this.user = formData;
       this.userData.createUser(this.user).subscribe({
@@ -151,7 +151,7 @@ export class UserRegFormComponent {
           //   response.userId,
           //   response.role
           // );
-          console.log(response, 'done');
+          //console.log(response, 'done');
           this.alertTitle = 'Successfull!!';
           this.alertMsg = response.message;
           this.UserExistModalBTN.nativeElement.click();
@@ -163,7 +163,7 @@ export class UserRegFormComponent {
           // window.location.href = '';
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
           this.alertTitle = 'Error!!';
           this.alertMsg = error.error.message;
 

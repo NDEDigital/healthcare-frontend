@@ -59,12 +59,11 @@ export class SellerInventoryComponent {
     this.Search();
   }
 
+  GetData() {
+    this.sellerId = localStorage.getItem('code') || '';
+    console.log(' sellerId', this.sellerId);
 
-GetData() {
-this.sellerId = localStorage.getItem('code') || '';
-    console.log(" sellerId", this.sellerId)
-
-    this.SellerService.getSellerInventory( this.sellerId ).subscribe(
+    this.SellerService.getSellerInventory(this.sellerId).subscribe(
       (data: any) => {
         console.log(' load dataaaaaa', data); // Use a type if possible for better type checking
         this.inventoryData = data;

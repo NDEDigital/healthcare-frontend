@@ -53,16 +53,16 @@ export class CartDataService {
   }
 
   loadIntoLocalStorage() {
-        localStorage.setItem('cartCount', JSON.stringify(this.cartCount));
-        localStorage.setItem('totalPrice', JSON.stringify(this.totalPrice));
-        localStorage.setItem(
-          'cartDataDetail',
-          JSON.stringify(Array.from(this.cartDataDetail.entries()))
-        );
-        localStorage.setItem(
-          'cartDataQt',
-          JSON.stringify(Array.from(this.cartDataQt.entries()))
-        );
+    localStorage.setItem('cartCount', JSON.stringify(this.cartCount));
+    localStorage.setItem('totalPrice', JSON.stringify(this.totalPrice));
+    localStorage.setItem(
+      'cartDataDetail',
+      JSON.stringify(Array.from(this.cartDataDetail.entries()))
+    );
+    localStorage.setItem(
+      'cartDataQt',
+      JSON.stringify(Array.from(this.cartDataQt.entries()))
+    );
   }
 
   clearCartData() {
@@ -84,10 +84,8 @@ export class CartDataService {
   }
 
   setCartCount(key: string) {
-
-    
     const count = this.cartDataQt.get(key);
-   
+
     if (count === undefined) {
       this.cartCount++;
     }
@@ -96,7 +94,6 @@ export class CartDataService {
   }
 
   setPrice(price: number, qt: number, key: string) {
-    
     const count = this.cartDataQt.get(key);
     if (this.cartDataQt.has(key) && count !== undefined) {
       this.totalPrice -= count * price;
@@ -105,7 +102,7 @@ export class CartDataService {
     if (this.totalPrice < 0) {
       this.totalPrice = 0;
     }
-    
+
     localStorage.setItem('totalPrice', JSON.stringify(this.totalPrice));
   }
 
@@ -126,9 +123,7 @@ export class CartDataService {
   setCartData(obj: any, qt: any) {
     let groupCode_groupId = obj.groupCode + '&' + obj.goodsId;
     this.cartDataDetail.set(groupCode_groupId, obj);
-     
-     
-      
+
     this.cartDataQt.set(groupCode_groupId, qt);
 
     // Convert Map to an array of its entries and then stringify
@@ -140,29 +135,26 @@ export class CartDataService {
       'cartDataQt',
       JSON.stringify(Array.from(this.cartDataQt.entries()))
     );
-
   }
 
   deleteCartData(key: string) {
-   
     if (key !== undefined) {
       this.initializeAndLoadData();
       const objData = this.cartDataDetail.get(key);
       const objQt = this.cartDataQt.get(key);
-      console.log(objData, "----utshow----", objQt);
+      console.log(objData, '----utshow----', objQt);
       console.log(this.totalPrice, 'totalPrice');
       if (objData !== undefined && objQt !== undefined) {
         this.totalPrice -= objQt * parseInt(objData.price);
       }
       console.log(this.totalPrice, 'totalPrice', objData);
-    
+
       this.cartCount--;
       this.cartDataDetail.delete(key);
       this.cartDataQt.delete(key);
-     
+
       this.loadIntoLocalStorage();
     }
-    
   }
 
   updateData(cartData: any, cartDataQt: any) {

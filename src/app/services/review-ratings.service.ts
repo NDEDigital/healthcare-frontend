@@ -6,7 +6,6 @@ import { API_URL } from '../config';
   providedIn: 'root',
 })
 export class ReviewRatingsService {
-  
   URL = API_URL;
   addReviewAndRatingURL = `${this.URL}/api/ReviewAndRating/addReviewAndRating`;
 

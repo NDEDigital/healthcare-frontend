@@ -22,16 +22,15 @@ export class AdminInvoiceComponent {
       this.orderID
     ).subscribe({
       next: (response: any) => {
-        console.log(' invoice data ', response);
+        //console.log(' invoice data ', response);
         this.invoice = response.invoice;
-   
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }
   ngOnInit() {
-    console.log('aise');
+    //console.log('aise');
   }
 }

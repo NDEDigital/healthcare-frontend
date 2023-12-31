@@ -42,7 +42,7 @@ export class PaymentComponent {
     } else {
       this.payment_method = type;
 
-      // console.log(' div', paymentDiv);
+      // ////console.log(' div', paymentDiv);
       for (let i = 0; i < paymentDiv.length; i++) {
         if (paymentDiv[i].classList.contains(type)) {
           paymentDiv[i].style.backgroundColor = 'rgb(230, 242, 252)';
@@ -69,19 +69,18 @@ export class PaymentComponent {
     this.orderApiService.insertOrderData().subscribe(
       (response) => {
         if (response.message === 'Data inserted successfully.') {
-          alert("success"); 
+          alert('success');
           this.cartDataService.clearCartData();
           this.router.navigate(['/']);
         } else {
-          console.log('not success');
+          ////console.log('not success');
         }
       },
       (error) => {
-        alert("Error try Again");
+        alert('Error try Again');
         this.router.navigate(['/cartView']);
-        console.error('Error:', error);
+        ////console.error('Error:', error);
       }
     );
-    
   }
 }

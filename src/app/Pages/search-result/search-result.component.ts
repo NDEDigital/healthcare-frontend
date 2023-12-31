@@ -69,15 +69,15 @@ export class SearchResultComponent {
           discountAmount: this.goods[i].discountAmount,
           discountPct: this.goods[i].discountPct,
           totalCount: this.goods[i].totalCount,
-          netPrice: this.goods[i].totalPrice
+          netPrice: this.goods[i].totalPrice,
         };
-        console.log(obj, this.searchData, 's data');
+        //console.log(obj, this.searchData, 's data');
 
         this.searchData.push(obj);
       }
       if (this.searchData.length > 0) {
         this.compareValues = Array(20).fill('Compare product');
-        console.log(this.searchData, 'sda');
+        //console.log(this.searchData, 'sda');
 
         this.totalPages = Math.ceil(this.searchData[0].totalCount / 20);
       }
@@ -95,7 +95,7 @@ export class SearchResultComponent {
 
   ////////////////////
   getDisplayPageRange(): number[] {
-    // console.log('a gaya2');
+    // //console.log('a gaya2');
     const displayRangeSize = 3; // Number of pages to display at a time
     const middlePage = Math.ceil(displayRangeSize / 2);
     let startPage = this.page - middlePage + 1;
@@ -120,7 +120,7 @@ export class SearchResultComponent {
     }
   }
   done(product: any) {
-    console.log(product, ' done');
+    //console.log(product, ' done');
   }
 
   updateCompareValue(index: number) {
@@ -129,7 +129,7 @@ export class SearchResultComponent {
     } else {
       this.compareValues[index] = 'Compare product';
     }
-    console.log(this.compareValues);
+    //console.log(this.compareValues);
   }
 
   receiveDataFromChild(dataEvent: any) {
@@ -139,7 +139,7 @@ export class SearchResultComponent {
       for (let i = 0; i < this.compareData.length; i++) {
         if (this.compareData[i] === obj) {
           this.compareData.splice(i, 1);
-          console.log('Done');
+          //console.log('Done');
 
           break;
         }
@@ -150,7 +150,7 @@ export class SearchResultComponent {
         this.compareData.push(obj);
       }
     }
-    console.log(this.compareData.length);
+    //console.log(this.compareData.length);
 
     if (this.compareData.length) {
       this.showCompare = true;
@@ -191,7 +191,7 @@ export class SearchResultComponent {
   }
 
   private updateVisibleImages(num: number): void {
-    console.log(num, ' num ', this.showIn);
+    //console.log(num, ' num ', this.showIn);
 
     if (num < 175) {
       this.backColor = 'gray';
@@ -245,7 +245,7 @@ export class SearchResultComponent {
     if (option === 'BestMatch') {
       this.goodsDataService.sortedKey = 'NAME';
     } else if (option === 'PriceLowtoHigh') {
-      console.log('ASC');
+      //console.log('ASC');
       this.goodsDataService.sortedKey = 'ASC';
     } else {
       this.goodsDataService.sortedKey = 'DESC';

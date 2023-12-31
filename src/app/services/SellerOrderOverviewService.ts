@@ -14,8 +14,8 @@ export class SellerOrderOverviewService {
   getOrderInfoURL = `${this.URL}/api/Order/getSearchedAllOrderForSeller`;
   updateOrderStatusURL = `${this.URL}/api/Order/updateSellerOrderStatus`;
   updateDetaiilsOrderStatusURL = `${this.URL}/api/Order/updateDetailsOrderStatus`;
-   getUsersDataURL = `${this.URL}/api/Order/getBuyerInfo`;
-   SellerInventory = `${this.URL}/GetSellerInventoryDataBySellerId/`;
+  getUsersDataURL = `${this.URL}/api/Order/getBuyerInfo`;
+  SellerInventory = `${this.URL}/GetSellerInventoryDataBySellerId/`;
   // getBuyerDataURL = `${this.URL}/api/Order/GetBuyerOrderData?`;
   // getOrderInfo(sellerId: any) {
   //   // const ordersInfos = of(OrdersInfos);
@@ -117,22 +117,40 @@ export class SellerOrderOverviewService {
     console.log('service e aise stua', status);
     const formData = new FormData();
     formData.append('status', status);
-    return this.http.post(`${this.URL}/api/Order/GetReturnData/${pageNumber}/${pageSize}`, formData);
+    return this.http.post(
+      `${this.URL}/api/Order/GetReturnData/${pageNumber}/${pageSize}`,
+      formData
+    );
   }
-    // by marufa
-    GetReturnDataWithSearch(status: string, pageNumber: number, pageSize: number,searchby: string,searchValue: string ,fromDate : any , toDate:any) {
-      console.log('load return data', status);
-      const formData = new FormData();
-      formData.append('status', status);
-      formData.append('searchby', searchby);
-      formData.append('searchValue', searchValue);
-      formData.append('fromDate', fromDate);
-      formData.append('toDate', toDate);
-      return this.http.post(`${this.URL}/api/Order/getReturnDataForAdmin/${pageNumber}/${pageSize}`, formData);
-    }
+  // by marufa
+  GetReturnDataWithSearch(
+    status: string,
+    pageNumber: number,
+    pageSize: number,
+    searchby: string,
+    searchValue: string,
+    fromDate: any,
+    toDate: any
+  ) {
+    console.log('load return data', status);
+    const formData = new FormData();
+    formData.append('status', status);
+    formData.append('searchby', searchby);
+    formData.append('searchValue', searchValue);
+    formData.append('fromDate', fromDate);
+    formData.append('toDate', toDate);
+    return this.http.post(
+      `${this.URL}/api/Order/getReturnDataForAdmin/${pageNumber}/${pageSize}`,
+      formData
+    );
+  }
 
   updateDetailsStatus(OrderDetailsIds: string, StatusValue: string) {
-    console.log(OrderDetailsIds, StatusValue, 'OrderDetailsIds, StatusValue on Return Update');
+    console.log(
+      OrderDetailsIds,
+      StatusValue,
+      'OrderDetailsIds, StatusValue on Return Update'
+    );
     const formData = new FormData();
     formData.append('idList', OrderDetailsIds);
     formData.append('status', StatusValue);
@@ -144,9 +162,7 @@ export class SellerOrderOverviewService {
     return this.http.get(this.getUsersDataURL, { params: { idList } });
   }
 
-  getSellerInventory(userId: any   )  {
-    return this.http.get<any>(this.SellerInventory+userId, {
-    
-    } );
+  getSellerInventory(userId: any) {
+    return this.http.get<any>(this.SellerInventory + userId, {});
   }
 }

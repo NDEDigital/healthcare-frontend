@@ -92,11 +92,7 @@ export class SharedService {
   loginStatus$ = this.loginStatusSubject.asObservable();
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
-  updateLoginStatus(
-    loginStatus: boolean,
-    userCode: any,
-    role: any
-  ) {
+  updateLoginStatus(loginStatus: boolean, userCode: any, role: any) {
     this.loginStatusSubject.next(loginStatus);
     localStorage.setItem('loginStatus', loginStatus.toString());
     localStorage.setItem('code', userCode);

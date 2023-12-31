@@ -8,7 +8,7 @@ import { API_URL } from '../config';
 export class ProductReturnServiceService {
   //baseUrl = 'http://172.16.5.18:8081/ProductReturn'; // liveURL
 
-  URL =API_URL;
+  URL = API_URL;
   baseUrl = `${this.URL}/ProductReturn`;
   constructor(private http: HttpClient) {}
 

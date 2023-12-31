@@ -14,8 +14,8 @@ declare var bootstrap: any;
 export class ProductComponent {
   products: any[] = [];
   products2: any;
-  goods:any;
-  
+  goods: any;
+
   productType = new Map();
   GroupdCode: string = '';
   productSize = new Map();
@@ -32,8 +32,6 @@ export class ProductComponent {
     private cartDataService: CartDataService,
     private route: Router
   ) {
-
-    
     this.role = localStorage.getItem('role');
     if (this.role === 'seller' || this.role === 'admin') {
       this.isBuyer = false;
@@ -41,49 +39,47 @@ export class ProductComponent {
     this.goodsData
       .getProductList(this.sharedService.companyCode)
       .subscribe((data: any[]) => {
-             this.goods = data;
-      
-         for(let i =0;i<this.goods.length;i++){
+        this.goods = data;
+
+        for (let i = 0; i < this.goods.length; i++) {
           let obj = {
             companyName: this.goods[i].companyName,
             groupCode: this.goods[i].productGroupID,
             goodsId: this.goods[i].productId,
-            groupName: this.goods[i].productGroupName,                
+            groupName: this.goods[i].productGroupName,
             goodsName: this.goods[i].productName,
             specification: this.goods[i].specification,
             approveSalesQty: this.goods[i].availableQty,
             sellerCode: this.goods[i].sellerId,
-            unitId:this.goods[i].unitId,
-            quantityUnit :  this.goods[i].unit,
-            imagePath :  this.goods[i].imagePath,
+            unitId: this.goods[i].unitId,
+            quantityUnit: this.goods[i].unit,
+            imagePath: this.goods[i].imagePath,
             price: this.goods[i].price,
             discountAmount: this.goods[i].discountAmount,
             discountPct: this.goods[i].discountPct,
-            netPrice: this.goods[i].totalPrice
+            netPrice: this.goods[i].totalPrice,
           };
-              this.products.push(obj);
-         }
-       
-         
+          this.products.push(obj);
+        }
+
         // this.products = goods;
         this.filteredProducts = [...this.products];
         this.loading = false;
-        console.log(this.filteredProducts,"u");
-        
+        ////console.log(this.filteredProducts, 'u');
       });
 
     // this.interval = setInterval(() => {
     //   this.goodsData
     //     .getProductList(this.sharedService.companyCode)
     //     .subscribe((data: any[]) => {
-    //       console.log(data,"lala");
-          
-    //       data.forEach((newProduct: any) => {        
+    //       ////console.log(data,"lala");
+
+    //       data.forEach((newProduct: any) => {
     //           let obj = {
     //             companyName: newProduct.companyName,
     //             groupCode: newProduct.productGroupID,
     //             goodsId: newProduct.productId,
-    //             groupName: newProduct.productGroupName,                
+    //             groupName: newProduct.productGroupName,
     //             goodsName: newProduct.productName,
     //             specification: newProduct.specification,
     //             approveSalesQty: newProduct.availableQty,
@@ -95,11 +91,10 @@ export class ProductComponent {
     //             discountAmount: newProduct.discountAmount,
     //             discountPct: newProduct.discountPct,
     //           };
-             
-              
-    //           this.products2.push(obj); 
-    //           console.log(this.products2,"sssd",obj);  
-              
+
+    //           this.products2.push(obj);
+    //           ////console.log(this.products2,"sssd",obj);
+
     //         // const existingProduct = this.filteredProducts.find(
     //         //   (product: any) => product.goodsId === this.products2.goodsId
     //         // );
@@ -149,41 +144,38 @@ export class ProductComponent {
     //     this.filteredProducts = [...this.products];
     //     this.loading = false;
     //   });
-      // this.goodsData
-      // .getProductList(this.sharedService.companyCode)
-      // .subscribe((data: any[]) => {
-      //        this.goods = data;
-      
-      //    for(let i =0;i<this.goods.length;i++){
-      //     let obj = {
-      //       companyName: this.goods[i].companyName,
-      //       groupCode: this.goods[i].productGroupID,
-      //       goodsId: this.goods[i].productId,
-      //       groupName: this.goods[i].productGroupName,                
-      //       goodsName: this.goods[i].productName,
-      //       specification: this.goods[i].specification,
-      //       approveSalesQty: this.goods[i].availableQty,
-      //       sellerCode: this.goods[i].sellerId,
-      //       unitId:this.goods[i].unitId,
-      //       quantityUnit :  this.goods[i].unit,
-      //       imagePath :  this.goods[i].imagePath,
-      //       price: this.goods[i].price,
-      //       discountAmount: this.goods[i].discountAmount,
-      //       discountPct: this.goods[i].discountPct,
-      //     };
-      //         this.products.push(obj);
-      //    }
-       
-         
-      //   // this.products = goods;
-      //   this.filteredProducts = [...this.products];
-      //   this.loading = false;
-      //   console.log(this.filteredProducts,"u");
-        
-      // });
+    // this.goodsData
+    // .getProductList(this.sharedService.companyCode)
+    // .subscribe((data: any[]) => {
+    //        this.goods = data;
 
+    //    for(let i =0;i<this.goods.length;i++){
+    //     let obj = {
+    //       companyName: this.goods[i].companyName,
+    //       groupCode: this.goods[i].productGroupID,
+    //       goodsId: this.goods[i].productId,
+    //       groupName: this.goods[i].productGroupName,
+    //       goodsName: this.goods[i].productName,
+    //       specification: this.goods[i].specification,
+    //       approveSalesQty: this.goods[i].availableQty,
+    //       sellerCode: this.goods[i].sellerId,
+    //       unitId:this.goods[i].unitId,
+    //       quantityUnit :  this.goods[i].unit,
+    //       imagePath :  this.goods[i].imagePath,
+    //       price: this.goods[i].price,
+    //       discountAmount: this.goods[i].discountAmount,
+    //       discountPct: this.goods[i].discountPct,
+    //     };
+    //         this.products.push(obj);
+    //    }
 
-      
+    //   // this.products = goods;
+    //   this.filteredProducts = [...this.products];
+    //   this.loading = false;
+    //   ////console.log(this.filteredProducts,"u");
+
+    // });
+
     // this.interval = setInterval(() => {
     //   this.goodsData
     //     .getProductList(this.sharedService.companyCode)
@@ -258,7 +250,7 @@ export class ProductComponent {
     const m = str1.length;
     const n = str2.length;
     const dp: number[][] = [];
-    // console.log(m, 'm', n, 'n');
+    // ////console.log(m, 'm', n, 'n');
     let maxLength = 0;
 
     for (let i = 0; i <= m; i++) {
@@ -269,7 +261,7 @@ export class ProductComponent {
       for (let j = 1; j <= n; j++) {
         if (str1[i - 1] === str2[j - 1]) {
           dp[i][j] = dp[i - 1][j - 1] + 1;
-          // console.log(dp[i][j], ' dp[i][j]');
+          // ////console.log(dp[i][j], ' dp[i][j]');
 
           maxLength = Math.max(maxLength, dp[i][j]);
         }
@@ -290,7 +282,7 @@ export class ProductComponent {
     const trimmedKey = key.trim();
     const parts = trimmedKey.split('GG');
     const firstHalf = parts[0].trim();
-    // console.log(firstHalf);
+    // ////console.log(firstHalf);
     return firstHalf;
   }
 
@@ -306,15 +298,13 @@ export class ProductComponent {
     this.cartDataDetail = this.cartDataService.getCartData().cartDataDetail;
     this.cartDataQt = this.cartDataService.getCartData().cartDataQt;
     this.totalPrice = this.cartDataService.getTotalPrice();
-   
-    
   }
 
   setCart(entry: any, inputQt: string) {
     if (entry.price === '' || entry.price === undefined) {
       entry.price = '12000';
     }
-    
+
     let groupCode_groupId = entry.groupCode + '&' + entry.goodsId;
 
     this.cartDataService.setCartCount(groupCode_groupId);
