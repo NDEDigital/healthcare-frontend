@@ -7,7 +7,7 @@ import {
   Renderer2,
   ViewChildren,
 } from '@angular/core';
-import { catchError, throwError } from 'rxjs';
+import { catchError, find, throwError } from 'rxjs';
 import { GoodsDataService } from 'src/app/services/goods-data.service';
 import { SharedService } from 'src/app/services/shared.service';
 
@@ -132,10 +132,11 @@ export class ProductSliderComponent {
     this.goodsDataObj.getCarouselData().subscribe(
       (data: any[]) => {
         this.goods = data;
-
+             console.log(this.goods);
+             
         for (let i = 0; i < this.goods.length; i++) {
-          let finObj = this.products3.get(this.goods[i].groupName);
-          
+          let finObj = this.products3.get(this.goods[i].productGroupName);
+         
           if (this.goods[i].approveSalesQty === '0') continue;
 
           if (finObj) {
@@ -178,14 +179,18 @@ export class ProductSliderComponent {
               discountPct: this.goods[i].discountPct,
               netPrice: this.goods[i].totalPrice
             };
+            // console.log(obj," uts");
+            
             this.products3.set(this.goods[i].productGroupName, [obj]);
+             
+            
           }
-          console.log(this.products3," ut");
+          // console.log(this.products3," ut");
           
         }
 
         // console.log(this.products3, ' products3');
-        this.updateQuantity();
+         this.updateQuantity();
 
         // Add any other code or logic you need here
       },
@@ -247,7 +252,7 @@ export class ProductSliderComponent {
   // }
 
   updateQuantity() {
-    // this.intervalId = setInterval(() => {
+     this.intervalId = setInterval(() => {
       this.goodsDataObj.getCarouselData().subscribe((data: any[]) => {
         console.log(' data error ');
         this.goods = data;
@@ -293,7 +298,8 @@ export class ProductSliderComponent {
             this.products3.set(key, [obj]);
           }
         }
-      
+        //  console.log("la");
+         
         // catchError((error: any) => {
         //   console.error('Error:', error);
         //   if (error.status === 401) {
@@ -305,7 +311,7 @@ export class ProductSliderComponent {
 
         // console.log(this.products3, 'products3');
       });
-    // }, 5000);
+    }, 5000);
   }
 
   ngOnDestroy() {
