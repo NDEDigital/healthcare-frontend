@@ -30,7 +30,7 @@ export class OrderFlowComponent {
     if (uidS) userID = parseInt(uidS, 10);
     this.orderApi.getBuyerOrder(userID, status).subscribe({
       next: (response: any) => {
-        //console.log(response);
+        console.log(response);
         this.productsData = response;
         //console.log(this.productsData);
       },
