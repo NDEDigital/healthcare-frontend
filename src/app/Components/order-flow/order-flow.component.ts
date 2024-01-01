@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 import { AddProductService } from 'src/app/services/add-product.service';
 import { OrderApiService } from 'src/app/services/order-api.service';
+import { ProductReturnServiceService } from 'src/app/services/product-return-service.service';
 
 @Component({
   selector: 'app-order-flow',
@@ -10,6 +11,7 @@ import { OrderApiService } from 'src/app/services/order-api.service';
 export class OrderFlowComponent {
   btnIndex = -1;
   productsData: any;
+  returntype: any;
   imagePath = '';
   status = 'Pending';
   imageTitle = 'No Data Found!';
@@ -17,11 +19,13 @@ export class OrderFlowComponent {
 
   constructor(
     private productService: AddProductService,
-    private orderApi: OrderApiService
+    private orderApi: OrderApiService,
+    private productReturnService: ProductReturnServiceService
   ) {}
 
   ngOnInit() {
     this.getData(this.status);
+    this.GetReturnTypeForSelectOption();
   }
 
   getData(status: string) {
@@ -30,7 +34,7 @@ export class OrderFlowComponent {
     if (uidS) userID = parseInt(uidS, 10);
     this.orderApi.getBuyerOrder(userID, status).subscribe({
       next: (response: any) => {
-        //console.log(response);
+        console.log(response);
         this.productsData = response;
         //console.log(this.productsData);
       },
@@ -39,6 +43,34 @@ export class OrderFlowComponent {
       },
     });
   }
+
+  GetReturnTypeForSelectOption(){
+    this.productReturnService.getReturnType().subscribe({
+      next: (Response: any) => {
+        console.log(Response);
+        this.returntype = Response;
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
+  }
+
+  
+  ReturnProduct(formValues: any): void {
+    // Access the form values directly
+    const returnType = formValues.returnTypeControl;
+    const remarks = formValues.remarksControl;
+
+    // Now you can use returnType and remarks in your logic
+    console.log('Return Type:', returnType);
+    console.log('Remarks:', remarks);
+    
+    // Add your logic to send the values to the server or perform any other actions
+  }
+
+
+
 
   showImage(path: any, title: any) {
     //console.log(path, title);

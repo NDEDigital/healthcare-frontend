@@ -2,7 +2,7 @@
   <div
     class="bg-white d-flex justify-content-center p-2 border border-1 rounded"
   >
-    <h1 class="companyApproval_header_text">Orders Overview</h1>
+    <h1 class="companyApproval_header_text">Orders Overview buyer</h1>
   </div>
   <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2">
     <div class="headerbtns">
@@ -106,7 +106,8 @@
       <div class="col tableHeader">Order Date</div>
       <div class="col tableHeader">Address</div>
       <div class="col tableHeader">Status</div>
-      <!-- <div class="col tableHeader">Action</div> -->
+      <div class="col tableHeader" *ngIf="btnIndex === 6">Action</div>
+
       <!-- <div class="col tableHeader">Action</div> -->
     </div>
 
@@ -135,13 +136,121 @@
       <div class="col tableBody">
         {{ row.sellerStatus }}
       </div>
-      <div class="col tableBody">
-        {{ row.sellerStatus }}
+      <div class="col tableBody" *ngIf="btnIndex === 6">
+        <button
+        class="custom-btn"
+        type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
+      >
+        Return
+      </button>
+      <button
+      class="custom-btn"
+    >
+      Review
+    </button>
       </div>
-
-
-
-
+      <!-- <div class="col tableBody">
+        <div class="d-flex justify-content-center align-items-center">
+          <div>
+            <button class="actionBtn" *ngIf="btnIndex != 1">
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="25"
+                height="25"
+                fill="green"
+                class="bi bi-check2 me-3"
+                viewBox="0 0 16 16"
+                (click)="
+                  updateProduct(
+                    row.userId,
+                    row.companyCode,
+                    row.productId,
+                    'Approved'
+                  )
+                "
+              >
+                <path
+                  d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+                />
+              </svg>
+            </button>
+          </div>
+          <div>
+            <button
+              class="actionBtn"
+              *ngIf="btnIndex != 0"
+              (click)="
+                updateProduct(
+                  row.userId,
+                  row.companyCode,
+                  row.productId,
+                  'Rejected'
+                )
+              "
+            >
+              <svg
+                xmlns="http://www.w3.org/2000/svg"
+                width="20"
+                height="20"
+                fill="red"
+                class="bi bi-x-lg fw-bolder"
+                viewBox="0 0 16 16"
+              >
+                <path
+                  d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+      </div> -->
     </section>
   </div>
+
+
+  <section id="ReturnFormModalSection">
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      Launch static backdrop modal
+    </button> -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Return Form</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <div>
+                <label for="">Return Type: </label>
+                <select name="returntype">
+                  <option value="0"> Nothing is Selected</option>
+                  <option *ngFor="let entry of returntype" [ngValue]="entry.returnTypeId"
+                  [value]="entry.returnTypeName + '%' + entry.returnTypeId" >
+                    {{ entry.returnTypeName }}
+                  </option>
+                </select>
+              </div>
+              <div>
+                <label for="">Remarks: </label>
+                <input type="text" placeholder="Remarks" name="remarks">
+              </div>
+
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="custom-btn"
+
+            (click)="btnIndex = -1"
+            (click)="getData('Pending')"> Return </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

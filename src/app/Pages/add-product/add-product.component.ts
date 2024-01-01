@@ -110,6 +110,7 @@ export class AddProductComponent {
       }
     });
   }
+  
   onSubmit() {
     if (this.editMode) {
       this.updateProduct();
@@ -134,6 +135,7 @@ export class AddProductComponent {
     });
     this.productForm.get('image')?.disable();
   }
+
   updateProduct() {
     //console.log('update callde');
     this.addFormData();
@@ -160,6 +162,7 @@ export class AddProductComponent {
       });
     }
   }
+
   addProduct() {
     this.addFormData();
     
@@ -217,6 +220,7 @@ export class AddProductComponent {
     this.formData.append('Quantity', this.productForm.value.quantity);
     this.formData.append('QuantityUnit', this.productForm.value.quantityUnit);
   }
+
   // onImageChange(event: any): void {
   //   const file = event.target.files[0];
   //   const reader = new FileReader();
@@ -231,6 +235,7 @@ export class AddProductComponent {
   //     reader.readAsDataURL(file);
   //   }
   // }
+
   onImageChange(event: any): void {
     const file = event.target.files[0];
     // const allowedTypes = [
