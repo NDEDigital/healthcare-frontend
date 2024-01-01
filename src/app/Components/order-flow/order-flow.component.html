@@ -139,6 +139,7 @@
       <div class="col tableBody" *ngIf="btnIndex === 6">
         <button
         class="custom-btn"
+        type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
       >
         Return
       </button>
@@ -205,4 +206,51 @@
       </div> -->
     </section>
   </div>
+
+
+  <section id="ReturnFormModalSection">
+    <!-- Button trigger modal -->
+    <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+      Launch static backdrop modal
+    </button> -->
+
+    <!-- Modal -->
+    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+      <div class="modal-dialog">
+        <div class="modal-content">
+          <div class="modal-header">
+            <h1 class="modal-title fs-5" id="staticBackdropLabel">Return Form</h1>
+            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+          </div>
+          <div class="modal-body">
+            <form action="">
+              <div>
+                <label for="">Return Type: </label>
+                <select name="returntype">
+                  <option value="0"> Nothing is Selected</option>
+                  <option *ngFor="let entry of returntype" [ngValue]="entry.returnTypeId" 
+                  [value]="entry.returnTypeName + '%' + entry.returnTypeId" >
+                    {{ entry.returnTypeName }}
+                  </option>
+                </select>
+              </div>
+              <div>
+                <label for="">Remarks: </label>
+                <input type="text" placeholder="Remarks" name="remarks">
+              </div>
+
+
+            </form>
+          </div>
+          <div class="modal-footer">
+            <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+            <button type="button" class="custom-btn"
+
+            (click)="btnIndex = -1"
+            (click)="getData('Pending')"> Return </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 </div>

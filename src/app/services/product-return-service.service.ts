@@ -8,14 +8,19 @@ import { API_URL } from '../config';
 export class ProductReturnServiceService {
   //baseUrl = 'http://172.16.5.18:8081/ProductReturn'; // liveURL
 
-  URL =API_URL;
+  URL = API_URL;
   baseUrl = `${this.URL}/ProductReturn`;
   constructor(private http: HttpClient) {}
 
   getReturnType(): Observable<any> {
-    const url = `${this.baseUrl}/GetReturnType`;
+    const url = `${this.URL}/api/HK_Gets/GetReturnList`;
     return this.http.get<any>(url);
   }
+
+  // getReturnType(): Observable<any> {
+  //   const url = `${this.baseUrl}/GetReturnType`;
+  //   return this.http.get<any>(url);
+  // }
 
   insertData(returnData: any): Observable<any> {
     //console.log(' in service ', returnData);
@@ -24,6 +29,7 @@ export class ProductReturnServiceService {
     const url = `${this.baseUrl}/InsertReturnedData`;
     return this.http.post<any>(url, returnData);
   }
+
   updateStatus(status: string, orderMasterId: string) {
     //console.log(' in service ', status);
     const formData = new FormData();
@@ -48,4 +54,6 @@ export class ProductReturnServiceService {
     formData.append('status', StatusValue);
     return this.http.put(url, formData);
   }
+
+
 }
