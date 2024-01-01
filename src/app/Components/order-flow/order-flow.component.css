@@ -92,3 +92,14 @@
   height: 4rem;
   width: 6rem;
 }
+
+.starDesign {
+  color: gray; /* Default star color */
+  padding: 1rem;
+  font-size: 2rem;
+}
+
+.starDesign.hovered,
+.starDesign.selected {
+  color: gold; /* Highlight color when hovered or selected */
+}
