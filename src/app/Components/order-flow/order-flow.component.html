@@ -102,6 +102,7 @@
     <div class="row headerRow sticky-top fw-bolder">
       <div class="col tableHeader">Index</div>
       <div class="col tableHeader">Order No</div>
+      <div class="col tableHeader">Product Name</div>
       <div class="col tableHeader">Buyer Name</div>
       <div class="col tableHeader">Order Date</div>
       <div class="col tableHeader">Address</div>
@@ -122,6 +123,9 @@
         {{ row.orderNo }}
       </div>
       <div class="col tableBody">
+        {{ row.productName }}
+      </div>
+      <div class="col tableBody">
         {{ row.buyerName }}
       </div>
 
@@ -137,12 +141,12 @@
         {{ row.sellerStatus }}
       </div>
       <div class="col tableBody" *ngIf="btnIndex === 6">
-        <button
-        class="custom-btn"
-        type="button" data-bs-toggle="modal" data-bs-target="#staticBackdrop"
-      >
+        <button id="{{i}}" class="custom-btn returnbutton"
+        (click)="setreturnDataArrayIndex(i)"
+        type="button" data-bs-toggle="modal" data-bs-target="#ReturnformModal">
         Return
       </button>
+
       <button
       class="custom-btn"
     >
@@ -215,39 +219,36 @@
     </button> -->
 
     <!-- Modal -->
-    <div class="modal fade" id="staticBackdrop" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="staticBackdropLabel" aria-hidden="true">
+    <div class="modal fade" id="ReturnformModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ReturnformModalLabel" aria-hidden="true">
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="staticBackdropLabel">Return Form</h1>
+            <h1 class="modal-title fs-5" id="ReturnformModalLabel">Return Form</h1>
             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
           </div>
           <div class="modal-body">
-            <form action="">
+            <form [formGroup]="returnForm">
               <div>
-                <label for="">Return Type: </label>
-                <select name="returntype">
-                  <option value="0"> Nothing is Selected</option>
-                  <option *ngFor="let entry of returntype" [ngValue]="entry.returnTypeId" 
-                  [value]="entry.returnTypeName + '%' + entry.returnTypeId" >
+                <label class="p-2 fw-bold" for="returntype">Return Type:</label>
+                <select class="border border-1 rounded" formControlName="returntype">
+                  <option value="" disabled>Select Return Type</option>
+                  <option *ngFor="let entry of returntype" [ngValue]="entry.returnTypeId">
                     {{ entry.returnTypeName }}
                   </option>
                 </select>
               </div>
               <div>
-                <label for="">Remarks: </label>
-                <input type="text" placeholder="Remarks" name="remarks">
+                <label class="p-2 fw-bold" for="remarks">Remarks:</label>
+                <input type="text" placeholder=" Remarks" formControlName="remarks" class="border border-1 rounded">
               </div>
-
-
+            
             </form>
+            
           </div>
           <div class="modal-footer">
             <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
             <button type="button" class="custom-btn"
-
-            (click)="btnIndex = -1"
-            (click)="getData('Pending')"> Return </button>
+            (click)="ProductReturnFunction()" data-bs-dismiss="modal" > Return </button>
           </div>
         </div>
       </div>

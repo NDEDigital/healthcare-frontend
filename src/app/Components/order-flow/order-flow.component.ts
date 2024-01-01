@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { AddProductService } from 'src/app/services/add-product.service';
 import { OrderApiService } from 'src/app/services/order-api.service';
 import { ProductReturnServiceService } from 'src/app/services/product-return-service.service';
+import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+
 
 @Component({
   selector: 'app-order-flow',
@@ -9,6 +11,8 @@ import { ProductReturnServiceService } from 'src/app/services/product-return-ser
   styleUrls: ['./order-flow.component.css'],
 })
 export class OrderFlowComponent {
+  returnForm!: FormGroup;
+  arrayindex: any;
   btnIndex = -1;
   productsData: any;
   returntype: any;
@@ -20,10 +24,15 @@ export class OrderFlowComponent {
   constructor(
     private productService: AddProductService,
     private orderApi: OrderApiService,
-    private productReturnService: ProductReturnServiceService
+    private productReturnService: ProductReturnServiceService,
+    private fb: FormBuilder
   ) {}
 
   ngOnInit() {
+    this.returnForm = this.fb.group({
+      returntype: ['', Validators.required],
+      remarks: ['']
+    });
     this.getData(this.status);
     this.GetReturnTypeForSelectOption();
   }
@@ -56,17 +65,62 @@ export class OrderFlowComponent {
     });
   }
 
-  
-  ReturnProduct(formValues: any): void {
-    // Access the form values directly
-    const returnType = formValues.returnTypeControl;
-    const remarks = formValues.remarksControl;
 
-    // Now you can use returnType and remarks in your logic
+  setreturnDataArrayIndex(index: any){
+
+    this.arrayindex = index;
+    console.log("classname", index);
+  }
+  
+  
+  
+  ProductReturnFunction(): void {
+
+    // Create a FormData object
+    const returnData = new FormData();
+
+    // Access the form values using this.returnForm.value
+    const returnType = this.returnForm.get('returntype')?.value;
+    const remarks = this.returnForm.get('remarks')?.value;
+  
     console.log('Return Type:', returnType);
     console.log('Remarks:', remarks);
-    
-    // Add your logic to send the values to the server or perform any other actions
+
+    console.log("return product array", this.productsData);
+    if (this.arrayindex >= 0 && this.arrayindex < this.productsData.length) {
+      const selectedProduct = this.productsData[this.arrayindex];
+      console.log('Selected Product:', selectedProduct);
+      // Append individual values to the FormData
+      returnData.append('ReturnTypeId', returnType);
+      // formData.append('ProductGroupId', '1');
+      // formData.append('ProductId', '2');
+      returnData.append('OrderNo', selectedProduct.orderNo);
+      returnData.append('Price', selectedProduct.price);
+      returnData.append('OrderDetailsId', selectedProduct.orderDetailId);
+      // formData.append('SellerId', '');
+      // returnData.append('ApplyDate', selectedProduct.detailDeliveryDate);
+      // formData.append('DeliveryDate', new Date().toISOString());
+      returnData.append('Remarks', remarks);
+      returnData.append('AddedDate', new Date().toISOString());
+      returnData.append('AddedBy', 'Test User');
+      returnData.append('AddedPc', '0.0.0.0');
+      }
+
+      returnData.forEach((value, key) => {
+        console.log(`${key}: ${value}`);
+      });
+      
+      
+
+    this.productReturnService.ReturnProductAndChangeOrderDetailsStatus(returnData).subscribe({
+      next: (Response: any) => {
+        console.log("return post and status change response",Response);
+        this.getData('Delivered');
+      },
+      error: (error: any) => {
+        console.log(error);
+      }
+    });
   }
 
 
