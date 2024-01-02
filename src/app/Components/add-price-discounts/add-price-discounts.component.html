@@ -71,7 +71,9 @@
         <img
           class="product_image"
           [src]="
-            product.imagePath ? product.imagePath.split('FrontEnd')[1] : ''
+            product.imagePath
+              ? '/asset' + product.imagePath.split('asset')[1]
+              : ''
           "
           alt="no image was uploaded!"
         />
