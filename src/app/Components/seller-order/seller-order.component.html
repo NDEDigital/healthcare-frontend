@@ -112,6 +112,7 @@
       <div class="col tableHeader">netPrice</div>
       <div class="col tableHeader">stockQty</div>
       <div class="col tableHeader">saleQty</div>
+      <div class="col tableHeader" *ngIf="btnIndex === 7">Return Type Name</div>
       <div class="col tableHeader" *ngIf="status != ''">Action</div>
     </div>
 
@@ -142,6 +143,10 @@
       </div>
       <div class="col tableBody">
         {{ row.saleQty }}
+      </div>
+
+      <div class="col tableBody" *ngIf="btnIndex === 7">
+        {{row.returnTypeName}}
       </div>
 
       <div class="col tableBody" *ngIf="status != ''">
