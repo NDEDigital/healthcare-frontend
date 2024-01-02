@@ -109,7 +109,7 @@ a {
   font-weight: 600;
 }
 .sidebar_delimiter {
-  height: 0.01rem;
+  height: 1px;
   background: #c1c3cd;
 }
 .menu_link {
