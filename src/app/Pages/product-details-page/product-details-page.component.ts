@@ -8,7 +8,6 @@ import { CartDataService } from 'src/app/services/cart-data.service';
 import { GoodsDataService } from 'src/app/services/goods-data.service';
 import { ReviewRatingsService } from 'src/app/services/review-ratings.service';
 import { CartItem } from '../cart-added-product/cart-item.interface';
-
 declare var bootstrap: any;
 @Component({
   selector: 'app-product-details-page',
@@ -62,7 +61,8 @@ export class ProductDetailsPageComponent {
     private service: GoodsDataService,
     private elementRef: ElementRef,
     private reviewService: ReviewRatingsService,
-    private cartDataService: CartDataService
+    private cartDataService: CartDataService,
+
   ) {
     this.reviewForm = new FormGroup({
       rating: new FormControl(Validators.required),
@@ -126,6 +126,8 @@ export class ProductDetailsPageComponent {
       // You can do something with the rating value here
     });
   }
+
+ 
   setDetail(detail: any) {
     this.reviewUpdateData = detail;
     //console.log(this.reviewUpdateData);
@@ -316,7 +318,12 @@ export class ProductDetailsPageComponent {
         this.bsModal.hide();
       }, 2000);
     });
-  }
+
+    const carousel = document.querySelector('.carousel');
+    if (carousel) {
+      new bootstrap.Carousel(carousel);
+    }
+  } 
 
   getMaxValue(val: any) {
     return parseInt(val);

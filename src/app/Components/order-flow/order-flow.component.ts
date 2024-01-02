@@ -45,7 +45,7 @@ export class OrderFlowComponent {
       next: (response: any) => {
         console.log(response);
         this.productsData = response;
-        //console.log(this.productsData);
+        console.log(this.productsData);
       },
       error: (error: any) => {
         //console.log(error);
@@ -156,5 +156,13 @@ export class OrderFlowComponent {
         //console.log(error);
       },
     });
+  }
+  gotoInvoice(orderId: any) {
+    sessionStorage.setItem('orderMasterID', orderId);
+
+    const urlToOpen = '/buyerInvoice'; // Replace with your desired URL
+
+    // Use window.open to open the new window/tab
+    window.open(urlToOpen, '_blank');
   }
 }

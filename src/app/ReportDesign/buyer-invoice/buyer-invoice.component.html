@@ -1,4 +1,4 @@
-<p>buyer-invoice works!</p>
+
 <!-- Invoice design  -->
 <section>
     <div class="invoice">
@@ -15,10 +15,10 @@
                   <span><strong>Name: </strong></span>
                   <span class="field_data">{{ invoice.buyerName }}</span>
                 </div>
-                <div class="div d-flex" *ngIf="invoice.buyerCompanyName">
+                <!-- <div class="div d-flex" >
                   <span><strong>Company: </strong></span>
                   <span class="field_data">{{ invoice.buyerCompanyName }}</span>
-                </div>
+                </div> -->
                 <div class="div d-flex">
                   <span><strong>Address:</strong></span>
                   <span class="field_data">{{ invoice.buyerAddress }}</span>
@@ -29,10 +29,10 @@
                 </div>
               </div>
               <div class="col-4 text-end p-0">
-                <div class="div d-flex justify-content-end">
+                <!-- <div class="div d-flex justify-content-end">
                   <span><strong>Invoice No: </strong></span>
                   <span class="field_data"> {{ invoice.orderNo }} </span>
-                </div>
+                </div> -->
                 <!-- <div class="div d-flex">
                   <span><strong>Order No: </strong></span>
                   <span> {{ invoice.orderNo }} </span>
@@ -43,38 +43,34 @@
         </div>
   
         <div class="row d-flex mt-3 justify-content-center">
-          <ng-container
-            *ngFor="let seller of invoice.sellerDetailsList; let i = index"
-          >
+        
             <div class="row py-2 seller_info">
               <!-- 1st seller information col -->
               <div class="col-8 p-0">
                 <div class="row"><h6 class="fst-italic">Bill From:</h6></div>
                 <div class="div d-flex">
                   <span><strong>Name: </strong></span>
-                  <span class="field_data">{{ seller.sellerName }}</span>
+                  <span class="field_data">{{invoice.orderInvoiceDetailList[0].selesPerson }}</span>
                 </div>
   
-                <div class="div d-flex" *ngIf="seller.sellerCompanyName">
+                <!-- <div class="div d-flex" *ngIf="seller.sellerCompanyName">
                   <span><strong>Company: </strong></span>
-                  <span class="field_data">{{ seller.sellerCompanyName }}</span>
-                </div>
+                  <span class="field_data"> </span>
+                </div> -->
                 <div class="div d-flex">
                   <span><strong>Address: </strong></span>
-                  <span class="field_data">{{ seller.sellerAddress }}</span>
+                  <span class="field_data"> {{invoice.orderInvoiceDetailList[0].selesAddress }}</span>
                 </div>
               </div>
               <!-- 1st seller information col -->
               <div class="col-4 text-end p-0">
                 <div class="div d-flex justify-content-end">
                   <span><strong>Delivery Date: </strong></span>
-                  <span class="field_data">{{
-                    seller.deliveryDate.split(" ")[0]
-                  }}</span>
+                  <span class="field_data"> {{invoice.orderInvoiceDetailList[0].selesPerson }}</span>
                 </div>
                 <div class="div d-flex justify-content-end">
                   <span><strong>Phone: </strong></span>
-                  <span class="field_data">{{ seller.sellerPhone }}</span>
+                  <span class="field_data">{{invoice.orderInvoiceDetailList[0].sellerContact }} </span>
                 </div>
               </div>
             </div>
@@ -88,38 +84,55 @@
                   <th>Price</th>
                   <th>Sub Total</th>
                 </tr>
-                <ng-container  *ngFor="
-                let product of invoice.productDetailsList;
-                
-              ">
-                <tr
-                   *ngIf="product.sellerCode==invoice.sellerDetailsList[i].sellerCode"
-                >
-                  <td>{{ product.productName }}</td>
-                  <td>{{ product.specification }}</td>
-                  <td>{{ product.quantity }}</td>
-                  <td>{{ product.price }}Tk</td>
-                  <td>{{ product.subTotalPrice }}Tk</td>
-                </tr>
-              </ng-container>
+                <ng-container *ngFor="let product of invoice.orderInvoiceDetailList">
+                  <tr>
+                    <td>{{ product.productName }}</td>
+                    <td>{{ product.specification }}</td>
+                    <td>{{ product.quantity }}</td>
+                    <td>{{ product.price }}Tk</td>
+                    <td>{{ product.netPrice }}Tk</td>
+                  </tr>
+                </ng-container>
+   
               </table>
             </div>
-          </ng-container>
+            
+              <!-- <div class="table-responsive">
+                <table class="items table">
+                  <tr class="table_header">
+                    <th>Product Name</th>
+                    <th>Description</th>
+                    <th>Quantity</th>
+                    <th>Price</th>
+                    <th>Sub Total</th>
+                  </tr>
+               
+                   <tr> 
+                    <td>{{ invoice.orderInvoiceDetailList[0].productName }}</td>
+                    <td>{{ invoice.orderInvoiceDetailList[0].specification }}</td>
+                    <td>{{ invoice.orderInvoiceDetailList[0].quantity }}</td>
+                    <td>{{ invoice.orderInvoiceDetailList[0].price }}Tk</td>
+                    <td>{{ invoice.orderInvoiceDetailList[0].subTotalPrice }}Tk</td>
+                  </tr>
+                </table>
+              </div> -->
+           
+   
           <!-- <div class="total">
             <p>
               <strong>Total:</strong>
               {{ invoice.totalPrice }}Tk
             </p>
           </div> -->
-          <div class="table-responsive" *ngIf="invoice.productDetailsList">
+          <div class="table-responsive" *ngIf="invoice.orderInvoiceDetailList">
             <table class="items table">
               <tr>
                 <td class="totalPrice_col">Delivery charge</td>
-                <td>{{ invoice.productDetailsList[0].deliveryCharge }}Tk</td>
+                <td>{{ invoice.orderInvoiceDetailList[0].deliveryCharge }}tk</td>
               </tr>
               <tr>
                 <td class="totalPrice_col">Total</td>
-                <td>{{ invoice.totalPrice }}Tk</td>
+                <td>{{ invoice.orderInvoiceDetailList[0].subTotalPrice }}tk</td>
               </tr>
             </table>
           </div>

@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { AdminOrderDataGetService } from 'src/app/services/admin-order-data-get.service';
-
+ 
+import { InvoiceService } from 'src/app/services/invoice.service';
+ 
 @Component({
   selector: 'app-buyer-invoice',
   templateUrl: './buyer-invoice.component.html',
@@ -10,7 +11,7 @@ export class BuyerInvoiceComponent {
   orderID = 0;
   invoice: any = [];
   test = 0;
-  constructor(private AdminOrderDataGetService: AdminOrderDataGetService) {
+  constructor(private InvoiceService: InvoiceService) {
     const orderIDString = sessionStorage.getItem('orderMasterID');
     if (orderIDString !== null) {
       this.orderID = parseInt(orderIDString, 10);
@@ -19,11 +20,11 @@ export class BuyerInvoiceComponent {
       alert('No order found')!;
     }
 
-    this.AdminOrderDataGetService.getInvoiceForAdminOrder(
+    this.InvoiceService.getBuyerInvoice(
       this.orderID
     ).subscribe({
       next: (response: any) => {
-        //console.log(' invoice data ', response);
+        console.log(' invoice data ', response);
         this.invoice = response.invoice;
    
       },
