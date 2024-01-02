@@ -70,7 +70,9 @@
       <div class="col tableBody">
         <img
           class="product_image"
-          [src]="group.imagepath ? group.imagepath.split('FrontEnd')[1] : ''"
+          [src]="
+            group.imagepath ? '/asset' + group.imagepath.split('asset')[1] : ''
+          "
           alt="no image was uploaded!"
         />
       </div>

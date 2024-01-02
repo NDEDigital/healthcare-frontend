@@ -28,9 +28,7 @@ export class CompanyApprovalComponent {
   getData() {
     this.companyService.GetCompaniesBasedOnStatus(this.btnIndex).subscribe({
       next: (response: any) => {
-       
         this.companies = response;
-    
       },
       error: (error: any) => {
         //console.log(error);
@@ -39,8 +37,9 @@ export class CompanyApprovalComponent {
   }
 
   showImage(path: any, title: any) {
-  
-    this.imagePath = path.split('FrontEnd')[1];
+    console.log(path);
+
+    this.imagePath = '/asset' + path.split('asset')[1];
     this.imageTitle = title;
   }
 
