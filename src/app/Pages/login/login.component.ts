@@ -59,7 +59,8 @@ export class LoginComponent {
 
         // this.sharedServiceData.loggedInUserInfo(response.user);
         if (response.role === 'buyer') {
-          this.router.navigate(['/']);
+          // this.router.navigate(['/']);
+          window.location.href = '/';
 
           // const localStorageRefresh = localStorage.getItem('RefreshToken');
 
@@ -73,7 +74,10 @@ export class LoginComponent {
           //     //console.log(error);
           //   },
           // });
-        } else this.router.navigate(['/dashboard']);
+        } else{
+          // this.router.navigate(['/dashboard']);
+          window.location.href = '/dashboard'
+        } 
       },
       error: (error: any) => {
         //console.log(error);

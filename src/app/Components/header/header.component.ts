@@ -301,6 +301,7 @@ export class HeaderComponent {
     this.sharedService.updateLoginStatus(false, null, null);
     localStorage.clear();
     sessionStorage.clear();
+    window.location.href = '/login';
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
