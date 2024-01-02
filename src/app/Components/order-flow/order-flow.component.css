@@ -99,7 +99,7 @@
   font-size: 2rem;
 }
 
-.starDesign.hovered,
+/* .starDesign.hovered, */
 .starDesign.selected {
   color: gold; /* Highlight color when hovered or selected */
 }

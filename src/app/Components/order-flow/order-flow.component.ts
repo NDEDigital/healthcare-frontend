@@ -20,22 +20,22 @@ import { ReviewRatingsService } from 'src/app/services/review-ratings.service';
 })
 export class OrderFlowComponent {
   @ViewChildren('star') stars!: QueryList<ElementRef>;
+  @ViewChild('starContainer') starContainer!: ElementRef;
   @ViewChild('ProductImageInput') ProductImageInput!: ElementRef;
 
   reviewForm!: FormGroup;
   ratingValue: number = 0;
   // stars: HTMLElement[] = [];
   currentOrderDetailId: number = 0;
-
+  buyerId: number = 0;
 
   btnIndex = -1;
   productsData: any;
   returntype: any;
-  imagePath = '';
+  imageFile = '';
   status = 'Pending';
   imageTitle = 'No Data Found!';
   selectedCompanyCodeValues: { [key: string]: number } = {};
-
 
   constructor(
     private productService: AddProductService,
@@ -57,8 +57,8 @@ export class OrderFlowComponent {
 
     this.reviewForm = new FormGroup({
       reviewText: new FormControl(''),
-      imagePath: new FormControl(''),
-      ratingValue: new FormControl(0),
+      imageFile: new FormControl(''),
+      ratingValue: new FormControl(0, [Validators.required, this.ratingValidator])
     });
   }
 
@@ -92,24 +92,18 @@ export class OrderFlowComponent {
   }
 
   ReturnProduct(formValues: any): void {
-    // Access the form values directly
     const returnType = formValues.returnTypeControl;
     const remarks = formValues.remarksControl;
 
-    // Now you can use returnType and remarks in your logic
     console.log('Return Type:', returnType);
     console.log('Remarks:', remarks);
-
-    // Add your logic to send the values to the server or perform any other actions
   }
 
   showImage(path: any, title: any) {
-    //console.log(path, title);
-    this.imagePath = path.split('src')[1];
+    this.imageFile = path.split('src')[1];
     this.imageTitle = title;
   }
   updateProduct(UserId: any, CompanyCode: any, ProductId: any, Status: any) {
-    //console.log(UserId, CompanyCode, ProductId, Status);
     const productStatus = {
       UserId,
       CompanyCode,
@@ -118,9 +112,6 @@ export class OrderFlowComponent {
     };
     this.productService.updateProduct(productStatus).subscribe({
       next: (response: any) => {
-        //console.log(response);
-        // this.productsData = response;
-        // //console.log(this.productsData);
         if ((this.btnIndex = -1)) {
           this.getData('Pending');
         } else if ((this.btnIndex = 1)) {
@@ -129,10 +120,13 @@ export class OrderFlowComponent {
           this.getData('Rejected');
         }
       },
-      error: (error: any) => {
-        //console.log(error);
-      },
+      error: (error: any) => {},
     });
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.reviewForm.get(fieldName);
+    return field ? field.invalid && (field.dirty || field.touched) : false;
   }
 
   updateRating(hoveredStar: number): void {
@@ -148,70 +142,117 @@ export class OrderFlowComponent {
 
   setRating(star: number): void {
     this.ratingValue = star;
-    this.reviewForm.get('ratingValue')?.setValue(this.ratingValue);
+    // this.reviewForm.get('ratingValue')?.setValue(this.ratingValue);
+    this.reviewForm.get('ratingValue')?.setValue(star);
     this.stars.forEach((starElement, index) => {
       const element = starElement.nativeElement;
       if (index < this.ratingValue) {
-        // Add 'selected' class to the star if it's less than the ratingValue
         element.classList.add('selected');
-        element.classList.remove('hovered'); // Optional: Remove hovered class if needed
+        element.classList.remove('hovered');
       } else {
-        // Remove 'selected' class from the star if it's greater than or equal to the ratingValue
         element.classList.remove('selected');
       }
     });
   }
 
-  openReviewModal(row: any): void {
-     this.currentOrderDetailId = row.orderDetailId;
-    console.log(row, "row value");
+  resetStars(): void {
+    this.stars.forEach((starElement) => {
+      const element = starElement.nativeElement;
+      element.classList.remove('selected', 'hovered');
+    });
+  }
+  resetRating(event: MouseEvent): void {
+    const container = this.starContainer.nativeElement;
 
+    // Check if the clicked element is a star
+    if (
+      event.target instanceof HTMLElement &&
+      event.target.classList.contains('bi-star-fill')
+    ) {
+      // Clicked on a star, no need to reset rating
+      return;
+    }
 
-
+    // Click was outside the stars, reset the rating
+    this.ratingValue = 0;
+    this.reviewForm.get('ratingValue')?.setValue(this.ratingValue);
+    this.resetStars(); // Call this method to reset star visual state
   }
 
 
+  ratingValidator(control: AbstractControl): ValidationErrors | null {
+    const rating = control.value;
+    // Assuming 0 is the default value and means no rating is selected
+    if (rating === 0) {
+      return { 'noRating': true };
+    }
+    return null;
+  }
+
+  // resting form
+
+  resetFormAndStars(): void {
+    this.reviewForm.reset();
+    this.resetStars();
+
+    if (this.ProductImageInput) {
+      this.ProductImageInput.nativeElement.value = '';
+    }
+  }
+
+  openReviewModal(row: any): void {
+    this.currentOrderDetailId = row.orderDetailId;
+    console.log(row, 'row value');
+  }
+
   onSubmit(): void {
+    Object.values(this.reviewForm.controls).forEach((control) => {
+      control.markAsTouched();
+      control.markAsDirty();
+    });
     if (this.reviewForm.valid) {
       const formData = new FormData();
       const formValue = this.reviewForm.value;
 
-      // Append the image file
+      let buyerId = localStorage.getItem('code');
+      console.log(buyerId, 'buyerId..');
+
       const file = this.ProductImageInput.nativeElement.files[0];
       if (file) {
-        formData.append('imagePath', file);
+        formData.append('imageFile', file);
       }
 
-      // Append other form fields
       Object.keys(formValue).forEach((key) => {
-        if (key !== 'imagePath') {
-          // Exclude the imagePath as it's handled above
+        if (key !== 'imageFile') {
           formData.append(key, formValue[key]);
         }
       });
 
-      // Append additional fields if needed
       formData.append('addedBy', 'user');
       formData.append('addedPC', '0.0.0.0');
-      formData.append('orderDetailId',  this.currentOrderDetailId.toString());
+      if (buyerId) {
+        formData.append('buyerId', buyerId);
+      } else {
+        console.log('Buyer ID is not available');
+      }
+
+      formData.append('orderDetailId', this.currentOrderDetailId.toString());
 
       formData.forEach((value, key) => {
         console.log(`${key}:`, value);
       });
 
-
-      // Call your service
       this.ReviewandRatingsService.addReview(formData).subscribe({
         next: (response) => {
           console.log(response, 'response');
-          this.reviewForm.reset();
+          this.resetFormAndStars();
         },
         error: (error) => {
-          // Handle errors here
+          console.error('Error during submission:', error);
         },
       });
     } else {
-      // Handle the case when the form is not valid
+      console.log('form is invalid');
     }
   }
 }

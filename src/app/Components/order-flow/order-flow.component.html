@@ -310,11 +310,20 @@
               class="btn-close"
               data-bs-dismiss="modal"
               aria-label="Close"
+              (click)="resetFormAndStars()"
             ></button>
           </div>
           <div class="modal-body">
             <form [formGroup]="reviewForm">
-              <div class="star-inputs form-group">
+              <div
+                class="star-inputs form-group border border-1 d-flex justify-content-center"
+                (click)="resetRating($event)"
+                [class.error]="
+                  reviewForm.get('ratingValue')?.invalid &&
+                  reviewForm.get('ratingValue')?.touched
+                "
+                #starContainer
+              >
                 <i
                   #star
                   class="bi bi-star-fill starDesign"
@@ -345,6 +354,16 @@
                   (mouseover)="updateRating(5)"
                   (click)="setRating(5)"
                 ></i>
+
+                <span
+                  class="text-danger"
+                  *ngIf="
+                    reviewForm.get('ratingValue')?.invalid &&
+                    reviewForm.get('ratingValue')?.touched
+                  "
+                >
+                  *Rating is required.
+                </span>
               </div>
 
               <div class="review-text d-flex flex-column m-1 form-group">
@@ -365,10 +384,11 @@
                 <input
                   type="file"
                   class="form-control"
-                  name="imagePath"
-                  id="imagePath"
-                  formControlName="imagePath"
+                  name="imageFile"
+                  id="imageFile"
+                  formControlName="imageFile"
                   #ProductImageInput
+                  accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
                 />
               </div>
 
