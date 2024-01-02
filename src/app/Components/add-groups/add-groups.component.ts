@@ -28,10 +28,12 @@ export class AddGroupsComponent {
     this.showProductDiv = !this.showProductDiv;
     this.btnIndex = -1;
     this.getProductGroup(-1);
+    this.ngOnInit();
   }
 
   showApprovalProductGrid(): void {
     this.showProductDiv = false;
+    this.addGroupForm.reset();
   }
 
   ngOnInit() {
