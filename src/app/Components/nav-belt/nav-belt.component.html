@@ -13,14 +13,15 @@
       [class.active]="entry.value === activeEntry"
     >
       <div class="navbelt_image mb-2">
-      <!-- In your template -->
-      <img [src]="this.imgProduct.get(entry.key).split('FrontEnd')[1]" alt="Product Image" />
-
+        <!-- In your template -->
+        <img
+          [src]="'/asset' + this.imgProduct.get(entry.key).split('asset')[1]"
+          alt="Product Image"
+        />
       </div>
       <div class="navbelt_title fw-bold">
         {{ entry.value }}
       </div>
-
     </div>
   </div>
 </div>
