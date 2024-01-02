@@ -1,6 +1,6 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-
+import { CommonModule } from '@angular/common';
 import { AppRoutingModule } from './app-routing.module';
 import { AppComponent } from './app.component';
 import { HeaderComponent } from './Components/header/header.component';
@@ -51,6 +51,7 @@ import { ClientsListSliderComponent } from './Components/clients-list-slider/cli
 import { PaginationComponent } from './Components/pagination/pagination.component';
 import { SellerInvoiceComponent } from './ReportDesign/seller-invoice/seller-invoice.component';
 import { AdminInvoiceComponent } from './ReportDesign/admin-invoice/admin-invoice.component';
+import { BuyerInvoiceComponent } from './ReportDesign/buyer-invoice/buyer-invoice.component';
 import { ProductDetailsPageComponent } from './Pages/product-details-page/product-details-page.component';
 import { BuyerOrderComponent } from './Components/buyer-order/buyer-order.component';
 import { BuyerOrderDetailsComponent } from './Components/buyer-order-details/buyer-order-details.component';
@@ -132,8 +133,10 @@ import { UserOrdersComponent } from './Pages/user-orders/user-orders.component';
     OrderFlowComponent,
     SellerOrderComponent,
     UserOrdersComponent,
+    BuyerInvoiceComponent,
   ],
   imports: [
+    CommonModule,
     BrowserModule,
     AppRoutingModule,
     HttpClientModule,
