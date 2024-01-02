@@ -94,6 +94,7 @@ export class SharedService {
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
   updateLoginStatus(loginStatus: boolean, userCode: any, role: any) {
+    localStorage.clear()
     this.loginStatusSubject.next(loginStatus);
     localStorage.setItem('loginStatus', loginStatus.toString());
     localStorage.setItem('proj', 'HealthCare');
