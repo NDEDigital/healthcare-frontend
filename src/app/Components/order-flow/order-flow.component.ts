@@ -22,6 +22,7 @@ export class OrderFlowComponent {
   @ViewChildren('star') stars!: QueryList<ElementRef>;
   @ViewChild('starContainer') starContainer!: ElementRef;
   @ViewChild('ProductImageInput') ProductImageInput!: ElementRef;
+  @ViewChild('CloseReviewFormModal') CloseReviewFormModalBTN!: ElementRef;
 
   reviewForm!: FormGroup;
   ratingValue: number = 0;
@@ -246,6 +247,7 @@ export class OrderFlowComponent {
         next: (response) => {
           console.log(response, 'response');
           this.resetFormAndStars();
+          this.CloseReviewFormModalBTN.nativeElement.click();
         },
         error: (error) => {
           console.error('Error during submission:', error);
