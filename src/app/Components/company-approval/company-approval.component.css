@@ -2,7 +2,12 @@
 .companyApproval_header_text {
   color: var(--color-primary);
 }
-
+.company_images {
+  max-width: 100%;
+  max-height: 100%;
+  display: block;
+  margin: auto;
+}
 /* table design */
 
 .headerRow,
@@ -83,4 +88,3 @@
   background: none;
   border: none;
 }
-
