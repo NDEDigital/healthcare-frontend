@@ -227,8 +227,9 @@
             {{ orderInfo.orderMasterId }}
           </td>
           <td scope="col" *ngIf="!returnProduct">{{ orderInfo.orderNo }}</td>
+          <td scope="col" *ngIf="!returnProduct"><a (click)="buyerInvoice(orderInfo.orderMasterId)"> {{ orderInfo.orderNo }}</a></td>
           <td scope="col" *ngIf="!returnProduct">{{ orderInfo.orderDate }}</td>
-          <td scope="col" *ngIf="!returnProduct">{{ orderInfo.address }}</td>
+          <td scope="col" *ngIf="!returnProduct" >{{ orderInfo.address }}</td>
           <td scope="col" *ngIf="!returnProduct">
             {{ orderInfo.paymentMethod }}
           </td>

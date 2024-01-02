@@ -70,6 +70,7 @@ import { ProductApprovalComponent } from './Components/product-approval/product-
 import { OrderFlowComponent } from './Components/order-flow/order-flow.component';
 import { SellerOrderComponent } from './Components/seller-order/seller-order.component';
 import { UserOrdersComponent } from './Pages/user-orders/user-orders.component';
+ 
 
 @NgModule({
   declarations: [
@@ -132,6 +133,7 @@ import { UserOrdersComponent } from './Pages/user-orders/user-orders.component';
     OrderFlowComponent,
     SellerOrderComponent,
     UserOrdersComponent,
+ 
   ],
   imports: [
     BrowserModule,
