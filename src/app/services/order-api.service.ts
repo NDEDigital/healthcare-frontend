@@ -124,7 +124,7 @@ export class OrderApiService {
       const detailData: OrderDetail = {
         productId: parseInt(entry.goodsId),
         qty: qt,
-        price: parseFloat(entry.price),
+        price: entry.netPrice,
         deliveryCharge: 100,
         specification: entry.specification,
         productGroupId: entry.groupCode.toString(),
@@ -132,7 +132,7 @@ export class OrderApiService {
         unitId: entry.unitId,
         discountAmount: entry.discountAmount,
         discountPct:entry.discountPct,
-        netPrice: entry.netPrice,
+        netPrice: ((entry.netPrice*qt)+100),
         addedBy:this.buyerCode,
         addedPC: "0.0.0.0",
       };
