@@ -9,6 +9,7 @@ import { Router } from '@angular/router';
 export class CardComponent {
   constructor(private router: Router) {}
   @Input() title = '';
+  @Input() img = '';
 
   contactSupplier() {
     this.router.navigate(['/contactSupplierComponent']);

@@ -1,4 +1,4 @@
-<div class="head d-flex align-items-center ">
+<div class="head d-flex align-items-center">
   <a routerLink="" class="logo ms-5">Nimpex HealthCare</a>
 </div>
 
@@ -96,13 +96,14 @@
         <!-- Trade Licence -->
         <div class="form-group">
           <label for="tradeLicense"
-            ><span class="text-danger">*</span>Upload Trade Licence</label
+            ><span class="text-danger">*</span>Upload Trade Licence Image</label
           >
           <input
             class="form-control"
             type="file"
             id="tradeLicense"
             formControlName="tradeLicense"
+            accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
             [class.error]="isFieldInvalid('tradeLicense')"
             #TradeLicenseInput
           />
@@ -122,6 +123,7 @@
             type="file"
             id="companyImage"
             formControlName="companyImage"
+            accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
             [class.error]="isFieldInvalid('companyImage')"
             #CompanyImageInput
           /><span class="text-danger" *ngIf="isFieldInvalid('companyImage')">

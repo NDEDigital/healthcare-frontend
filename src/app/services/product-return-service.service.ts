@@ -6,16 +6,24 @@ import { API_URL } from '../config';
   providedIn: 'root',
 })
 export class ProductReturnServiceService {
+
   //baseUrl = 'http://172.16.5.18:8081/ProductReturn'; // liveURL
 
   URL = API_URL;
   baseUrl = `${this.URL}/ProductReturn`;
   constructor(private http: HttpClient) {}
 
+
   getReturnType(): Observable<any> {
     const url = `${this.URL}/api/HK_Gets/GetReturnList`;
     return this.http.get<any>(url);
   }
+
+  ReturnProductAndChangeOrderDetailsStatus(returnData: any): Observable<any>{
+    const url = `${this.URL}/ProductReturn/InsertReturnedData`;
+    return this.http.post(url, returnData);
+  }
+
 
   // getReturnType(): Observable<any> {
   //   const url = `${this.baseUrl}/GetReturnType`;

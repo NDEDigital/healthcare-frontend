@@ -70,9 +70,11 @@
       <div class="col tableBody">
         <img
           class="product_image"
-          [src]="group.imagepath ? group.imagepath.split('FrontEnd')[1] : ''"
+          [src]="
+            group.imagepath ? '/asset' + group.imagepath.split('asset')[1] : ''
+          "
           alt="no image was uploaded!"
-        />     
+        />
       </div>
       <div class="col tableBody">{{ group.productGroupPrefix }}</div>
       <div class="col tableBody">{{ group.productGroupDetails }}</div>
@@ -175,6 +177,7 @@
         class="form-control"
         id="productGroupImage"
         formControlName="productGroupImage"
+        accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
         [class.error]="isFieldInvalid('productGroupImage')"
         #productGroupImageInput
       />

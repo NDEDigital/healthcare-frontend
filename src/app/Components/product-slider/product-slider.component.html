@@ -123,10 +123,14 @@
             </p> -->
               <img
                 class="mt-1 h-70"
-                [src]="value.imagePath ? value.imagePath.split('FrontEnd')[1] : ''"
+                [src]="
+                  value.imagePath
+                    ? '/asset' + value.imagePath.split('asset')[1]
+                    : ''
+                "
                 alt=""
               />
-             
+
               <p class="product-title text-wrap">
                 Product Name:
                 <span class="fs-6 text-secondary"

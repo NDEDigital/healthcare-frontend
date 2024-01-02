@@ -70,7 +70,11 @@
       <div class="col tableBody">
         <img
           class="product_image"
-          [src]="product.imagePath ? product.imagePath.split('FrontEnd')[1] : ''"
+          [src]="
+            product.imagePath
+              ? '/asset' + product.imagePath.split('asset')[1]
+              : ''
+          "
           alt="no image was uploaded!"
         />
       </div>
@@ -168,8 +172,8 @@
           [class.error]="isFieldInvalid('discountAmount')"
         />
         <span class="text-danger" *ngIf="isFieldInvalid('discountAmount')"
-        >Give 0 or positive number, it is not valid.</span
-      >
+          >Give 0 or positive number, it is not valid.</span
+        >
       </div>
 
       <div class="form-group col-12 col-md-6">
@@ -182,8 +186,8 @@
           [class.error]="isFieldInvalid('discountPct')"
         />
         <span class="text-danger" *ngIf="isFieldInvalid('discountPct')"
-        >Give 0 or positive number, it is not valid.</span
-      >
+          >Give 0 or positive number, it is not valid.</span
+        >
       </div>
     </div>
 
@@ -229,6 +233,7 @@
         class="form-control"
         id="productImage"
         formControlName="productImage"
+        accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
         [class.error]="isFieldInvalid('productImage')"
         #ProductImageInput
       />
