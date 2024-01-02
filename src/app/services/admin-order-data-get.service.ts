@@ -13,7 +13,7 @@ export class AdminOrderDataGetService {
   // URL = 'http://172.16.5.18:8081'; // liveURL
 
   private baseUrl = `${this.URL}/api/Order`;
-  private invoiceUrl = `${this.URL}/api/Invoice`;
+  private invoiceUrl = `${this.URL}`;
   constructor(private http: HttpClient) {}
 
 
@@ -100,13 +100,17 @@ GetOrderDataSearch(pageNumber: number, pageSize: number,  status: string, search
 
 
   // invoice
-  getInvoiceForAdminOrder(  OrderID: number) {
+  getInvoiceForAdminOrder(  OrderMasterId: number) {
     console.log('service e aise');
-    return this.http.get(`${this.invoiceUrl}/GetInvoiceDataForAdmin`, {
-      params: {   OrderID },
+    console.log(" orderMasterId ",OrderMasterId )
+    return this.http.get(`${this.invoiceUrl}/api/Invoice/GetInvoiceDataForAdmin`, {
+      params: {
+        OrderMasterId: OrderMasterId, // Ensure it's converted to string
+      },
     });
+    // return this.http.get(`https://localhost:7006/api/Invoice/GetInvoiceDataForAdmin?OrderMasterId=6`);
   }
-
+ 
 }
 
 

@@ -22,9 +22,9 @@ export class AdminInvoiceComponent {
       this.orderID
     ).subscribe({
       next: (response: any) => {
-        console.log(' invoice data ', response);
-        this.invoice = response.invoice;
-   
+      
+        this.invoice = response;
+        console.log(' invoice data ',      this.invoice);
       },
       error: (error: any) => {
         console.log(error);

@@ -5,32 +5,32 @@
       <h3 class="invoiceText">Invoice</h3>
     </div>
     <div class="content border-top-0 p-0">
-      <div class="info">
+      <div class="info" >
         <div class="d-flex justify-content-center border-bottom border-top">
           <div class="row p-0" style="width: 100%">
             <div class="col-8 p-0">
               <div class="row"><h6 class="fst-italic">Bill To:</h6></div>
               <div class="div d-flex d-flex">
                 <span><strong>Name: </strong></span>
-                <span class="field_data">{{ invoice.buyerName }}</span>
+                <span class="field_data">{{ invoice[0].buyerName }}</span>
               </div>
               <div class="div d-flex" *ngIf="invoice.buyerCompanyName">
                 <span><strong>Company: </strong></span>
-                <span class="field_data">{{ invoice.buyerCompanyName }}</span>
+                <span class="field_data">{{ invoice[0].buyerCompanyName }}</span>
               </div>
               <div class="div d-flex">
                 <span><strong>Address:</strong></span>
-                <span class="field_data">{{ invoice.buyerAddress }}</span>
+                <span class="field_data">{{ invoice[0].buyerAddress }}</span>
               </div>
               <div class="div d-flex">
                 <span><strong>Phone: </strong></span>
-                <span class="field_data">{{ invoice.buyerPhone }}</span>
+                <span class="field_data">{{ invoice[0].phoneNumber }}</span>
               </div>
             </div>
             <div class="col-4 text-end p-0">
               <div class="div d-flex justify-content-end">
                 <span><strong>Invoice No: </strong></span>
-                <span class="field_data"> {{ invoice.orderNo }} </span>
+                <span class="field_data"> {{ invoice[0].orderNo }} </span>
               </div>
               <!-- <div class="div d-flex">
                 <span><strong>Order No: </strong></span>
@@ -43,7 +43,7 @@
 
       <div class="row d-flex mt-3 justify-content-center">
         <ng-container
-          *ngFor="let seller of invoice.sellerDetailsList; let i = index"
+          *ngFor="let seller of invoice; let i = index"
         >
           <div class="row py-2 seller_info">
             <!-- 1st seller information col -->
@@ -77,7 +77,7 @@
               </div>
             </div>
           </div>
-
+        </ng-container>
           <div class="table-responsive">
             <table class="items table">
               <tr class="table_header">
@@ -87,24 +87,18 @@
                 <th>Price</th>
                 <th>Sub Total</th>
               </tr>
-              <ng-container  *ngFor="
-              let product of invoice.productDetailsList;
-              
-            ">
-              <tr
-                 *ngIf="product.sellerCode==invoice.sellerDetailsList[i].sellerCode"
-              >
-                <td>{{ product.productName }}</td>
-                <td>{{ product.specification }}</td>
-                <td>{{ product.quantity }}</td>
-                <td>{{ product.price }}Tk</td>
-
-                <td>{{ product.subTotalPrice }}Tk</td>
-              </tr>
-            </ng-container>
+              <ng-container *ngFor="let product of invoice">
+                <tr>
+                  <td>{{ product.productName }}</td>
+                  <td>{{ product.specification }}</td>
+                  <td>{{ product.qty }}</td>
+                  <td>{{ product.price }}Tk</td>
+                  <td>{{ product.netPrice }}Tk</td>
+                </tr>
+              </ng-container>
             </table>
           </div>
-        </ng-container>
+    
         <!-- <div class="total">
           <p>
             <strong>Total:</strong>
