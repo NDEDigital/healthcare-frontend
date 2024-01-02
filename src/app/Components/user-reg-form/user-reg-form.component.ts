@@ -152,6 +152,7 @@ export class UserRegFormComponent {
           //   response.role
           // );
           //console.log(response, 'done');
+          this.userResistrationForm.reset();
           this.alertTitle = 'Successfull!!';
           this.alertMsg = response.message;
           this.UserExistModalBTN.nativeElement.click();
@@ -159,8 +160,6 @@ export class UserRegFormComponent {
           //   this.router.navigate(['/']);
           // } else this.router.navigate(['/dashboard']);
           // this.sharedServiceData.loggedInUserInfo(response.user);
-
-          // window.location.href = '';
         },
         error: (error: any) => {
           //console.log(error);
@@ -171,5 +170,8 @@ export class UserRegFormComponent {
         },
       });
     }
+  }
+  goToLogin() {
+    this.router.navigate(['/login']);
   }
 }
