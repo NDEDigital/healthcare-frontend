@@ -18,6 +18,7 @@
         >
           <app-card
             [title]="company.companyName"
+            [img] = "company.companyImage"
             (click)="productCardClick(company.companyCode)"
           ></app-card>
         </div>
