@@ -129,6 +129,7 @@ export class BecomeASellerComponent {
         next: (response: any) => {
           //console.log(response);
           this.companyResistrationForm.reset();
+          this.ngOnInit();
           this.alertTitile = response.message;
           this.alertmsg =
             'Your company is Registered! Wait for the approval mail for further, Thank you.';
