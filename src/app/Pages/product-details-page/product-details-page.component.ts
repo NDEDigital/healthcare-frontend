@@ -99,6 +99,7 @@ export class ProductDetailsPageComponent {
 
     //console.log('this.detailsData.goodsId,this.detailsData.groupCode', this.detailsData.goodsId,this.detailsData.groupCode);
     // //console.log('goodsName', this.detailsData.goodsName);
+    console.log("this.detailsData.goodsId",this.detailsData.goodsId)
     this.service
       .getReviewRatingsData(
         this.detailsData.goodsId
