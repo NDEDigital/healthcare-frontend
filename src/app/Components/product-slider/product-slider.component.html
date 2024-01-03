@@ -189,7 +189,7 @@
         </div>
         <div
           class="mx-3"
-          [ngClass]="{ 'remove-btn': product.value.length < 5 }"
+          [ngClass]="{ 'remove-btn': !shouldRemoveButton(product.value.length) }"
         >
           <button
             class="carousel-control-prev carousel-button"
