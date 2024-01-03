@@ -99,7 +99,7 @@ const routes: Routes = [
   {
     path: 'buyerInvoice',
     component: BuyerInvoiceComponent,
-    canActivate: [BuyerOnlyGuard],
+     
   },
   {
     path: 'productDetails',

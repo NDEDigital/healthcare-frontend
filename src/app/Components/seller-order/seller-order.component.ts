@@ -37,7 +37,7 @@ export class SellerOrderComponent {
     if (userId) {
       this.sellerService.getsellerOrderData(userId, status).subscribe({
         next: (response: any) => {
-          //console.log(response);
+          console.log(response);
           this.sellerOrderData = response;
           //console.log(' data ', this.sellerOrderData);
           this.sellerOrderData = this.sellerOrderData.map((item: any) => ({
@@ -125,5 +125,13 @@ export class SellerOrderComponent {
           //console.log(error);
         },
       });
+  }
+  gotoInvoice(orderId: any) {
+    sessionStorage.setItem('orderMasterID', orderId);
+
+    const urlToOpen = '/sellerInvoice'; // Replace with your desired URL
+
+    // Use window.open to open the new window/tab
+    window.open(urlToOpen, '_blank');
   }
 }
