@@ -63,6 +63,13 @@ export class ProductSliderComponent {
     //   this.startAutoSlide();
     // }, 600);
   }
+  windowWidth: number = window.innerWidth;
+
+  @HostListener('window:resize', ['$event'])
+  onResize(event: any) {
+    this.windowWidth = window.innerWidth;
+  }
+
   // getAllProduct() {
   //   this.products.clear();
   //   this.goodsDataObj.getCarouselData().subscribe((data: any[]) => {
@@ -250,6 +257,31 @@ export class ProductSliderComponent {
   //     );
   //   }, 5000);
   // }
+  shouldRemoveButton(product:any): boolean {
+    if (this.windowWidth <= 1400 && product >= 5) {
+      return true;
+    }
+    else if (this.windowWidth <= 1200 && product >= 4) {
+      return true;
+    }
+    else if (this.windowWidth <= 1000 && product >= 4) {
+      return true;
+    }
+    else if (this.windowWidth <= 780 && product >= 3) {
+      return true;
+    }
+    else if (this.windowWidth <= 576 && product >= 3 ) {
+      return true;
+    }
+    
+    
+    return false;
+  }
+
+
+
+
+
 
   updateQuantity() {
      this.intervalId = setInterval(() => {
