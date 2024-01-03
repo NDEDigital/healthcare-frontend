@@ -23,6 +23,7 @@ import { SellerInvoiceComponent } from './ReportDesign/seller-invoice/seller-inv
 import { AdminInvoiceComponent } from './ReportDesign/admin-invoice/admin-invoice.component';
 import { BuyerOrderComponent } from './Components/buyer-order/buyer-order.component';
 import { BuyerOrderDetailsComponent } from './Components/buyer-order-details/buyer-order-details.component';
+import {BuyerInvoiceComponent } from './ReportDesign/buyer-invoice/buyer-invoice.component';
 
 import { BuyerOnlyGuard } from './services/buyer-only.guard';
 import { SellerOnlyGuard } from './services/seller-only.guard';
@@ -93,6 +94,11 @@ const routes: Routes = [
   {
     path: 'checkout',
     component: CheckoutPageComponent,
+    canActivate: [BuyerOnlyGuard],
+  },
+  {
+    path: 'buyerInvoice',
+    component: BuyerInvoiceComponent,
     canActivate: [BuyerOnlyGuard],
   },
   {

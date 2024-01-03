@@ -115,7 +115,8 @@
         </div>
       </div>
     </div>
-    <!-- <div
+    <div
+      *ngIf="Role === 'seller'"
       class="profile_details rounded p-2 pb-4 bg-"
       [class.border-highlight]="editMode2 === 'companyInfo'"
     >
@@ -141,7 +142,7 @@
             (blur)="onInputBlur(companyName)"
           />
         </p>
-        <p class="row info_field">
+        <!-- <p class="row info_field">
           <span class="col-4 text-muted text-end">Website:</span>
           <input
             formControlName="website"
@@ -155,8 +156,8 @@
             (focus)="onInputFocus(website)"
             (blur)="onInputBlur(website)"
           />
-        </p>
-        <p class="row info_field">
+        </p> -->
+        <!-- <p class="row info_field">
           <span class="col-4 text-muted text-end">Product Category:</span>
           <input
             type="text"
@@ -164,8 +165,7 @@
             value="{{ user.productCategory }}"
             readonly
           />
-
-        </p>
+        </p> -->
         <p class="row info_field">
           <span class="col-4 text-muted text-end">Years In Business:</span>
           <input
@@ -185,16 +185,16 @@
         <p class="row info_field">
           <span class="col-4 text-muted text-end">Tax ID Number:</span>
           <input
-            formControlName="taxIdNum"
-            #taxIDNumber
+            formControlName="taxIdentificationNumber"
+            #taxIdentificationNumber
             [class.editable]="editMode2 === 'companyInfo'"
             [readonly]="editMode2 !== 'companyInfo'"
             type="text"
             class="col-8 rounded"
-            value="{{ user.taxIDNumber }}"
+            value="{{ user.taxIdentificationNumber }}"
             [class.p-2]="editMode2 === 'companyInfo'"
-            (focus)="onInputFocus(taxIDNumber)"
-            (blur)="onInputBlur(taxIDNumber)"
+            (focus)="onInputFocus(taxIdentificationNumber)"
+            (blur)="onInputBlur(taxIdentificationNumber)"
           />
         </p>
         <p class="row info_field">
@@ -218,11 +218,33 @@
           <span class="col-4 text-muted text-end"
             >Preferred Payment Method:</span
           >
+          <input type="text" class="col-8" readonly value="{{ user.pmName }}" />
+        </p>
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Bank Name:</span>
           <input
             type="text"
             class="col-8"
             readonly
-            value="{{ user.preferredPaymentMethod }}"
+            value="{{ user.pmBankName }}"
+          />
+        </p>
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Account Number:</span>
+          <input
+            type="text"
+            class="col-8"
+            readonly
+            value="{{ user.accountNumber }}"
+          />
+        </p>
+        <p class="row info_field">
+          <span class="col-4 text-muted text-end">Account Holder Name:</span>
+          <input
+            type="text"
+            class="col-8"
+            readonly
+            value="{{ user.accountHolderName }}"
           />
         </p>
 
@@ -238,7 +260,7 @@
           </button>
         </div>
       </div>
-    </div> -->
+    </div>
   </form>
 </section>
 

@@ -2,7 +2,7 @@
   <div class="card-img">
     <img
       class="img-fluid product-img rounded"
-      [src]="productData.imagePath ? productData.imagePath.split('src')[1] : ''"
+      [src]="productData.imagePath?'/asset' + productData.imagePath.split('asset')[1] : ''"
       alt="Not Uploaded Yet"
     />
   </div>
