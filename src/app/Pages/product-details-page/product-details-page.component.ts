@@ -87,7 +87,7 @@ export class ProductDetailsPageComponent {
     const productData = sessionStorage.getItem('productData');
     if (productData) {
       this.detailsData = JSON.parse(productData);
-      //console.log("this.detailsData ",this.detailsData)
+      console.log("this.detailsData ",this.detailsData)
     }
     if( this.detailsData.approveSalesQty == 0){
       this.CartButtonText ="Out of stock";
