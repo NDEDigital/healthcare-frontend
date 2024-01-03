@@ -627,4 +627,13 @@ export class OrdersOverviewComponent {
     this.UpdateStatus = status;
     this.checkingCheckBox(status);
   }
+ 
+  gotoInvoice(orderId: any) {
+    sessionStorage.setItem('orderMasterID', orderId);
+
+    const urlToOpen = '/buyerInvoice'; // Replace with your desired URL
+
+    // Use window.open to open the new window/tab
+    window.open(urlToOpen, '_blank');
+  }
 }
