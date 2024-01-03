@@ -249,10 +249,10 @@
                 'red-p': detail.status === 'Cancelled'
               }"
             >
-              <span *ngIf="activeNav !== 'Delivered'">
+              <span *ngIf="activeNav == 'Delivered'">
                 {{ getStatusDescription(detail.status) }}</span
               >
-              <span class="color-primary" *ngIf="activeNav === 'Delivered'">
+              <span class="color-primary" *ngIf="btnIndex === 6">
                 <button
                   class="p-2 p-lg-1 p-sm-1 process-btn review-bg"
                   #reviewBTN
