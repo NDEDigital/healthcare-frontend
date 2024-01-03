@@ -15,20 +15,22 @@ export class SellerInvoiceComponent {
     //console.log('aise');
 
     const userCode = localStorage.getItem('code');
-    const orderIDString = sessionStorage.getItem('orderID');
+    const orderIDString = sessionStorage.getItem('orderMasterID');
     if (orderIDString !== null) {
       this.orderID = parseInt(orderIDString, 10);
       // Now, orderID contains the parsed value if it was not null
     } else {
       alert('No order found')!;
     }
-    this.orderService.getInvoiceForSeller(userCode, this.orderID).subscribe({
+    console.log(" orderId", this.orderID)
+    this.orderService.getInvoiceForSeller( this.orderID).subscribe({
       next: (response: any) => {
-        //console.log(response);
+        console.log(response);
         this.invoice = response.invoice;
+        console.log("this.invoice ",  this.invoice )
       },
       error: (error: any) => {
-        //console.log(error);
+        console.log(error);
       },
     });
   }
