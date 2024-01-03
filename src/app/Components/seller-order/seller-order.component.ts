@@ -111,13 +111,15 @@ export class SellerOrderComponent {
           //console.log(response);
           // this.productsData = response;
           // //console.log(this.productsData);
-          if ((this.btnIndex = -1)) {
-            this.getData('Pending');
-          } else if ((this.btnIndex = 1)) {
-            this.getData('Approved');
-          } else {
-            this.getData('Rejected');
-          }
+          // if ((this.btnIndex = -1)) {
+          //   this.getData('Pending');
+          // } else if ((this.btnIndex = 1)) {
+          //   this.getData('Approved');
+          // } else {
+          //   this.getData('Rejected');
+          // }
+          this.btnIndex = -1;
+          this.getData('');
         },
         error: (error: any) => {
           //console.log(error);
