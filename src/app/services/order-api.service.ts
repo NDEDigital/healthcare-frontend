@@ -61,6 +61,7 @@ export class OrderApiService {
   orderPostUrl = `${this.URL}/api/Order/InsertOrderData`;
   getUserInfoURL = `${this.URL}/api/Order/getOrderUserInfo`;
   getAllOrderForBuyerURL = `${this.URL}/api/Order/getAllOrderForBuyer`;
+  getOrdersForBuyerURL = `${this.URL}/api/Order/getAllOrderForBuyer`;
   checkUnderOrderProccessURL = `${this.URL}/api/Order/checkUnderOrderProccess`;
 
   // ============== new code  ==================
@@ -131,10 +132,10 @@ export class OrderApiService {
         userId: parseInt(entry.sellerCode),
         unitId: entry.unitId,
         discountAmount: entry.discountAmount,
-        discountPct:entry.discountPct,
-        netPrice: ((entry.netPrice*qt)+100),
-        addedBy:this.buyerCode,
-        addedPC: "0.0.0.0",
+        discountPct: entry.discountPct,
+        netPrice: entry.netPrice * qt + 100,
+        addedBy: this.buyerCode,
+        addedPC: '0.0.0.0',
       };
       this.orderdata.orderDetailsList.push(detailData);
     }
@@ -168,6 +169,23 @@ export class OrderApiService {
         status,
       },
     });
+  }
+  getOrdersForBuyer(userid: any, status: any) {
+    //console.log(buyerCode, PageNumber, rowCount, status);
+    if (status === '') {
+      return this.http.get(this.getOrdersForBuyerURL, {
+        params: {
+          userid,
+        },
+      });
+    } else {
+      return this.http.get(this.getOrdersForBuyerURL, {
+        params: {
+          userid,
+          status,
+        },
+      });
+    }
   }
 
   checkUnderOrderProccess(GoodsId: number, GroupCode: string) {
