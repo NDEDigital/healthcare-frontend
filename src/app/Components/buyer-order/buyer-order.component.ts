@@ -43,8 +43,9 @@ export class BuyerOrderComponent {
   productImageSrc: string = '';
   returnType = false;
   orderDetailDescription: any = {
+    Approved: 'Order is waiting for Seller Approval',
     Processing: 'Processing product',
-    Pending: 'Pending product',
+    Pending: 'Order is waiting for Admin Approval',
     'Ready to Ship': ' Product is  ready to ship',
     Shipped: 'Product is on the way to deliver',
     Delivered: 'Delivered product',

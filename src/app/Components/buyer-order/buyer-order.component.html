@@ -196,7 +196,7 @@
               Placed on <span class="fw-semibold">{{ order.orderDate }}</span>
             </p>
           </div>
-          <div><Button class="pay-now-btn fst-italic">Manage</Button></div>
+          <!-- <div><Button class="pay-now-btn fst-italic">Manage</Button></div> -->
         </div>
 
         <div
@@ -218,10 +218,10 @@
             />
           </div>
           <div class="col-3" (click)="goToDetail(detail)">
-            {{ detail.goodsName }}
+            {{ detail.productName }}
           </div>
           <div class="col-3 col-lg-2 col-sm-2">
-            <span class="qty-design">Qty: {{ detail.quantity }}</span>
+            <span class="qty-design">Qty: {{ detail.qty }}</span>
           </div>
           <div class="col-2 col-lg-3 col-sm-3">
             <button
