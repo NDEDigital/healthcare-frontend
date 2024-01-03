@@ -144,8 +144,8 @@ export class GoodsDataService {
 
   // review and ratings
 
-  getReviewRatingsData(goodsId: any) {
-    //console.log(goodsId, groupCode);
+  getReviewRatingsData(productId: any) {
+    console.log(productId, "ProductId");
 
  
 
@@ -153,7 +153,7 @@ export class GoodsDataService {
     // const url = `${this.baseUrl}/GetOrderData/${pageNumber}/${pageSize}/${status} `;
  
     return this.http.get(url, {
-      params: { goodsId },
+      params: { ProductId: productId.toString() }, // Ensure productId is a string
     });
   }
 }
