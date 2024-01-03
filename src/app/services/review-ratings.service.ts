@@ -6,7 +6,6 @@ import { API_URL } from '../config';
   providedIn: 'root',
 })
 export class ReviewRatingsService {
-
   URL = API_URL;
   addReviewAndRatingURL = `${this.URL}/api/ReviewAndRating/addReviewAndRating`;
   updateReviewAndRatingURL = `${this.URL}/api/ReviewAndRating/UpdateReviewAndRatings`;
@@ -33,17 +32,7 @@ export class ReviewRatingsService {
   }
 
   // newly added  get review
-  getReview(
-    review: any
-  ) {
-
+  getReview(review: any) {
     return this.http.get(this.getReviewUrl, review);
   }
-
-
-
-
-
-
-
 }
