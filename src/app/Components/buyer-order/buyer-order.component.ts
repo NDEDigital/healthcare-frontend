@@ -50,7 +50,7 @@ export class BuyerOrderComponent {
     Delivered: 'Delivered product',
     Cancelled: 'Cancelled product',
   };
-
+  btnIndex = -2;
   constructor(
     private router: Router,
     private orderService: OrderApiService,
@@ -174,55 +174,42 @@ export class BuyerOrderComponent {
 
   loadData() {
     const userCode = localStorage.getItem('code');
-    //console.log(userCode);
 
-    if (
-      this.activeNav === 'Ready to Ship' ||
-      this.activeNav === 'Shipped' ||
-      this.activeNav === 'Delivered' ||
-      this.activeNav === 'to Return' ||
-      this.activeNav === 'Returned'
-    ) {
-      this.rowCount = this.allCount > 0 ? this.allCount : 1;
-      //console.log(this.rowCount, 'rowwww');
-    }
-    this.orderService
-      .getAllOrderForBuyer(
-        userCode,
-        this.pageNum,
-        this.rowCount,
-        this.activeNav
-      )
-      .subscribe({
-        next: (response: any) => {
-          this.buyerOrder = [];
-          //console.log(response, 'buyer Order');
-          const orders = response.buyerOrderLst;
+    this.orderService.getOrdersForBuyer(userCode, '').subscribe({
+      next: (response: any) => {
+        console.log(response, 'newbuyerorder');
+        this.buyerOrder = response;
 
-          for (let order of orders) {
-            if (order.orderDetailsList.length > 0) {
-              this.buyerOrder.push(order);
-            }
-          }
-          //console.log(this.buyerOrder, 'bO');
-
-          this.toShipCount = response.toShipCount;
-          this.toDeliverCount = response.toDeliverCount;
-          this.allCount = response.allCount;
-          this.toReviewCount = response.toReviewCount;
-          this.ReturnedCount = response.returnedCount;
-          this.ToReturnCount = response.toReturnCount;
-          //console.log(' this.allCount', this.allCount);
-          this.loading = false;
-          this.data = Array.from(
-            { length: Math.ceil(this.allCount / this.rowCount) },
-            (_, index) => index + 1
+        setTimeout(() => {
+          console.log(
+            this.buyerOrder,
+            'byer order array',
+            this.buyerOrder.length,
+            'this.buyerOrder.length'
           );
-        },
-        error: (error: any) => {
-          //console.log(error);
-        },
-      });
+        }, 500);
+        this.loading = false;
+      },
+      error: (error: any) => {
+        //console.log(error);
+      },
+    });
+  }
+
+  getData(status: string) {
+    let uidS = localStorage.getItem('code');
+    let userID;
+    if (uidS) userID = parseInt(uidS, 10);
+    this.orderService.getOrdersForBuyer(userID, status).subscribe({
+      next: (response: any) => {
+        console.log(response, 'get buyer order data');
+        this.buyerOrder = response;
+        // console.log(this.productsData,"all data");
+      },
+      error: (error: any) => {
+        //console.log(error);
+      },
+    });
   }
   handlePaginationData(data: {
     selectedPageIndex: number;
@@ -300,7 +287,9 @@ export class BuyerOrderComponent {
     });
     this.productImageSrc = returnData.imagePath
       ? returnData.imagePath.substring(returnData.imagePath.indexOf('assets'))
-      : '../../../assets/images/medical/' + returnData.groupName.trim() + '.jpg';
+      : '../../../assets/images/medical/' +
+        returnData.groupName.trim() +
+        '.jpg';
   }
 
   SaveReturnData() {

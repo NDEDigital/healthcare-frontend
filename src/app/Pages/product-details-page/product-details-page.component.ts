@@ -99,13 +99,13 @@ export class ProductDetailsPageComponent {
 
     //console.log('this.detailsData.goodsId,this.detailsData.groupCode', this.detailsData.goodsId,this.detailsData.groupCode);
     // //console.log('goodsName', this.detailsData.goodsName);
+    console.log("this.detailsData.goodsId",this.detailsData.goodsId)
     this.service
       .getReviewRatingsData(
-        this.detailsData.goodsId,
-        this.detailsData.groupCode
+        this.detailsData.goodsId
       )
       .subscribe((data: any) => {
-        //console.log(' dAta ', data);
+        console.log(' dAta ', data);
         this.reviewData = data.reviewsAndRatings;
         this.perRatingCount = data.ratingsArray;
         this.totalRatings = data.totalCount;

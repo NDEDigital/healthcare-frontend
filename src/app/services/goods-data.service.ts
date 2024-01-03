@@ -144,16 +144,16 @@ export class GoodsDataService {
 
   // review and ratings
 
-  getReviewRatingsData(goodsId: any, groupCode: string) {
-    //console.log(goodsId, groupCode);
+  getReviewRatingsData(productId: any) {
+    console.log(productId, "ProductId");
 
-    const formData = new FormData();
-    // if (fromDate!=""&& toDate!="" ){
-    formData.append('goodsId', goodsId);
-    formData.append('groupCode', groupCode);
+ 
 
-    const url = `${this.URL}/api/ReviewAndRating/getReviewRatingsData`;
+    const url = `${this.URL}/api/ReviewAndRating/getReviewRatingsDataForDetailsPage`;
     // const url = `${this.baseUrl}/GetOrderData/${pageNumber}/${pageSize}/${status} `;
-    return this.http.post<any>(url, formData);
+ 
+    return this.http.get(url, {
+      params: { ProductId: productId.toString() }, // Ensure productId is a string
+    });
   }
 }

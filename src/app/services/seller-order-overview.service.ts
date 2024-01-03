@@ -136,10 +136,10 @@ export class SellerOrderOverviewService {
     return this.http.put(this.updateOrderStatusURL, formData);
   }
 
-  getInvoiceForSeller(sellerCode: any, OrderID: number) {
+  getInvoiceForSeller(OrderID: number) {
     //console.log('service e aise');
     return this.http.get(this.getInvoiceForSellerURL, {
-      params: { sellerCode, OrderID },
+      params: {  OrderID },
     });
   }
 }

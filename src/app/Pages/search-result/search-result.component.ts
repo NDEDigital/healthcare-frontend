@@ -48,6 +48,7 @@ export class SearchResultComponent {
       this.page = 1;
       this.currentPage = 1;
     }
+    this.searchData = [];
     this.searchKey = this.goodsDataService.searchKey;
     this.goodsDataService.getSearchResult().subscribe((data: any[]) => {
       this.goods = data;
