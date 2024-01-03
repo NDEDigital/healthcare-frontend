@@ -150,7 +150,7 @@
         {{row.returnTypeName}}
       </div>
 
-      <div class="col tableBody" *ngIf="status != '' || btnIndex === 9 || btnIndex === 8 || btnIndex === 6 || btnIndex === 5">
+      <div class="col tableHeader" *ngIf="status != '' && btnIndex != 9 && btnIndex != 8 && btnIndex != 6 && btnIndex != 5">
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button class="actionBtn">
