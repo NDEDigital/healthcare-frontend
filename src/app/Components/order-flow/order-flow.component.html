@@ -141,21 +141,26 @@
         {{ row.sellerStatus }}
       </div>
       <div class="col tableBody" *ngIf="btnIndex === 6">
-        <button id="{{i}}" class="custom-btn returnbutton"
-        (click)="setreturnDataArrayIndex(i)"
-        type="button" data-bs-toggle="modal" data-bs-target="#ReturnformModal">
-        Return
-      </button>
+        <button
+          id="{{ i }}"
+          class="custom-btn returnbutton"
+          (click)="setreturnDataArrayIndex(i)"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#ReturnformModal"
+        >
+          Return
+        </button>
 
-      <button
-      class="custom-btn"
-      type="button"
-      data-bs-toggle="modal"
-      data-bs-target="#reviewModal"
-      (click)="openReviewModal(row)"
-    >
-      Review
-    </button>
+        <button
+          class="custom-btn"
+          type="button"
+          data-bs-toggle="modal"
+          data-bs-target="#reviewModal"
+          (click)="openReviewModal(row)"
+        >
+          Review
+        </button>
       </div>
       <!-- <div class="col tableBody">
         <div class="d-flex justify-content-center align-items-center">
@@ -221,40 +226,77 @@
       Launch static backdrop modal
     </button> -->
     <!-- Modal -->
-    <div class="modal fade" id="ReturnformModal" data-bs-backdrop="static" data-bs-keyboard="false" tabindex="-1" aria-labelledby="ReturnformModalLabel" aria-hidden="true">
+    <div
+      class="modal fade"
+      id="ReturnformModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="ReturnformModalLabel"
+      aria-hidden="true"
+    >
       <div class="modal-dialog">
         <div class="modal-content">
           <div class="modal-header">
-            <h1 class="modal-title fs-5" id="ReturnformModalLabel">Return Form</h1>
-            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+            <h1 class="modal-title fs-5" id="ReturnformModalLabel">
+              Return Form
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
           </div>
           <div class="modal-body">
             <form [formGroup]="returnForm">
               <div>
                 <label class="p-2 fw-bold" for="returntype">Return Type:</label>
-                <select class="border border-1 rounded" formControlName="returntype">
+                <select
+                  class="border border-1 rounded"
+                  formControlName="returntype"
+                >
                   <option value="" disabled>Select Return Type</option>
-                  <option *ngFor="let entry of returntype" [ngValue]="entry.returnTypeId">
+                  <option
+                    *ngFor="let entry of returntype"
+                    [ngValue]="entry.returnTypeId"
+                  >
                     {{ entry.returnTypeName }}
                   </option>
                 </select>
               </div>
               <div>
                 <label class="p-2 fw-bold" for="remarks">Remarks:</label>
-                <input type="text" placeholder=" Remarks" formControlName="remarks" class="border border-1 rounded">
+                <input
+                  type="text"
+                  placeholder=" Remarks"
+                  formControlName="remarks"
+                  class="border border-1 rounded"
+                />
               </div>
             </form>
           </div>
           <div class="modal-footer">
-            <button type="button" #CloseReturnFormModal class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-            <button type="button" class="custom-btn"
-            (click)="ProductReturnFunction()" > Return </button>
+            <button
+              type="button"
+              #CloseReturnFormModal
+              class="btn btn-secondary"
+              data-bs-dismiss="modal"
+            >
+              Close
+            </button>
+            <button
+              type="button"
+              class="custom-btn"
+              (click)="ProductReturnFunction()"
+            >
+              Return
+            </button>
           </div>
         </div>
       </div>
     </div>
   </section>
-
 
   <section id="ReviewFormModalSection">
     <!-- Button trigger modal -->
@@ -364,7 +406,14 @@
               </div>
 
               <div class="form-group d-flex justify-content-end">
-                <button type="button" #CloseReviewFormModal class="btn btn-secondary d-none" data-bs-dismiss="modal">Close</button>
+                <button
+                  type="button"
+                  #CloseReviewFormModal
+                  class="btn btn-secondary d-none"
+                  data-bs-dismiss="modal"
+                >
+                  Close
+                </button>
 
                 <button
                   type="button"

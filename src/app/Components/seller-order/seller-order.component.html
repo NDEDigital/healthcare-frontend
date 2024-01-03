@@ -125,7 +125,8 @@
     >
       <div class="col tableBody">#{{ i + 1 }}</div>
       <div class="col tableBody">
-        {{ row.orderNo }}
+        <a class="invoice" (click)="gotoInvoice( row.orderMasterId)">  {{ row.orderNo }}</a> 
+      
       </div>
       <div class="col tableBody">
         {{ row.productName }}

@@ -313,7 +313,7 @@
             <span>{{ dataIndexNumber + i }}</span>
           </div>
           <div class="col-1 order_col" *ngIf="!returnProduct">
-            <a (click)="GotoInvoice(row.orderMasterId)"> invoice </a>
+            <a class= "invoice" (click)="GotoInvoice(row.orderMasterId)"> invoice </a>
           </div>
           <div class="col-1 order_col">
             {{ row.orderNo }}

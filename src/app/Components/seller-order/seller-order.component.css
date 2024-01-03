@@ -156,3 +156,8 @@
   height: 4rem;
   width: 6rem;
 }
+.invoice{
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-primary);
+}
