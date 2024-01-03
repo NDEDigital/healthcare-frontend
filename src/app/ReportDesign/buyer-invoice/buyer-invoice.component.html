@@ -9,27 +9,34 @@
         <div class="info">
           <div class="d-flex justify-content-center border-bottom border-top">
             <div class="row p-0" style="width: 100%">
-              <div class="col-8 p-0">
-                <div class="row"><h6 class="fst-italic">Bill To:</h6></div>
-                <div class="div d-flex d-flex">
-                  <span><strong>Name: </strong></span>
-                  <span class="field_data">{{ invoice.buyerName }}</span>
+              <div class="col-9 p-0">
+           
+                <div>
+                    <div class="row"><h6 class="fst-italic">Bill To:</h6></div>
+                    <div class="div d-flex d-flex">
+                      <span><strong>Name: </strong></span>
+                      <span class="field_data">{{ invoice.buyerName }}</span>
+                    </div>
+                    <!-- <div class="div d-flex" >
+                      <span><strong>Company: </strong></span>
+                      <span class="field_data">{{ invoice.buyerCompanyName }}</span>
+                    </div> -->
+                    <div class="div d-flex">
+                      <span><strong>Address:</strong></span>
+                      <span class="field_data">{{ invoice.address }}</span>
+                    </div>
+                    <div class="div d-flex">
+                      <span><strong>Phone: </strong></span>
+                      <span class="field_data">{{ invoice.phone }}</span>
+                    </div>
                 </div>
-                <!-- <div class="div d-flex" >
-                  <span><strong>Company: </strong></span>
-                  <span class="field_data">{{ invoice.buyerCompanyName }}</span>
-                </div> -->
-                <div class="div d-flex">
-                  <span><strong>Address:</strong></span>
-                  <span class="field_data">{{ invoice.address }}</span>
-                </div>
-                <div class="div d-flex">
-                  <span><strong>Phone: </strong></span>
-                  <span class="field_data">{{ invoice.buyerPhone }}</span>
-                </div>
+               
               </div>
-              <div class="col-4 text-end p-0">
-         
+              <div class="col-3 text-end p-0">
+                <div class="div d-flex">
+                    <span><strong>invoice: </strong></span>
+                    <span class="field_data">{{ invoice.invoiceNumber }}</span>
+                </div>
               </div>
             </div>
           </div>

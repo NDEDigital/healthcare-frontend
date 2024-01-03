@@ -69,6 +69,11 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   color: #ebf8ff !important;
 }
+.invoice{
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-primary);
+}
 .btn-inactive.active {
   background-color: #a4a554 !important ;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);

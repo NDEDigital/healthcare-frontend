@@ -23,6 +23,11 @@
 .tableBody {
   min-width: 10rem;
 }
+.invoice{
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-primary);
+}
 
 .tableBody {
   background-color: white;
