@@ -176,7 +176,7 @@
           <span class="fw-semibold"> Categories</span>
         </button>
 
-        <ul class="dropdown-menu">
+        <ul class="dropdown-menu border" id="dropdown-listDesign">
           <li
             *ngFor="let product of products | keyvalue"
             (click)="setSelectData(product.key, product.value)"
@@ -568,7 +568,7 @@
               ></span>
               <span class="fw-semibold"> Categories</span>
             </button>
-            <ul class="dropdown-menu border dropdown-listDesign">
+            <ul class="dropdown-menu border" id="dropdown-listDesign">
               <li
                 *ngFor="let product of products | keyvalue"
                 (click)="setSelectData(product.key, product.value)"
