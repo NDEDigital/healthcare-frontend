@@ -23,6 +23,7 @@ interface OrderDetail {
   discountPct: number;
   price: number;
   deliveryCharge: number;
+  deliveryDate:string;
   specification: string;
   productGroupId: string;
   userId: number;
@@ -91,6 +92,11 @@ export class OrderApiService {
       .replace(/\//g, '-');
     return bdDateTime;
   }
+  getDeliveryDateAndTime():string{
+    const currentDate = new Date(); // This will give you the current date and time
+    const futureDate = new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000); // Adding 7 days in milliseconds
+    return futureDate.toISOString(); // Converting to ISO 8601 string format
+  }
 
   setData() {
     const cart = this.cartDataService.getCartData();
@@ -121,11 +127,13 @@ export class OrderApiService {
       }
       qt =
         qt === undefined ? 0 : typeof qt === 'string' ? parseInt(qt, 10) : qt;
+       
       const detailData: OrderDetail = {
         productId: parseInt(entry.goodsId),
         qty: qt,
         price: entry.netPrice,
         deliveryCharge: 100,
+        deliveryDate:this.getDeliveryDateAndTime(),
         specification: entry.specification,
         productGroupId: entry.groupCode.toString(),
         userId: parseInt(entry.sellerCode),
