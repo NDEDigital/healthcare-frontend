@@ -16,23 +16,30 @@ export class ReviewRatingsService {
   addReviewAndRating(review: any) {
     return this.http.post(this.addReviewAndRatingURL, review);
   }
-  updateReviewAndRating( reviewId: any, rating: any ,ReviewText:any ) {
-    // const reviewAndRating = {
-    //   reviewId: reviewId,
-    //   RatingValue: rating,
-    //   ReviewText: review,
-    // };
-    console.log(reviewId, 'rev');
+  // updateReviewAndRating( reviewId: any, rating: any ,ReviewText:any ) {
+  //   // const reviewAndRating = {
+  //   //   reviewId: reviewId,
+  //   //   RatingValue: rating,
+  //   //   ReviewText: review,
+  //   // };
+  //   console.log(reviewId, 'rev');
 
-    const body = {
-      reviewId: reviewId,
-      rating: rating,
-      review: ReviewText
-    };
+  //   const body = {
+  //     reviewId: reviewId,
+  //     rating: rating,
+  //     review: ReviewText
+  //   };
 
-    return this.http.put(this.updateReviewAndRatingURL, body);
+  //   return this.http.put(this.updateReviewAndRatingURL, body);
+  // }
+
+  updateReviewAndRating(formData: FormData)  {
+    formData.forEach((value, key) => {
+      console.log(key, value);
+    });
+
+    return this.http.put<any>(this.updateReviewAndRatingURL, formData);
   }
-
   // newly added for adding review and ratings...
   addReview(review: any) {
     return this.http.post(this.addReviewUrl, review);

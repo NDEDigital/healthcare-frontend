@@ -137,39 +137,16 @@ export class ProductDetailsPageComponent {
     });
   }
   editReview() {
-    // if (this.rating > 0) {
-    //   this.formData.append('ReviewId', this.reviewUpdateData.reviewId);
-    //   this.formData.append('RatingValue', this.reviewForm.value.rating);
-    //   this.formData.append('ReviewText', this.reviewForm.value.reviwField);
-
-    //   //console.log('FormData inside Add:');
-    //   this.formData.forEach((value, key) => {
-    //     console.log(key, value);
-    //   });
-    //   this.reviewService.updateReviewAndRating(this.formData).subscribe({
-    //     next: (response: any) => {
-    //       //console.log(response);
-    //       this.reviewForm.reset();
-    //       this.closeBTN.nativeElement.click();
-    //       window.location.reload();
-    //     },
-    //     error: (error: any) => {
-    //       //console.log(error);
-    //     },
-    //   });
-    // } else {
-    //   this.errorMsg = true;
-    // }
     if (this.rating > 0) {
-      this.formData.append('ReviewId', this.reviewUpdateData.reviewId);
-      this.formData.append('RatingValue', this.reviewForm.value.rating);
-      this.formData.append('ReviewText', this.reviewForm.value.reviwField);
+      this.formData.append('reviewId', this.reviewUpdateData.reviewId);
+      this.formData.append('rating', this.reviewForm.value.rating);
+      this.formData.append('review', this.reviewForm.value.reviwField);
 
       //console.log('FormData inside Add:');
       this.formData.forEach((value, key) => {
         console.log(key, value);
       });
-      this.reviewService.updateReviewAndRating(this.reviewUpdateData.reviewId,this.reviewForm.value.rating , this.reviewForm.value.reviwField).subscribe({
+      this.reviewService.updateReviewAndRating(this.formData).subscribe({
         next: (response: any) => {
           //console.log(response);
           this.reviewForm.reset();
@@ -183,6 +160,29 @@ export class ProductDetailsPageComponent {
     } else {
       this.errorMsg = true;
     }
+    // if (this.rating > 0) {
+    //   this.formData.append('ReviewId', this.reviewUpdateData.reviewId);
+    //   this.formData.append('RatingValue', this.reviewForm.value.rating);
+    //   this.formData.append('ReviewText', this.reviewForm.value.reviwField);
+
+    //   //console.log('FormData inside Add:');
+    //   this.formData.forEach((value, key) => {
+    //     console.log(key, value);
+    //   });
+    //   this.reviewService.updateReviewAndRating(this.reviewUpdateData.reviewId,this.reviewForm.value.rating , this.reviewForm.value.reviwField).subscribe({
+    //     next: (response: any) => {
+    //       //console.log(response);
+    //       this.reviewForm.reset();
+    //       this.closeBTN.nativeElement.click();
+    //       window.location.reload();
+    //     },
+    //     error: (error: any) => {
+    //       //console.log(error);
+    //     },
+    //   });
+    // } else {
+    //   this.errorMsg = true;
+    // }
   }
   disableMouseActions = false;
 
