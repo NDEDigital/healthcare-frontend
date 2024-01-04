@@ -26,6 +26,7 @@ export class AddPriceDiscountsComponent {
   showPriceProductDiv: boolean = false;
   productList: any;
   btnIndex = -1;
+
   isDiscountEntered(): boolean {
     const discountAmount = parseFloat(
       this.addPriceDiscountForm.get('discountAmount')?.value
@@ -80,6 +81,19 @@ export class AddPriceDiscountsComponent {
     };
   }
 
+  maxDiscountPctValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value || control.value === '') {
+        return null; // No error if the field is empty
+      }
+
+      const discountPct = parseFloat(control.value);
+      return discountPct >= 0 && discountPct <= 100 ? null : { maxDiscountPct: true };
+    };
+  }
+
+
+
   ngOnInit() {
     this.addPriceDiscountForm = new FormGroup({
       productId: new FormControl('', Validators.required),
@@ -95,6 +109,7 @@ export class AddPriceDiscountsComponent {
       discountPct: new FormControl('0.00', [
         Validators.pattern(/^\d*\.?\d+$/),
         this.nonNegativeNumberValidator(),
+        this.maxDiscountPctValidator(),
       ]),
       effectivateDate: new FormControl(''),
       endDate: new FormControl(''),
@@ -111,7 +126,6 @@ export class AddPriceDiscountsComponent {
     this.getProducts(-1);
     this.setupFormValueChanges();
     this.getProductList();
-
   }
 
   getProductList() {
@@ -125,7 +139,6 @@ export class AddPriceDiscountsComponent {
       }
     );
   }
-
 
   // setupFormValueChanges() {
   //   const form = this.addPriceDiscountForm;
@@ -160,6 +173,23 @@ export class AddPriceDiscountsComponent {
   //   });
   // }
 
+  // function maxDiscountAmountValidator(priceControl: FormControl): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     const discountAmount = parseFloat(control.value);
+  //     const price = parseFloat(priceControl.value);
+  //     return discountAmount <= price ? null : { maxDiscountAmount: true };
+  //   };
+  // }
+
+  // function maxDiscountPctValidator(): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     const discountPct = parseFloat(control.value);
+  //     return discountPct <= 100 ? null : { maxDiscountPct: true };
+  //   };
+  // }
+
+
+
   setupFormValueChanges() {
     const form = this.addPriceDiscountForm;
     const priceControl = form.get('price');
@@ -180,7 +210,7 @@ export class AddPriceDiscountsComponent {
 
     // Subscribe to changes in Price
     priceControl?.valueChanges.subscribe((value) => {
-      if(value) {
+      if (value) {
         discountPctControl?.setValue('0', { emitEvent: false });
         discountAmountControl?.setValue('0', { emitEvent: false });
       }
