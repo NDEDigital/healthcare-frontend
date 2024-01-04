@@ -136,6 +136,7 @@ export class ProductDetailsPageComponent {
       rating: this.reviewUpdateData ? this.reviewUpdateData.ratingValue : '',
     });
   }
+
   editReview() {
     if (this.rating > 0) {
       this.formData.append('ReviewId', this.reviewUpdateData.reviewId);
@@ -295,14 +296,14 @@ export class ProductDetailsPageComponent {
   setCart(entry: any, inputQt: string) {
     //console.log(entry.approveSalesQty, 'approveSalesQty');
 
-    if (entry.price === '' || entry.price === undefined) {
-      entry.price = '12000';
+    if (entry.netPrice === '' || entry.netPrice === undefined) {
+      entry.netPrice = 0;
     }
     let groupCode_groupId = entry.groupCode + '&' + entry.goodsId;
 
     this.cartDataService.setCartCount(groupCode_groupId);
     this.cartDataService.setPrice(
-      entry.price,
+      entry.netPrice,
       parseInt(inputQt),
       groupCode_groupId
     );
