@@ -47,31 +47,34 @@ export class NavBeltComponent implements OnInit {
       }
     });
 
-
-
     this.loadData();
-
   }
-
 
   loadData(): void {
     this.goodsData.getNavData().subscribe((data: any[]) => {
       this.goods = data;
-      console.log(this.goods, "all products....");
+      console.log(this.goods, 'all products....');
 
       for (let i = 0; i < this.goods.length; i++) {
-        this.products.set(this.goods[i].productGroupCode, this.goods[i].productGroupName);
-        this.imgProduct.set(this.goods[i].productGroupCode,this.goods[i].imagePath);
+        this.products.set(
+          this.goods[i].productGroupCode,
+          this.goods[i].productGroupName
+        );
+        this.imgProduct.set(
+          this.goods[i].productGroupCode,
+          this.goods[i].imagePath
+        );
       }
       this.getDynamicWidthClass();
     });
   }
 
   getDynamicWidthClass(): string {
-   const productCount = this.goods.length;
+    if (!this.goods || this.goods.length === 0) {
+      return 'w-75';
+    }
 
-    console.log(productCount, "sjdfhjdf");
-
+    const productCount = this.goods.length;
 
     if (productCount <= 3) {
       return 'w-25';
@@ -81,8 +84,6 @@ export class NavBeltComponent implements OnInit {
       return 'w-75';
     }
   }
-
-
 
 
   // shouldShowButtons(): boolean {
