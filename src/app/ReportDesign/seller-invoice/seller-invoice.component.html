@@ -75,8 +75,8 @@
               <tr class="table_header">
                 <th>Porduct</th>
                 <th>Description</th>
-                <th>Seller Address</th>
-                <th>Seller contact</th>
+                <!-- <th>Seller Address</th>
+                <th>Seller contact</th> -->
                 <th>Delivery Date</th>
                 <th>Quantity</th>
                 <th>Price</th>
@@ -86,8 +86,8 @@
                 <tr *ngIf=" this.userId ==  product.sellerId &&  product.status !== 'Rejected'">
                   <td>{{ product.productName }}</td>
                   <td>{{ product.specification }}</td>
-                  <td>{{ product.selesAddress }}</td>  
-                  <td>{{ product.sellerContact }}</td>
+                  <!-- <td>{{ product.selesAddress }}</td>  
+                  <td>{{ product.sellerContact }}</td> -->
                   <td>{{ product.deliveryDate }}</td>
                   <td>{{ product.quantity }}</td>
                   <td>{{ product.price }}Tk</td>
