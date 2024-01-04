@@ -16,14 +16,21 @@ export class ReviewRatingsService {
   addReviewAndRating(review: any) {
     return this.http.post(this.addReviewAndRatingURL, review);
   }
-  updateReviewAndRating(reviewAndRating: any) {
+  updateReviewAndRating( reviewId: any, rating: any ,ReviewText:any ) {
     // const reviewAndRating = {
     //   reviewId: reviewId,
     //   RatingValue: rating,
     //   ReviewText: review,
     // };
-    //console.log(reviewAndRating, 'rev');
-    return this.http.put(this.updateReviewAndRatingURL, reviewAndRating);
+    console.log(reviewId, 'rev');
+
+    const body = {
+      reviewId: reviewId,
+      rating: rating,
+      review: ReviewText
+    };
+
+    return this.http.put(this.updateReviewAndRatingURL, body);
   }
 
   // newly added for adding review and ratings...
