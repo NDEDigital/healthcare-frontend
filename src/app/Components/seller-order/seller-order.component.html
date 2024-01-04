@@ -113,8 +113,18 @@
       <div class="col tableHeader">stockQty</div>
       <div class="col tableHeader">saleQty</div>
       <div class="col tableHeader" *ngIf="btnIndex === 7">Return Type Name</div>
-      <div class="col tableHeader" *ngIf="status != '' && btnIndex != 9 && btnIndex != 8 && btnIndex != 6 && btnIndex != 5">Action</div>
-
+      <div
+        class="col tableHeader"
+        *ngIf="
+          status != '' &&
+          btnIndex != 9 &&
+          btnIndex != 8 &&
+          btnIndex != 6 &&
+          btnIndex != 5
+        "
+      >
+        Action
+      </div>
     </div>
 
     <!-- table body -->
@@ -125,8 +135,9 @@
     >
       <div class="col tableBody">#{{ i + 1 }}</div>
       <div class="col tableBody">
-        <a class="invoice" (click)="gotoInvoice( row.orderMasterId)">  {{ row.orderNo }}</a> 
-      
+        <a class="invoice" (click)="gotoInvoice(row.orderMasterId)">
+          {{ row.orderNo }}</a
+        >
       </div>
       <div class="col tableBody">
         {{ row.productName }}
@@ -151,7 +162,16 @@
         {{ row.returnTypeName }}
       </div>
 
-      <div class="col tableHeader" *ngIf="status != '' && btnIndex != 9 && btnIndex != 8 && btnIndex != 6 && btnIndex != 5">
+      <div
+        class="col tableHeader"
+        *ngIf="
+          status != '' &&
+          btnIndex != 9 &&
+          btnIndex != 8 &&
+          btnIndex != 6 &&
+          btnIndex != 5
+        "
+      >
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button class="actionBtn">
@@ -174,7 +194,7 @@
             <button
               class="actionBtn"
               *ngIf="btnIndex != 0"
-              (click)="updateOrder(row.orderDetailId, row)"
+              (click)="updateOrder(row.orderDetailId, 'Rejected')"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
