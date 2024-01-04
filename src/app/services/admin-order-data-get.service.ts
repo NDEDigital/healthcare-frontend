@@ -47,7 +47,7 @@ export class AdminOrderDataGetService {
 
 // get data
 GetOrderDataSearch(pageNumber: number, pageSize: number,  status: string, searchby: string , serchValue: string  ): Observable<any> {
-  // console.log(" sent in api status",status);
+  // //console.log(" sent in api status",status);
   const url = `${this.baseUrl}/GetOrderData/${pageNumber}/${pageSize}/${status}/${searchby}/${serchValue}`;
   // const url = `${this.baseUrl}/GetOrderData/${pageNumber}/${pageSize}/${status} `;
   return this.http.get<any>(url);
@@ -57,7 +57,7 @@ GetOrderDataSearch(pageNumber: number, pageSize: number,  status: string, search
 
   //  update status
   updateOrderStatus(orderMasterId: string, detailsCancelledId: string | null, status: string): Observable<any> {
-    console.log(" orderMasterId, detailsCancelledId, status",orderMasterId, detailsCancelledId, status)
+    //console.log(" orderMasterId, detailsCancelledId, status",orderMasterId, detailsCancelledId, status)
     const url = `${this.baseUrl}/AdminOrderUpdateStatus`;
     let params = new HttpParams().set('orderMasterId', orderMasterId);
 
@@ -75,7 +75,7 @@ GetOrderDataSearch(pageNumber: number, pageSize: number,  status: string, search
   // getDataByDate
 
   getDataByDate(pageNumber: number, pageSize: number,  status: string, searchby: string , serchValue: string , fromDate: any ,toDate: any ): Observable<AdminOrderModel[]> {
-    console.log(" sent in api status", fromDate, toDate);
+    //console.log(" sent in api status", fromDate, toDate);
 
     const formData = new FormData();
     // if (fromDate!=""&& toDate!="" ){
@@ -101,7 +101,7 @@ GetOrderDataSearch(pageNumber: number, pageSize: number,  status: string, search
 
   // invoice
   getInvoiceForAdminOrder(  OrderID: number) {
-    console.log('service e aise');
+    //console.log('service e aise');
     return this.http.get(`${this.invoiceUrl}/GetInvoiceDataForAdmin`, {
       params: {   OrderID },
     });

@@ -6,26 +6,40 @@ import { API_URL } from '../config';
   providedIn: 'root',
 })
 export class ProductReturnServiceService {
+
   //baseUrl = 'http://172.16.5.18:8081/ProductReturn'; // liveURL
 
-  URL =API_URL;
+  URL = API_URL;
   baseUrl = `${this.URL}/ProductReturn`;
   constructor(private http: HttpClient) {}
 
+
   getReturnType(): Observable<any> {
-    const url = `${this.baseUrl}/GetReturnType`;
+    const url = `${this.URL}/api/HK_Gets/GetReturnList`;
     return this.http.get<any>(url);
   }
 
+  ReturnProductAndChangeOrderDetailsStatus(returnData: any): Observable<any>{
+    const url = `${this.URL}/ProductReturn/InsertReturnedData`;
+    return this.http.post(url, returnData);
+  }
+
+
+  // getReturnType(): Observable<any> {
+  //   const url = `${this.baseUrl}/GetReturnType`;
+  //   return this.http.get<any>(url);
+  // }
+
   insertData(returnData: any): Observable<any> {
-    console.log(' in service ', returnData);
+    //console.log(' in service ', returnData);
     // const formData = new FormData();
     // formData.append('returnData', returnData);
     const url = `${this.baseUrl}/InsertReturnedData`;
     return this.http.post<any>(url, returnData);
   }
+
   updateStatus(status: string, orderMasterId: string) {
-    console.log(' in service ', status);
+    //console.log(' in service ', status);
     const formData = new FormData();
     formData.append('status', status);
     formData.append('idList', orderMasterId);
@@ -48,4 +62,6 @@ export class ProductReturnServiceService {
     formData.append('status', StatusValue);
     return this.http.put(url, formData);
   }
+
+
 }

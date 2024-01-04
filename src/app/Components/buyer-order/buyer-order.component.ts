@@ -43,14 +43,15 @@ export class BuyerOrderComponent {
   productImageSrc: string = '';
   returnType = false;
   orderDetailDescription: any = {
+    Approved: 'Order is waiting for Seller Approval',
     Processing: 'Processing product',
-    Pending: 'Pending product',
+    Pending: 'Order is waiting for Admin Approval',
     'Ready to Ship': ' Product is  ready to ship',
     Shipped: 'Product is on the way to deliver',
     Delivered: 'Delivered product',
     Cancelled: 'Cancelled product',
   };
-
+  btnIndex = -2;
   constructor(
     private router: Router,
     private orderService: OrderApiService,
@@ -64,7 +65,7 @@ export class BuyerOrderComponent {
     });
     this.reviewForm.valueChanges.subscribe(() => {
       this.isFormValid = this.reviewForm.valid;
-      // console.log(this.isFormValid);
+      // //console.log(this.isFormValid);
     });
 
     this.returnForm = new FormGroup({
@@ -85,7 +86,7 @@ export class BuyerOrderComponent {
     this.loadData();
 
     this.reviewForm.get('rating')?.valueChanges.subscribe((rating) => {
-      console.log('Rating selected:', rating);
+      //console.log('Rating selected:', rating);
       this.errorMsg = false;
       this.rating = rating;
       // You can do something with the rating value here
@@ -93,11 +94,11 @@ export class BuyerOrderComponent {
   }
   setDetail(detail: any) {
     this.detailData = detail;
-    console.log(' details data888888888888888888888888888888 ', this.detailData);
+    //console.log(' details data888888888888888888888888888888 ', this.detailData);
   }
   goToDetail(detail: any) {
     this.item = detail;
-    console.log(detail, 'detail prod');
+    //console.log(detail, 'detail prod');
 
     let obj = {
       approveSalesQty: this.item.quantity,
@@ -120,20 +121,20 @@ export class BuyerOrderComponent {
       weight: this.item.width,
     };
 
-    console.log('product data ', obj);
+    //console.log('product data ', obj);
     sessionStorage.setItem('productData', JSON.stringify(obj));
     // this.route.navigate(['/productDetails']);
     window.open('/productDetails', '_blank');
   }
   addReview() {
-    console.log(' review addedddddddddddddddd');
+    //console.log(' review addedddddddddddddddd');
     if (this.isFormValid && this.rating > 0) {
       this.formData.append('RatingValue', this.reviewForm.value.rating);
       this.formData.append('ReviewText', this.reviewForm.value.reviwField);
       const imageFile = this.imageInput.nativeElement.files[0];
       if (imageFile) {
         const fileExtension = imageFile.type.split('/').pop();
-        // console.log(fileExtension);
+        // //console.log(fileExtension);
         const timestamp = new Date().getTime();
         const randomNumber = Math.floor(Math.random() * 1000);
         let imageName = `review_${timestamp}_${randomNumber}.${fileExtension}`;
@@ -147,23 +148,23 @@ export class BuyerOrderComponent {
       this.formData.append('goodsId', this.detailData.goodsId);
       this.formData.append('GroupName', this.detailData.groupName);
       const buyerCode = localStorage.getItem('code');
-      console.log(buyerCode);
+      //console.log(buyerCode);
       if (buyerCode) {
         this.formData.append('BuyerId', buyerCode);
       }
-      console.log('FormData inside Add:');
+      //console.log('FormData inside Add:');
       this.formData.forEach((value, key) => {
-        console.log(key, value);
+        //console.log(key, value);
       });
       this.reviewService.addReviewAndRating(this.formData).subscribe({
         next: (response: any) => {
-          console.log(response);
+          //console.log(response);
           this.reviewForm.reset();
           this.closeBTN.nativeElement.click();
           window.location.reload();
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
         },
       });
     } else {
@@ -174,88 +175,75 @@ export class BuyerOrderComponent {
 
   loadData() {
     const userCode = localStorage.getItem('code');
-    console.log(userCode);
 
-    if (
-      this.activeNav === 'Ready to Ship' ||
-      this.activeNav === 'Shipped' ||
-      this.activeNav === 'Delivered' ||
-      this.activeNav === 'to Return' ||
-      this.activeNav === 'Returned'
-    ) {
-      this.rowCount = this.allCount > 0 ? this.allCount : 1;
-      console.log(this.rowCount, 'rowwww');
-    }
-    this.orderService
-      .getAllOrderForBuyer(
-        userCode,
-        this.pageNum,
-        this.rowCount,
-        this.activeNav
-      )
-      .subscribe({
-        next: (response: any) => {
-          this.buyerOrder = [];
-          console.log(response, 'buyer Order');
-          const orders = response.buyerOrderLst;
+    this.orderService.getOrdersForBuyer(userCode, '').subscribe({
+      next: (response: any) => {
+        console.log(response, 'newbuyerorder');
+        this.buyerOrder = response;
 
-          for (let order of orders) {
-            if (order.orderDetailsList.length > 0) {
-              this.buyerOrder.push(order);
-            }
-          }
-          console.log(this.buyerOrder, 'bO');
-
-          this.toShipCount = response.toShipCount;
-          this.toDeliverCount = response.toDeliverCount;
-          this.allCount = response.allCount;
-          this.toReviewCount = response.toReviewCount;
-          this.ReturnedCount = response.returnedCount;
-          this.ToReturnCount = response.toReturnCount;
-          console.log(' this.allCount', this.allCount);
-          this.loading = false;
-          this.data = Array.from(
-            { length: Math.ceil(this.allCount / this.rowCount) },
-            (_, index) => index + 1
+        setTimeout(() => {
+          console.log(
+            this.buyerOrder,
+            'byer order array',
+            this.buyerOrder.length,
+            'this.buyerOrder.length'
           );
-        },
-        error: (error: any) => {
-          console.log(error);
-        },
-      });
+        }, 500);
+        this.loading = false;
+      },
+      error: (error: any) => {
+        //console.log(error);
+      },
+    });
+  }
+
+  getData(status: string) {
+    let uidS = localStorage.getItem('code');
+    let userID;
+    if (uidS) userID = parseInt(uidS, 10);
+    this.orderService.getOrdersForBuyer(userID, status).subscribe({
+      next: (response: any) => {
+        console.log(response, 'get buyer order data');
+        this.buyerOrder = response;
+        // console.log(this.productsData,"all data");
+      },
+      error: (error: any) => {
+        //console.log(error);
+      },
+    });
   }
   handlePaginationData(data: {
     selectedPageIndex: number;
     selectedValue: number;
   }) {
-    console.log(data.selectedPageIndex, data.selectedValue, 'data.....');
+    //console.log(data.selectedPageIndex, data.selectedValue, 'data.....');
     this.pageNum = data.selectedPageIndex;
     this.rowCount = data.selectedValue;
     this.loadData();
   }
   orderDetails(order: any) {
-    console.log(order, 'order');
+    //console.log(order, 'order');
     sessionStorage.setItem('order', JSON.stringify(order));
   }
   btnClick(str: string) {
     if (str === '') {
       this.activeNav = str;
-      console.log('clicked', str);
+      //console.log('clicked', str);
     } else if (str === 'Ready to Ship') {
       this.activeNav = str;
-      console.log('clicked', str);
+      //console.log('clicked', str);
     } else if (str === 'Shipped') {
       this.activeNav = str;
-      console.log('clicked', str);
+      //console.log('clicked', str);
     } else if (str === 'Delivered') {
       this.activeNav = str;
-      console.log('clicked', str);
+      //console.log('clicked', str);
     } else if (str === 'to Return') {
       this.activeNav = str;
-      console.log('clicked', str);
+      //console.log('clicked', str);
     } else if (str === 'Returned') {
       this.activeNav = str;
-      console.log('clicked', str);
+      //console.log('clicked', str);
     }
     this.loadData();
   }
@@ -268,7 +256,7 @@ export class BuyerOrderComponent {
   // handeling star
 
   onRatingChange() {
-    console.log('Selected rating:', this.selectedRating);
+    //console.log('Selected rating:', this.selectedRating);
     // You can perform actions based on the selected rating here.
   }
 
@@ -278,14 +266,14 @@ export class BuyerOrderComponent {
     this.returnForm.reset();
     this.returnType = false;
     this.returnService.getReturnType().subscribe((data: any) => {
-      console.log(' typeId', data[0].typeId); // Use a type if possible for better type checking
-      console.log(' returnType', data[0].returnType); // Use a type if possible for better type checking
+      //console.log(' typeId', data[0].typeId); // Use a type if possible for better type checking
+      //console.log(' returnType', data[0].returnType); // Use a type if possible for better type checking
       this.returnTypeData = data;
     });
 
     this.returnData = returnData;
-    console.log(' return Data', this.returnData);
-    console.log(' group Data', this.returnData.groupName);
+    //console.log(' return Data', this.returnData);
+    //console.log(' group Data', this.returnData.groupName);
 
     this.returnForm.patchValue({
       orderNo: orderId ? orderId : '',
@@ -300,13 +288,15 @@ export class BuyerOrderComponent {
     });
     this.productImageSrc = returnData.imagePath
       ? returnData.imagePath.substring(returnData.imagePath.indexOf('assets'))
-      : '../../../assets/images/medical/' + returnData.groupName.trim() + '.jpg';
+      : '../../../assets/images/medical/' +
+        returnData.groupName.trim() +
+        '.jpg';
   }
 
   SaveReturnData() {
-    console.log(' type', this.returnForm.value.typeId);
+    //console.log(' type', this.returnForm.value.typeId);
     if (this.returnForm.value.typeId != null) {
-      console.log(' RETURN fORM ', this.returnForm.value);
+      //console.log(' RETURN fORM ', this.returnForm.value);
       this.formData.append('OrderNo', this.returnForm.value.orderNo);
       this.formData.append('GroupName', this.returnForm.value.groupName);
       this.formData.append('GoodsName', this.returnForm.value.goodsName);
@@ -323,12 +313,12 @@ export class BuyerOrderComponent {
       const formDataObject = this.formDataToObject(this.formData);
 
       // Log the FormData as an object
-      console.log(' form data ', formDataObject);
+      //console.log(' form data ', formDataObject);
 
       this.returnService.insertData(this.formData).subscribe(
         (response) => {
           // Handle a successful response
-          console.log('Data saved successfully:', response);
+          //console.log('Data saved successfully:', response);
           // Optionally, reset the form after successful submission
           this.formData = new FormData();
           this.returnForm.reset();

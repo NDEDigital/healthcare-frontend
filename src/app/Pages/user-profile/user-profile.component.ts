@@ -25,26 +25,26 @@ export class UserProfileComponent {
     }
     const userCode = localStorage.getItem('code');
 
-    // console.log(userCode, 'code');
+    // //console.log(userCode, 'code');
     this.userDataService.getSingleUser(userCode).subscribe({
       next: (response: any) => {
-        // console.log(response);
+        // //console.log(response);
         const userData = response.user;
         this.sharedService.loggedInUserInfo(userData);
       },
       error: (error: any) => {
         // Handle the error
-        // console.log(error);
+        // //console.log(error);
       },
     });
 
     // this.user$.subscribe((user) => {
-    //   console.log(user, 'user');
+    //   //console.log(user, 'user');
     //   this.user = user; // Update the user property for use in the component
 
-    //   // console.log(this.user, ' this.user ');
+    //   // //console.log(this.user, ' this.user ');
     // });
-    // console.log(this.user, ' this.user');
+    // //console.log(this.user, ' this.user');
     // this.updateUserForm = new FormGroup({
     //   email: new FormControl(this.user.email),
     //   address: new FormControl(this.user.address),
@@ -57,7 +57,7 @@ export class UserProfileComponent {
     //   // prefPaymentMethod: new FormControl(''),
     // });
     this.user$.subscribe((user) => {
-      // console.log(user, 'user');
+      // //console.log(user, 'user');
       this.user = user; // Update the user property for use in the component
       if (this.updateUserForm) {
         this.updateUserForm.patchValue({
@@ -89,7 +89,7 @@ export class UserProfileComponent {
   editMode2: string = '';
 
   toggleEditMode(section: string) {
-    // console.log('aise');
+    // //console.log('aise');
 
     if ('contact' === section) {
       this.editMode1 = 'contact';
@@ -100,12 +100,12 @@ export class UserProfileComponent {
     }
   }
   // toggleEditMode1(section: string) {
-  //   console.log('aise');
+  //   //console.log('aise');
 
   //   this.editMode1 = 'contact';
   // }
   // toggleEditMode2(section: string) {
-  //   console.log('aise');
+  //   //console.log('aise');
   //   this.editMode2 = 'companyInfo';
   // }
   onInputFocus(input: HTMLInputElement | HTMLTextAreaElement) {
@@ -131,12 +131,12 @@ export class UserProfileComponent {
         this.updateUserForm.value.businessRegNum;
       this.user.taxIDNumber = this.updateUserForm.value.taxIdNum;
       const updatedUser = this.user;
-      // console.log(updatedUser, 'updatedUser');
+      // //console.log(updatedUser, 'updatedUser');
       this.userDataService.updateUser(updatedUser).subscribe({
         next: (response: any) => {
           // location.reload();
-          // console.log(response);
-          // console.log(updatedUser, 'userData');
+          // //console.log(response);
+          // //console.log(updatedUser, 'userData');
           // Clear the form
           // this.userForm.reset();
           // alert(response.message);
@@ -149,7 +149,7 @@ export class UserProfileComponent {
           // location.reload();
         },
         error: (error: any) => {
-          // console.log(error);
+          // //console.log(error);
           // alert(error.error.message);
         },
       });

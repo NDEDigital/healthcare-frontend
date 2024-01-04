@@ -20,12 +20,12 @@ export class ContactSupplierComponent implements OnInit {
     //   document.querySelectorAll('button');
     // buttons.forEach((btn) => {
     //   btn.addEventListener('click', () => {
-    //     console.log('Button clicked!');
+    //     //console.log('Button clicked!');
     //     this.buttonText = btn.textContent!;
-    //     console.log(this.buttonText, 'btntext');
+    //     //console.log(this.buttonText, 'btntext');
     //     if (textArea && this.buttonText) {
     //       textArea.value += this.buttonText + ' ';
-    //       console.log(textArea.value);
+    //       //console.log(textArea.value);
     //     }
     //   });
     // });
@@ -45,7 +45,7 @@ export class ContactSupplierComponent implements OnInit {
 
     if (textArea && buttonText) {
       textArea.value += buttonText + ' ';
-      // console.log(textArea.value);
+      // //console.log(textArea.value);
     }
   }
   // addQuestion() {
@@ -54,18 +54,18 @@ export class ContactSupplierComponent implements OnInit {
   //     document.querySelectorAll('button');
   //   buttons.forEach((btn) => {
   //     btn.addEventListener('click', () => {
-  //       console.log('Button clicked!');
+  //       //console.log('Button clicked!');
   //       this.buttonText = btn.textContent!;
-  //       console.log(this.buttonText, 'btntext');
+  //       //console.log(this.buttonText, 'btntext');
   //       if (textArea && this.buttonText) {
   //         textArea.value += this.buttonText + ' ';
-  //         console.log(textArea.value);
+  //         //console.log(textArea.value);
   //       }
   //     });
   //   });
   //   // if (textArea && this.buttonText) {
   //   //   textArea.value += this.buttonText + ' ';
-  //   //   console.log(textArea.value);
+  //   //   //console.log(textArea.value);
   //   // }
   // }
 }

@@ -8,7 +8,6 @@ import { CartDataService } from 'src/app/services/cart-data.service';
 import { GoodsDataService } from 'src/app/services/goods-data.service';
 import { ReviewRatingsService } from 'src/app/services/review-ratings.service';
 import { CartItem } from '../cart-added-product/cart-item.interface';
-
 declare var bootstrap: any;
 @Component({
   selector: 'app-product-details-page',
@@ -62,7 +61,8 @@ export class ProductDetailsPageComponent {
     private service: GoodsDataService,
     private elementRef: ElementRef,
     private reviewService: ReviewRatingsService,
-    private cartDataService: CartDataService
+    private cartDataService: CartDataService,
+
   ) {
     this.reviewForm = new FormGroup({
       rating: new FormControl(Validators.required),
@@ -71,7 +71,7 @@ export class ProductDetailsPageComponent {
     });
     this.reviewForm.valueChanges.subscribe(() => {
       this.isFormValid = this.reviewForm.valid;
-      // console.log(this.isFormValid);
+      // //console.log(this.isFormValid);
     });
   }
 
@@ -93,66 +93,69 @@ export class ProductDetailsPageComponent {
       this.CartButtonText ="Out of stock";
     }
     this.buyerCode = localStorage.getItem('code');
-    console.log(' buyerCode ', this.buyerCode);
-   console.log(" detailsData ",this.detailsData )
+    //console.log(' buyerCode ', this.buyerCode);
+   //console.log(" detailsData ",this.detailsData )
     // this.detailsData = this.goodsData.getDetaileData();
 
-    console.log('this.detailsData.goodsId,this.detailsData.groupCode', this.detailsData.goodsId,this.detailsData.groupCode);
-    // console.log('goodsName', this.detailsData.goodsName);
+    //console.log('this.detailsData.goodsId,this.detailsData.groupCode', this.detailsData.goodsId,this.detailsData.groupCode);
+    // //console.log('goodsName', this.detailsData.goodsName);
+    console.log("this.detailsData.goodsId",this.detailsData.goodsId)
     this.service
       .getReviewRatingsData(
-        this.detailsData.goodsId,
-        this.detailsData.groupCode
+        this.detailsData.goodsId
       )
       .subscribe((data: any) => {
         console.log(' dAta ', data);
         this.reviewData = data.reviewsAndRatings;
         this.perRatingCount = data.ratingsArray;
         this.totalRatings = data.totalCount;
-        console.log(this.perRatingCount, this.totalRatings, 'count');
+        //console.log(this.perRatingCount, this.totalRatings, 'count');
         const reviewsAndRatingsArray = JSON.parse(
           data.reviewsAndRatings[0].ratingArray
         );
-        console.log(' json convert', reviewsAndRatingsArray);
-        console.log(' review data dataaaaaa', this.reviewData); // Use a type if possible for better type checking
+        //console.log(' json convert', reviewsAndRatingsArray);
+        //console.log(' review data dataaaaaa', this.reviewData); // Use a type if possible for better type checking
 
         this.ratingsColor();
       });
 
     this.reviewForm.get('rating')?.valueChanges.subscribe((rating) => {
-      console.log('Rating selected:', rating);
+      //console.log('Rating selected:', rating);
       this.errorMsg = false;
       this.rating = rating;
       // You can do something with the rating value here
     });
   }
+
+ 
   setDetail(detail: any) {
     this.reviewUpdateData = detail;
-    console.log(this.reviewUpdateData);
+    //console.log(this.reviewUpdateData);
     this.reviewForm.patchValue({
       reviwField: this.reviewUpdateData ? this.reviewUpdateData.reviewText : '',
       rating: this.reviewUpdateData ? this.reviewUpdateData.ratingValue : '',
     });
   }
+
   editReview() {
     if (this.rating > 0) {
       this.formData.append('ReviewId', this.reviewUpdateData.reviewId);
       this.formData.append('RatingValue', this.reviewForm.value.rating);
       this.formData.append('ReviewText', this.reviewForm.value.reviwField);
 
-      console.log('FormData inside Add:');
+      //console.log('FormData inside Add:');
       this.formData.forEach((value, key) => {
-        console.log(key, value);
+        //console.log(key, value);
       });
       this.reviewService.updateReviewAndRating(this.formData).subscribe({
         next: (response: any) => {
-          console.log(response);
+          //console.log(response);
           this.reviewForm.reset();
           this.closeBTN.nativeElement.click();
           window.location.reload();
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
         },
       });
     } else {
@@ -164,16 +167,16 @@ export class ProductDetailsPageComponent {
   // Function to toggle the flag
   toggleMouseActions() {
     this.disableMouseActions = !this.disableMouseActions;
-    console.log('this.disableMouseActions', this.disableMouseActions);
+    //console.log('this.disableMouseActions', this.disableMouseActions);
   }
   mouse() {
-    console.log(' active');
+    //console.log(' active');
   }
   ratingsColor() {
     // Get references to the div elements with type assertions
     const coloredDiv =
       this.elementRef.nativeElement.querySelectorAll('.colordiv');
-    console.log(' color DIV ', coloredDiv);
+    //console.log(' color DIV ', coloredDiv);
     const unColoredDiv =
       this.elementRef.nativeElement.querySelectorAll('.unColoredDiv');
     let avgRating = 0;
@@ -197,20 +200,20 @@ export class ProductDetailsPageComponent {
       { length: this.fullStar },
       (_, index) => index + 1
     );
-    console.log(' arrayyy', this.fullStarArray);
+    //console.log(' arrayyy', this.fullStarArray);
 
     // let fullstarCellvalue = parseFloat((avgRating / this.totalRatings).toFixed(0));
     let fullstarCellvalue = Math.ceil(avgRating / this.totalRatings);
 
     // finding empty star
     this.emptyStar = 5 - fullstarCellvalue;
-    console.log(' empty star', this.emptyStar, fullstarCellvalue);
+    //console.log(' empty star', this.emptyStar, fullstarCellvalue);
     // Creating  empty star Array
     this.emptyStarArray = Array.from(
       { length: this.emptyStar },
       (_, index) => index + 1
     );
-    console.log(' emptyStarArray', this.emptyStarArray);
+    //console.log(' emptyStarArray', this.emptyStarArray);
   }
 
   parseRatingArray(ratingArrayString: string): number[] {
@@ -291,16 +294,16 @@ export class ProductDetailsPageComponent {
     this.totalPrice = this.cartDataService.getTotalPrice();
   }
   setCart(entry: any, inputQt: string) {
-    console.log(entry.approveSalesQty, 'approveSalesQty');
+    //console.log(entry.approveSalesQty, 'approveSalesQty');
 
-    if (entry.price === '' || entry.price === undefined) {
-      entry.price = '12000';
+    if (entry.netPrice === '' || entry.netPrice === undefined) {
+      entry.netPrice = 0;
     }
     let groupCode_groupId = entry.groupCode + '&' + entry.goodsId;
 
     this.cartDataService.setCartCount(groupCode_groupId);
     this.cartDataService.setPrice(
-      entry.price,
+      entry.netPrice,
       parseInt(inputQt),
       groupCode_groupId
     );
@@ -316,7 +319,12 @@ export class ProductDetailsPageComponent {
         this.bsModal.hide();
       }, 2000);
     });
-  }
+
+    const carousel = document.querySelector('.carousel');
+    if (carousel) {
+      new bootstrap.Carousel(carousel);
+    }
+  } 
 
   getMaxValue(val: any) {
     return parseInt(val);

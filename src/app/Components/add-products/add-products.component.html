@@ -74,7 +74,11 @@
       <div class="col tableBody">
         <img
           class="product_image"
-          [src]="product.imagePath ? product.imagePath.split('FrontEnd')[1] : ''"
+          [src]="
+            product.imagePath
+              ? '/asset' + product.imagePath.split('asset')[1]
+              : ''
+          "
           alt="no image was uploaded!"
         />
       </div>
@@ -285,6 +289,7 @@
         class="form-control"
         id="productImage"
         formControlName="productImage"
+        accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
         [class.error]="isFieldInvalid('productImage')"
         #ProductImageInput
       />

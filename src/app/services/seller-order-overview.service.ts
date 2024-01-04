@@ -39,13 +39,13 @@ export class SellerOrderOverviewService {
     status: string,
     sellerSalesMasterDto: any
   ) {
-    console.log('Data sent to server:', '1', status, sellerSalesMasterDto);
+    //console.log('Data sent to server:', '1', status, sellerSalesMasterDto);
     const updateOrder = {
       orderdetailsIds: orderdetailsIds,
       status: status,
       sellerSalesMasterDto: sellerSalesMasterDto,
     };
-    console.log(updateOrder, 'updateOrder');
+    //console.log(updateOrder, 'updateOrder');
 
     return this.http.put(this.UpdateSellerOrderDetailsStatusURL, updateOrder);
   }
@@ -58,12 +58,12 @@ export class SellerOrderOverviewService {
     detailsCancelledId: string | null,
     status: string
   ): Observable<any> {
-    console.log(
-      ' orderMasterId, detailsCancelledId, status',
-      orderMasterId,
-      detailsCancelledId,
-      status
-    );
+    // console.log(
+    //   ' orderMasterId, detailsCancelledId, status',
+    //   orderMasterId,
+    //   detailsCancelledId,
+    //   status
+    // );
     const url = `${this.sellerOrderUpdate}`;
     let params = new HttpParams().set('orderMasterId', orderMasterId);
 
@@ -82,7 +82,7 @@ export class SellerOrderOverviewService {
     pageNumber: number,
     pageSize: number
   ) {
-    console.log(status, "asodfjofasdhnpodnp'fp");
+    //console.log(status, "asodfjofasdhnpodnp'fp");
 
     return this.http.get<orderInfo[]>(this.getOrderInfoURL, {
       params: {
@@ -102,16 +102,16 @@ export class SellerOrderOverviewService {
     SearchedPaymentMethod: any,
     SearchedStatus: any
   ) {
-    console.log(status, "asodfjofasdhnpodnp'fp");
-    console.log(
-      sellerId,
-      status,
-      pageNumber,
-      pageSize,
-      SearchOrderNumber,
-      SearchedPaymentMethod,
-      SearchedStatus
-    );
+    //console.log(status, "asodfjofasdhnpodnp'fp");
+    // console.log(
+    //   sellerId,
+    //   status,
+    //   pageNumber,
+    //   pageSize,
+    //   SearchOrderNumber,
+    //   SearchedPaymentMethod,
+    //   SearchedStatus
+    // );
 
     return this.http.get<orderInfo[]>(this.getOrderInfoURL, {
       params: {
@@ -127,7 +127,7 @@ export class SellerOrderOverviewService {
   }
 
   updateOrderStatus(OrderMasterIds: string, StatusValue: string) {
-    console.log(OrderMasterIds, StatusValue, 'dsadsaasd');
+    //console.log(OrderMasterIds, StatusValue, 'dsadsaasd');
 
     const formData = new FormData();
     formData.append('idList', OrderMasterIds);
@@ -136,10 +136,10 @@ export class SellerOrderOverviewService {
     return this.http.put(this.updateOrderStatusURL, formData);
   }
 
-  getInvoiceForSeller(sellerCode: any, OrderID: number) {
-    console.log('service e aise');
+  getInvoiceForSeller(OrderID: number) {
+    //console.log('service e aise');
     return this.http.get(this.getInvoiceForSellerURL, {
-      params: { sellerCode, OrderID },
+      params: {  OrderID },
     });
   }
 }

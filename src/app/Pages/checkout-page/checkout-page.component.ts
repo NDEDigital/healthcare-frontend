@@ -57,7 +57,7 @@ export class CheckoutPageComponent {
     this.totalPrice = this.cartDataService.getTotalPrice();
     this.getUserInfo();
     // setTimeout(() => {
-    //   console.log(" usaer dataaaaaaaaaa",this.userData )
+    //   //console.log(" usaer dataaaaaaaaaa",this.userData )
     //    this.setUserInfo();
     
     // }, 90);
@@ -76,11 +76,11 @@ export class CheckoutPageComponent {
 
         if (response.message === "Order data Inserted Successfully.") {
            alert('success Data Insert');
-          console.log('success Data Insert');
+          //console.log('success Data Insert');
           this.cartDataService.clearCartData();
           // this.route.navigate(['/']);
         } else {
-          console.log('not success',response);
+          //console.log('not success',response);
         }
       },
       (error) => {
@@ -169,13 +169,13 @@ export class CheckoutPageComponent {
     this.orderService.getUserInfo(userId).subscribe({
       next: (response: any) => {
         this.userData = response.user;
-        console.log(  " user Data" ,this.userData);
+        //console.log(  " user Data" ,this.userData);
         this.userName = this.userData.fullName;
         this.setUserInfo()
       },
       error: (error: any) => {
         // Handle the error
-        // console.log(error);
+        // //console.log(error);
       },
     });
   }

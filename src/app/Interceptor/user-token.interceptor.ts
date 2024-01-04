@@ -32,18 +32,18 @@ export class UserTokenInterceptor implements HttpInterceptor {
     return next.handle(request).pipe(
 
       catchError((err: HttpErrorResponse) => {
-        console.log(" refreshhhhhhhhhhhhhhhhhhhhhhhhhhhh");
+        //console.log(" refreshhhhhhhhhhhhhhhhhhhhhhhhhhhh");
         if (err instanceof HttpErrorResponse && err.status === 401) {
           const refreshToken = localStorage.getItem('RefreshToken');
-          console.log(" refresh ", refreshToken)
+          //console.log(" refresh ", refreshToken)
           if(refreshToken)
           {
             return this.user.RenewToken(refreshToken).pipe(
               switchMap((response: any) => {
-                console.log('Token refreshed. Retrying original request...');
+                //console.log('Token refreshed. Retrying original request...');
                 this.user.SetAccessToken(response.accessToken);
                 this.user.SetRefreshToken(response.refreshToken);
-                console.log(" refresh response", response)
+                //console.log(" refresh response", response)
                 if (response.accessToken) {
                   // Retry the original request with the new access token
                   request = request.clone({
@@ -61,7 +61,7 @@ export class UserTokenInterceptor implements HttpInterceptor {
 
         }
         else if(err instanceof HttpErrorResponse && err.status === 403){
-        console.log("  forbiddddddddddd")
+        //console.log("  forbiddddddddddd")
         this.logout();
         }
 

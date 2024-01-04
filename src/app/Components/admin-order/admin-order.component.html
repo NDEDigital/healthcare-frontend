@@ -30,7 +30,7 @@
       <!-- Approved ({{ statusData["approvedCount"] }}) -->
     </button>
 
-    <button
+    <!-- <button
       type="button"
       class="order_status_button"
       [ngClass]="{
@@ -39,8 +39,8 @@
       (click)="statusChange('Delivered', 'Delivered')"
     >
     Delivered 
-      <!-- Delivered ({{ statusData["deliveredCount"] }}) -->
-    </button>
+     
+    </button> -->
     <!-- <button
       type="button"
       class="order_status_button"
@@ -313,7 +313,7 @@
             <span>{{ dataIndexNumber + i }}</span>
           </div>
           <div class="col-1 order_col" *ngIf="!returnProduct">
-            <a (click)="GotoInvoice(row.orderMasterId)"> invoice </a>
+            <a class= "invoice" (click)="GotoInvoice(row.orderMasterId)"> invoice </a>
           </div>
           <div class="col-1 order_col">
             {{ row.orderNo }}

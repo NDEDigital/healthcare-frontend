@@ -37,7 +37,7 @@ export class GoodsDataService {
 
   getSearchResult() {
     this.searchProuct = `${this.URL}/api/ProductSearch/GetSearchedProduct?productName=${this.searchKey}&sortDirection=${this.sortedKey}&nextCount=${this.item}&offset=${this.page}`;
-    console.log(this.searchKey, 'ddddd', this.searchProuct);
+    //console.log(this.searchKey, 'ddddd', this.searchProuct);
     return this.http
       .get<any[]>(this.searchProuct)
       .pipe(tap((response: any[]) => {}));
@@ -63,12 +63,12 @@ export class GoodsDataService {
     return this.http.get<any[]>(carouselURL).pipe(
       tap((response: any[]) => {
         this.carousalData = response;
-        // console.log(this.companyList,"");
+        // //console.log(this.companyList,"");
       }),
       // catchError((error: any) => {
       //   console.error('Error:', error);
       //   // if (error.status == 401) {
-      //   //   console.log(' error status', error.status);
+      //   //   //console.log(' error status', error.status);
       //   //   setTimeout(this.getCarouselData, 5000);
       //   // }
       //   return throwError(error);
@@ -76,7 +76,7 @@ export class GoodsDataService {
       catchError((error: any) => {
         console.error('Error:', error);
         // if (error.status === 401) {
-        //   console.log('Error status 401. Retrying after 5 seconds...');
+        //   //console.log('Error status 401. Retrying after 5 seconds...');
         //   setTimeout(() => {
         //     this.getCarouselData().subscribe((data: any[]) => {
         //       // this.updateQuantity();
@@ -91,23 +91,23 @@ export class GoodsDataService {
   getProductCompanyList(groupCode: string) {
     // this.groupCode = groupCode;
     // this.groupName = groupName;
-    // console.log( this.groupCode, "dsdsds");
+    // //console.log( this.groupCode, "dsdsds");
     // this.groupCode = groupCode;
     // this.groupName = groupName;
     this.groupCode = sessionStorage.getItem('groupCode') || '';
     this.groupName = sessionStorage.getItem('groupName') || '';
     // this.groupName = localStorage.getItem('activeEntry') || '';
-    console.log(this.groupCode, 'groupCode', this.groupName, 'groupname');
+    //console.log(this.groupCode, 'groupCode', this.groupName, 'groupname');
 
     const encodedGroupName = encodeURIComponent(this.groupName);
-    console.log('encodedGroupName ', encodedGroupName);
+    //console.log('encodedGroupName ', encodedGroupName);
     const productCompany = `${this.URL}/api/Goods/GetProductCompany/${this.groupCode}`;
-    console.log(productCompany, ' produ');
+    //console.log(productCompany, ' produ');
 
     return this.http.get<any[]>(productCompany).pipe(
       tap((response: any[]) => {
         this.companyList = response;
-        console.log(this.companyList, 'companyList');
+        //console.log(this.companyList, 'companyList');
       }),
       catchError((error: any) => {
         // console.error('Error:', error);
@@ -118,7 +118,7 @@ export class GoodsDataService {
 
   getProductList(companyCode: string) {
     // this.companyCode = companyCode;
-    // console.log(companyCode," ----------");
+    // //console.log(companyCode," ----------");
 
     this.companyCode = sessionStorage.getItem('companyCode') || '';
     this.groupName = localStorage.getItem('activeEntry') || '';
@@ -144,16 +144,16 @@ export class GoodsDataService {
 
   // review and ratings
 
-  getReviewRatingsData(goodsId: any, groupCode: string) {
-    console.log(goodsId, groupCode);
+  getReviewRatingsData(productId: any) {
+    console.log(productId, "ProductId");
 
-    const formData = new FormData();
-    // if (fromDate!=""&& toDate!="" ){
-    formData.append('goodsId', goodsId);
-    formData.append('groupCode', groupCode);
+ 
 
-    const url = `${this.URL}/api/ReviewAndRating/getReviewRatingsData`;
+    const url = `${this.URL}/api/ReviewAndRating/getReviewRatingsDataForDetailsPage`;
     // const url = `${this.baseUrl}/GetOrderData/${pageNumber}/${pageSize}/${status} `;
-    return this.http.post<any>(url, formData);
+ 
+    return this.http.get(url, {
+      params: { ProductId: productId.toString() }, // Ensure productId is a string
+    });
   }
 }

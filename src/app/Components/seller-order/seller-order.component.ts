@@ -39,15 +39,15 @@ export class SellerOrderComponent {
         next: (response: any) => {
           console.log(response);
           this.sellerOrderData = response;
-          console.log(' data ', this.sellerOrderData);
+          //console.log(' data ', this.sellerOrderData);
           this.sellerOrderData = this.sellerOrderData.map((item: any) => ({
             ...item,
             isChecked: false,
           }));
-          console.log('data after', this.sellerOrderData);
+          //console.log('data after', this.sellerOrderData);
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
         },
       });
     }
@@ -58,7 +58,7 @@ export class SellerOrderComponent {
     });
   }
   showImage(path: any, title: any) {
-    console.log(path, title);
+    //console.log(path, title);
     this.imagePath = path.split('src')[1];
     this.imageTitle = title;
   }
@@ -94,34 +94,45 @@ export class SellerOrderComponent {
     let status = 'status';
 
     let detailID = orderdetailsIds.toString();
-    console.log(
-      orderdetailsIds.toString(),
-      this.statusArray[this.btnIndex],
-      status,
-      sellerSalesMasterDto
-    );
+    // console.log(
+    //   orderdetailsIds.toString(),
+    //   this.statusArray[this.btnIndex],
+    //   status,
+    //   sellerSalesMasterDto
+    // );
+    if (product === 'Rejected') {
+      status = 'Rejected';
+    } else {
+      status = this.statusArray[this.btnIndex];
+    }
     this.sellerService
-      .UpdateSellerOrderDetailsStatus(
-        detailID,
-        this.statusArray[this.btnIndex],
-        sellerSalesMasterDto
-      )
+      .UpdateSellerOrderDetailsStatus(detailID, status, sellerSalesMasterDto)
       .subscribe({
         next: (response: any) => {
-          console.log(response);
+          //console.log(response);
           // this.productsData = response;
-          // console.log(this.productsData);
-          if ((this.btnIndex = -1)) {
-            this.getData('Pending');
-          } else if ((this.btnIndex = 1)) {
-            this.getData('Approved');
-          } else {
-            this.getData('Rejected');
-          }
+          // //console.log(this.productsData);
+          // if ((this.btnIndex = -1)) {
+          //   this.getData('Pending');
+          // } else if ((this.btnIndex = 1)) {
+          //   this.getData('Approved');
+          // } else {
+          //   this.getData('Rejected');
+          // }
+          this.btnIndex = -1;
+          this.getData('');
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
         },
       });
+  }
+  gotoInvoice(orderId: any) {
+    sessionStorage.setItem('orderMasterID', orderId);
+
+    const urlToOpen = '/sellerInvoice'; // Replace with your desired URL
+
+    // Use window.open to open the new window/tab
+    window.open(urlToOpen, '_blank');
   }
 }

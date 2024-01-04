@@ -39,7 +39,7 @@
         Ready To Ship
       </button>
       <button
-        class="custom-btn btn-Shipped"
+        class="custom-btn btn-ToDeliver"
         [ngClass]="{ active: btnIndex === 4 }"
         (click)="btnIndex = 4"
         (click)="getData('ToDeliver')"
@@ -47,7 +47,7 @@
         To Deliver
       </button>
       <button
-        class="custom-btn btn-Shipped"
+        class="custom-btn btn-Delivered"
         [ngClass]="{ active: btnIndex === 5 }"
         (click)="btnIndex = 5"
         (click)="getData('Delivered')"
@@ -55,7 +55,7 @@
         Delivered
       </button>
       <button
-        class="custom-btn btn-Delivered"
+        class="custom-btn btn-Reviewed"
         [ngClass]="{ active: btnIndex === 6 }"
         (click)="btnIndex = 6"
         (click)="getData('Reviewed')"
@@ -63,7 +63,7 @@
         Reviewed
       </button>
       <button
-        class="custom-btn btn-Delivered"
+        class="custom-btn btn-ToReturn"
         [ngClass]="{ active: btnIndex === 7 }"
         (click)="btnIndex = 7"
         (click)="getData('ToReturn')"
@@ -71,7 +71,7 @@
         To Return
       </button>
       <button
-        class="custom-btn btn-Delivered"
+        class="custom-btn btn-Returned"
         [ngClass]="{ active: btnIndex === 8 }"
         (click)="btnIndex = 8"
         (click)="getData('Returned')"
@@ -79,7 +79,7 @@
         Returned
       </button>
       <button
-        class="custom-btn btn-danger"
+        class="custom-btn btn-Rejected"
         [ngClass]="{ active: btnIndex === 9 }"
         (click)="btnIndex = 9"
         (click)="getData('Rejected')"
@@ -112,7 +112,19 @@
       <div class="col tableHeader">netPrice</div>
       <div class="col tableHeader">stockQty</div>
       <div class="col tableHeader">saleQty</div>
-      <div class="col tableHeader" *ngIf="status != ''">Action</div>
+      <div class="col tableHeader" *ngIf="btnIndex === 7">Return Type Name</div>
+      <div
+        class="col tableHeader"
+        *ngIf="
+          status != '' &&
+          btnIndex != 9 &&
+          btnIndex != 8 &&
+          btnIndex != 6 &&
+          btnIndex != 5
+        "
+      >
+        Action
+      </div>
     </div>
 
     <!-- table body -->
@@ -123,7 +135,9 @@
     >
       <div class="col tableBody">#{{ i + 1 }}</div>
       <div class="col tableBody">
-        {{ row.orderNo }}
+        <a class="invoice" (click)="gotoInvoice(row.orderMasterId)">
+          {{ row.orderNo }}</a
+        >
       </div>
       <div class="col tableBody">
         {{ row.productName }}
@@ -144,7 +158,20 @@
         {{ row.saleQty }}
       </div>
 
-      <div class="col tableBody" *ngIf="status != ''">
+      <div class="col tableBody" *ngIf="btnIndex === 7">
+        {{ row.returnTypeName }}
+      </div>
+
+      <div
+        class="col tableHeader"
+        *ngIf="
+          status != '' &&
+          btnIndex != 9 &&
+          btnIndex != 8 &&
+          btnIndex != 6 &&
+          btnIndex != 5
+        "
+      >
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button class="actionBtn">
@@ -167,7 +194,7 @@
             <button
               class="actionBtn"
               *ngIf="btnIndex != 0"
-              (click)="updateOrder(row.orderDetailId, row)"
+              (click)="updateOrder(row.orderDetailId, 'Rejected')"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

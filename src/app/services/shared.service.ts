@@ -30,11 +30,11 @@ export class SharedService {
 
   // editData(data: any) {
   //   this.editProduct = data;
-  //   console.log(this.editProduct, 'eshe   gesi');
+  //   //console.log(this.editProduct, 'eshe   gesi');
   // }
   deleteData(indx: any) {
     this.deleteProductIndx = indx;
-    // console.log(this.deleteProductIndx, 'delete indx');
+    // //console.log(this.deleteProductIndx, 'delete indx');
   }
   setProductData(products: any, productType: any) {
     this.products = products;
@@ -46,7 +46,7 @@ export class SharedService {
   }
 
   sliderDatafunc(sliderData: any) {
-    // console.log(sliderData);
+    // //console.log(sliderData);
     this.sliderData = sliderData;
   }
   setNavSelectData(groupCode: string, groupName: string) {
@@ -86,28 +86,31 @@ export class SharedService {
   }
 
   private loginStatusSubject = new BehaviorSubject<boolean>(
-    localStorage.getItem('loginStatus') === 'true'
+    localStorage.getItem('loginStatus') === 'true' &&
+      localStorage.getItem('proj') === 'HealthCare'
   );
 
   loginStatus$ = this.loginStatusSubject.asObservable();
   private userSubject = new BehaviorSubject<any>(null);
   user$ = this.userSubject.asObservable();
-  updateLoginStatus(
-    loginStatus: boolean,
-    userCode: any,
-    role: any
-  ) {
+  updateLoginStatus(loginStatus: boolean, userCode: any, role: any) {
+    // localStorage.clear()
+    localStorage.removeItem('loginStatus');
+localStorage.removeItem('proj');
+localStorage.removeItem('code');
+localStorage.removeItem('role');
     this.loginStatusSubject.next(loginStatus);
     localStorage.setItem('loginStatus', loginStatus.toString());
+    localStorage.setItem('proj', 'HealthCare');
     localStorage.setItem('code', userCode);
     // localStorage.setItem('isB', isBuyer);
     localStorage.setItem('role', role);
-    // console.log(this.loginStatus$);
+    // //console.log(this.loginStatus$);
   }
   loggedInUserInfo(user: any) {
-    // console.log(this.user$, '$user');
+    // //console.log(this.user$, '$user');
     this.userSubject.next(user);
-    // console.log(this.userSubject.getValue(), 'this.userSubject.getValue()'); // Print the _value of user$
+    // //console.log(this.userSubject.getValue(), 'this.userSubject.getValue()'); // Print the _value of user$
   }
   getUserInfo() {
     return this.userSubject.getValue();
@@ -119,7 +122,7 @@ export class SharedService {
     //   this.userSubject.next(user);
     // }
     // this.user$.subscribe((user) => {
-    //   console.log(user, 'this.user$ value'); // Print the value emitted by user$
+    //   //console.log(user, 'this.user$ value'); // Print the value emitted by user$
     // });
   }
 }

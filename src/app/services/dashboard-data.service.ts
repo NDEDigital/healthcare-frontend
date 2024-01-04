@@ -38,7 +38,7 @@ export class DashboardDataService {
     companyName: any,
     addedDate: any
   ) {
-    console.log(sellerCode, status, productName, companyName, addedDate);
+    //console.log(sellerCode, status, productName, companyName, addedDate);
 
     return this.http.get(this.getDashboardContentURl, {
       params: { sellerCode, status, productName, companyName, addedDate },
@@ -58,14 +58,14 @@ export class DashboardDataService {
     formData.append('statusBefore', statusBefore);
     formData.append('updatedPC', updatedPC);
     formData.forEach((value, key) => {
-      console.log(key, value);
+      //console.log(key, value);
     });
     const response = this.http.put(this.updateProductStatusURl, formData);
 
     return response;
   }
   comapreEditedProduct(productId: any) {
-    console.log(productId);
+    //console.log(productId);
     return this.http.get(this.comapreEditedProductURL, {
       params: { productId },
     });

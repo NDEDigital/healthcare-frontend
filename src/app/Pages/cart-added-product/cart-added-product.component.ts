@@ -35,7 +35,7 @@ export class CartAddedProductComponent {
     this.cartDataQt = cartData.cartDataQt;
     this.cartCount = this.cartDataService.getCartCount();
     this.totalPrice = this.cartDataService.getTotalPrice();
-    console.log(this.cartCount);
+    //console.log(this.cartCount);
     
     
   }
@@ -53,7 +53,7 @@ export class CartAddedProductComponent {
   }
 
   // deleteCartProduct(entry: any) {
-  //   console.log(entry);
+  //   //console.log(entry);
 
   //   this.cartDataDetail.delete(entry.groupCode + '&' + entry.goodsID);
   //   let qt: number | undefined = this.cartDataQt.get(
@@ -71,14 +71,14 @@ export class CartAddedProductComponent {
   // }
 
   procced() {
-    console.log(localStorage.getItem('loginStatus'));
+    //console.log(localStorage.getItem('loginStatus'));
     if (localStorage.getItem('loginStatus') === null) {
       this.route.navigate(['/login']);
     } else {
       if (this.cartDataDetail.size > 0) {
         this.route.navigate(['/checkout']);
       } else {
-        console.log('select product');
+        //console.log('select product');
       }
     }
   }

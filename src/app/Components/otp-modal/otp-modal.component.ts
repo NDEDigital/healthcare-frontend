@@ -17,7 +17,7 @@ export class OtpModalComponent {
   verifyOTP() {
     if (this.otpValue !== null && this.otpValue.toString().length === 6) {
       this.error = false;
-      console.log('OTP:', this.otpValue);
+      //console.log('OTP:', this.otpValue);
        this.dataChanged.emit(this.otpValue.toString());
     } else {
       this.error = true;
@@ -37,17 +37,17 @@ export class OtpModalComponent {
     this.startTimer();
   }
   startTimer() {
-    console.log('start timer');
+    //console.log('start timer');
 
     const interval = setInterval(() => {
       if (this.remainingTime > 0) {
         this.remainingTime--;
       }
-      console.log(this.remainingTime, 'this.remainingTime');
+      //console.log(this.remainingTime, 'this.remainingTime');
     }, 1000);
 
     setTimeout(() => {
-      console.log('clearInterval');
+      //console.log('clearInterval');
       this.enableResendBTN = true;
       clearInterval(interval);
     }, this.remainingTime * 1000);
@@ -59,7 +59,7 @@ export class OtpModalComponent {
     return `${minutes}:${secondsRemaining.toString().padStart(2, '0')}`;
   }
   resendOTP() {
-    console.log('resend otp');
+    //console.log('resend otp');
     this.remainingTime = 10;
     this.startTimer();
     this.error = false;

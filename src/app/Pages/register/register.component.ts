@@ -112,8 +112,8 @@ export class RegisterComponent implements AfterViewInit {
     //   this.initializeTimer();
     // }
     // Scroll to the banking info element
-    //  console.log('showBankingInfo:', this.showBankingInfo); // Check if this is true
-    //  console.log('PaymentInfo:', this.PaymentInfo); // Check if this is defined
+    //  //console.log('showBankingInfo:', this.showBankingInfo); // Check if this is true
+    //  //console.log('PaymentInfo:', this.PaymentInfo); // Check if this is defined
     //  if (this.showBankingInfo ) {
     //   this.PaymentInfo.nativeElement.scrollIntoView({ behavior: 'smooth', block: 'start' });
     // }
@@ -123,11 +123,11 @@ export class RegisterComponent implements AfterViewInit {
     const confirmPassword = control.get('confirmPassword')?.value;
     if (password !== confirmPassword) {
       control.get('confirmPassword')?.setErrors({ passwordMismatch: true });
-      // console.log('  Password and Confirm Password must match.');
+      // //console.log('  Password and Confirm Password must match.');
       return { passwordMismatch: true };
     } else {
       control.get('confirmPassword')?.setErrors(null);
-      // console.log('Password and Confirm Password matched!');
+      // //console.log('Password and Confirm Password matched!');
       return null;
     }
   }
@@ -135,11 +135,11 @@ export class RegisterComponent implements AfterViewInit {
     Object.values(this.userForm.controls).forEach((control) => {
       control.markAsTouched();
       control.markAsDirty();
-      // console.log(control);
+      // //console.log(control);
     });
 
     if (this.userForm.invalid) {
-      // console.log('invalid');
+      // //console.log('invalid');
       return;
     }
     this.user = {
@@ -171,43 +171,43 @@ export class RegisterComponent implements AfterViewInit {
       MobileBankingTypeId: this.userForm.value.MobileBankingTypeId,
       MobileBankingNo: this.userForm.value.MobileBankingNo,
     };
-    console.log(this.user);
+    //console.log(this.user);
 
     if (this.userForm.valid) {
       this.userData.UserExist(this.user).subscribe({
         next: (response: any) => {
           setTimeout(() => {
             this.userExist = response.userExist;
-            console.log(response);
+            //console.log(response);
             if (this.userExist) {
               this.alertMsg = 'User already exists';
               this.UserExistModalBTN.nativeElement.click();
             } else {
-              console.log(this.userExist);
+              //console.log(this.userExist);
               this.captchaVerify();
             }
           }, 100);
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
           //  alert(error.error.message);
           // this.alertMsg = error.error.message;
           // this.UserExistModalBTN.nativeElement.click();
         },
       });
     }
-    // console.log(userData);
+    // //console.log(userData);
 
     // this.cdr.detectChanges();
   }
 
   captchaVerify() {
     if (this.recaptchaVerifier) {
-      console.log(this.recaptchaVerifier, 'before');
+      //console.log(this.recaptchaVerifier, 'before');
       this.recaptchaVerifier.clear();
-      console.log(this.recaptchaVerifier, 'after1');
+      //console.log(this.recaptchaVerifier, 'after1');
       this.recaptchaVerifier = null;
-      console.log(this.recaptchaVerifier, 'after2');
+      //console.log(this.recaptchaVerifier, 'after2');
     }
     const auth = getAuth();
     this.capcha_container.nativeElement.clear;
@@ -227,7 +227,7 @@ export class RegisterComponent implements AfterViewInit {
   }
 
   matchOtp(auth: any) {
-    console.log('inside matchOtp', this.userForm.value.phone);
+    //console.log('inside matchOtp', this.userForm.value.phone);
 
     signInWithPhoneNumber(
       auth,
@@ -245,16 +245,16 @@ export class RegisterComponent implements AfterViewInit {
         }
       })
       .catch((error) => {
-        console.log(error.code, 'code send error');
+        //console.log(error.code, 'code send error');
       });
   }
 
   verifyOTP() {
-    console.log(this.otpValue, 'inside');
+    //console.log(this.otpValue, 'inside');
 
     if (this.otpValue !== null && this.otpValue.toString().length === 6) {
       this.error = false;
-      console.log('OTP:', this.otpValue);
+      //console.log('OTP:', this.otpValue);
       this.validateOtp
         .confirm(this.otpValue)
         .then(() => {
@@ -265,7 +265,7 @@ export class RegisterComponent implements AfterViewInit {
                 response.userId,
                 response.role
               );
-              console.log(response, 'done');
+              //console.log(response, 'done');
 
               this.closeOTPModal.nativeElement.click();
 
@@ -274,18 +274,18 @@ export class RegisterComponent implements AfterViewInit {
               } else this.router.navigate(['/dashboard']);
               // this.sharedServiceData.loggedInUserInfo(response.user);
 
-              console.log(this.userForm.value.phone, 'create');
+              //console.log(this.userForm.value.phone, 'create');
 
               // window.location.href = '';
             },
             error: (error: any) => {
-              // console.log(error);
+              // //console.log(error);
             },
           });
         })
         .catch((error: any) => {
           //  this.router.navigate(['/register']);
-          console.log(error);
+          //console.log(error);
           this.wrongOTP = true;
         });
     } else {
@@ -315,13 +315,13 @@ export class RegisterComponent implements AfterViewInit {
     const passwordControl = this.userForm.get('password');
 
     if (passwordControl?.hasError('required')) {
-      // console.log('Password is required');
+      // //console.log('Password is required');
       return 'Password is required';
     } else if (passwordControl?.hasError('minlength')) {
-      // console.log('minLength');
+      // //console.log('minLength');
       return 'Password Should be at least 8';
     } else if (passwordControl?.hasError('maxlength')) {
-      // console.log('maxLength');
+      // //console.log('maxLength');
 
       return 'Password can be at the max 15 characters long';
     }
@@ -333,7 +333,7 @@ export class RegisterComponent implements AfterViewInit {
     const tradeValue = this.userForm.get('trade')?.value;
     const containerWidth =
       tradeValue === 'Seller' || tradeValue === 'Both' ? '700px' : '450px';
-    // console.log('Container Width:', containerWidth);
+    // //console.log('Container Width:', containerWidth);
 
     return { width: containerWidth };
   }
@@ -355,17 +355,17 @@ export class RegisterComponent implements AfterViewInit {
   }
 
   startTimer() {
-    console.log('start timer');
+    //console.log('start timer');
 
     const interval = setInterval(() => {
       if (this.remainingTime > 0) {
         this.remainingTime--;
       } else {
-        console.log('clearInterval');
+        //console.log('clearInterval');
         clearInterval(interval);
         this.enableResendBTN = true;
       }
-      //  console.log(this.remainingTime, 'this.remainingTime');
+      //  //console.log(this.remainingTime, 'this.remainingTime');
     }, 1000);
   }
   secondsToMinutesAndSeconds(seconds: number): string {
@@ -384,12 +384,12 @@ export class RegisterComponent implements AfterViewInit {
     this.remainingTime = 30;
     this.startTimer();
     this.matchOtp(getAuth());
-    // console.log('resend otp');
+    // //console.log('resend otp');
 
-    // console.log(this.recaptchaVerifier);
+    // //console.log(this.recaptchaVerifier);
     // // sessionStorage.setItem('OTPresend', 'true');
 
-    // console.log(this.recaptchaVerifier);
+    // //console.log(this.recaptchaVerifier);
 
     // signInWithPhoneNumber(
     //   getAuth(),
@@ -405,7 +405,7 @@ export class RegisterComponent implements AfterViewInit {
     //
     //   })
     //   .catch((error) => {
-    //     console.log(error.code, 'inside resend');
+    //     //console.log(error.code, 'inside resend');
     //   });
   }
 
@@ -425,14 +425,14 @@ export class RegisterComponent implements AfterViewInit {
   // get bank data
   bankdata() {
     this.userData.GetBankdata().subscribe((data: any) => {
-      console.log(' GetBankdata dataaaaaa ', data); // Use a type if possible for better type checking
+      //console.log(' GetBankdata dataaaaaa ', data); // Use a type if possible for better type checking
       this.bankData = data;
     });
   }
   // get MobileBanking data
   MobileBankingdata() {
     this.userData.GetMobileBankingdata().subscribe((data: any) => {
-      console.log(' GetMobileBankingdata dataaaaaa ', data); // Use a type if possible for better type checking
+      //console.log(' GetMobileBankingdata dataaaaaa ', data); // Use a type if possible for better type checking
       this.mobileBankingData = data;
     });
   }

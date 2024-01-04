@@ -81,9 +81,9 @@ export class HeaderComponent {
       this.isSeller = false;
     }
 
-    // console.log(this.isBuyer, 'isBuyer');
+    // //console.log(this.isBuyer, 'isBuyer');
 
-    // console.log(this.sharedService.user$, ' lol');
+    // //console.log(this.sharedService.user$, ' lol');
     this.pForm = new FormGroup(
       {
         currentPassword: new FormControl('', [
@@ -198,15 +198,15 @@ export class HeaderComponent {
     this.pForm.reset();
   }
   formSubmit() {
-    // console.log(this.pForm.get("newPassword"));
-    // console.log(this.pForm.valid ,("this.pForm.valid "));
-    // console.log(this.user.password ,("this.user.password"));
-    // console.log(this.pForm.value.newPassword,("this.pForm.value.newPassword"));
-    // console.log(
+    // //console.log(this.pForm.get("newPassword"));
+    // //console.log(this.pForm.valid ,("this.pForm.valid "));
+    // //console.log(this.user.password ,("this.user.password"));
+    // //console.log(this.pForm.value.newPassword,("this.pForm.value.newPassword"));
+    // //console.log(
     //   this.pForm.value.currentPassword,
     //   'this.pForm.value.currentPassword'
     // );
-    // console.log(this.pForm.get("newPassword"),("this.pForm.get(newPassword)"));
+    // //console.log(this.pForm.get("newPassword"),("this.pForm.get(newPassword)"));
     if (
       // 1
       this.pForm.valid &&
@@ -219,7 +219,7 @@ export class HeaderComponent {
         oldPassword: this.pForm.value.currentPassword,
         newPassword: this.pForm.value.newPassword,
       };
-      console.log(passData, ' passData');
+      //console.log(passData, ' passData');
 
       this.userDataService.updatePass(passData).subscribe({
         next: (response: any) => {
@@ -239,7 +239,7 @@ export class HeaderComponent {
           //  log.password=
         },
         error: (error: any) => {
-          // console.log(error, ' ------error');
+          // //console.log(error, ' ------error');
           this.errorMessage = error.error.message;
           // alert(error.error.message);
         },
@@ -257,11 +257,11 @@ export class HeaderComponent {
     const confirmPassword = control.get('confirmPassword')?.value;
     if (password !== confirmPassword) {
       control.get('confirmPassword')?.setErrors({ passwordMismatch: true });
-      // console.log('  Password and Confirm Password must match.');
+      // //console.log('  Password and Confirm Password must match.');
       return { passwordMismatch: true };
     } else {
       control.get('confirmPassword')?.setErrors(null);
-      // console.log('Password and Confirm Password matched!');
+      // //console.log('Password and Confirm Password matched!');
       return null;
     }
   }
@@ -301,6 +301,7 @@ export class HeaderComponent {
     this.sharedService.updateLoginStatus(false, null, null);
     localStorage.clear();
     sessionStorage.clear();
+    window.location.href = '/login';
   }
   ngOnDestroy() {
     this.subscription.unsubscribe();
@@ -315,17 +316,17 @@ export class HeaderComponent {
     this.isMobileMenuActive = true;
     this.isSidebarOutBoxActive = true;
     this.isSideNavActive = true;
-    // console.log('isSidebarOutBoxActive:', this.isSidebarOutBoxActive);
-    // console.log('isSideNavActive:', this.isSideNavActive);
-    // console.log('bar');
+    // //console.log('isSidebarOutBoxActive:', this.isSidebarOutBoxActive);
+    // //console.log('isSideNavActive:', this.isSideNavActive);
+    // //console.log('bar');
   }
   // Add a method to remove the "active" class from the side navigation
   removeSideNavActiveClass() {
     this.isSideNavActive = false;
     this.isSidebarOutBoxActive = false;
     this.isMobileMenuActive = false;
-    // console.log('cross');
-    // console.log('isSidebarOutBoxActive:', this.isSidebarOutBoxActive);
-    // console.log('isSideNavActive:', this.isSideNavActive);
+    // //console.log('cross');
+    // //console.log('isSidebarOutBoxActive:', this.isSidebarOutBoxActive);
+    // //console.log('isSideNavActive:', this.isSideNavActive);
   }
 }

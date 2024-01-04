@@ -73,7 +73,7 @@ export class AddProductQuantityComponent {
 
  
     const selectedProductNames = this.selectedProductNames;
-    console.log(" before selectedProductNames ",selectedProductNames)
+    //console.log(" before selectedProductNames ",selectedProductNames)
     // Remove the corresponding selected product name from selectedProductNames array
     if (selectedProductNames[index]) {
       selectedProductNames.splice(index, 1);
@@ -81,14 +81,14 @@ export class AddProductQuantityComponent {
       // if there are further changes to the array's indexes.
     }
 
-    console.log(" after selectedProductNames ",selectedProductNames)
+    //console.log(" after selectedProductNames ",selectedProductNames)
     
   }
 
   onSubmit() {
     // Access the form value, which contains multiple rows of data
     const formData = this.form.value;
-    console.log(formData);
+    //console.log(formData);
     // Process or submit the form data as needed
   }
   isFormValid(): boolean {
@@ -139,7 +139,7 @@ export class AddProductQuantityComponent {
       // API call
       this.addProductService.insertPortalReceived(this.portaldata).subscribe({
         next: (response) => {
-          console.log('Response:', response);
+          //console.log('Response:', response);
           // Handle success response
           this.masterForm.reset(); // Reset the masterForm
           this.form.reset(); // Reset the nested form (rows)
@@ -157,7 +157,7 @@ export class AddProductQuantityComponent {
       // Further submission logic here
     }
     else {
-      console.log(" form invalid")
+      //console.log(" form invalid")
     }
   
      
@@ -194,12 +194,12 @@ isDropdownVisible(rowIndex: number): boolean {
     const userID = localStorage.getItem('code')
     this.addProductService.GetProductDetailsData(userID) .subscribe({
       next: (response) => {
-         console.log( response)
+         //console.log( response)
          this.productDertailsData = response;
-         console.log("his.productDertailsData ",this.productDertailsData)
+         //console.log("his.productDertailsData ",this.productDertailsData)
       },
       error: (error) => {
-       console.log("error ",error)
+       //console.log("error ",error)
       },
     });
   }
@@ -236,7 +236,7 @@ isDropdownVisible(rowIndex: number): boolean {
     });
   
     this.selectedProductNames[rowIndex] = selectedItem.productName; // Store selected product name for this row
-    console.log(" product name ",    this.selectedProductNames)
+    //console.log(" product name ",    this.selectedProductNames)
   }
   
   

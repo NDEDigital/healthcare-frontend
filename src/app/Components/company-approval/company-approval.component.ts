@@ -28,19 +28,18 @@ export class CompanyApprovalComponent {
   getData() {
     this.companyService.GetCompaniesBasedOnStatus(this.btnIndex).subscribe({
       next: (response: any) => {
-       
         this.companies = response;
-    
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }
 
   showImage(path: any, title: any) {
-  
-    this.imagePath = path.split('FrontEnd')[1];
+    console.log(path);
+
+    this.imagePath = '/asset' + path.split('asset')[1];
     this.imageTitle = title;
   }
 
@@ -50,21 +49,21 @@ export class CompanyApprovalComponent {
     Isactive: any,
     maxUser: any
   ) {
-    console.log(companyCode, Isactive, companyEmail);
+    //console.log(companyCode, Isactive, companyEmail);
     // const selectedCompany = this.companies.find(
     //   (cmp: any) => cmp.companyCode === companyCode
     // );
     // if (selectedCompany) {
     //   this.selectedCompanyCodeValue = selectedCompany.companyCode;
-    //   console.log(
+    //   //console.log(
     //     'Selected Company Code Value:',
     //     this.selectedCompanyCodeValue
     //   );
     // }
-    console.log(
-      'Selected Company Code Value:',
-      this.selectedCompanyCodeValues[companyCode]
-    );
+    // console.log(
+    //   'Selected Company Code Value:',
+    //   this.selectedCompanyCodeValues[companyCode]
+    // );
     const userCnt = this.selectedCompanyCodeValues[companyCode] || maxUser;
     if (userCnt < 0) {
       // Handle the invalid input (e.g., display an error message)
@@ -81,7 +80,7 @@ export class CompanyApprovalComponent {
     };
     this.companyService.UpdateCompany(cmp).subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.getData();
         this.sendEmailToCompany(companyEmail, companyCode, userCnt, Isactive);
         this.selectedCompanyCodeValues[companyCode] = null;
@@ -96,7 +95,7 @@ export class CompanyApprovalComponent {
         this.msgModalBTN.nativeElement.click();
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
       },
     });
   }
@@ -116,11 +115,11 @@ export class CompanyApprovalComponent {
       .sendEmail(email, 'Company Registration Successful', message)
       .subscribe({
         next: (response: any) => {
-          console.log(response);
+          //console.log(response);
           // Handle success
         },
         error: (error: any) => {
-          console.log(error);
+          //console.log(error);
           // Handle error
         },
       });

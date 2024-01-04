@@ -3,28 +3,30 @@
   class="navbelt_container d-flex flex-column align-items-center justify-content-center"
 >
   <div
-    class="d-flex justify-content-around nav-parent w-75 h-100 m-2"
+    class="d-flex justify-content-around nav-parent h-100 m-2"
+    [ngClass]="getDynamicWidthClass()"
     #navItems
   >
     <div
       *ngFor="let entry of products | keyvalue"
-      class="nav_item d-flex flex-column mt-2 p-1"
+      class="nav_item d-flex flex-column m-1 p-1"
       (click)="setSelectData(entry.key, entry.value)"
       [class.active]="entry.value === activeEntry"
     >
       <div class="navbelt_image mb-2">
-      <!-- In your template -->
-      <img [src]="this.imgProduct.get(entry.key).split('FrontEnd')[1]" alt="Product Image" />
-
+        <!-- In your template -->
+        <img
+          [src]="'/asset' + this.imgProduct.get(entry.key).split('asset')[1]"
+          alt="Product Image"
+        />
       </div>
       <div class="navbelt_title fw-bold">
         {{ entry.value }}
       </div>
-
     </div>
   </div>
 </div>
-<div class="button-container">
+<div class="button-container" [ngClass]="getDynamicWidthClass()">
   <button type="button" class="slider-btn prevBtnmargin" (click)="prev()">
     <i class="fa-solid fa-chevron-left"></i>
   </button>

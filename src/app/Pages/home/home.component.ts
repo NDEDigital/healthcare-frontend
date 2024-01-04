@@ -9,7 +9,7 @@ import { SharedService } from 'src/app/services/shared.service';
 export class HomeComponent {
   constructor(private sharedService: SharedService) {
     // this.user$.subscribe((user) => {
-    //   console.log(user, 'user');
+    //   //console.log(user, 'user');
     // });
   }
   user$ = this.sharedService.user$;
@@ -24,7 +24,7 @@ export class HomeComponent {
     // }
 
     this.user$.subscribe((user) => {
-      // console.log(user, 'user');
+      // //console.log(user, 'user');
       this.user = user; // Update the user property for use in the component
     });
   }

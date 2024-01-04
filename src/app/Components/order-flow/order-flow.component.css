@@ -23,6 +23,11 @@
 .tableBody {
   min-width: 10rem;
 }
+.invoice{
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-primary);
+}
 
 .tableBody {
   background-color: white;
@@ -91,4 +96,15 @@
 .product_image {
   height: 4rem;
   width: 6rem;
+}
+
+.starDesign {
+  color: gray; /* Default star color */
+  padding: 1rem;
+  font-size: 2rem;
+}
+
+/* .starDesign.hovered, */
+.starDesign.selected {
+  color: gold; /* Highlight color when hovered or selected */
 }

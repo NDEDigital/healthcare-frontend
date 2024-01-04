@@ -176,7 +176,7 @@
           <span class="fw-semibold"> Categories</span>
         </button>
 
-        <ul class="dropdown-menu dropdown-listDesign">
+        <ul class="dropdown-menu border" id="dropdown-listDesign">
           <li
             *ngFor="let product of products | keyvalue"
             (click)="setSelectData(product.key, product.value)"
@@ -215,6 +215,7 @@
         </div>
       </div>
     </div>
+    
     <div class="col-3 d-flex align-items-center justify-content-between">
       <ul
         class="d-flex justify-content-around justify-content-md-between align-items-center p-0 mb-0"
@@ -234,7 +235,7 @@
                 >Register</a
               >
             </div>
-            <div class="delimiter-horizontal"></div>
+            <div *ngIf="isBuyer" class="delimiter-horizontal"></div>
 
             <div class="popup-item mt-1" *ngIf="isBuyer">
               <a href="/buyerOrder" class="d-flex">
@@ -551,37 +552,37 @@
       >
         <!-- // category -->
         <div class="dropdown-container">
-        <div class="dropdown me-4  " *ngIf="isCategoriesVisible">
-          <button
-            class="dropdown-toggle catergoriesButton"
-            type="button"
-            id="dropdownMenuButton1"
-            data-bs-toggle="dropdown"
-            aria-expanded="false"
-          >
-            <span
-              ><i
-                class="fa-solid fa-ellipsis-vertical"
-                style="margin-right: 2.5px"
-              ></i
-              ><i class="fa-solid fa-bars"></i
-            ></span>
-            <span class="fw-semibold"> Categories</span>
-          </button>
-          <ul class="dropdown-menu border border-danger">
-            <li
-              *ngFor="let product of products | keyvalue"
-              (click)="setSelectData(product.key, product.value)"
+          <div class="dropdown me-4" *ngIf="isCategoriesVisible">
+            <button
+              class="dropdown-toggle catergoriesButton"
+              type="button"
+              id="dropdownMenuButton1"
+              data-bs-toggle="dropdown"
+              aria-expanded="false"
             >
-              <a
-                class="dropdown-item"
-                [class.active]="product.key === activeEntry"
-                >{{ product.key }}</a
+              <span
+                ><i
+                  class="fa-solid fa-ellipsis-vertical"
+                  style="margin-right: 2.5px"
+                ></i
+                ><i class="fa-solid fa-bars"></i
+              ></span>
+              <span class="fw-semibold"> Categories</span>
+            </button>
+            <ul class="dropdown-menu border" id="dropdown-listDesign">
+              <li
+                *ngFor="let product of products | keyvalue"
+                (click)="setSelectData(product.key, product.value)"
               >
-            </li>
-          </ul>
+                <a
+                  class="dropdown-item"
+                  [class.active]="product.key === activeEntry"
+                  >{{ product.key }}</a
+                >
+              </li>
+            </ul>
+          </div>
         </div>
-      </div>
 
         <!--  category end-->
         <div

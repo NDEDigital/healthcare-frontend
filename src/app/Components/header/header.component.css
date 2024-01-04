@@ -7,10 +7,13 @@ html {
 
 /* Category Scrolable  */
 
-.dropdown-listDesign{
-  height: 20rem;
+#dropdown-listDesign {
+  /* max-height: 10rem;
   overflow: auto;
-  inset: 0px auto auto -16px !important;
+  inset: 0px auto auto -16px !important; */
+  max-width: 15vw !important;
+  max-height: 15rem;
+  overflow: scroll;
 }
 .companyName {
   font-size: 2.2rem;
@@ -211,7 +214,7 @@ html {
   position: absolute;
   z-index: 100;
   top: 3.6rem;
- 
+
   box-shadow: 0 0 1rem var(--color-gray);
   /* width: 14.5rem; */
   background: white;

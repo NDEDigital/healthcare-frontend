@@ -38,7 +38,6 @@ ul.special-list {
  .productDetailsData .list-group-item {
   list-style-type: circle;
 }
-
 /* product */
 .singleImage img {
   width: 28rem;
@@ -132,6 +131,22 @@ ul.special-list {
 /* product end */
 
 /* product details */
+.original-price {
+  text-decoration: line-through; /* Strike through the original price */
+  font-size: 1.2rem;
+  color: #8f8f8d;
+  /* Other styles for the original price */
+}
+
+.totalPrice img {
+ 
+  width: 1.3rem;
+  margin-bottom: .2rem;
+}
+.discount-percent{
+  font-size: 1.5rem;
+  font-weight: 300;
+}
 .productDetailsTitle {
   font-size: 1.5rem;
   font-weight: 500;

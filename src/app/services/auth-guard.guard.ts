@@ -18,7 +18,7 @@ export class AuthGuardGuard implements CanActivate {
     this.sharedService.loginStatus$.subscribe((isLoggedIn: boolean) => {
       // Handle the login status value
       this.isLoggedIn = isLoggedIn;
-      // console.log('Login status:', isLoggedIn);
+      // //console.log('Login status:', isLoggedIn);
     });
   }
 
@@ -30,7 +30,7 @@ export class AuthGuardGuard implements CanActivate {
     | Promise<boolean | UrlTree>
     | boolean
     | UrlTree {
-    // console.log('Login status:', this.isLoggedIn);
+    // //console.log('Login status:', this.isLoggedIn);
     if (this.isLoggedIn) {
       this.router.navigate(['/']);
       return false;

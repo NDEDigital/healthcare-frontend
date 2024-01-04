@@ -2,8 +2,108 @@
 
 <section class="container body-design">
   <!-- <div class="fs-2 mb-3">My Orders</div> -->
+  <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2">
+    <div class="headerbtns">
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === -2 }"
+        (click)="btnIndex = -2"
+        (click)="getData('')"
+      >
+        All
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === -1 }"
+        (click)="btnIndex = -1"
+        (click)="getData('Pending')"
+      >
+        Pending
+      </button>
+      <!-- <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 1 }"
+        (click)="btnIndex = 1"
+        (click)="getData('Approved')"
+      >
+        Approved
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 0 }"
+        (click)="btnIndex = 0"
+        (click)="getData('Cancelled')"
+      >
+        Cancelled
+      </button> -->
 
-  <div class="d-flex flex-row fs-5 header-nav mt-5">
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 3 }"
+        (click)="btnIndex = 3"
+        (click)="getData('Processing')"
+      >
+        Processing
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 4 }"
+        (click)="btnIndex = 4"
+        (click)="getData('ReadyToShip')"
+      >
+        Ready To Ship
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 5 }"
+        (click)="btnIndex = 5"
+        (click)="getData('ToDeliver')"
+      >
+        To Deliver
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 6 }"
+        (click)="btnIndex = 6"
+        (click)="getData('Delivered')"
+      >
+        Delivered
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 7 }"
+        (click)="btnIndex = 7"
+        (click)="getData('Reviewed')"
+      >
+        Reviewed
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 8 }"
+        (click)="btnIndex = 8"
+        (click)="getData('ToReturn')"
+      >
+        To Return
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 9 }"
+        (click)="btnIndex = 9"
+        (click)="getData('Returned')"
+      >
+        Returned
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 2 }"
+        (click)="btnIndex = 2"
+        (click)="getData('Rejected')"
+      >
+        Rejected
+      </button>
+    </div>
+  </div>
+  <!-- <div class="d-flex flex-row fs-5 header-nav mt-5">
     <div class="px-4">
       <button
         class="px-3"
@@ -11,18 +111,9 @@
         (click)="btnClick('')"
       >
         All
-        <!-- <span *ngIf="allCount">({{ allCount }})</span> -->
       </button>
     </div>
-    <!-- <div class="px-4">
-      <button
-        class="px-3"
-        [class.active-button]="activeNav === 'Processing'"
-        (click)="btnClick('Processing')"
-      >
-        Processing
-      </button>
-    </div> -->
+
     <div class="px-4">
       <button
         class="px-3"
@@ -43,8 +134,6 @@
         <span *ngIf="toDeliverCount">({{ toDeliverCount }})</span>
       </button>
     </div>
-
-    <!-- review Btn -->
     <div class="px-4">
       <button
         class="px-3"
@@ -55,8 +144,6 @@
         <span *ngIf="toReviewCount">({{ toReviewCount }})</span>
       </button>
     </div>
-
-    <!-- return Btn -->
     <div class="px-4">
       <button
         class="px-3"
@@ -77,9 +164,9 @@
         <span *ngIf="ReturnedCount">({{ ReturnedCount }})</span>
       </button>
     </div>
-  </div>
+  </div> -->
 
-  <div class="w-auto nav-line"></div>
+  <!-- <div class="w-auto nav-line"></div> -->
 
   <div *ngIf="loading" class="text-center mt-5">
     <h5>Loading products...</h5>
@@ -91,7 +178,7 @@
     <div *ngFor="let order of buyerOrder">
       <div
         class="border-none bg-white order-card mt-2 border border-1"
-        *ngIf="order.orderDetailsList.length > 0"
+        *ngIf="order.orderDetailsListForBuyer.length > 0"
       >
         <div class="d-flex justify-content-between p-3 border-bottom bg-light">
           <div class="">
@@ -109,10 +196,13 @@
               Placed on <span class="fw-semibold">{{ order.orderDate }}</span>
             </p>
           </div>
-          <div><Button class="pay-now-btn fst-italic">Manage</Button></div>
+          <!-- <div><Button class="pay-now-btn fst-italic">Manage</Button></div> -->
         </div>
 
-        <div class="row mt-3" *ngFor="let detail of order.orderDetailsList">
+        <div
+          class="row mt-3"
+          *ngFor="let detail of order.orderDetailsListForBuyer"
+        >
           <div
             class="col-2 d-flex justify-content-center"
             (click)="goToDetail(detail)"
@@ -120,20 +210,18 @@
             <img
               [src]="
                 detail.imagePath
-                  ? detail.imagePath.substring(
-                      detail.imagePath.indexOf('assets')
-                    )
-                  : '../../../assets/images/medical/' + detail.groupName.trim() + '.jpg'
+                  ? '/asset' + detail.imagePath?.split('asset')[1]
+                  : ''
               "
               class="w-50 h-75"
               alt=""
             />
           </div>
           <div class="col-3" (click)="goToDetail(detail)">
-            {{ detail.goodsName }}
+            {{ detail.productName }}
           </div>
           <div class="col-3 col-lg-2 col-sm-2">
-            <span class="qty-design">Qty: {{ detail.quantity }}</span>
+            <span class="qty-design">Qty: {{ detail.qty }}</span>
           </div>
           <div class="col-2 col-lg-3 col-sm-3">
             <button
@@ -161,10 +249,10 @@
                 'red-p': detail.status === 'Cancelled'
               }"
             >
-              <span *ngIf="activeNav !== 'Delivered'">
+              <span *ngIf="activeNav == 'Delivered'">
                 {{ getStatusDescription(detail.status) }}</span
               >
-              <span class="color-primary" *ngIf="activeNav === 'Delivered'">
+              <span class="color-primary" *ngIf="btnIndex === 6">
                 <button
                   class="p-2 p-lg-1 p-sm-1 process-btn review-bg"
                   #reviewBTN

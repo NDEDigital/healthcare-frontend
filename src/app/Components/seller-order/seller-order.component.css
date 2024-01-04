@@ -69,6 +69,11 @@
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   color: #ebf8ff !important;
 }
+.invoice{
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-primary);
+}
 .btn-inactive.active {
   background-color: #a4a554 !important ;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
@@ -91,28 +96,52 @@
   color: #ebf8ff !important;
 }
 
-.btn-Shipped {
-  border: 1px solid rgb(48, 87, 161) !important;
+.btn-ToDeliver {
+  border: 1px solid rgb(224, 174, 35) !important;
 }
-.btn-Shipped.active {
-  background-color: rgb(48, 87, 161) !important;
+.btn-ToDeliver.active {
+  background-color: rgb(224, 174, 35) !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   color: #ebf8ff !important;
 }
 
 .btn-Delivered {
-  border: 1px solid rgb(85, 52, 104) !important;
+  border: 1px solid rgb(9, 156, 124) !important;
 }
 .btn-Delivered.active {
-  background-color: rgb(85, 52, 104) !important;
+  background-color: rgb(9, 156, 124) !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   color: #ebf8ff !important;
 }
-.btn-danger {
+.btn-Reviewed {
+  border: 1px solid rgb(48, 87, 161) !important;
+}
+.btn-Reviewed.active {
+  background-color: rgb(48, 87, 161) !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  color: #ebf8ff !important;
+}
+.btn-ToReturn {
+  border: 1px solid rgb(228, 130, 64) !important;
+}
+.btn-ToReturn.active {
+  background-color: rgb(228, 130, 64) !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  color: #ebf8ff !important;
+}
+.btn-Returned {
   border: 1px solid rgb(110, 29, 26) !important;
 }
-.btn-danger.active {
+.btn-Returned.active {
   background-color: rgb(110, 29, 26) !important;
+  box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+  color: #ebf8ff !important;
+}
+.btn-Rejected {
+  border: 1px solid rgb(206, 12, 5) !important;
+}
+.btn-Rejected.active {
+  background-color: rgb(206, 12, 5) !important;
   box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
   color: #ebf8ff !important;
 }
@@ -131,4 +160,9 @@
 .product_image {
   height: 4rem;
   width: 6rem;
+}
+.invoice{
+  cursor: pointer;
+  text-decoration: none;
+  color: var(--color-primary);
 }

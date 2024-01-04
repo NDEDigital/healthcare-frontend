@@ -23,6 +23,7 @@ interface OrderDetail {
   discountPct: number;
   price: number;
   deliveryCharge: number;
+  deliveryDate:string;
   specification: string;
   productGroupId: string;
   userId: number;
@@ -61,6 +62,7 @@ export class OrderApiService {
   orderPostUrl = `${this.URL}/api/Order/InsertOrderData`;
   getUserInfoURL = `${this.URL}/api/Order/getOrderUserInfo`;
   getAllOrderForBuyerURL = `${this.URL}/api/Order/getAllOrderForBuyer`;
+  getOrdersForBuyerURL = `${this.URL}/api/Order/getAllOrderForBuyer`;
   checkUnderOrderProccessURL = `${this.URL}/api/Order/checkUnderOrderProccess`;
 
   // ============== new code  ==================
@@ -90,6 +92,11 @@ export class OrderApiService {
       .toLocaleString('en-US', options)
       .replace(/\//g, '-');
     return bdDateTime;
+  }
+  getDeliveryDateAndTime():string{
+    const currentDate = new Date(); // This will give you the current date and time
+    const futureDate = new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000); // Adding 7 days in milliseconds
+    return futureDate.toISOString(); // Converting to ISO 8601 string format
   }
 
   setData() {
@@ -121,27 +128,29 @@ export class OrderApiService {
       }
       qt =
         qt === undefined ? 0 : typeof qt === 'string' ? parseInt(qt, 10) : qt;
+       
       const detailData: OrderDetail = {
         productId: parseInt(entry.goodsId),
         qty: qt,
-        price: parseFloat(entry.price),
+        price: entry.netPrice,
         deliveryCharge: 100,
+        deliveryDate:this.getDeliveryDateAndTime(),
         specification: entry.specification,
         productGroupId: entry.groupCode.toString(),
         userId: parseInt(entry.sellerCode),
         unitId: entry.unitId,
         discountAmount: entry.discountAmount,
-        discountPct:entry.discountPct,
-        netPrice: entry.netPrice,
-        addedBy:this.buyerCode,
-        addedPC: "0.0.0.0",
+        discountPct: entry.discountPct,
+        netPrice: entry.netPrice * qt + 100,
+        addedBy: this.buyerCode,
+        addedPC: '0.0.0.0',
       };
       this.orderdata.orderDetailsList.push(detailData);
     }
   }
   insertOrderData() {
     this.setData();
-    console.log(' orderdata', this.orderdata);
+    //console.log(' orderdata', this.orderdata);
     return this.http.post<any>(
       this.orderPostUrl,
       this.orderdata,
@@ -158,7 +167,7 @@ export class OrderApiService {
     rowCount: number,
     status: string
   ) {
-    console.log(buyerCode, PageNumber, rowCount, status);
+    //console.log(buyerCode, PageNumber, rowCount, status);
 
     return this.http.get(this.getAllOrderForBuyerURL, {
       params: {
@@ -168,6 +177,23 @@ export class OrderApiService {
         status,
       },
     });
+  }
+  getOrdersForBuyer(userid: any, status: any) {
+    //console.log(buyerCode, PageNumber, rowCount, status);
+    if (status === '') {
+      return this.http.get(this.getOrdersForBuyerURL, {
+        params: {
+          userid,
+        },
+      });
+    } else {
+      return this.http.get(this.getOrdersForBuyerURL, {
+        params: {
+          userid,
+          status,
+        },
+      });
+    }
   }
 
   checkUnderOrderProccess(GoodsId: number, GroupCode: string) {

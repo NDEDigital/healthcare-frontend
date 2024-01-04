@@ -31,7 +31,7 @@ export class CarouselComponent {
       this.products.clear();
 
     this.goodsData.getCarouselData().subscribe((data: any[]) => {
-       console.log(data);
+       //console.log(data);
       
        
     this.goods = data;
@@ -54,7 +54,7 @@ export class CarouselComponent {
       };
       finObj.push(obj);
   
-      // console.log(this.productType,"as");
+      // //console.log(this.productType,"as");
       // this.productType.set(this.goods[i].goodsName, obj);
      this.products3.set(this.goods[i].groupName + " " + this.goods[i].groupCode,finObj);
       
@@ -75,7 +75,7 @@ export class CarouselComponent {
      
              
    }
-   console.log(this.products3," dsdsdsd");
+   //console.log(this.products3," dsdsdsd");
    
    this.loadData(this.products3);
   });
@@ -87,14 +87,14 @@ export class CarouselComponent {
 }
  
 loadData(products:any): void {
-  // console.log(this.productType, ' Load Data from nav-belt');
+  // //console.log(this.productType, ' Load Data from nav-belt');
     this.sliderData.clear;
     
     
   for (const [key, value] of products.entries()) {
       this.finalProducts.set(key,[]);
        let obj=[];
-       console.log(value[0].approveSalesQty," check bro");
+       //console.log(value[0].approveSalesQty," check bro");
  for (let i = 0; i < value.length; i++) {
        if(i%4!=0 || i==0){
             let d={
@@ -177,7 +177,7 @@ loadData(products:any): void {
 
 //              }
 //       }     
-//       console.log(this.finalProducts," final products");
+//       //console.log(this.finalProducts," final products");
       
 //       // this.secondLoad();
    
@@ -187,12 +187,12 @@ loadData(products:any): void {
    
 
     
-//     //  console.log("Hello");
+//     //  //console.log("Hello");
 //     this.finalProducts2.clear();
 //     this.products2 = this.sliderData;
 //     var arr:number[] = new Array();
 
-//      console.log(this.products2," lu");
+//      //console.log(this.products2," lu");
   
      
 //      let j:number=0;
@@ -232,7 +232,7 @@ loadData(products:any): void {
 //       }
     
 //   }
-//     //  console.log(this.finalProducts2.get("Decking")[0][0]," fine product 2");
+//     //  //console.log(this.finalProducts2.get("Decking")[0][0]," fine product 2");
      
 //    let k=0;
    

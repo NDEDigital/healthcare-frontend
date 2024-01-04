@@ -28,10 +28,12 @@ export class AddGroupsComponent {
     this.showProductDiv = !this.showProductDiv;
     this.btnIndex = -1;
     this.getProductGroup(-1);
+    this.ngOnInit();
   }
 
   showApprovalProductGrid(): void {
     this.showProductDiv = false;
+    this.addGroupForm.reset();
   }
 
   ngOnInit() {
@@ -61,14 +63,14 @@ export class AddGroupsComponent {
     //   addedPC: '0.0.0.0',
     // };
     if (this.addGroupForm.valid) {
-      // console.log('Form Data:', this.addGroupForm.value);
+      // //console.log('Form Data:', this.addGroupForm.value);
       const formData = new FormData();
 
       Object.keys(this.addGroupForm.value).forEach((key) => {
         let value = this.addGroupForm.value[key];
         if (key === 'productId' || key === 'unitId') {
           value = String(Math.floor(Number(value)));
-          console.log(value);
+          //console.log(value);
         }
         formData.append(key, value);
       });
@@ -83,14 +85,14 @@ export class AddGroupsComponent {
       formData.append('addedPC', '0.0.0.0');
 
       for (let pair of (formData as any).entries()) {
-        console.log(`${pair[0]}: `, pair[1]);
+        //console.log(`${pair[0]}: `, pair[1]);
       }
 
       this.addProductService.createProductGroup(formData).subscribe({
         next: (response: any) => {
-          console.log(response, 'successfull');
+          //console.log(response, 'successfull');
           this.alertMsg = response.message;
-          console.log(response.message);
+          //console.log(response.message);
           setTimeout(() => {
             this.UserExistModalBTN.nativeElement.click();
             this.addGroupForm.reset();
@@ -98,24 +100,24 @@ export class AddGroupsComponent {
           }, 50);
         },
         error: (error: any) => {
-          console.log(error, 'error');
+          //console.log(error, 'error');
           this.alertMsg = error.error.message;
           this.UserExistModalBTN.nativeElement.click();
         },
       });
     } else {
-      console.log('Form is not valid');
+      //console.log('Form is not valid');
     }
   }
 
   getProductGroup(status: any) {
     this.addProductService.GetProductGroupsListByStatus(status).subscribe({
       next: (response: any) => {
-        console.log(response);
+        //console.log(response);
         this.groupList = response;
       },
       error: (error: any) => {
-        console.log(error);
+        //console.log(error);
         this.alertMsg = error.error.message;
         this.UserExistModalBTN.nativeElement.click();
       },

@@ -57,7 +57,7 @@
 
         </p>
         <p class="fw-bold">
-          <span class="money-icon">৳</span>{{ entry.value.price }}
+          <span class="money-icon">৳</span>{{ entry.value.netPrice }}
         </p>
       </div>
       <div class="d-flex justify-content-between align-items-center px-1">
@@ -154,7 +154,7 @@
             <div class="carousel-inner">
               <div class="carousel-item active">
                 <div class="imageSlider">
-                  <!-- Loop through the array of image objects -->
+                
                   <img
                     *ngFor="let image of imageArray"
                     [src]="
@@ -234,7 +234,7 @@
       <div
         class="col-12 col-lg-6 col-md-6 col-sm-12 b p-4 d-flex justify-content-center align-items-end"
       >
-        <Div>
+        <div>
           <div class="productName">{{ detailsData.goodsName }}</div>
           <!-- rating -->
           <div class="productRating d-flex py-2">
@@ -299,19 +299,31 @@
               >
             </div>
           </div>
-          <div  class="py-2"> 
+          <div  class="py-2">
             <span > Quantity : </span>{{detailsData.approveSalesQty}}
           </div>
           <!-- price -->
-          <div class="price d-flex align-items-center py-2" *ngIf="!isSeller" >
-            <div>
-              <img
-                class="taKa_icon"
-                src="../../../assets/images/takaIcon.png"
-              />
-              {{ detailsData.price }}
+          <div class="price d-flex  py-2" *ngIf="!isSeller" >
+            <div >
+              <div>
+                <img
+                  class="taKa_icon"
+                  src="../../../assets/images/takaIcon.png"
+                />
+                {{ detailsData.price -  detailsData.discountAmount}}  
+              </div>
+  
+                <!-- total price and discount percent -->
+              <div class="totalPrice" *ngIf="detailsData.discountPct>0">
+                <del><img
+                  class="taKa_icon"
+                  src="../../../assets/images/takaIcon.png"
+                />
+                <span class="original-price mx-2">{{ detailsData.price }}</span>
+                <span class="discount-percent"> -{{detailsData.discountPct}}%</span> </del>
+                
+              </div>
             </div>
-
             <div class="ms-3">
               <input
                 #qtyInput
@@ -348,7 +360,7 @@
                  </button>
 
                <!-- Only render the modal trigger if approveSalesQty is not 0 -->
-            
+
            </div>
           </div>
 
@@ -362,7 +374,7 @@
             <button type="button" class="buyNowButton">Buy Now</button>
             <button type="button" class="AddToCartButton">Add to Cart</button>
           </div> -->
-        </Div>
+        </div>
       </div>
       <!-- product delivery part -->
       <!-- <div class="col-12 col-lg-4 col-md-6 col-sm-12 p-4   p-2"> -->
@@ -389,7 +401,7 @@
     </div>
     <div class="row py-2 productDetailsData">
       {{ detailsData.specification }}
-   
+
     </div>
     <!-- <div class="innerTitle">Specifications of {{ detailsData.goodsName }}</div>
     <div class="row Specifications">

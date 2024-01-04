@@ -151,8 +151,16 @@
   aria-hidden="true"
 >
   <div class="modal-dialog">
-    <div class="modal-content border  {{ alertTitle === 'Successfull!!' ? 'border-success' : 'border-danger' }}">
-      <div class="modal-header fs-5 fw-bold {{ alertTitle === 'Successfull!!' ? 'text-success' : 'text-danger' }}">
+    <div
+      class="modal-content border  {{
+        alertTitle === 'Successfull!!' ? 'border-success' : 'border-danger'
+      }}"
+    >
+      <div
+        class="modal-header fs-5 fw-bold {{
+          alertTitle === 'Successfull!!' ? 'text-success' : 'text-danger'
+        }}"
+      >
         <h1 class="modal-title fs-5" id="userExistModalLabel">
           {{ alertTitle }}
         </h1>
@@ -167,7 +175,12 @@
         {{ alertMsg }}
       </div>
       <div class="modal-footer">
-        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+        <button
+          type="button"
+          class="btn btn-primary"
+          data-bs-dismiss="modal"
+          (click)="goToLogin()"
+        >
           OK
         </button>
       </div>
