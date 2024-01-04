@@ -182,6 +182,7 @@ export class AddPriceDiscountsComponent {
     priceControl?.valueChanges.subscribe((value) => {
       if(value) {
         discountPctControl?.setValue('0', { emitEvent: false });
+        discountAmountControl?.setValue('0', { emitEvent: false });
       }
       this.calculateTotalPrice();
     });
