@@ -10,10 +10,9 @@
   >
     <div class="headerbtns">
       <button
-        class="custom-btn new-btn active"
-        (click)="getProductGroup(-1)"
+        class="custom-btn new-btn"
+        (click)="getProductGroup(-1); btnIndex = -1"
         [ngClass]="{ active: btnIndex === -1 }"
-        (click)="btnIndex = -1"
       >
         New
       </button>
@@ -40,6 +39,7 @@
         class="custom-btn addGroup-btn"
         data-bs-toggle="modal"
         data-bs-target="#addGroupModalCenter"
+        #addGroupModalCenterG
       >
         Add Group
       </button>
@@ -63,6 +63,7 @@
     <section
       class="row tablebodyRow fw-semibold"
       *ngFor="let group of groupList; let i = index"
+      (dblclick)="openModalWithData(group)"
     >
       <div class="col tableBody">#{{ i + 1 }}</div>
       <div class="col tableBody">{{ group.productGroupID }}</div>
@@ -70,6 +71,7 @@
       <div class="col tableBody">{{ group.productGroupName }}</div>
       <div class="col tableBody">
         <img
+          #groupImage
           class="product_image"
           [src]="
             group.imagepath ? '/asset' + group.imagepath.split('asset')[1] : ''
@@ -152,7 +154,13 @@
             <!-- Back Button on the left -->
 
             <!-- Title in the middle -->
-            <h2 class="register_title">Add Product Groups Name</h2>
+            <h2 class="register_title">
+              {{
+                isEditMode
+                  ? "Edit Product Groups Name"
+                  : "Add Product Groups Name"
+              }}
+            </h2>
           </div>
           <hr />
           <form [formGroup]="addGroupForm">
@@ -173,22 +181,32 @@
               >
             </div>
             <div class="form-group">
+              <div *ngIf="isEditMode" class="image-preview">
+                <label for="productGroupImage"> Group Image Preview </label>
+                <img
+                  #modalGroupImage
+                  alt="Product Group Image"
+                  class="product_image"
+                />
+              </div>
+
               <label for="productGroupImage"
                 ><span class="text-danger">*</span>Upload Product Group Image
               </label>
-
               <input
                 type="file"
                 class="form-control"
                 id="productGroupImage"
                 formControlName="productGroupImage"
                 accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
-                [class.error]="isFieldInvalid('productGroupImage')"
+                [class.error]="
+                  isFieldInvalid('productGroupImage') && !isEditMode
+                "
                 #productGroupImageInput
               />
               <span
                 class="text-danger"
-                *ngIf="isFieldInvalid('productGroupImage')"
+                *ngIf="isFieldInvalid('productGroupImage') && !isEditMode"
                 >Product Image is required.</span
               >
             </div>

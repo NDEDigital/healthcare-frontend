@@ -1,6 +1,6 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 
-import { AddGroupsComponent } from './add-groups.component';
+import { AddGroupsComponent } from './AddGroupsComponent';
 
 describe('AddGroupsComponent', () => {
   let component: AddGroupsComponent;
@@ -8,9 +8,8 @@ describe('AddGroupsComponent', () => {
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      declarations: [ AddGroupsComponent ]
-    })
-    .compileComponents();
+      declarations: [AddGroupsComponent],
+    }).compileComponents();
 
     fixture = TestBed.createComponent(AddGroupsComponent);
     component = fixture.componentInstance;
