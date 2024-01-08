@@ -78,6 +78,10 @@ export class AddProductsComponent implements OnInit {
       }
     );
   }
+  resetForm(): void {
+    this.addProductForm.reset();
+  }
+
 
   onSubmit(): void {
     Object.values(this.addProductForm.controls).forEach((control) => {
