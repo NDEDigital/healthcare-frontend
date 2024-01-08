@@ -63,6 +63,7 @@ export class OrderApiService {
   getUserInfoURL = `${this.URL}/api/Order/getOrderUserInfo`;
   // getAllOrderForBuyerURL = `${this.URL}/api/Order/getAllOrderForBuyer`;
   getOrdersForBuyerURL = `${this.URL}/api/Order/getAllOrderForBuyer`;
+  getSingleOrderForBuyerURL = `${this.URL}/api/Order/getOrderDetailsForBuyerBasedOnOrderNo`;
   getOrdersForSellerURL = `${this.URL}/api/Order/getAllOrderForSeller`;
   checkUnderOrderProccessURL = `${this.URL}/api/Order/checkUnderOrderProccess`;
 
@@ -218,6 +219,11 @@ export class OrderApiService {
     }
   }
 
+  getSingleOrderForBuyer(orderNo: string) {
+    return this.http.get(this.getSingleOrderForBuyerURL, {
+      params: { orderNo },
+    });
+  }
   checkUnderOrderProccess(GoodsId: number, GroupCode: string) {
     return this.http.get(this.checkUnderOrderProccessURL, {
       params: { GoodsId, GroupCode },
