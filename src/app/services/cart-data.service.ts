@@ -152,7 +152,7 @@ export class CartDataService {
       //console.log(objData, "----utshow----", objQt);
       //console.log(this.totalPrice, 'totalPrice');
       if (objData !== undefined && objQt !== undefined) {
-        this.totalPrice -= objQt * parseInt(objData.price);
+        this.totalPrice -= objQt * objData.netPrice;
       }
       //console.log(this.totalPrice, 'totalPrice', objData);
     

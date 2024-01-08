@@ -21,7 +21,7 @@ export class UserRegFormComponent {
   alertTitle: string = '';
   alertMsg: string = '';
   user: any;
-
+  regError = true;
   constructor(
     private userData: UserDataService,
     private sharedServiceData: SharedService,
@@ -153,13 +153,17 @@ export class UserRegFormComponent {
           // );
           //console.log(response, 'done');
           this.userResistrationForm.reset();
+          this.regError = false;
           this.alertTitle = 'Successfull!!';
           this.alertMsg = response.message;
           this.UserExistModalBTN.nativeElement.click();
+
           // if (response.role === 'buyer') {
           //   this.router.navigate(['/']);
           // } else this.router.navigate(['/dashboard']);
           // this.sharedServiceData.loggedInUserInfo(response.user);
+
+          // window.location.href = '';
         },
         error: (error: any) => {
           //console.log(error);
@@ -172,6 +176,8 @@ export class UserRegFormComponent {
     }
   }
   goToLogin() {
-    this.router.navigate(['/login']);
+    if (!this.regError) {
+      this.router.navigate(['/login']);
+    }
   }
 }

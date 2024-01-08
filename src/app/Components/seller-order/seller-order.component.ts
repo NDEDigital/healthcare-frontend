@@ -100,12 +100,13 @@ export class SellerOrderComponent {
     //   status,
     //   sellerSalesMasterDto
     // );
+    if (product === 'Rejected') {
+      status = 'Rejected';
+    } else {
+      status = this.statusArray[this.btnIndex];
+    }
     this.sellerService
-      .UpdateSellerOrderDetailsStatus(
-        detailID,
-        this.statusArray[this.btnIndex],
-        sellerSalesMasterDto
-      )
+      .UpdateSellerOrderDetailsStatus(detailID, status, sellerSalesMasterDto)
       .subscribe({
         next: (response: any) => {
           //console.log(response);

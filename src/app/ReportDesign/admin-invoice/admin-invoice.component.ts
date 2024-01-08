@@ -34,4 +34,9 @@ export class AdminInvoiceComponent {
   ngOnInit() {
     //console.log('aise');
   }
+
+  // for download
+  downloadAsPDF(){
+    
+  }
 }
