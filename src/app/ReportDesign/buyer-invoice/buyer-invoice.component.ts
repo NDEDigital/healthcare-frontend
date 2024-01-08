@@ -2,9 +2,6 @@ import { Component,ElementRef, ViewChild } from '@angular/core';
  
 import { InvoiceService } from 'src/app/services/invoice.service';
  import * as jspdf from 'jspdf'
- import * as html2pdf from 'html2canvas';
- 
- 
  import html2canvas from 'html2canvas';
  
 @Component({
