@@ -12,14 +12,19 @@
         >
       </p>
       <p class="m-0 p-0">
-        Placed on <span class="fw-semibold">{{ order.orderDate }}</span>
+        Placed on Placed on
+        <span class="fw-semibold"
+          >{{ order.orderDate | date : "mediumDate" : "" : "en-US" }}.
+          <span class="text-muted">Time: </span>
+          {{ order.orderDate | date : "shortTime" : "" : "en-US" }}
+        </span>
       </p>
     </div>
     <div>
       <p class="fs-6 fw-bold">
         Total:
         <img class="taka-icon" src="assets/images/takaIcon.png" alt="" /><span>
-          {{ order.totalPrice }}</span
+          {{ order.totalAmount }}</span
         >
       </p>
     </div>
@@ -169,24 +174,24 @@
     <div class="col gap-2">
       <div class="border border-1 box-design rounded p-3">
         <p class="fs-5 fw-semibold">Shipping Address</p>
-        <p class="m-0 p-0">{{ order.buyerName }}</p>
+        <p class="m-0 p-0 fw-semibold">{{ order.buyerName }}</p>
         <p>
-          Address
+          Address:
           <span> {{ order.shippingAddress }}</span>
         </p>
         <p>
-          Conatct Number: <span>{{ order.shippingContact }}</span>
+          Conatct Number: <span>{{ order.shippingPhoneNumber }}</span>
         </p>
       </div>
       <div class="border border-1 box-design rounded p-3 my-2">
         <p class="fs-5 fw-semibold">Billing Address</p>
-        <p class="m-0 p-0">{{ order.buyerName }}</p>
+        <p class="m-0 p-0 fw-semibold">{{ order.buyerName }}</p>
         <p>
-          Address
+          Address:
           <span> {{ order.billingAddress }}</span>
         </p>
         <p>
-          Conatct Number: <span>{{ order.billingContact }}</span>
+          Conatct Number: <span>{{ order.billingPhoneNumber }}</span>
         </p>
       </div>
     </div>
@@ -201,7 +206,7 @@
               class="taka-icon"
               src="assets/images/takaIcon.png"
               alt=""
-            /><span> {{ order.subtotal }}</span>
+            /><span> {{ order.subTotal }}</span>
           </div>
         </div>
         <div class="d-flex justify-content-between">
@@ -211,7 +216,7 @@
               class="taka-icon"
               src="assets/images/takaIcon.png"
               alt=""
-            /><span> {{ order.deliveryCharge }}</span>
+            /><span> {{ order.totalDeliveryCharge }}</span>
           </div>
         </div>
 
@@ -224,11 +229,11 @@
               class="taka-icon"
               src="assets/images/takaIcon.png"
               alt=""
-            /><span> {{ order.totalPrice }}</span>
+            /><span> {{ order.totalAmount }}</span>
           </div>
         </div>
 
-        <p class="fw-semibold mt-3">Paid by online banking</p>
+        <p class="fw-semibold mt-3">Paid by {{ order.paymentMethod }}</p>
       </div>
     </div>
   </div>
