@@ -65,11 +65,34 @@
       *ngFor="let group of groupList; let i = index"
       (dblclick)="openModalWithData(group)"
     >
-      <div class="col tableBody">#{{ i + 1 }}</div>
-      <div class="col tableBody">{{ group.productGroupID }}</div>
-      <div class="col tableBody">{{ group.productGroupCode }}</div>
-      <div class="col tableBody">{{ group.productGroupName }}</div>
-      <div class="col tableBody">
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+      >
+        #{{ i + 1 }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+      >
+        {{ group.productGroupID }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+      >
+        {{ group.productGroupCode }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+      >
+        {{ group.productGroupName }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+      >
         <img
           #groupImage
           class="product_image"
@@ -79,9 +102,22 @@
           alt="no image was uploaded!"
         />
       </div>
-      <div class="col tableBody">{{ group.productGroupPrefix }}</div>
-      <div class="col tableBody">{{ group.productGroupDetails }}</div>
-      <div class="col tableBody">
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+      >
+        {{ group.productGroupPrefix }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+      >
+        {{ group.productGroupDetails }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+      >
         {{ group.dateAdded | date : "dd MMM yyyy" }}
       </div>
 

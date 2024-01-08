@@ -28,6 +28,7 @@ export class AddGroupsComponent {
   isEditMode = false;
   existingImagePath: string = '';
   currentGroup: any = null;
+  activeGroupId: number | null = null;
 
   constructor(private addProductService: AddProductService) {}
 
@@ -64,7 +65,7 @@ export class AddGroupsComponent {
   }
 
   onSubmit(): void {
-    // console.log("clicked..");
+
 
     Object.values(this.addGroupForm.controls).forEach((control) => {
       control.markAsTouched();
@@ -111,7 +112,7 @@ export class AddGroupsComponent {
       for (let pair of (formData as any).entries()) {
         console.log(`${pair[0]}: `, pair[1]);
       }
-
+      if (!this.isEditMode) {
       this.addProductService.createProductGroup(formData).subscribe({
         next: (response: any) => {
           //console.log(response, 'successfull');
@@ -121,8 +122,10 @@ export class AddGroupsComponent {
           setTimeout(() => {
             this.UserExistModalBTN.nativeElement.click();
             this.addGroupForm.reset();
-            this.toggleAddProductGroupDiv();
+           // this.toggleAddProductGroupDiv();
           }, 50);
+
+
         },
         error: (error: any) => {
           //console.log(error, 'error');
@@ -131,8 +134,12 @@ export class AddGroupsComponent {
           this.UserExistModalBTN.nativeElement.click();
         },
       });
+    }
+      // console.log(this.isEditMode, "inserting on submit");
+
 
       if (this.isEditMode) {
+
         let updateByUser = localStorage.getItem('code');
         console.log(updateByUser, 'code...');
 
@@ -149,14 +156,14 @@ export class AddGroupsComponent {
             // Handle successful response here
             console.log('Update successful:', response);
             this.alertMsg = 'Product group updated successfully';
-            this.isError = false;
-
+            this.isEditMode = false;
             // Optionally, reset the form and refresh the group list
             this.addGroupForm.reset();
             this.getProductGroup(-1);
 
             // Close the modal if you have one open
             this.UserExistModalBTN.nativeElement.click();
+
           },
           error: (error: any) => {
             // Handle error response here
@@ -164,11 +171,13 @@ export class AddGroupsComponent {
             this.alertMsg =
               error.error.message || 'Error updating product group';
             this.isError = true;
+            this.isEditMode = false;
 
             // Show the error modal or message
             this.UserExistModalBTN.nativeElement.click();
           },
         });
+        console.log(this.isEditMode, "updating on submit");
       }
     } else {
       console.log('Form is not valid');
@@ -203,6 +212,7 @@ export class AddGroupsComponent {
   }
 
   openModalWithData(group: any): void {
+
     this.isEditMode = true;
     this.updateFormValidators();
     console.log('group', group);
@@ -212,6 +222,7 @@ export class AddGroupsComponent {
     // Ensure the modal is opened before calling displayImage
     this.AddGroupModalCenterG.nativeElement.click();
     this.displayImage(group.imagepath);
+    this.activeGroupId = group.productGroupID;
   }
   populateForm(group: any): void {
     this.addGroupForm.patchValue({
