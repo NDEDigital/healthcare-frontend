@@ -1,7 +1,8 @@
 
 <!-- Invoice design  -->
+<button (click)="downloadAsPDF()">Download as PDF</button>
 <section>
-    <div class="invoice">
+    <div class="invoice" #content>
       <div class="header py-2">
         <h3 class="invoiceText">Invoice</h3>
       </div>
@@ -32,8 +33,8 @@
                 </div>
                
               </div>
-              <div class="col-3 text-end p-0">
-                <div class="div d-flex">
+              <div class="col-3 p-0">
+                <div class="div d-flex justify-content-end">
                     <span><strong>invoice: </strong></span>
                     <span class="field_data">{{ invoice.invoiceNumber }}</span>
                 </div>
@@ -97,34 +98,7 @@
    
               </table>
             </div>
-            
-              <!-- <div class="table-responsive">
-                <table class="items table">
-                  <tr class="table_header">
-                    <th>Product Name</th>
-                    <th>Description</th>
-                    <th>Quantity</th>
-                    <th>Price</th>
-                    <th>Sub Total</th>
-                  </tr>
-               
-                   <tr> 
-                    <td>{{ invoice.orderInvoiceDetailList[0].productName }}</td>
-                    <td>{{ invoice.orderInvoiceDetailList[0].specification }}</td>
-                    <td>{{ invoice.orderInvoiceDetailList[0].quantity }}</td>
-                    <td>{{ invoice.orderInvoiceDetailList[0].price }}Tk</td>
-                    <td>{{ invoice.orderInvoiceDetailList[0].subTotalPrice }}Tk</td>
-                  </tr>
-                </table>
-              </div> -->
-           
-   
-          <!-- <div class="total">
-            <p>
-              <strong>Total:</strong>
-              {{ invoice.totalPrice }}Tk
-            </p>
-          </div> -->
+ 
           <div class="table-responsive" *ngIf="invoice.orderInvoiceDetailList">
             <table class="items table">
               <tr>
@@ -140,5 +114,6 @@
         </div>
       </div>
     </div>
+
   </section>
   
