@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { Router } from '@angular/router';
+import { SellerOrderOverviewService } from 'src/app/services/seller-order-overview.service';
 import { OrderApiService } from 'src/app/services/order-api.service';
 import { ProductReturnServiceService } from 'src/app/services/product-return-service.service';
 import { ReviewRatingsService } from 'src/app/services/review-ratings.service';
@@ -23,7 +24,7 @@ export class SellerOrdersComponent {
   ToReturnCount = 0;
   ReturnedCount = 0;
   allCount = 0;
-  buyerOrder: any = [];
+  sellerOrder: any = [];
   loading: boolean = true;
   data: any = [];
   returnTypeData: any = [];
@@ -49,12 +50,24 @@ export class SellerOrdersComponent {
     Delivered: 'Delivered product',
     Cancelled: 'Cancelled product',
   };
+  statusArray = [
+    'Approved',
+    'Processing',
+    'ReadyToShip',
+    'ToDeliver',
+    'Delivered',
+    'Reviewed',
+    'ToReturn',
+    'Returned',
+    'Rejected',
+  ];
   btnIndex = -2;
   constructor(
     private router: Router,
     private orderService: OrderApiService,
     private reviewService: ReviewRatingsService,
-    private returnService: ProductReturnServiceService
+    private returnService: ProductReturnServiceService,
+    private sellerService: SellerOrderOverviewService
   ) {
     this.reviewForm = new FormGroup({
       rating: new FormControl(Validators.required),
@@ -128,17 +141,17 @@ export class SellerOrdersComponent {
   loadData() {
     const userCode = localStorage.getItem('code');
 
-    this.orderService.getOrdersForBuyer(userCode, '').subscribe({
+    this.orderService.getOrdersForSeller(userCode, '').subscribe({
       next: (response: any) => {
-        console.log(response, 'newbuyerorder');
-        this.buyerOrder = response;
+        console.log(response, 'newsellerorder');
+        this.sellerOrder = response;
 
         setTimeout(() => {
           console.log(
-            this.buyerOrder,
+            this.sellerOrder,
             'byer order array',
-            this.buyerOrder.length,
-            'this.buyerOrder.length'
+            this.sellerOrder.length,
+            'this.sellerOrder.length'
           );
         }, 500);
         this.loading = false;
@@ -153,10 +166,10 @@ export class SellerOrdersComponent {
     let uidS = localStorage.getItem('code');
     let userID;
     if (uidS) userID = parseInt(uidS, 10);
-    this.orderService.getOrdersForBuyer(userID, status).subscribe({
+    this.orderService.getOrdersForSeller(userID, status).subscribe({
       next: (response: any) => {
-        console.log(response, 'get buyer order data');
-        this.buyerOrder = response;
+        console.log(response, 'get seller order data');
+        this.sellerOrder = response;
         // console.log(this.productsData,"all data");
       },
       error: (error: any) => {
@@ -205,93 +218,81 @@ export class SellerOrdersComponent {
     return description || '';
   }
 
-  // handeling star
+  updateOrder(stat: any, order: any) {
+    let uidS = localStorage.getItem('code');
+    let uid: any;
+    if (uidS) uid = parseInt(uidS, 10);
+    console.log(order.orderDetailsListForSeller);
 
-  onRatingChange() {
-    //console.log('Selected rating:', this.selectedRating);
-    // You can perform actions based on the selected rating here.
-  }
+    order.orderDetailsListForSeller.forEach((product: any) => {
+      console.log(product);
+      let status = 'status';
+      let detailID = product.orderDetailId.toString();
 
-  // added by marufa
+      const sellerSalesMasterDto = {
+        userId: uid,
+        totalPrice: product.netPrice,
 
-  toReturn(returnData: any, orderId: any) {
-    this.returnForm.reset();
-    this.returnType = false;
-    this.returnService.getReturnType().subscribe((data: any) => {
-      //console.log(' typeId', data[0].typeId); // Use a type if possible for better type checking
-      //console.log(' returnType', data[0].returnType); // Use a type if possible for better type checking
-      this.returnTypeData = data;
+        bUserId: product.bUserId,
+        addedBy: 'user',
+        addedPC: '0.0.0.0',
+        sellerSalesDetailsList: [
+          {
+            orderNo: product.orderNo,
+            productId: product.productId,
+            specification: product.specification,
+            stockQty: product.stockQty,
+            saleQty: product.saleQty,
+            unitId: product.unitId,
+            netPrice: product.netPrice,
+            address: product.address,
+            productGroupID: product.productGroupID,
+            addedBy: 'user',
+            addedPC: '0.0.0.0',
+          },
+        ],
+      };
+
+      // console.log(
+      //   orderdetailsIds.toString(),
+      //   this.statusArray[this.btnIndex],
+      //   status,
+      //   sellerSalesMasterDto
+      // );
+      if (stat === 'Rejected') {
+        status = 'Rejected';
+      } else {
+        status = this.statusArray[this.btnIndex];
+      }
+      this.sellerService
+        .UpdateSellerOrderDetailsStatus(detailID, status, sellerSalesMasterDto)
+        .subscribe({
+          next: (response: any) => {
+            console.log(response);
+            // this.productsData = response;
+            // //console.log(this.productsData);
+            // if ((this.btnIndex = -1)) {
+            //   this.getData('Pending');
+            // } else if ((this.btnIndex = 1)) {
+            //   this.getData('Approved');
+            // } else {
+            //   this.getData('Rejected');
+            // }
+            this.btnIndex = -1;
+            this.getData('');
+          },
+          error: (error: any) => {
+            //console.log(error);
+          },
+        });
     });
-
-    this.returnData = returnData;
-    //console.log(' return Data', this.returnData);
-    //console.log(' group Data', this.returnData.groupName);
-
-    this.returnForm.patchValue({
-      orderNo: orderId ? orderId : '',
-      groupName: this.returnData ? this.returnData.groupName : '',
-      goodsName: this.returnData ? this.returnData.goodsName : '',
-      groupCode: this.returnData ? this.returnData.groupCode : '',
-      goodsId: this.returnData ? this.returnData.goodsId : '',
-      price: this.returnData ? this.returnData.price : '',
-      detailsId: this.returnData ? this.returnData.orderDetailId : '',
-      sellerCode: this.returnData ? this.returnData.sellerCode : '',
-      deliveryDate: this.returnData ? this.returnData.deliveryDate : '',
-    });
-    this.productImageSrc = returnData.imagePath
-      ? returnData.imagePath.substring(returnData.imagePath.indexOf('assets'))
-      : '../../../assets/images/medical/' +
-        returnData.groupName.trim() +
-        '.jpg';
   }
+  gotoInvoice(orderId: any) {
+    sessionStorage.setItem('orderMasterID', orderId);
 
-  SaveReturnData() {
-    //console.log(' type', this.returnForm.value.typeId);
-    if (this.returnForm.value.typeId != null) {
-      //console.log(' RETURN fORM ', this.returnForm.value);
-      this.formData.append('OrderNo', this.returnForm.value.orderNo);
-      this.formData.append('GroupName', this.returnForm.value.groupName);
-      this.formData.append('GoodsName', this.returnForm.value.goodsName);
-      this.formData.append('GroupCode', this.returnForm.value.groupCode);
-      this.formData.append('goodsId', this.returnForm.value.goodsId);
-      this.formData.append('Remarks', this.returnForm.value.remarks);
-      this.formData.append('TypeId', this.returnForm.value.typeId);
-      this.formData.append('Price', this.returnForm.value.price);
-      this.formData.append('DetailsId', this.returnForm.value.detailsId);
-      this.formData.append('ReturnType', this.returnForm.value.returnType);
-      this.formData.append('SellerCode', this.returnForm.value.sellerCode);
-      this.formData.append('DeliveryDate', this.returnForm.value.deliveryDate);
-      // Assuming you have already populated the `this.formData` object
-      const formDataObject = this.formDataToObject(this.formData);
+    const urlToOpen = '/sellerInvoice'; // Replace with your desired URL
 
-      // Log the FormData as an object
-      //console.log(' form data ', formDataObject);
-
-      this.returnService.insertData(this.formData).subscribe(
-        (response) => {
-          // Handle a successful response
-          //console.log('Data saved successfully:', response);
-          // Optionally, reset the form after successful submission
-          this.formData = new FormData();
-          this.returnForm.reset();
-          this.closeModalButton.nativeElement.click();
-          this.loadData();
-        },
-        (error) => {
-          // Handle an error response
-          console.error('Error saving data:', error);
-        }
-      );
-    } else {
-      this.returnType = true;
-    }
-  }
-  // Create a helper function to convert FormData to a plain object
-  formDataToObject(formData: FormData): { [key: string]: any } {
-    const object: { [key: string]: any } = {};
-    formData.forEach((value, key) => {
-      object[key] = value;
-    });
-    return object;
+    // Use window.open to open the new window/tab
+    window.open(urlToOpen, '_blank');
   }
 }
