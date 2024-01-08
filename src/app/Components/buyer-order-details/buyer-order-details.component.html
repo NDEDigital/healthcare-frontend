@@ -101,7 +101,7 @@
         <div class="steps">
           <div
             class="step"
-            [ngClass]="{ current: package.status === 'Pending' }"
+            [ngClass]="{ current: package.status === 'Approved' }"
           >
             <span>Pending</span>
           </div>
@@ -113,7 +113,7 @@
           </div>
           <div
             class="step"
-            [ngClass]="{ current: package.status === 'Ready to Ship' }"
+            [ngClass]="{ current: package.status === 'ReadyToShip' }"
           >
             <span>Ready to ship</span>
           </div>
