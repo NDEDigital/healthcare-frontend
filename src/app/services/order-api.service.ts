@@ -106,8 +106,7 @@ export class OrderApiService {
     const cart = this.cartDataService.getCartData();
     this.cartDataDetail = cart.cartDataDetail;
     this.cartDataQt = cart.cartDataQt;
-    this.totalPriceWithDeliveryCharge =
-      this.cartDataService.getTotalPrice(); //+ 100;
+    this.totalPriceWithDeliveryCharge = this.cartDataService.getTotalPrice(); //+ 100;
 
     this.buyerCode = localStorage.getItem('code');
 
@@ -116,7 +115,8 @@ export class OrderApiService {
       address: this.address,
       paymentMethod: 'CashOnDelivery',
       numberOfItem: this.cartDataDetail.size,
-      totalPrice: this.totalPriceWithDeliveryCharge + (this.cartDataDetail.size * 100),
+      totalPrice:
+        this.totalPriceWithDeliveryCharge + this.cartDataDetail.size * 100,
       phoneNumber: this.phone,
       deliveryCharge: 100,
       addedBy: 'me',
@@ -199,6 +199,8 @@ export class OrderApiService {
     }
   }
   getOrdersForSeller(userid: any, status: any) {
+    console.log(status, userid);
+
     //console.log(buyerCode, PageNumber, rowCount, status);
     if (status === '') {
       return this.http.get(this.getOrdersForSellerURL, {
@@ -207,7 +209,7 @@ export class OrderApiService {
         },
       });
     } else {
-      return this.http.get(this.getOrdersForBuyerURL, {
+      return this.http.get(this.getOrdersForSellerURL, {
         params: {
           userid,
           status,

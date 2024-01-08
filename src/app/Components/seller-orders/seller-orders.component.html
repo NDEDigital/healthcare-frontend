@@ -14,9 +14,9 @@
         class="custom-btn"
         [ngClass]="{ active: btnIndex === -1 }"
         (click)="btnIndex = -1"
-        (click)="getData('Pending')"
+        (click)="getData('Approved')"
       >
-        Pending
+        NEW
       </button>
       <!-- <button
         class="custom-btn"
@@ -140,7 +140,16 @@
             </div> -->
 
             <div>
-              <button class="actionBtn">
+              <button
+                class="actionBtn"
+                *ngIf="
+                  btnIndex != -2 &&
+                  btnIndex != 2 &&
+                  btnIndex != 6 &&
+                  btnIndex != 7 &&
+                  btnIndex != 9
+                "
+              >
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="25"
@@ -159,7 +168,7 @@
             <div>
               <button
                 class="actionBtn"
-                *ngIf="btnIndex != 0"
+                *ngIf="btnIndex == -1"
                 (click)="updateOrder('Rejected', order)"
               >
                 <svg

@@ -163,19 +163,42 @@ export class SellerOrdersComponent {
   }
 
   getData(status: string) {
-    let uidS = localStorage.getItem('code');
-    let userID;
-    if (uidS) userID = parseInt(uidS, 10);
-    this.orderService.getOrdersForSeller(userID, status).subscribe({
+    const userCode = localStorage.getItem('code');
+
+    this.orderService.getOrdersForSeller(userCode, status).subscribe({
       next: (response: any) => {
-        console.log(response, 'get seller order data');
+        console.log(response, 'newsellerorder');
         this.sellerOrder = response;
-        // console.log(this.productsData,"all data");
+
+        setTimeout(() => {
+          console.log(
+            this.sellerOrder,
+            'seller order array',
+            this.sellerOrder.length,
+            'this.sellerOrder.length'
+          );
+        }, 500);
+        this.loading = false;
       },
       error: (error: any) => {
         //console.log(error);
       },
     });
+    // console.log(status);
+
+    // let uidS = localStorage.getItem('code');
+    // let userID;
+    // if (uidS) userID = parseInt(uidS, 10);
+    // this.orderService.getOrdersForSeller(userID, status).subscribe({
+    //   next: (response: any) => {
+    //     console.log(response, 'get seller order data');
+    //     this.sellerOrder = response;
+    //     // console.log(this.productsData,"all data");
+    //   },
+    //   error: (error: any) => {
+    //     //console.log(error);
+    //   },
+    // });
   }
   handlePaginationData(data: {
     selectedPageIndex: number;
@@ -184,32 +207,6 @@ export class SellerOrdersComponent {
     //console.log(data.selectedPageIndex, data.selectedValue, 'data.....');
     this.pageNum = data.selectedPageIndex;
     this.rowCount = data.selectedValue;
-    this.loadData();
-  }
-  // orderDetails(order: any) {
-  //   //console.log(order, 'order');
-  //   sessionStorage.setItem('order', JSON.stringify(order));
-  // }
-  btnClick(str: string) {
-    if (str === '') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    } else if (str === 'Ready to Ship') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    } else if (str === 'Shipped') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    } else if (str === 'Delivered') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    } else if (str === 'to Return') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    } else if (str === 'Returned') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    }
     this.loadData();
   }
 
