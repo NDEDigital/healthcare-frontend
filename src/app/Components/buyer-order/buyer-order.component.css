@@ -5,7 +5,9 @@
 .order-card {
   /* height: 15rem; */
 }
-
+.invoice {
+  cursor: pointer;
+}
 .header-nav button {
   background-color: transparent;
 }

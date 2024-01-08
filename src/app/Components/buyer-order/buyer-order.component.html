@@ -185,9 +185,7 @@
             <p class="fs-6 m-0 p-0">
               Order:
               <span class="fs-6 fw-semibold order-number"
-                ><a
-                  routerLink="/buyerOrderDetails"
-                  (click)="orderDetails(order.orderNo)"
+                ><a class="invoice" (click)="orderDetails(order.orderNo)"
                   ># {{ order.orderNo }}</a
                 ></span
               >
