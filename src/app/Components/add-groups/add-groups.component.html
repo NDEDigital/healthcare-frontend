@@ -1,5 +1,5 @@
 <!-- approval grid  -->
-<div *ngIf="!showProductDiv" class="container approval-grid">
+<div class="container approval-grid">
   <div class="bg-white p-2 border border-1 rounded">
     <div class="d-flex justify-content-center">
       <h1 class="companyApproval_header_text">Add Product Group Table</h1>
@@ -37,10 +37,11 @@
 
     <div>
       <button
-        class="custom-btn addproduct-btn"
-        (click)="toggleAddProductGroupDiv()"
+        class="custom-btn addGroup-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#addGroupModalCenter"
       >
-        {{ showProductDiv ? "Show Approval Grid" : "Add Group" }}
+        Add Group
       </button>
     </div>
   </div>
@@ -124,145 +125,153 @@
   </div>
 </div>
 
-<!-- add group form design  -->
-<div *ngIf="showProductDiv" class="container containgFields mt-5 mb-5 rounded">
-  <!-- <h2 class="register_title">Add Product Groups Name</h2> -->
-  <div class="d-flex justify-content-between align-items-center">
-    <!-- Back Button on the left -->
-    <div class="d-flex align-items-center" (click)="showApprovalProductGrid()">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="25"
-        height="25"
-        fill="currentColor"
-        class="bi bi-arrow-left"
-        viewBox="0 0 16 16"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-        />
-      </svg>
-    </div>
+<!-- add Group modal   -->
+<div
+  class="modal fade"
+  id="addGroupModalCenter"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="d-flex justify-content-end align-items-center">
+          <button
+            type="button"
+            class="btn-close border border-1"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="resetForm()"
+          ></button>
+        </div>
+        <!-- add group form design  -->
+        <div>
+          <!-- <h2 class="register_title">Add Product Groups Name</h2> -->
+          <div class="d-flex justify-content-center align-items-center">
+            <!-- Back Button on the left -->
 
-    <!-- Title in the middle -->
-    <h2 class="register_title">Add Product Groups Name</h2>
-
-    <!-- Placeholder for right alignment -->
-    <div></div>
-  </div>
-  <hr />
-  <form [formGroup]="addGroupForm">
-    <div class="form-group">
-      <label for="productGroupName"
-        ><span class="text-danger">*</span>Product Group Name</label
-      >
-      <input
-        type="text"
-        id="productGroupName"
-        formControlName="productGroupName"
-        [class.error]="isFieldInvalid('productGroupName')"
-      />
-      <span class="text-danger" *ngIf="isFieldInvalid('productGroupName')"
-        >Product Group Name is required.</span
-      >
-    </div>
-    <div class="form-group">
-      <label for="productGroupImage"
-        ><span class="text-danger">*</span>Upload Product Group Image
-      </label>
-
-      <input
-        type="file"
-        class="form-control"
-        id="productGroupImage"
-        formControlName="productGroupImage"
-        accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
-        [class.error]="isFieldInvalid('productGroupImage')"
-        #productGroupImageInput
-      />
-      <span class="text-danger" *ngIf="isFieldInvalid('productGroupImage')"
-        >Product Image is required.</span
-      >
-    </div>
-    <div class="form-group">
-      <label for="productGroupPrefix"
-        ><span class="text-danger">*</span>Product Group Prefix</label
-      >
-      <input
-        type="text"
-        id="productGroupPrefix"
-        formControlName="productGroupPrefix"
-        [class.error]="isFieldInvalid('productGroupPrefix')"
-      />
-      <span class="text-danger" *ngIf="isFieldInvalid('productGroupPrefix')"
-        >Product Group Prefix is required.</span
-      >
-    </div>
-
-    <div class="form-group">
-      <label for="productGroupDetails">Product Group Detail</label>
-      <textarea
-        type="text"
-        id="productGroupDetails"
-        class="textAreaDesign"
-        formControlName="productGroupDetails"
-      ></textarea>
-    </div>
-    <!-- Button trigger modal -->
-    <button
-      type="submit"
-      class="button mt-3"
-      id="sign-in-button"
-      (click)="onSubmit()"
-    >
-      Submit
-    </button>
-
-    <button
-      type="button"
-      class="btn btn-primary d-none"
-      data-bs-toggle="modal"
-      data-bs-target="#productGroupModal"
-      #userExistModalBTN
-    >
-      Launch demo modal
-    </button>
-    <!-- Modal -->
-    <div
-      class="modal fade"
-      id="productGroupModal"
-      tabindex="-1"
-      aria-labelledby="productGroupModalLabel"
-      aria-hidden="true"
-    >
-      <div class="modal-dialog">
-        <div class="modal-content">
-          <div class="modal-header modal-heading">
-            <h1 class="modal-title fs-5 text-light" id="productGroupModalLabel">
-              Add Product Groups Name
-            </h1>
-            <button
-              type="button"
-              class="btn-close"
-              data-bs-dismiss="modal"
-              aria-label="Close"
-            ></button>
+            <!-- Title in the middle -->
+            <h2 class="register_title">Add Product Groups Name</h2>
           </div>
-          <div class="modal-body">
-            <p>{{ alertMsg }}</p>
-          </div>
-          <div class="modal-footer">
+          <hr />
+          <form [formGroup]="addGroupForm">
+            <div class="form-group">
+              <label for="productGroupName"
+                ><span class="text-danger">*</span>Product Group Name</label
+              >
+              <input
+                type="text"
+                id="productGroupName"
+                formControlName="productGroupName"
+                [class.error]="isFieldInvalid('productGroupName')"
+              />
+              <span
+                class="text-danger"
+                *ngIf="isFieldInvalid('productGroupName')"
+                >Product Group Name is required.</span
+              >
+            </div>
+            <div class="form-group">
+              <label for="productGroupImage"
+                ><span class="text-danger">*</span>Upload Product Group Image
+              </label>
+
+              <input
+                type="file"
+                class="form-control"
+                id="productGroupImage"
+                formControlName="productGroupImage"
+                accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
+                [class.error]="isFieldInvalid('productGroupImage')"
+                #productGroupImageInput
+              />
+              <span
+                class="text-danger"
+                *ngIf="isFieldInvalid('productGroupImage')"
+                >Product Image is required.</span
+              >
+            </div>
+            <div class="form-group">
+              <label for="productGroupPrefix"
+                ><span class="text-danger">*</span>Product Group Prefix</label
+              >
+              <input
+                type="text"
+                id="productGroupPrefix"
+                formControlName="productGroupPrefix"
+                [class.error]="isFieldInvalid('productGroupPrefix')"
+              />
+              <span
+                class="text-danger"
+                *ngIf="isFieldInvalid('productGroupPrefix')"
+                >Product Group Prefix is required.</span
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="productGroupDetails">Product Group Detail</label>
+              <textarea
+                type="text"
+                id="productGroupDetails"
+                class="textAreaDesign"
+                formControlName="productGroupDetails"
+              ></textarea>
+            </div>
+            <!-- Button trigger modal -->
             <button
-              type="button"
-              class="btn btn-primary"
-              data-bs-dismiss="modal"
+              type="submit"
+              class="button mt-3"
+              id="sign-in-button"
+              (click)="onSubmit()"
             >
-              OK
+              Submit
             </button>
-          </div>
+          </form>
         </div>
       </div>
     </div>
-  </form>
+  </div>
+</div>
+
+<button
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#productGroupModal"
+  #userExistModalBTN
+>
+  Launch demo modal
+</button>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="productGroupModal"
+  tabindex="-1"
+  aria-labelledby="productGroupModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header modal-heading">
+        <h1 class="modal-title fs-5 text-light" id="productGroupModalLabel">
+          Add Product Groups Name
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <p>{{ alertMsg }}</p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
 </div>

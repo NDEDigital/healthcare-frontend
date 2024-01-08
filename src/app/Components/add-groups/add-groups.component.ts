@@ -22,6 +22,7 @@ export class AddGroupsComponent {
   showProductDiv: boolean = false;
   groupList: any;
   btnIndex = -1;
+  isError: boolean = false;
   constructor(private addProductService: AddProductService) {}
 
   toggleAddProductGroupDiv(): void {
@@ -50,6 +51,10 @@ export class AddGroupsComponent {
     const field = this.addGroupForm.get(fieldName);
     // Check if the field is not null before accessing its properties
     return field ? field.invalid && (field.dirty || field.touched) : false;
+  }
+
+  resetForm(): void {
+    this.addGroupForm.reset();
   }
 
   onSubmit(): void {
@@ -92,6 +97,7 @@ export class AddGroupsComponent {
         next: (response: any) => {
           //console.log(response, 'successfull');
           this.alertMsg = response.message;
+          this.isError = false;
           //console.log(response.message);
           setTimeout(() => {
             this.UserExistModalBTN.nativeElement.click();
@@ -102,6 +108,7 @@ export class AddGroupsComponent {
         error: (error: any) => {
           //console.log(error, 'error');
           this.alertMsg = error.error.message;
+          this.isError = true;
           this.UserExistModalBTN.nativeElement.click();
         },
       });
