@@ -59,7 +59,7 @@ export class BuyerInvoiceComponent {
         const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
 
         pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-        pdf.save('downloaded-page.pdf');
+        pdf.save('Invoice.pdf');
       });
     } else {
       console.error('Content element is undefined or not available.');

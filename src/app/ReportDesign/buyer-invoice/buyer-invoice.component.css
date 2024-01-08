@@ -1,17 +1,16 @@
 /* ===================  Invoice design  =================== */
  
  
-
   .invoice {
     background-color: #ffffff;
-    width: 100%;
+    width: 70%;
     max-width: 900px;
-    margin: auto;
+
     border: 1px solid #ddd;
     padding: 20px;
     /* Consider reducing or removing box shadow */
     /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
-    margin-top: 2rem;
+
   }
   
   .invoiceText {

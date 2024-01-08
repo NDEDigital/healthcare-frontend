@@ -1,7 +1,6 @@
 
 <!-- Invoice design  -->
-<button (click)="downloadAsPDF()">Download as PDF</button>
-<section>
+<section class="d-flex mt-3 justify-content-center">
     <div class="invoice" #content>
       <div class="header py-2">
         <h3 class="invoiceText">Invoice</h3>
@@ -115,5 +114,10 @@
       </div>
     </div>
 
+
+    <div class=" px-2">
+      <!-- <button (click)="downloadAsPDF()">Download as PDF</button> -->
+      <i class="fa-solid fa-download" (click)="downloadAsPDF()"></i>
+    </div>
   </section>
   
