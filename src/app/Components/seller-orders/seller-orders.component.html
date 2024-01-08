@@ -1,0 +1,226 @@
+<app-sub-header [headerTitle]="'My Orders'"></app-sub-header>
+
+<section class="container body-design">
+  <!-- <div class="fs-2 mb-3">My Orders</div> -->
+  <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2">
+    <div class="headerbtns">
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === -2 }"
+        (click)="btnIndex = -2"
+        (click)="getData('')"
+      >
+        All
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === -1 }"
+        (click)="btnIndex = -1"
+        (click)="getData('Pending')"
+      >
+        Pending
+      </button>
+      <!-- <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 1 }"
+        (click)="btnIndex = 1"
+        (click)="getData('Approved')"
+      >
+        Approved
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 0 }"
+        (click)="btnIndex = 0"
+        (click)="getData('Cancelled')"
+      >
+        Cancelled
+      </button> -->
+
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 3 }"
+        (click)="btnIndex = 3"
+        (click)="getData('Processing')"
+      >
+        Processing
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 4 }"
+        (click)="btnIndex = 4"
+        (click)="getData('ReadyToShip')"
+      >
+        Ready To Ship
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 5 }"
+        (click)="btnIndex = 5"
+        (click)="getData('ToDeliver')"
+      >
+        To Deliver
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 6 }"
+        (click)="btnIndex = 6"
+        (click)="getData('Delivered')"
+      >
+        Delivered
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 7 }"
+        (click)="btnIndex = 7"
+        (click)="getData('Reviewed')"
+      >
+        Reviewed
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 8 }"
+        (click)="btnIndex = 8"
+        (click)="getData('ToReturn')"
+      >
+        To Return
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 9 }"
+        (click)="btnIndex = 9"
+        (click)="getData('Returned')"
+      >
+        Returned
+      </button>
+      <button
+        class="custom-btn"
+        [ngClass]="{ active: btnIndex === 2 }"
+        (click)="btnIndex = 2"
+        (click)="getData('Rejected')"
+      >
+        Rejected
+      </button>
+    </div>
+  </div>
+
+  <div *ngIf="loading" class="text-center mt-5">
+    <h5>Loading products...</h5>
+  </div>
+  <div *ngIf="!loading && buyerOrder.length < 1">
+    <h3 class="text-danger text-center mt-5">No Product Found</h3>
+  </div>
+  <div *ngIf="!loading && buyerOrder.length > 0" class="mt-5">
+    <div *ngFor="let order of buyerOrder">
+      <div
+        class="border-none bg-white order-card mt-2 border border-1"
+        *ngIf="order.orderDetailsListForBuyer.length > 0"
+      >
+        <div class="d-flex justify-content-between p-3 border-bottom bg-light">
+          <div class="">
+            <p class="fs-6 m-0 p-0">
+              Order:
+              <span class="fs-6 fw-semibold order-number"
+                ><a># {{ order.orderNo }}</a></span
+              >
+            </p>
+            <p class="m-0 p-0">
+              Placed on <span class="fw-semibold">{{ order.orderDate }}</span>
+            </p>
+          </div>
+          <!-- <div><Button class="pay-now-btn fst-italic">Manage</Button></div> -->
+        </div>
+
+        <div
+          class="row mt-3"
+          *ngFor="let detail of order.orderDetailsListForBuyer"
+        >
+          <div
+            class="col-2 d-flex justify-content-center"
+            (click)="goToDetail(detail)"
+          >
+            <img
+              [src]="
+                detail.imagePath
+                  ? '/asset' + detail.imagePath?.split('asset')[1]
+                  : ''
+              "
+              class="w-50 h-75"
+              alt=""
+            />
+          </div>
+          <div class="col-3" (click)="goToDetail(detail)">
+            {{ detail.productName }}
+          </div>
+          <div class="col-3 col-lg-2 col-sm-2">
+            <span class="qty-design">Qty: {{ detail.qty }}</span>
+          </div>
+          <div class="col-2 col-lg-3 col-sm-3">
+            <button
+              class="p-2 p-lg-1 p-sm-1 process-btn"
+              [ngClass]="{
+                'gray-bg':
+                  detail.status === 'Pending' || detail.status === 'Processing',
+                'yellow-bg': detail.status === 'Ready to Ship',
+                'green-bg':
+                  detail.status === 'Delivered' || detail.status === 'Shipped',
+                'red-bg': detail.status === 'Cancelled'
+              }"
+            >
+              {{ detail.status }}
+            </button>
+          </div>
+          <div class="col-2 text-success fw-semibold">
+            <p
+              [ngClass]="{
+                'gray-p':
+                  detail.status === 'Pending' || detail.status === 'Processing',
+                'yellow-p': detail.status === 'Ready to Ship',
+                'green-p':
+                  detail.status === 'Delivered' || detail.status === 'Shipped',
+                'red-p': detail.status === 'Cancelled'
+              }"
+            >
+              <span *ngIf="activeNav == 'Delivered'">
+                {{ getStatusDescription(detail.status) }}</span
+              >
+              <span class="color-primary" *ngIf="btnIndex === 6">
+                <button
+                  class="p-2 p-lg-1 p-sm-1 process-btn review-bg"
+                  #reviewBTN
+                  data-bs-toggle="modal"
+                  data-bs-target="#staticBackdrop"
+                  (click)="setDetail(detail)"
+                >
+                  Add a review
+                </button>
+                <button
+                  type="button"
+                  class="p-2 p-lg-1 p-sm-1 process-btn return-button"
+                  data-bs-toggle="modal"
+                  data-bs-target="#exampleModal"
+                  (click)="toReturn(detail, order.orderNo)"
+                >
+                  To return
+                </button>
+              </span>
+            </p>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div *ngIf="buyerOrder.length == 0" class="text-danger text-center">
+      <h3>No Order are made yet!</h3>
+    </div>
+
+    <!-- pag -->
+
+    <app-pagination
+      *ngIf="activeNav === 'All' && buyerOrder.length > 0"
+      [inputdata]="data"
+      (myData)="handlePaginationData($event)"
+    >
+    </app-pagination>
+  </div>
+</section>
