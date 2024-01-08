@@ -71,6 +71,7 @@ import { ProductApprovalComponent } from './Components/product-approval/product-
 import { OrderFlowComponent } from './Components/order-flow/order-flow.component';
 import { SellerOrderComponent } from './Components/seller-order/seller-order.component';
 import { UserOrdersComponent } from './Pages/user-orders/user-orders.component';
+import { SellerOrdersComponent } from './Components/seller-orders/seller-orders.component';
  
 
 @NgModule({
@@ -135,6 +136,7 @@ import { UserOrdersComponent } from './Pages/user-orders/user-orders.component';
     SellerOrderComponent,
     UserOrdersComponent,
     BuyerInvoiceComponent,
+    SellerOrdersComponent,
   ],
   imports: [
     CommonModule,
