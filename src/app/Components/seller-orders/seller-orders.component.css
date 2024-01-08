@@ -1,7 +1,9 @@
 .sub-header {
   height: 5rem;
 }
-
+.invoice {
+  cursor: pointer;
+}
 .order-card {
   /* height: 15rem; */
 }

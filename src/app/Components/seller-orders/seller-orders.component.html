@@ -118,9 +118,11 @@
           <div class="">
             <p class="fs-6 m-0 p-0">
               Order:
-              <span class="fs-6 fw-semibold order-number"
-                ><a># {{ order.orderNo }}</a></span
-              >
+              <span class="fs-6 fw-semibold order-number">
+                <a class="invoice" (click)="gotoInvoice(order.orderMasterId)">
+                  # {{ order.orderNo }}</a
+                >
+              </span>
             </p>
             <p class="m-0 p-0">
               Placed on <span class="fw-semibold">{{ order.orderDate }}</span>
