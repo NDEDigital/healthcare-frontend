@@ -43,12 +43,12 @@ export class DashboardComponent {
   // addGroups: boolean = false;
 
   sidebarCol1Title = 'Product List';
-  sidebarCol2Title = 'Add Products';
+  sidebarCol2Title = 'Products';
   sidebarCol3Title = 'Orders';
   sidebarCol4Title = 'Inventory';
   sidebarCol5Title = 'Add Quantity';
   sidebarCol6Title = 'Product Order';
-  sidebarCol7Title = 'Add Groups';
+  sidebarCol7Title = 'Product Groups';
   sidebarCol8Title = 'Company Approval';
   sidebarCol9Title = 'Price & Discounts';
   sidebarCol10Title = 'Product Approval';
@@ -93,7 +93,6 @@ export class DashboardComponent {
     private userDataService: UserDataService,
     private emailService: EmailService
   ) {
-
     this.sellerCode = localStorage.getItem('code');
     fetch('https://api.ipify.org?format=json')
       .then((response) => response.json())
@@ -418,18 +417,12 @@ export class DashboardComponent {
   }
 
   handleCheckboxChange(event: any) {
-  
     this.selectedCheckboxIds = event;
-  
   }
   handleStatusChange(status: any) {
-  
     this.updateStatus(status);
   }
   handleShowProductDetailsID(ID: any) {
-   
-   
-
     // Use the find method to search for the product with the given ID
     const selectedProduct = this.products.find(
       (product: any) => product.productId === ID
@@ -438,7 +431,6 @@ export class DashboardComponent {
     if (selectedProduct) {
       // If the product is found, set it as the selectedProduct
       this.productDetails = selectedProduct;
- 
 
       // Open the product details modal
       this.productDetailsModalBTN.nativeElement.click();

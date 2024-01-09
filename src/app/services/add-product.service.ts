@@ -25,13 +25,15 @@ export class AddProductService {
 
   createProductListURL = `${this.URL}/api/ProductList/CreateProductList`;
   updateProductURL = `${this.URL}/SellerProductStatusUpdate`;
+  updateProductStatusURL = `${this.URL}/api/ProductList/MakeProductActiveOrInactive`;
+  updateProductGroupStatusURL = `${this.URL}/api/ProductGroups/MakeGroupActiveOrInactive`;
 
   CreateSellerProductPriceURL = `${this.URL}/ProductQuantity/CreateSellerProductPriceAndOffer`;
   GetProductsByStatusURL = `${this.URL}/ProductQuantity/GetSellerProductsByCompanyCode`;
 
   updateProductGroupURL = `${this.URL}/api/ProductGroups/UpdateProductGroups`;
 
-  updateProductListURL = `${this.URL}/api/ProductList/UpdateProductList`
+  updateProductListURL = `${this.URL}/api/ProductList/UpdateProductList`;
 
   constructor(private http: HttpClient) {}
 
@@ -92,14 +94,40 @@ export class AddProductService {
   updateProduct(productListData: any) {
     return this.http.put(this.updateProductURL, productListData);
   }
+  // updateProductStatus(productId: any, IsActive: any) {
+  //   console.log(productId, IsActive, 'service prduct is active');
+  //   return this.http.put(this.updateProductStatusURL, {
+  //     params: { productId, IsActive },
+  //   });
+  // }
+  updateProductStatus(productId: any, IsActive: any) {
+    // Convert IsActive to boolean
+    const convertedIsActive = IsActive === 1 ? true : false;
 
+    console.log(productId, convertedIsActive, 'service product is active');
+
+    return this.http.put(
+      `${this.updateProductStatusURL}?productId=${productId}&IsActive=${convertedIsActive}`,
+      {}
+    );
+  }
+  updateProductGroupStatus(groupId: any, IsActive: any) {
+    // Convert IsActive to boolean
+    const convertedIsActive = IsActive === 1 ? true : false;
+
+    console.log(groupId, convertedIsActive, 'service product is active');
+
+    return this.http.put(
+      `${this.updateProductGroupStatusURL}?groupId=${groupId}&IsActive=${convertedIsActive}`,
+      {}
+    );
+  }
   updateProductGroup(groupListData: any) {
     return this.http.put(this.updateProductGroupURL, groupListData);
   }
 
-
-  updateProductList(productListData: any){
-    return this.http.put(this.updateProductListURL, productListData)
+  updateProductList(productListData: any) {
+    return this.http.put(this.updateProductListURL, productListData);
   }
 
   getallProducts() {

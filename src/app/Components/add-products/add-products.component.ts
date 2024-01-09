@@ -263,4 +263,19 @@ export class AddProductsComponent implements OnInit {
     }
     this.AddProductModalCenterG.nativeElement.click();
   }
+
+  updateIsActive(isActive: any, producID: any) {
+    console.log(isActive, 'isActive', producID, 'productID');
+    this.productService.updateProductStatus(producID, isActive).subscribe({
+      next: (response: any) => {
+        console.log(response);
+        this.getProducts(isActive);
+        this.btnIndex = isActive;
+      },
+      error: (error: any) => {
+        //console.log(error);
+        this.alertMsg = error.error.message;
+      },
+    });
+  }
 }
