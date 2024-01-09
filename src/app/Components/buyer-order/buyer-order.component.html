@@ -543,7 +543,9 @@
                 aria-label="Default select example"
                 formControlName="typeId"
               >
-              <option value="0" disabled>Select Return Type</option>
+                <option [value]="null" disabled selected>
+                  Select Return Type
+                </option>
                 <option
                   *ngFor="let option of returnTypeData"
                   [value]="option.returnTypeId"

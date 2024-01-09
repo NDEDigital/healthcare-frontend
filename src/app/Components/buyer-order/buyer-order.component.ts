@@ -91,6 +91,8 @@ export class BuyerOrderComponent {
       this.rating = rating;
       // You can do something with the rating value here
     });
+    // Set the default value for typeId form control
+    this.returnForm.get('typeId')?.setValue(null);
   }
   setDetail(detail: any) {
     this.detailData = detail;
@@ -316,18 +318,18 @@ export class BuyerOrderComponent {
       //console.log(' form data ', formDataObject);
 
       this.returnService
-      .ReturnProductAndChangeOrderDetailsStatus(this.formData)
-      .subscribe({
-        next: (Response: any) => {
-          console.log('return post and status change response', Response);
-          this.getData('Delivered');
-          this.closeModalButton.nativeElement.click();
-        },
-        error: (error: any) => {
-          console.log(error);
-          alert(error);
-        },
-      });
+        .ReturnProductAndChangeOrderDetailsStatus(this.formData)
+        .subscribe({
+          next: (Response: any) => {
+            console.log('return post and status change response', Response);
+            this.getData('Delivered');
+            this.closeModalButton.nativeElement.click();
+          },
+          error: (error: any) => {
+            console.log(error);
+            alert(error);
+          },
+        });
     } else {
       this.returnType = true;
     }
