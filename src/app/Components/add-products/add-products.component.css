@@ -234,3 +234,7 @@ select {
   width: 6rem;
   height: 4rem;
 }
+
+.active-row {
+  background-color: #f1f1dd;
+}

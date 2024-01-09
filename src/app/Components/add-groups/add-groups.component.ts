@@ -17,7 +17,8 @@ export class AddGroupsComponent {
   @ViewChild('userExistModalBTN') UserExistModalBTN!: ElementRef;
   @ViewChild('productGroupImageInput') ProductImageInput!: ElementRef;
   @ViewChild('addGroupModalCenterG') AddGroupModalCenterG!: ElementRef;
-  @ViewChild('modalGroupImage') modalGroupImage!: ElementRef<HTMLImageElement>;
+  //@ViewChild('modalGroupImage') ModalGroupImage!: ElementRef;
+  @ViewChild('modalGroupImage') ModalGroupImage!: ElementRef<HTMLImageElement>;
 
   addGroupForm!: FormGroup;
   alertMsg = '';
@@ -29,6 +30,7 @@ export class AddGroupsComponent {
   existingImagePath: string = '';
   currentGroup: any = null;
   activeGroupId: number | null = null;
+  imagePathPreview: string = '';
 
   constructor(private addProductService: AddProductService) {}
 
@@ -54,6 +56,13 @@ export class AddGroupsComponent {
     this.getProductGroup(-1);
   }
 
+  openAddGroupModal(): void {
+    this.resetForm();
+    this.isEditMode = false;
+    this.currentGroup = null;
+    this.AddGroupModalCenterG.nativeElement.click();
+  }
+
   isFieldInvalid(fieldName: string): boolean {
     const field = this.addGroupForm.get(fieldName);
     // Check if the field is not null before accessing its properties
@@ -62,20 +71,17 @@ export class AddGroupsComponent {
 
   resetForm(): void {
     this.addGroupForm.reset();
+    this.isEditMode = false;
+    this.currentGroup = null;
+    this.activeGroupId = null;
   }
 
   onSubmit(): void {
-
-
     Object.values(this.addGroupForm.controls).forEach((control) => {
       control.markAsTouched();
       control.markAsDirty();
     });
-    // const formData = {
-    //   ...this.addGroupForm.value,
-    //   addedBy: 'user',
-    //   addedPC: '0.0.0.0',
-    // };
+
     if (this.addGroupForm.valid) {
       // //console.log('Form Data:', this.addGroupForm.value);
       const formData = new FormData();
@@ -89,10 +95,7 @@ export class AddGroupsComponent {
         formData.append(key, value);
       });
 
-      // formData.append(
-      //   'imageFile',
-      //   this.ProductImageInput.nativeElement.files[0]
-      // );
+
 
       if (this.ProductImageInput.nativeElement.files[0]) {
         // If a new file is selected, append it
@@ -113,33 +116,30 @@ export class AddGroupsComponent {
         console.log(`${pair[0]}: `, pair[1]);
       }
       if (!this.isEditMode) {
-      this.addProductService.createProductGroup(formData).subscribe({
-        next: (response: any) => {
-          //console.log(response, 'successfull');
-          this.alertMsg = response.message;
-          this.isError = false;
-          //console.log(response.message);
-          setTimeout(() => {
+        this.addProductService.createProductGroup(formData).subscribe({
+          next: (response: any) => {
+            //console.log(response, 'successfull');
+            this.alertMsg = response.message;
+            this.isError = false;
+            //console.log(response.message);
+            setTimeout(() => {
+              this.UserExistModalBTN.nativeElement.click();
+              this.addGroupForm.reset();
+              // this.toggleAddProductGroupDiv();
+            }, 50);
+            this.getProductGroup(-1);
+          },
+          error: (error: any) => {
+            //console.log(error, 'error');
+            this.alertMsg = error.error.message;
+            this.isError = true;
             this.UserExistModalBTN.nativeElement.click();
-            this.addGroupForm.reset();
-           // this.toggleAddProductGroupDiv();
-          }, 50);
-
-
-        },
-        error: (error: any) => {
-          //console.log(error, 'error');
-          this.alertMsg = error.error.message;
-          this.isError = true;
-          this.UserExistModalBTN.nativeElement.click();
-        },
-      });
-    }
+          },
+        });
+      }
       // console.log(this.isEditMode, "inserting on submit");
 
-
       if (this.isEditMode) {
-
         let updateByUser = localStorage.getItem('code');
         console.log(updateByUser, 'code...');
 
@@ -151,6 +151,7 @@ export class AddGroupsComponent {
           console.error('Update by code not found in localStorage');
         }
         formData.append('UpdatedPC', '0.0.0.0');
+
         this.addProductService.updateProductGroup(formData).subscribe({
           next: (response: any) => {
             // Handle successful response here
@@ -163,7 +164,6 @@ export class AddGroupsComponent {
 
             // Close the modal if you have one open
             this.UserExistModalBTN.nativeElement.click();
-
           },
           error: (error: any) => {
             // Handle error response here
@@ -177,7 +177,7 @@ export class AddGroupsComponent {
             this.UserExistModalBTN.nativeElement.click();
           },
         });
-        console.log(this.isEditMode, "updating on submit");
+        console.log(this.isEditMode, 'updating on submit');
       }
     } else {
       console.log('Form is not valid');
@@ -212,7 +212,6 @@ export class AddGroupsComponent {
   }
 
   openModalWithData(group: any): void {
-
     this.isEditMode = true;
     this.updateFormValidators();
     console.log('group', group);
@@ -220,7 +219,7 @@ export class AddGroupsComponent {
     this.currentGroup = group;
 
     // Ensure the modal is opened before calling displayImage
-    this.AddGroupModalCenterG.nativeElement.click();
+
     this.displayImage(group.imagepath);
     this.activeGroupId = group.productGroupID;
   }
@@ -236,13 +235,16 @@ export class AddGroupsComponent {
   }
 
   displayImage(imagePath: string): void {
-    if (this.modalGroupImage && this.modalGroupImage.nativeElement) {
-      if (imagePath) {
-        const imageUrl = '/asset' + imagePath.split('asset')[1];
-        this.modalGroupImage.nativeElement.src = imageUrl;
-      } else {
-        this.modalGroupImage.nativeElement.src = '';
-      }
+    console.log('Received imagePath:', imagePath);
+
+    if (imagePath) {
+      const imageUrl = '/asset' + imagePath.split('asset')[1];
+
+      console.log('Constructed imageUrl:', imageUrl);
+      this.imagePathPreview = imageUrl;
+    } else {
+      this.imagePathPreview = 'not upload yet';
     }
+    this.AddGroupModalCenterG.nativeElement.click();
   }
 }

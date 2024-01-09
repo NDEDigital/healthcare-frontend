@@ -236,7 +236,7 @@ select {
 } */
 
 .active-row {
-  background-color: #f1f1dd; /* Your desired highlight color */
-  /* border: 1px solid red; */
+  background-color: #f1f1dd;
+
 }
 
