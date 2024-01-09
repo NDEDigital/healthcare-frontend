@@ -73,9 +73,9 @@ export class BuyerOrderComponent {
       groupName: new FormControl(''),
       goodsName: new FormControl(''),
       groupCode: new FormControl(''),
-      goodsId: new FormControl(0),
+      productId: new FormControl(0),
       remarks: new FormControl(''),
-      typeId: new FormControl(''),
+      typeId: new FormControl('0'),
       price: new FormControl(''),
       detailsId: new FormControl(''),
       sellerCode: new FormControl(''),
@@ -105,7 +105,7 @@ export class BuyerOrderComponent {
       companyName: this.item.companyName,
       dimensionUnit: this.item.dimensionUnit,
       finish: this.item.finish,
-      goodsId: this.item.goodsId,
+      productId: this.item.productId,
       goodsName: this.item.goodsName,
       grade: this.item.grade,
       groupCode: this.item.groupCode,
@@ -145,7 +145,7 @@ export class BuyerOrderComponent {
       this.formData.append('SellerId', this.detailData.sellerCode);
       this.formData.append('OrderDetailId', this.detailData.orderDetailId);
       this.formData.append('GroupCode', this.detailData.groupCode);
-      this.formData.append('goodsId', this.detailData.goodsId);
+      this.formData.append('productId', this.detailData.productId);
       this.formData.append('GroupName', this.detailData.groupName);
       const buyerCode = localStorage.getItem('code');
       //console.log(buyerCode);
@@ -268,7 +268,7 @@ export class BuyerOrderComponent {
     this.returnType = false;
     this.returnService.getReturnType().subscribe((data: any) => {
       //console.log(' typeId', data[0].typeId); // Use a type if possible for better type checking
-      //console.log(' returnType', data[0].returnType); // Use a type if possible for better type checking
+      console.log('get returnType data', data); // Use a type if possible for better type checking
       this.returnTypeData = data;
     });
 
@@ -281,7 +281,7 @@ export class BuyerOrderComponent {
       groupName: this.returnData ? this.returnData.groupName : '',
       goodsName: this.returnData ? this.returnData.goodsName : '',
       groupCode: this.returnData ? this.returnData.groupCode : '',
-      goodsId: this.returnData ? this.returnData.goodsId : '',
+      productId: this.returnData ? this.returnData.productId : '',
       price: this.returnData ? this.returnData.price : '',
       detailsId: this.returnData ? this.returnData.orderDetailId : '',
       sellerCode: this.returnData ? this.returnData.sellerCode : '',
@@ -299,38 +299,35 @@ export class BuyerOrderComponent {
     if (this.returnForm.value.typeId != null) {
       //console.log(' RETURN fORM ', this.returnForm.value);
       this.formData.append('OrderNo', this.returnForm.value.orderNo);
-      this.formData.append('GroupName', this.returnForm.value.groupName);
-      this.formData.append('GoodsName', this.returnForm.value.goodsName);
-      this.formData.append('GroupCode', this.returnForm.value.groupCode);
-      this.formData.append('goodsId', this.returnForm.value.goodsId);
+      //this.formData.append('ProductGroupId', this.returnForm.value.groupName);
+      //this.formData.append('ProductId', this.returnForm.value.productId);
       this.formData.append('Remarks', this.returnForm.value.remarks);
-      this.formData.append('TypeId', this.returnForm.value.typeId);
+      this.formData.append('ReturnTypeId', this.returnForm.value.typeId);
       this.formData.append('Price', this.returnForm.value.price);
-      this.formData.append('DetailsId', this.returnForm.value.detailsId);
-      this.formData.append('ReturnType', this.returnForm.value.returnType);
-      this.formData.append('SellerCode', this.returnForm.value.sellerCode);
-      this.formData.append('DeliveryDate', this.returnForm.value.deliveryDate);
+      this.formData.append('OrderDetailsId', this.returnForm.value.detailsId);
+      //this.formData.append('SellerId', this.returnForm.value.SellerOrderId);
+      this.formData.append('AddedBy', 'Test User');
+      this.formData.append('AddedPc', '0.0.0.0');
+
       // Assuming you have already populated the `this.formData` object
-      const formDataObject = this.formDataToObject(this.formData);
+      //const formDataObject = this.formDataToObject(this.formData);
 
       // Log the FormData as an object
       //console.log(' form data ', formDataObject);
 
-      this.returnService.insertData(this.formData).subscribe(
-        (response) => {
-          // Handle a successful response
-          //console.log('Data saved successfully:', response);
-          // Optionally, reset the form after successful submission
-          this.formData = new FormData();
-          this.returnForm.reset();
+      this.returnService
+      .ReturnProductAndChangeOrderDetailsStatus(this.formData)
+      .subscribe({
+        next: (Response: any) => {
+          console.log('return post and status change response', Response);
+          this.getData('Delivered');
           this.closeModalButton.nativeElement.click();
-          this.loadData();
         },
-        (error) => {
-          // Handle an error response
-          console.error('Error saving data:', error);
-        }
-      );
+        error: (error: any) => {
+          console.log(error);
+          alert(error);
+        },
+      });
     } else {
       this.returnType = true;
     }

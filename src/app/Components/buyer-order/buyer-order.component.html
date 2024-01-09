@@ -543,11 +543,12 @@
                 aria-label="Default select example"
                 formControlName="typeId"
               >
+              <option value="0" disabled>Select Return Type</option>
                 <option
                   *ngFor="let option of returnTypeData"
-                  [value]="option.typeId"
+                  [value]="option.returnTypeId"
                 >
-                  {{ option.returnType }}
+                  {{ option.returnTypeName }}
                 </option>
               </select>
 

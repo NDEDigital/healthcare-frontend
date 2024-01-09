@@ -96,7 +96,7 @@ export class OrderFlowComponent {
   GetReturnTypeForSelectOption() {
     this.productReturnService.getReturnType().subscribe({
       next: (Response: any) => {
-        console.log(Response);
+        console.log(Response,"all return");
         this.returntype = Response;
       },
       error: (error: any) => {
