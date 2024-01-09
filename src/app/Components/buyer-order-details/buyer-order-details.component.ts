@@ -88,14 +88,16 @@ export class BuyerOrderDetailsComponent implements OnInit {
   // Adjust the percentage as needed
   getLineWidth(status: string): number {
     switch (status) {
-      case 'Approved':
+      case 'Approved' ||'Pending':
         return 0;
       case 'Processing':
-        return 25;
+        return 20;
       case 'ReadyToShip':
-        return 50;
+        return 40;
       case 'Shipped':
-        return 75;
+        return 60;
+      case 'ToDeliver':
+        return 80;
       case 'Delivered':
         return 100;
       default:

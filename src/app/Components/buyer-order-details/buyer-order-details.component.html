@@ -101,7 +101,10 @@
         <div class="steps">
           <div
             class="step"
-            [ngClass]="{ current: package.status === 'Approved' }"
+            [ngClass]="{
+              current:
+                package.status === 'Approved' || package.status === 'Pending'
+            }"
           >
             <span>Pending</span>
           </div>
@@ -118,10 +121,16 @@
             <span>Ready to ship</span>
           </div>
           <div
-            class="step current"
+            class="step"
             [ngClass]="{ current: package.status === 'Shipped' }"
           >
             <span>Shipped</span>
+          </div>
+          <div
+            class="step current"
+            [ngClass]="{ current: package.status === 'ToDeliver' }"
+          >
+            <span>To Deliver</span>
           </div>
           <div
             class="step"
