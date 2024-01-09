@@ -258,8 +258,8 @@
                   class="p-2 p-lg-1 p-sm-1 process-btn review-bg"
                   #reviewBTN
                   data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop"
-                  (click)="setDetail(detail)"
+                  data-bs-target="#reviewModal"
+                  (click)="openReviewModal(detail)"
                 >
                   Add a review
                 </button>
@@ -294,163 +294,7 @@
   </div>
 </section>
 
-<section class="">
-  <!-- Modal -->
-  <div
-    class="modal fade"
-    id="staticBackdrop"
-    data-bs-backdrop="static"
-    data-bs-keyboard="false"
-    tabindex="-1"
-    aria-labelledby="staticBackdropLabel"
-    aria-hidden="true"
-  >
-    <div class="modal-dialog modal-dialog-centered">
-      <div class="modal-content">
-        <div class="modal-header">
-          <h1 class="modal-title fs-5" id="staticBackdropLabel">
-            Add a Review
-          </h1>
 
-          <button
-            type="button"
-            class="btn-close"
-            data-bs-dismiss="modal"
-            aria-label="Close"
-          ></button>
-        </div>
-        <div class="modal-body">
-          <form [formGroup]="reviewForm">
-            <div class="mb-3">
-              <div class="mb-3">
-                <label for="exampleInputPassword1" class="form-label"
-                  >Ratings</label
-                >
-                <!-- Rating Design -->
-                <div class="ratings">
-                  <div class="text-center">
-                    <input
-                      type="radio"
-                      class="star"
-                      id="star1"
-                      name="rating"
-                      value="1"
-                      formControlName="rating"
-                    />
-                    <label [class.active]="rating >= 1" for="star1"
-                      >&#9733;</label
-                    >
-                    <p [class.active]="rating == 1">Terrible</p>
-                  </div>
-                  <div class="text-center">
-                    <input
-                      type="radio"
-                      class="star"
-                      id="star2"
-                      name="rating"
-                      value="2"
-                      formControlName="rating"
-                    />
-                    <label [class.active]="rating >= 2" for="star2"
-                      >&#9733;</label
-                    >
-                    <p [class.active]="rating == 2">Poor</p>
-                  </div>
-                  <div class="text-center">
-                    <input
-                      type="radio"
-                      class="star"
-                      id="star3"
-                      name="rating"
-                      value="3"
-                      formControlName="rating"
-                    />
-                    <label [class.active]="rating >= 3" for="star3"
-                      >&#9733;</label
-                    >
-                    <p [class.active]="rating == 3">Fair</p>
-                  </div>
-                  <div class="text-center">
-                    <input
-                      id="star4"
-                      type="radio"
-                      class="star"
-                      name="rating"
-                      value="4"
-                      formControlName="rating"
-                    />
-
-                    <label [class.active]="rating >= 4" for="star4"
-                      >&#9733;</label
-                    >
-                    <p [class.active]="rating == 4">Good</p>
-                  </div>
-                  <div class="text-center">
-                    <input
-                      id="star5"
-                      type="radio"
-                      class="star"
-                      name="rating"
-                      value="5"
-                      formControlName="rating"
-                    />
-                    <label [class.active]="rating >= 5" for="star5"
-                      >&#9733;</label
-                    >
-                    <p [class.active]="rating == 5">Excellent</p>
-                  </div>
-                </div>
-                <div *ngIf="errorMsg" class="text-danger">
-                  Give rating to submit a review!!
-                </div>
-              </div>
-              <label for="exampleFormControlTextarea1" class="form-label"
-                >Tell us about product</label
-              >
-              <textarea
-                formControlName="reviwField"
-                class="form-control"
-                id="exampleFormControlTextarea1"
-                rows="3"
-              ></textarea>
-
-              <div class="mb-3">
-                <div>
-                  <label for="exampleInputPassword1" class="form-label mt-2"
-                    >Add an image:</label
-                  >
-                </div>
-                <div>
-                  <input
-                    #imageInput
-                    formControlName="image"
-                    type="file"
-                    id="imageUpload"
-                    name="imageUpload"
-                    accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
-                  />
-                </div>
-              </div>
-            </div>
-          </form>
-        </div>
-        <div class="modal-footer">
-          <button
-            type="button"
-            class="btn btn-secondary"
-            data-bs-dismiss="modal"
-            #closeBTN
-          >
-            Close
-          </button>
-          <button type="button" class="btn btn-primary" (click)="addReview()">
-            Submit
-          </button>
-        </div>
-      </div>
-    </div>
-  </div>
-</section>
 
 <!-- return modal -->
 <section>
@@ -585,6 +429,141 @@
                 (click)="SaveReturnData()"
               >
                 Return
+              </button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+
+
+<section id="ReviewFormModalSection">
+  <!-- Button trigger modal -->
+  <!-- <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#staticBackdrop">
+    Launch static backdrop modal
+  </button> -->
+
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="reviewModal"
+    data-bs-backdrop="static"
+    data-bs-keyboard="false"
+    tabindex="-1"
+    aria-labelledby="reviewModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h1 class="modal-title fs-5" id="reviewModalLabel">Review Form</h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="resetFormAndStars()"
+          ></button>
+        </div>
+        <div class="modal-body">
+          <form [formGroup]="reviewForm">
+            <div
+              class="star-inputs form-group border border-1 d-flex justify-content-center"
+              (click)="resetRating($event)"
+              [class.error]="
+                reviewForm.get('ratingValue')?.invalid &&
+                reviewForm.get('ratingValue')?.touched
+              "
+              #starContainer
+            >
+              <i
+                #star
+                class="bi bi-star-fill starDesign"
+                (mouseover)="updateRating(1)"
+                (click)="setRating(1)"
+              ></i>
+              <i
+                #star
+                class="bi bi-star-fill starDesign"
+                (mouseover)="updateRating(2)"
+                (click)="setRating(2)"
+              ></i>
+              <i
+                #star
+                class="bi bi-star-fill starDesign"
+                (mouseover)="updateRating(3)"
+                (click)="setRating(3)"
+              ></i>
+              <i
+                #star
+                class="bi bi-star-fill starDesign"
+                (mouseover)="updateRating(4)"
+                (click)="setRating(4)"
+              ></i>
+              <i
+                #star
+                class="bi bi-star-fill starDesign"
+                (mouseover)="updateRating(5)"
+                (click)="setRating(5)"
+              ></i>
+
+              <span
+                class="text-danger"
+                *ngIf="
+                  reviewForm.get('ratingValue')?.invalid &&
+                  reviewForm.get('ratingValue')?.touched
+                "
+              >
+                *Rating is required.
+              </span>
+            </div>
+
+            <div class="review-text d-flex flex-column m-1 form-group">
+              <label class="fs-6 fw-semibold" for="">Review Text: </label>
+              <textarea
+                name="reviewText"
+                id="ReviewText"
+                cols="20"
+                rows="10"
+                class="border border-1"
+                formControlName="reviewText"
+              ></textarea>
+            </div>
+            <div class="image-upload form-group">
+              <label for="productImage"
+                ><span class=""></span>Upload Product Image
+              </label>
+              <input
+                type="file"
+                class="form-control"
+                name="imageFile"
+                id="imageFile"
+                formControlName="imageFile"
+                #ProductImageInput
+                accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
+              />
+            </div>
+
+            <div class="form-group d-flex justify-content-end">
+              <button
+                type="button"
+                #CloseReviewFormModal
+                class="btn btn-secondary d-none"
+                data-bs-dismiss="modal"
+              >
+                Close
+              </button>
+
+              <button
+                type="button"
+                class="custom-btn"
+                (click)="onSubmit()"
+                (click)="btnIndex = -1"
+              >
+                submit
               </button>
             </div>
           </form>

@@ -26,6 +26,20 @@ export class AddPriceDiscountsComponent {
   showPriceProductDiv: boolean = false;
   productList: any;
   btnIndex = -1;
+  selectedUnitName = '';
+
+
+  onProductChange(event: any) {
+    const productId = event.target.value;
+    const selectedProduct = this.products.find(prod => prod.productId == productId);
+    this.selectedUnitName = selectedProduct ? selectedProduct.unitName : '';
+    console.log(this.selectedUnitName, "name");
+    console.log(selectedProduct, "product");
+    //console.log(productName, "Prod name");
+
+
+}
+
 
   isDiscountEntered(): boolean {
     const discountAmount = parseFloat(
@@ -115,6 +129,7 @@ export class AddPriceDiscountsComponent {
       endDate: new FormControl(''),
       productImage: new FormControl('', Validators.required),
       totalPrice: new FormControl(''),
+      //uniteName: new FormControl('')
     });
 
     // Fetch product groups when the component is initialized
@@ -126,18 +141,28 @@ export class AddPriceDiscountsComponent {
     this.getProducts(-1);
     this.setupFormValueChanges();
     this.getProductList();
+    this.addPriceDiscountForm.get('productId')?.setValue(null);
   }
 
   getProductList() {
     this.productService.getallProducts().subscribe(
       (data: any) => {
         this.products = data;
-        //console.log('Products :', this.products);
+
+        console.log('Products :', this.products);
       },
       (error) => {
         console.error('Error fetching product groups:', error);
       }
     );
+  }
+
+  resetForm(): void {
+    this.addPriceDiscountForm.reset();
+    this.selectedUnitName = '';
+    //console.log(this.addPriceDiscountForm, "price form");
+
+
   }
 
   // setupFormValueChanges() {
@@ -195,6 +220,7 @@ export class AddPriceDiscountsComponent {
     const priceControl = form.get('price');
     const discountAmountControl = form.get('discountAmount');
     const discountPctControl = form.get('discountPct');
+
 
     // Subscribe to changes in discount amount
     discountAmountControl?.valueChanges.subscribe((value) => {
@@ -423,12 +449,17 @@ export class AddPriceDiscountsComponent {
           this.isError = false; // Set isError to false for a success message
           this.PrdouctExistModalBTN.nativeElement.click();
           this.addPriceDiscountForm.reset();
+          this.resetForm();
+          this.getProducts(-1);
         },
         error: (error: any) => {
           //console.log(error);
           this.alertMsg = error.error.message;
           this.isError = true; // Set isError to true for an error message
           this.PrdouctExistModalBTN.nativeElement.click();
+          this.addPriceDiscountForm.reset();
+          this.resetForm();
+          this.getProducts(-1);
         },
       });
     } else {
