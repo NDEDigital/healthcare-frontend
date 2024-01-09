@@ -51,11 +51,12 @@
     <!-- TABLE header -->
     <div class="row headerRow sticky-top fw-bolder">
       <div class="col tableHeader">Index</div>
-      <div class="col tableHeader">productId</div>
-      <div class="col tableHeader">Unit Id</div>
-      <div class="col tableHeader">Product Group ID</div>
+      <!-- <div class="col tableHeader">productId</div> -->
+
+      <div class="col tableHeader">Product Group Name</div>
       <div class="col tableHeader">Product Name</div>
       <div class="col tableHeader">Product SubName</div>
+      <div class="col tableHeader">Unit</div>
       <div class="col tableHeader">Specification</div>
       <div class="col tableHeader">Image</div>
       <div class="col tableHeader">Date Added</div>
@@ -76,24 +77,20 @@
         #{{ i + 1 }}
       </div>
 
-      <div
+      <!-- <div
         class="col tableBody"
         [ngClass]="{ 'active-row': product.productId === activeProductId }"
       >
         {{ product.productId }}
-      </div>
+      </div> -->
+
       <div
         class="col tableBody"
         [ngClass]="{ 'active-row': product.productId === activeProductId }"
       >
-        {{ product.unitId }}
+        {{ product.productGroupName }}
       </div>
-      <div
-        class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId }"
-      >
-        {{ product.productGroupID }}
-      </div>
+
       <div
         class="col tableBody"
         [ngClass]="{ 'active-row': product.productId === activeProductId }"
@@ -105,6 +102,12 @@
         [ngClass]="{ 'active-row': product.productId === activeProductId }"
       >
         {{ product.productSubName }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+      >
+        {{ product.unit }}
       </div>
       <div
         class="col tableBody"
