@@ -139,7 +139,11 @@
       <div class="col tableBody">
         <div class="d-flex justify-content-center align-items-center">
           <div>
-            <button class="actionBtn">
+            <button
+              class="actionBtn"
+              *ngIf="btnIndex === 0"
+              (click)="updateIsActive(1, product.productId)"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
@@ -147,7 +151,6 @@
                 fill="green"
                 class="bi bi-check2 me-3"
                 viewBox="0 0 16 16"
-                *ngIf="btnIndex === 0"
               >
                 <path
                   d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
@@ -156,7 +159,11 @@
             </button>
           </div>
           <div>
-            <button class="actionBtn">
+            <button
+              class="actionBtn"
+              *ngIf="btnIndex === 1"
+              (click)="updateIsActive(0, product.productId)"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="25"
@@ -164,7 +171,6 @@
                 fill="red"
                 class="bi bi-x-lg fw-bolder"
                 viewBox="0 0 16 16"
-                *ngIf="btnIndex === 1"
               >
                 <path
                   d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"

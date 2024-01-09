@@ -95,8 +95,6 @@ export class AddGroupsComponent {
         formData.append(key, value);
       });
 
-
-
       if (this.ProductImageInput.nativeElement.files[0]) {
         // If a new file is selected, append it
         formData.append(
@@ -246,5 +244,9 @@ export class AddGroupsComponent {
       this.imagePathPreview = 'not upload yet';
     }
     this.AddGroupModalCenterG.nativeElement.click();
+  }
+
+  updateIsActive(isActive: any) {
+    console.log(isActive, 'isActive');
   }
 }
