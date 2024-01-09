@@ -1,5 +1,14 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup, Validators } from '@angular/forms';
+import { QueryList, ViewChildren } from '@angular/core';
+import {
+  FormBuilder,
+  FormControl,
+  FormGroup,
+  Validators,
+  ValidatorFn,
+  AbstractControl,
+  ValidationErrors,
+} from '@angular/forms';
 import { Router } from '@angular/router';
 import { OrderApiService } from 'src/app/services/order-api.service';
 import { ProductReturnServiceService } from 'src/app/services/product-return-service.service';
@@ -15,6 +24,10 @@ export class BuyerOrderComponent {
   @ViewChild('imageInput') imageInput!: ElementRef;
   @ViewChild('reviewBTN') reviewBTN!: ElementRef;
   @ViewChild('closeBTN') closeBTN!: ElementRef;
+  @ViewChild('CloseReviewFormModal') CloseReviewFormModalBTN!: ElementRef;
+  @ViewChildren('star') stars!: QueryList<ElementRef>;
+  @ViewChild('starContainer') starContainer!: ElementRef;
+  @ViewChild('ProductImageInput') ProductImageInput!: ElementRef;
   orderSection: boolean = true;
   activeNav: string = '';
   pageNum = 1;
@@ -31,7 +44,7 @@ export class BuyerOrderComponent {
   returnTypeData: any = [];
   selectedRating: number = 0;
   item: any;
-  reviewForm: FormGroup;
+
   returnForm: FormGroup;
   returnData: any = [];
   isFormValid = false;
@@ -42,6 +55,11 @@ export class BuyerOrderComponent {
   detailData: any;
   productImageSrc: string = '';
   returnType = false;
+  reviewForm!: FormGroup;
+  ratingValue: number = 0;
+  // stars: HTMLElement[] = [];
+  currentOrderDetailId: number = 0;
+  buyerId: number = 0;
   orderDetailDescription: any = {
     Approved: 'Order is waiting for Seller Approval',
     Processing: 'Processing product',
@@ -82,6 +100,14 @@ export class BuyerOrderComponent {
       deliveryDate: new FormControl(''),
     });
   }
+
+  ngAfterViewInit() {
+    // Optional: You might need to handle changes if stars are dynamic
+    this.stars.changes.subscribe((stars: QueryList<ElementRef>) => {
+      // Logic to handle changes in the star elements
+    });
+  }
+
   ngOnInit() {
     this.loadData();
 
@@ -91,9 +117,20 @@ export class BuyerOrderComponent {
       this.rating = rating;
       // You can do something with the rating value here
     });
+
+    this.reviewForm = new FormGroup({
+      reviewText: new FormControl(''),
+      imageFile: new FormControl(''),
+      ratingValue: new FormControl(0, [
+        Validators.required,
+        this.ratingValidator,
+      ]),
+    });
   }
   setDetail(detail: any) {
     this.detailData = detail;
+    console.log(detail, 'detail data...');
+
     //console.log(' details data888888888888888888888888888888 ', this.detailData);
   }
   goToDetail(detail: any) {
@@ -126,50 +163,138 @@ export class BuyerOrderComponent {
     // this.route.navigate(['/productDetails']);
     window.open('/productDetails', '_blank');
   }
-  addReview() {
-    //console.log(' review addedddddddddddddddd');
-    if (this.isFormValid && this.rating > 0) {
-      this.formData.append('RatingValue', this.reviewForm.value.rating);
-      this.formData.append('ReviewText', this.reviewForm.value.reviwField);
-      const imageFile = this.imageInput.nativeElement.files[0];
-      if (imageFile) {
-        const fileExtension = imageFile.type.split('/').pop();
-        // //console.log(fileExtension);
-        const timestamp = new Date().getTime();
-        const randomNumber = Math.floor(Math.random() * 1000);
-        let imageName = `review_${timestamp}_${randomNumber}.${fileExtension}`;
-        this.formData.append('Image', imageFile);
-        this.formData.append('ImageName', imageName);
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.reviewForm.get(fieldName);
+    return field ? field.invalid && (field.dirty || field.touched) : false;
+  }
+
+  updateRating(hoveredStar: number): void {
+    this.stars.forEach((star, index) => {
+      const starElement = star.nativeElement;
+      if (index < hoveredStar) {
+        starElement.classList.add('hovered');
+      } else {
+        starElement.classList.remove('hovered');
+      }
+    });
+  }
+
+  setRating(star: number): void {
+    this.ratingValue = star;
+    // this.reviewForm.get('ratingValue')?.setValue(this.ratingValue);
+    this.reviewForm.get('ratingValue')?.setValue(star);
+    this.stars.forEach((starElement, index) => {
+      const element = starElement.nativeElement;
+      if (index < this.ratingValue) {
+        element.classList.add('selected');
+        element.classList.remove('hovered');
+      } else {
+        element.classList.remove('selected');
+      }
+    });
+  }
+
+  resetStars(): void {
+    this.stars.forEach((starElement) => {
+      const element = starElement.nativeElement;
+      element.classList.remove('selected', 'hovered');
+    });
+  }
+  resetRating(event: MouseEvent): void {
+    const container = this.starContainer.nativeElement;
+
+    // Check if the clicked element is a star
+    if (
+      event.target instanceof HTMLElement &&
+      event.target.classList.contains('bi-star-fill')
+    ) {
+      // Clicked on a star, no need to reset rating
+      return;
+    }
+
+    // Click was outside the stars, reset the rating
+    this.ratingValue = 0;
+    this.reviewForm.get('ratingValue')?.setValue(this.ratingValue);
+    this.resetStars(); // Call this method to reset star visual state
+  }
+
+  ratingValidator(control: AbstractControl): ValidationErrors | null {
+    const rating = control.value;
+    // Assuming 0 is the default value and means no rating is selected
+    if (rating === 0) {
+      return { noRating: true };
+    }
+    return null;
+  }
+
+  // resting form
+
+  resetFormAndStars(): void {
+    this.reviewForm.reset();
+    this.resetStars();
+
+    if (this.ProductImageInput) {
+      this.ProductImageInput.nativeElement.value = '';
+    }
+  }
+
+  // adding review
+  openReviewModal(detail: any): void {
+    this.currentOrderDetailId = detail.orderDetailId;
+    console.log(detail, 'row value');
+  }
+
+  onSubmit(): void {
+    Object.values(this.reviewForm.controls).forEach((control) => {
+      control.markAsTouched();
+      control.markAsDirty();
+    });
+    if (this.reviewForm.valid) {
+      const formData = new FormData();
+      const formValue = this.reviewForm.value;
+
+      let buyerId = localStorage.getItem('code');
+      console.log(buyerId, 'buyerId..');
+
+      const file = this.ProductImageInput.nativeElement.files[0];
+      if (file) {
+        formData.append('imageFile', file);
       }
 
-      this.formData.append('SellerId', this.detailData.sellerCode);
-      this.formData.append('OrderDetailId', this.detailData.orderDetailId);
-      this.formData.append('GroupCode', this.detailData.groupCode);
-      this.formData.append('productId', this.detailData.productId);
-      this.formData.append('GroupName', this.detailData.groupName);
-      const buyerCode = localStorage.getItem('code');
-      //console.log(buyerCode);
-      if (buyerCode) {
-        this.formData.append('BuyerId', buyerCode);
-      }
-      //console.log('FormData inside Add:');
-      this.formData.forEach((value, key) => {
-        //console.log(key, value);
+      Object.keys(formValue).forEach((key) => {
+        if (key !== 'imageFile') {
+          formData.append(key, formValue[key]);
+        }
       });
-      this.reviewService.addReviewAndRating(this.formData).subscribe({
-        next: (response: any) => {
-          //console.log(response);
-          this.reviewForm.reset();
-          this.closeBTN.nativeElement.click();
-          window.location.reload();
+
+      formData.append('addedBy', 'user');
+      formData.append('addedPC', '0.0.0.0');
+      if (buyerId) {
+        formData.append('buyerId', buyerId);
+      } else {
+        console.log('Buyer ID is not available');
+      }
+
+      formData.append('orderDetailId', this.currentOrderDetailId.toString());
+
+      formData.forEach((value, key) => {
+        console.log(`${key}:`, value);
+      });
+
+      this.reviewService.addReview(formData).subscribe({
+        next: (response) => {
+          console.log(response, 'response');
+          this.resetFormAndStars();
+          this.CloseReviewFormModalBTN.nativeElement.click();
+          alert('Review added successfully');
         },
-        error: (error: any) => {
-          //console.log(error);
+        error: (error) => {
+          console.error('Error during submission:', error);
         },
       });
     } else {
-      this.errorMsg = true;
-      // alert('erorrrrr');
+      console.log('form is invalid');
     }
   }
 
@@ -254,13 +379,6 @@ export class BuyerOrderComponent {
     return description || '';
   }
 
-  // handeling star
-
-  onRatingChange() {
-    //console.log('Selected rating:', this.selectedRating);
-    // You can perform actions based on the selected rating here.
-  }
-
   // added by marufa
 
   toReturn(returnData: any, orderId: any) {
@@ -316,18 +434,18 @@ export class BuyerOrderComponent {
       //console.log(' form data ', formDataObject);
 
       this.returnService
-      .ReturnProductAndChangeOrderDetailsStatus(this.formData)
-      .subscribe({
-        next: (Response: any) => {
-          console.log('return post and status change response', Response);
-          this.getData('Delivered');
-          this.closeModalButton.nativeElement.click();
-        },
-        error: (error: any) => {
-          console.log(error);
-          alert(error);
-        },
-      });
+        .ReturnProductAndChangeOrderDetailsStatus(this.formData)
+        .subscribe({
+          next: (Response: any) => {
+            console.log('return post and status change response', Response);
+            this.getData('Delivered');
+            this.closeModalButton.nativeElement.click();
+          },
+          error: (error: any) => {
+            console.log(error);
+            alert(error);
+          },
+        });
     } else {
       this.returnType = true;
     }

@@ -96,7 +96,7 @@ export class OrderFlowComponent {
   GetReturnTypeForSelectOption() {
     this.productReturnService.getReturnType().subscribe({
       next: (Response: any) => {
-        console.log(Response,"all return");
+        console.log(Response, 'all return');
         this.returntype = Response;
       },
       error: (error: any) => {
@@ -332,6 +332,7 @@ export class OrderFlowComponent {
       console.log('form is invalid');
     }
   }
+
   gotoInvoice(orderId: any) {
     sessionStorage.setItem('orderMasterID', orderId);
 
