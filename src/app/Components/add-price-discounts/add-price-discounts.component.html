@@ -186,8 +186,15 @@
           [class.error]="isFieldInvalid('discountPct')"
         />
         <span class="text-danger" *ngIf="isFieldInvalid('discountPct')"
-          >Give 0 or positive number, it is not valid.</span
+          >Give 0 or positive number, it is not valid or </span
         >
+        <!-- Corrected error message display using bracket notation -->
+        <span
+          class="text-danger"
+          *ngIf="addPriceDiscountForm?.get('discountPct')?.errors?.['maxDiscountPct']"
+        >
+          Discount Percentage cannot be greater than 100.
+        </span>
       </div>
     </div>
 

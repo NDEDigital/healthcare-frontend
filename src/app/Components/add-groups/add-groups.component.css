@@ -227,10 +227,16 @@ select {
   border: none;
 }
 
-.addproduct-btn {
+.addGroup-btn {
   width: 10rem !important;
 }
 
 /* .marginBackBtn{
   margin-left: 10rem;
 } */
+
+.active-row {
+  background-color: #f1f1dd;
+
+}
+

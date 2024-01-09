@@ -29,6 +29,10 @@ export class AddProductService {
   CreateSellerProductPriceURL = `${this.URL}/ProductQuantity/CreateSellerProductPriceAndOffer`;
   GetProductsByStatusURL = `${this.URL}/ProductQuantity/GetSellerProductsByCompanyCode`;
 
+  updateProductGroupURL = `${this.URL}/api/ProductGroups/UpdateProductGroups`;
+
+  updateProductListURL = `${this.URL}/api/ProductList/UpdateProductList`
+
   constructor(private http: HttpClient) {}
 
   createProductGroup(productData: any) {
@@ -87,6 +91,15 @@ export class AddProductService {
   }
   updateProduct(productListData: any) {
     return this.http.put(this.updateProductURL, productListData);
+  }
+
+  updateProductGroup(groupListData: any) {
+    return this.http.put(this.updateProductGroupURL, groupListData);
+  }
+
+
+  updateProductList(productListData: any){
+    return this.http.put(this.updateProductListURL, productListData)
   }
 
   getallProducts() {

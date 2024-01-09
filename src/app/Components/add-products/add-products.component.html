@@ -1,6 +1,6 @@
 <!-- approval grid  -->
 
-<div *ngIf="!showProductDiv" class="container approval-grid">
+<div class="container approval-grid">
   <div class="bg-white p-2 border border-1 rounded">
     <div class="d-flex justify-content-center">
       <h1 class="companyApproval_header_text">Add Product Table</h1>
@@ -37,8 +37,13 @@
     </div>
 
     <div>
-      <button class="custom-btn addproduct-btn" (click)="toggleAddProductDiv()">
-        {{ showProductDiv ? "Show Approval Grid" : "Add Product" }}
+      <button
+        class="custom-btn addproduct-btn"
+        data-bs-toggle="modal"
+        data-bs-target="#addProductModalCenter"
+        #addProductModalCenterG
+      >
+        Add Product
       </button>
     </div>
   </div>
@@ -62,16 +67,55 @@
     <section
       class="row tablebodyRow fw-semibold"
       *ngFor="let product of productList; let i = index"
+      (dblclick)="openModalWithData(product)"
     >
-      <div class="col tableBody">#{{ i + 1 }}</div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+      >
+        #{{ i + 1 }}
+      </div>
 
-      <div class="col tableBody">{{ product.productId }}</div>
-      <div class="col tableBody">{{ product.unitId }}</div>
-      <div class="col tableBody">{{ product.productGroupID }}</div>
-      <div class="col tableBody">{{ product.productName }}</div>
-      <div class="col tableBody">{{ product.productSubName }}</div>
-      <div class="col tableBody">{{ product.specification }}</div>
-      <div class="col tableBody">
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+      >
+        {{ product.productId }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+      >
+        {{ product.unitId }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+      >
+        {{ product.productGroupID }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+      >
+        {{ product.productName }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+      >
+        {{ product.productSubName }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+      >
+        {{ product.specification }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+      >
         <img
           class="product_image"
           [src]="
@@ -82,7 +126,10 @@
           alt="no image was uploaded!"
         />
       </div>
-      <div class="col tableBody">
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+      >
         {{ product.addedDate | date : "dd MMM yyyy" }}
       </div>
 
@@ -172,141 +219,168 @@
 <!-- add product -->
 
 <!-- add product form design  -->
-<div *ngIf="showProductDiv" class="container containgFields mt-5 mb-5 rounded">
-  <div class="d-flex justify-content-between align-items-center">
-    <!-- Back Button on the left -->
-    <div class="d-flex align-items-center" (click)="showApprovalGrid()">
-      <svg
-        xmlns="http://www.w3.org/2000/svg"
-        width="25"
-        height="25"
-        fill="currentColor"
-        class="bi bi-arrow-left"
-        viewBox="0 0 16 16"
-      >
-        <path
-          fill-rule="evenodd"
-          d="M15 8a.5.5 0 0 0-.5-.5H2.707l3.147-3.146a.5.5 0 1 0-.708-.708l-4 4a.5.5 0 0 0 0 .708l4 4a.5.5 0 0 0 .708-.708L2.707 8.5H14.5A.5.5 0 0 0 15 8"
-        />
-      </svg>
+
+<!-- add Product modal   -->
+<div
+  class="modal fade"
+  id="addProductModalCenter"
+  tabindex="-1"
+  aria-labelledby="exampleModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog modal-dialog-centered modal-lg">
+    <div class="modal-content">
+      <div class="modal-body">
+        <div class="d-flex justify-content-end align-items-center">
+          <button
+            type="button"
+            class="btn-close border border-1"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+            (click)="resetForm()"
+          ></button>
+        </div>
+        <!-- add product form design -->
+        <div>
+          <div class="d-flex justify-content-center align-items-center">
+            <!-- Title in the middle -->
+            <!-- <h2 class="register_title">Add Product</h2> -->
+            <h2 class="register_title">
+              {{ isEditMode ? "Edit Product" : "Add Product" }}
+            </h2>
+
+            <!-- Placeholder for right alignment -->
+            <!-- <div></div> -->
+          </div>
+
+          <hr />
+          <form [formGroup]="addProductForm">
+            <div class="form-group">
+              <label for="productGroupID"
+                ><span class="text-danger">*</span>Product Group Name</label
+              >
+              <select
+                id="productGroupID"
+                formControlName="productGroupID"
+                [class.error]="isFieldInvalid('productGroupID')"
+              >
+                <option value="" disabled>Select Product Group</option>
+                <option
+                  *ngFor="let group of productGroups"
+                  [value]="group.productGroupID"
+                >
+                  {{ group.productGroupName }}
+                </option>
+              </select>
+              <span class="text-danger" *ngIf="isFieldInvalid('productGroupID')"
+                >Product Group Name is required.</span
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="productName"
+                ><span class="text-danger">*</span>Product Name</label
+              >
+              <input
+                type="text"
+                id="productName"
+                formControlName="productName"
+                [class.error]="isFieldInvalid('productName')"
+              />
+              <span class="text-danger" *ngIf="isFieldInvalid('productName')"
+                >Product Name is required.</span
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="productSubName -"> Product SubName </label>
+              <input
+                type="text"
+                id="productSubName"
+                formControlName="productSubName"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="specification"
+                ><span class="text-danger">*</span>Specification
+              </label>
+              <textarea
+                type="text"
+                id="specification"
+                class="textAreaDesign"
+                formControlName="specification"
+                [class.error]="isFieldInvalid('specification')"
+              ></textarea>
+
+              <span class="text-danger" *ngIf="isFieldInvalid('specification')"
+                >Specification is required.</span
+              >
+            </div>
+
+            <div class="form-group">
+              <label for="unitId"
+                ><span class="text-danger">*</span>unitId</label
+              >
+
+              <select
+                name="unitId"
+                id="unitId"
+                formControlName="unitId"
+                [class.error]="isFieldInvalid('unitId')"
+              >
+                <option value="" disabled>Select Unit</option>
+                <option *ngFor="let unit of units" [value]="unit.unitId">
+                  {{ unit.name }}
+                </option>
+              </select>
+
+              <span class="text-danger" *ngIf="isFieldInvalid('unitId')"
+                >unitId is required.</span
+              >
+            </div>
+
+            <div *ngIf="isEditMode" class="image-preview">
+              <label for="productImage"> Product Image Preview </label>
+              <img
+                [src]="imagePathPreview"
+                alt="Product Image"
+                class="product_image"
+              />
+            </div>
+
+            <div class="form-group">
+              <label for="productImage"
+                ><span class="text-danger">*</span>Upload Product Image
+              </label>
+
+              <input
+                type="file"
+                class="form-control"
+                id="productImage"
+                formControlName="productImage"
+                accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
+                [class.error]="isFieldInvalid('productImage')"
+                #ProductImageInput
+              />
+              <span class="text-danger" *ngIf="isFieldInvalid('productImage')"
+                >Product Image is required.</span
+              >
+            </div>
+
+            <button
+              type="submit"
+              class="button mt-3"
+              id="sign-in-button"
+              (click)="onSubmit()"
+            >
+              Submit
+            </button>
+          </form>
+        </div>
+      </div>
     </div>
-
-    <!-- Title in the middle -->
-    <h2 class="register_title">Add Product</h2>
-
-    <!-- Placeholder for right alignment -->
-    <div></div>
   </div>
-
-  <hr />
-  <form [formGroup]="addProductForm">
-    <div class="form-group">
-      <label for="productGroupID"
-        ><span class="text-danger">*</span>Product Group Name</label
-      >
-      <select
-        id="productGroupID"
-        formControlName="productGroupID"
-        [class.error]="isFieldInvalid('productGroupID')"
-      >
-        <option value="" disabled>Select Product Group</option>
-        <option
-          *ngFor="let group of productGroups"
-          [value]="group.productGroupID"
-        >
-          {{ group.productGroupName }}
-        </option>
-      </select>
-      <span class="text-danger" *ngIf="isFieldInvalid('productGroupID')"
-        >Product Group Name is required.</span
-      >
-    </div>
-
-    <div class="form-group">
-      <label for="productName"
-        ><span class="text-danger">*</span>Product Name</label
-      >
-      <input
-        type="text"
-        id="productName"
-        formControlName="productName"
-        [class.error]="isFieldInvalid('productName')"
-      />
-      <span class="text-danger" *ngIf="isFieldInvalid('productName')"
-        >Product Name is required.</span
-      >
-    </div>
-
-    <div class="form-group">
-      <label for="productSubName -"> Product SubName </label>
-      <input type="text" id="productSubName" formControlName="productSubName" />
-    </div>
-
-    <div class="form-group">
-      <label for="specification"
-        ><span class="text-danger">*</span>Specification
-      </label>
-      <textarea
-        type="text"
-        id="specification"
-        class="textAreaDesign"
-        formControlName="specification"
-        [class.error]="isFieldInvalid('specification')"
-      ></textarea>
-
-      <span class="text-danger" *ngIf="isFieldInvalid('specification')"
-        >Specification is required.</span
-      >
-    </div>
-
-    <div class="form-group">
-      <label for="unitId"><span class="text-danger">*</span>unitId</label>
-
-      <select
-        name="unitId"
-        id="unitId"
-        formControlName="unitId"
-        [class.error]="isFieldInvalid('unitId')"
-      >
-        <option value="" disabled>Select Unit</option>
-        <option *ngFor="let unit of units" [value]="unit.unitId">
-          {{ unit.name }}
-        </option>
-      </select>
-
-      <span class="text-danger" *ngIf="isFieldInvalid('unitId')"
-        >unitId is required.</span
-      >
-    </div>
-
-    <div class="form-group">
-      <label for="productImage"
-        ><span class="text-danger">*</span>Upload Product Image
-      </label>
-
-      <input
-        type="file"
-        class="form-control"
-        id="productImage"
-        formControlName="productImage"
-        accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
-        [class.error]="isFieldInvalid('productImage')"
-        #ProductImageInput
-      />
-      <span class="text-danger" *ngIf="isFieldInvalid('productImage')"
-        >Product Image is required.</span
-      >
-    </div>
-
-    <button
-      type="submit"
-      class="button mt-3"
-      id="sign-in-button"
-      (click)="onSubmit()"
-    >
-      Submit
-    </button>
-  </form>
 </div>
 
 <!-- Button trigger modal -->
