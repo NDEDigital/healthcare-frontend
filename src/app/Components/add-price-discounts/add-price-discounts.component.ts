@@ -129,6 +129,7 @@ export class AddPriceDiscountsComponent {
       endDate: new FormControl(''),
       productImage: new FormControl('', Validators.required),
       totalPrice: new FormControl(''),
+      //uniteName: new FormControl('')
     });
 
     // Fetch product groups when the component is initialized
@@ -154,6 +155,14 @@ export class AddPriceDiscountsComponent {
         console.error('Error fetching product groups:', error);
       }
     );
+  }
+
+  resetForm(): void {
+    this.addPriceDiscountForm.reset();
+    this.selectedUnitName = '';
+    //console.log(this.addPriceDiscountForm, "price form");
+
+
   }
 
   // setupFormValueChanges() {
@@ -211,6 +220,7 @@ export class AddPriceDiscountsComponent {
     const priceControl = form.get('price');
     const discountAmountControl = form.get('discountAmount');
     const discountPctControl = form.get('discountPct');
+
 
     // Subscribe to changes in discount amount
     discountAmountControl?.valueChanges.subscribe((value) => {
@@ -439,12 +449,17 @@ export class AddPriceDiscountsComponent {
           this.isError = false; // Set isError to false for a success message
           this.PrdouctExistModalBTN.nativeElement.click();
           this.addPriceDiscountForm.reset();
+          this.resetForm();
+          this.getProducts(-1);
         },
         error: (error: any) => {
           //console.log(error);
           this.alertMsg = error.error.message;
           this.isError = true; // Set isError to true for an error message
           this.PrdouctExistModalBTN.nativeElement.click();
+          this.addPriceDiscountForm.reset();
+          this.resetForm();
+          this.getProducts(-1);
         },
       });
     } else {
