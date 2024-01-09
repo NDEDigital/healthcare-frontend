@@ -134,7 +134,13 @@
           </div>
           <div
             class="step"
-            [ngClass]="{ current: package.status === 'Delivered' }"
+            [ngClass]="{
+              current:
+                package.status === 'Delivered' ||
+                package.status === 'Reviewed' ||
+                package.status === 'ToReturn' ||
+                package.status === 'Returned'
+            }"
           >
             <span>Delivered</span>
           </div>
