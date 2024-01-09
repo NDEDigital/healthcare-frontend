@@ -13,100 +13,39 @@
   >
     {{ showAll ? 'Show Less' : 'Show All' }}
   </h5>
-  
 
-   
   <hr />
+
+
   <div>
     <p class="parent">Brands</p>
-    <ul class="list-unstyled mb-3">
-      <li>
+    <ul  class="list-unstyled mb-3">
+      <div *ngFor = "let company of companyList; let i = index">
+      <li 
+           *ngIf="showAllBrand || i < initialLimit"
+          >
         <input
           class="form-check-input"
           type="radio"
           name="flexRadioDefault"
           id="checkbox"
         />
-        <label class="form-check-label" for="flexCheckDefault"
-          >NDE Prominent</label
+        <label 
+         class="form-check-label"
+          for="flexCheckDefault"
+          >{{company.companyName}}</label
         >
       </li>
-      <li>
-        <input
-          class="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="checkbox"
-        />
-        <label class="form-check-label" for="flexCheckDefault"
-          >Tata Medical Ltd</label
+    </div>
+      <h5 
+        *ngIf="companyList && companyList.length > initialLimit" 
+        (click)="showAllBrand = !showAllBrand" 
+        class="text-primary"
+        style="cursor: pointer;"
         >
-      </li>
-      <li>
-        <input
-          class="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="checkbox"
-        />
-        <label class="form-check-label" for="flexCheckDefault">JSW Steel</label>
-      </li>
-      <li>
-        <input
-          class="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="checkbox"
-        />
-        <label class="form-check-label" for="flexCheckDefault"
-          >Prime Medical</label
-        >
-      </li>
-      <li>
-        <input
-          class="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="checkbox"
-        />
-        <label class="form-check-label" for="flexCheckDefault"
-          >MSSR Medical
-        </label>
-      </li>
-      <li>
-        <input
-          class="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="checkbox"
-        />
-        <label class="form-check-label" for="flexCheckDefault"
-          >Medical Ltd</label
-        >
-      </li>
-      <li>
-        <input
-          class="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="checkbox"
-        />
-        <label class="form-check-label" for="flexCheckDefault"
-          >Jindal Medical</label
-        >
-      </li>
-      <li>
-        <input
-          class="form-check-input"
-          type="radio"
-          name="flexRadioDefault"
-          id="checkbox"
-        />
-        <label class="form-check-label" for="flexCheckDefault"
-          >Bhushan Medical</label
-        >
-      </li>
-      <a href=""><p>View More</p></a>
+    {{ showAll ? 'Show Less' : 'Show All' }}
+  </h5>
+
     </ul>
     <hr />
   </div>
