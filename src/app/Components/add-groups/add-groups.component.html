@@ -49,10 +49,10 @@
     <!-- TABLE header -->
     <div class="row headerRow sticky-top fw-bolder">
       <div class="col tableHeader">Index</div>
-      <div class="col tableHeader">Product Group ID</div>
+      <!-- <div class="col tableHeader">Product Group ID</div> -->
+      <div class="col tableHeader">Image</div>
       <div class="col tableHeader">Product Group Code</div>
       <div class="col tableHeader">Product Group Name</div>
-      <div class="col tableHeader">Image</div>
       <div class="col tableHeader">Product Group Prefix</div>
       <div class="col tableHeader">Product Group Details</div>
       <div class="col tableHeader">Date Added</div>
@@ -71,24 +71,12 @@
       >
         #{{ i + 1 }}
       </div>
-      <div
+      <!-- <div
         class="col tableBody"
         [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
       >
         {{ group.productGroupID }}
-      </div>
-      <div
-        class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
-      >
-        {{ group.productGroupCode }}
-      </div>
-      <div
-        class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
-      >
-        {{ group.productGroupName }}
-      </div>
+      </div> -->
       <div
         class="col tableBody"
         [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
@@ -102,6 +90,19 @@
           alt="no image was uploaded!"
         />
       </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+      >
+        {{ group.productGroupCode }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+      >
+        {{ group.productGroupName }}
+      </div>
+
       <div
         class="col tableBody"
         [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
