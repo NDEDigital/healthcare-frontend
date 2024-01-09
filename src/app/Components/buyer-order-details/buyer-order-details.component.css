@@ -15,7 +15,11 @@ body {
   box-sizing: border-box;
   font-family: "Lato", verdana, sans-serif;
 } */
-
+.taKa_icon {
+  width: 0.65rem;
+  margin-bottom: 0.3rem;
+  margin-right: 0.1rem;
+}
 .horizontal.timeline {
   display: flex;
   position: relative;

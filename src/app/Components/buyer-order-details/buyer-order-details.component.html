@@ -12,14 +12,19 @@
         >
       </p>
       <p class="m-0 p-0">
-        Placed on <span class="fw-semibold">{{ order.orderDate }}</span>
+        Placed on Placed on
+        <span class="fw-semibold"
+          >{{ order.orderDate | date : "mediumDate" : "" : "en-US" }}.
+          <span class="text-muted">Time: </span>
+          {{ order.orderDate | date : "shortTime" : "" : "en-US" }}
+        </span>
       </p>
     </div>
     <div>
       <p class="fs-6 fw-bold">
         Total:
         <img class="taka-icon" src="assets/images/takaIcon.png" alt="" /><span>
-          {{ order.totalPrice }}</span
+          {{ order.totalAmount }}</span
         >
       </p>
     </div>
@@ -27,7 +32,10 @@
 
   <div
     class="mt-3 box-design rounded"
-    *ngFor="let package of packageMap | keyvalue; let i = index"
+    *ngFor="
+      let package of order.orderDetails2ndMasterListForBuyer;
+      let i = index
+    "
   >
     <div class="d-flex justify-content-between p-3">
       <div>
@@ -46,9 +54,7 @@
         </div>
         <div>
           Sold by
-          <span class="fw-bold text-success">{{
-            package.value[0].sellerName
-          }}</span>
+          <span class="fw-bold text-success">{{ package.sellerName }}</span>
         </div>
       </div>
       <!-- <span> {{ package.value[0].status }}</span> -->
@@ -71,7 +77,8 @@
 
     <div class="d-flex justify-content-between p-3">
       <p class="text-success fw-semibold">
-        Delivery with estimated date {{ package.value[0].deliveryDate }}
+        Delivery with estimated date
+        {{ package.deliveryDate | date : "mediumDate" : "" : "en-US" }}.
       </p>
       <div>
         <svg
@@ -94,31 +101,31 @@
         <div class="steps">
           <div
             class="step"
-            [ngClass]="{ current: package.value[0].status === 'Pending' }"
+            [ngClass]="{ current: package.status === 'Approved' }"
           >
             <span>Pending</span>
           </div>
           <div
             class="step"
-            [ngClass]="{ current: package.value[0].status === 'Processing' }"
+            [ngClass]="{ current: package.status === 'Processing' }"
           >
             <span>Processing</span>
           </div>
           <div
             class="step"
-            [ngClass]="{ current: package.value[0].status === 'Ready to Ship' }"
+            [ngClass]="{ current: package.status === 'ReadyToShip' }"
           >
             <span>Ready to ship</span>
           </div>
           <div
             class="step current"
-            [ngClass]="{ current: package.value[0].status === 'Shipped' }"
+            [ngClass]="{ current: package.status === 'Shipped' }"
           >
             <span>Shipped</span>
           </div>
           <div
             class="step"
-            [ngClass]="{ current: package.value[0].status === 'Delivered' }"
+            [ngClass]="{ current: package.status === 'Delivered' }"
           >
             <span>Delivered</span>
           </div>
@@ -126,15 +133,17 @@
 
         <div
           class="line"
-          [ngStyle]="{ 'width.%': getLineWidth(package.value[0].status) }"
+          [ngStyle]="{ 'width.%': getLineWidth(package.status) }"
         ></div>
       </div>
     </div>
 
-    <div class="row mt-5" *ngFor="let orderDetail of package.value">
+    <div
+      class="row mt-5"
+      *ngFor="let orderDetail of package.orderDetails2ndMDetailsListForBuyer"
+    >
       <div class="col-2" (click)="goToDetail(orderDetail)">
-        <img
-          class="w-50 h-50 mx-auto d-block"
+        <!-- <img
           [src]="
             orderDetail.imagePath
               ? orderDetail.imagePath.substring(
@@ -143,10 +152,18 @@
               : '../../../assets/images/' + orderDetail.groupName + '.jpg'
           "
           alt=""
+        /> -->
+
+        <img
+          class="w-50 h-50 mx-auto d-block"
+          [src]="
+            orderDetail.imagepath ? orderDetail.imagepath.split('src')[1] : ''
+          "
+          alt="no image was uploaded!"
         />
       </div>
       <div class="col-4" (click)="goToDetail(orderDetail)">
-        {{ orderDetail.goodsName }}
+        {{ orderDetail.productName }}
       </div>
       <div class="col-2">
         <img class="taka-icon" src="assets/images/takaIcon.png" alt="" /><span>
@@ -154,7 +171,7 @@
         >
       </div>
       <div class="col-2">
-        Qty: <span>{{ orderDetail.quantity }}</span>
+        Qty: <span>{{ orderDetail.totalQty }}</span>
       </div>
       <!-- <div class="col-2">
         Cancel
@@ -163,30 +180,54 @@
         </span>
       </div> -->
     </div>
+
+    <div class="d-flex justify-content-end p-3 bg-light border border-top">
+      <div class="text-end text-muted fw-semibold">
+        <div>
+          Package Subtotal:
+          <img
+            src="../../../assets/images/takaIcon.png"
+            class="taKa_icon"
+          /><span class="text-dark">{{ package.packageSubtotal }}</span>
+        </div>
+        <div>
+          Package Delivery Charge:
+          <img src="../../../assets/images/takaIcon.png" class="taKa_icon" />
+          <span class="text-dark">{{ package.packageDeliveryCharge }}</span>
+        </div>
+        <div>
+          Package Total Amount:
+          <img src="../../../assets/images/takaIcon.png" class="taKa_icon" />
+          <span class="text-dark">{{
+            package.packageSubtotal + package.packageDeliveryCharge
+          }}</span>
+        </div>
+      </div>
+    </div>
   </div>
 
   <div class="row mt-3">
     <div class="col gap-2">
       <div class="border border-1 box-design rounded p-3">
         <p class="fs-5 fw-semibold">Shipping Address</p>
-        <p class="m-0 p-0">{{ order.buyerName }}</p>
+        <p class="m-0 p-0 fw-semibold">{{ order.buyerName }}</p>
         <p>
-          Address
+          Address:
           <span> {{ order.shippingAddress }}</span>
         </p>
         <p>
-          Conatct Number: <span>{{ order.shippingContact }}</span>
+          Conatct Number: <span>{{ order.shippingPhoneNumber }}</span>
         </p>
       </div>
       <div class="border border-1 box-design rounded p-3 my-2">
         <p class="fs-5 fw-semibold">Billing Address</p>
-        <p class="m-0 p-0">{{ order.buyerName }}</p>
+        <p class="m-0 p-0 fw-semibold">{{ order.buyerName }}</p>
         <p>
-          Address
+          Address:
           <span> {{ order.billingAddress }}</span>
         </p>
         <p>
-          Conatct Number: <span>{{ order.billingContact }}</span>
+          Conatct Number: <span>{{ order.billingPhoneNumber }}</span>
         </p>
       </div>
     </div>
@@ -201,7 +242,7 @@
               class="taka-icon"
               src="assets/images/takaIcon.png"
               alt=""
-            /><span> {{ order.subtotal }}</span>
+            /><span> {{ order.subTotal }}</span>
           </div>
         </div>
         <div class="d-flex justify-content-between">
@@ -211,7 +252,7 @@
               class="taka-icon"
               src="assets/images/takaIcon.png"
               alt=""
-            /><span> {{ order.deliveryCharge }}</span>
+            /><span> {{ order.totalDeliveryCharge }}</span>
           </div>
         </div>
 
@@ -224,11 +265,11 @@
               class="taka-icon"
               src="assets/images/takaIcon.png"
               alt=""
-            /><span> {{ order.totalPrice }}</span>
+            /><span> {{ order.totalAmount }}</span>
           </div>
         </div>
 
-        <p class="fw-semibold mt-3">Paid by online banking</p>
+        <p class="fw-semibold mt-3">Paid by {{ order.paymentMethod }}</p>
       </div>
     </div>
   </div>

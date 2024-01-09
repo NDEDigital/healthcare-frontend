@@ -221,32 +221,33 @@ export class BuyerOrderComponent {
     this.rowCount = data.selectedValue;
     this.loadData();
   }
-  orderDetails(order: any) {
+  orderDetails(orderNo: any) {
     //console.log(order, 'order');
-    sessionStorage.setItem('order', JSON.stringify(order));
+    sessionStorage.setItem('orderNo', JSON.stringify(orderNo));
+    window.open('/buyerOrderDetails', '_blank');
   }
-  btnClick(str: string) {
-    if (str === '') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    } else if (str === 'Ready to Ship') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    } else if (str === 'Shipped') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    } else if (str === 'Delivered') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    } else if (str === 'to Return') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    } else if (str === 'Returned') {
-      this.activeNav = str;
-      //console.log('clicked', str);
-    }
-    this.loadData();
-  }
+  // btnClick(str: string) {
+  //   if (str === '') {
+  //     this.activeNav = str;
+  //     //console.log('clicked', str);
+  //   } else if (str === 'Ready to Ship') {
+  //     this.activeNav = str;
+  //     //console.log('clicked', str);
+  //   } else if (str === 'Shipped') {
+  //     this.activeNav = str;
+  //     //console.log('clicked', str);
+  //   } else if (str === 'Delivered') {
+  //     this.activeNav = str;
+  //     //console.log('clicked', str);
+  //   } else if (str === 'to Return') {
+  //     this.activeNav = str;
+  //     //console.log('clicked', str);
+  //   } else if (str === 'Returned') {
+  //     this.activeNav = str;
+  //     //console.log('clicked', str);
+  //   }
+  //   this.loadData();
+  // }
 
   getStatusDescription(status: string): string {
     const description = this.orderDetailDescription[status];
