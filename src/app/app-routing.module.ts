@@ -99,16 +99,17 @@ const routes: Routes = [
   {
     path: 'buyerInvoice',
     component: BuyerInvoiceComponent,
+     
   },
   {
     path: 'productDetails',
     component: ProductDetailsPageComponent,
   },
-  // {
-  //   path: 'buyerOrder',
-  //   component: UserOrdersComponent,
-  //   canActivate: [BuyerOnlyGuard],
-  // },
+  {
+    path: 'buyerOrder',
+    component: UserOrdersComponent,
+    canActivate: [BuyerOnlyGuard],
+  },
   {
     path: 'buyerOrders',
     component: BuyerOrderComponent,
