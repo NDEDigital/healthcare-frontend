@@ -14,10 +14,14 @@ export class AddProductQuantityComponent {
   selectedProductNames: string[] = []; // Initialize an array to hold selected product names for each row
 
   selectedProduct :any;
+  selectedGroup : any
+  selectedProductGroup :string[] = [];
   masterForm: FormGroup;
   form!: FormGroup;
   productDertailsData:any;
+  productGroupData : any
   portaldata: any;
+  ProductGroupID:any;
   // ModalText = "Give some entry"
  
   constructor(private fb: FormBuilder , private addProductService :AddProductService) {
@@ -28,14 +32,18 @@ export class AddProductQuantityComponent {
       challanDate: ['', Validators.required],
       remarks: [''],
     }); 
+    this.form = this.fb.group({
+      rows: this.fb.array([])
+    });
   }
  
 
 
   ngOnInit() {
-    this.form = this.fb.group({
-      rows: this.fb.array([])
-    });
+
+
+    
+ 
   }
 
   get rowsFormArray(): FormArray {
@@ -43,26 +51,71 @@ export class AddProductQuantityComponent {
   }
 
   addRow() {
+    const rowsArray = this.form.get('rows') as FormArray;
+    
+    if (rowsArray.length > 0) {
+      const lastRow = rowsArray.at(rowsArray.length - 1) as FormGroup;
+      if(!lastRow.valid){
+        console.log(" sjgio")
+      }
+      // const controls = lastRow.controls;
+      // const emptyFields = Object.keys(controls).filter(controlName => {
+      //   const control = controls[controlName];
+      //   return control.value === '' || control.value === null;
+      // });
+      
+      // if (emptyFields.length > 0) {
+      //   // Do something (alert, validation message, etc.) indicating there are empty fields.
+      //   console.log('Previous row has empty fields');
+      //   return; // Abort adding a new row
+      // }
+    }
+  
     const newRow = this.fb.group({
-      productName: ['',Validators.required],
-      productId: ['' ],
-      productGroupId: ['' ],
- 
-      specification: ['',Validators.required],
-      unit: ['',Validators.required],
+
+      productName: ['', Validators.required],
+      productId: [''],
+      productGroupId: [''],
+      specification: ['', Validators.required],
+      unit: ['', Validators.required],
       unitId: [''],
-      price: ['',Validators.required],
-      receiveQty: ['',Validators.required],
-      availableQty: ['',Validators.required],
+      price: ['', Validators.required],
+      receiveQty: ['', [Validators.required, Validators.pattern(/^-?\d+$/)]],
+      availableQty: ['', Validators.required],
       remarks: [''],
-      isDropdownOpen: [false], // Ensure isDropdownOpen is initialized for each row
+      isDropdownOpen: [false],
+      isGroDropdownOpen: [false],
       // ... other fields
     });
   
-    // Access the FormArray and push the new FormGroup
-    (this.form.get('rows') as FormArray).push(newRow);
-    this.selectedProductNames[this.selectedProductNames.length] = 'select product';
+    rowsArray.push(newRow);
+    this.selectedProductNames.push('Select product');
+    this.selectedProductGroup.push('Select Group');
   }
+  
+
+  // addRow() {
+  //   const newRow = this.fb.group({
+  //     productName: ['',Validators.required],
+  //     productId: ['' ],
+  //     productGroupId: ['' ],
+ 
+  //     specification: ['',Validators.required],
+  //     unit: ['',Validators.required],
+  //     unitId: [''],
+  //     price: ['',Validators.required],
+  //     // receiveQty: ['',Validators.required],
+  //     receiveQty: ['', [Validators.required, Validators.pattern(/^-?\d+$/)]],
+  //     availableQty: ['',Validators.required],
+  //     remarks: [''],
+  //     isDropdownOpen: [false], // Ensure isDropdownOpen is initialized for each row
+  //     // ... other fields
+  //   });
+  
+  //   // Access the FormArray and push the new FormGroup
+  //   (this.form.get('rows') as FormArray).push(newRow);
+  //   this.selectedProductNames[this.selectedProductNames.length] = 'select product';
+  // }
   
   
 
@@ -131,38 +184,67 @@ export class AddProductQuantityComponent {
       // Check if challanDate exists and is not empty before adding it to portaldata
       if (this.masterForm.value.challanDate) {
         this.portaldata.challanDate = this.masterForm.value.challanDate;
-      }
-      
-    
-      
-  
+      } 
       // API call
       this.addProductService.insertPortalReceived(this.portaldata).subscribe({
         next: (response) => {
-          //console.log('Response:', response);
+          console.log('Response:', response);
           // Handle success response
           this.masterForm.reset(); // Reset the masterForm
           this.form.reset(); // Reset the nested form (rows)
-          while (this.rowsFormArray.length > 0) {
-            this.removeRow(0);
-            this.selectedProductNames=[] // clearing the array
-          }
+          this.PatchForm(response);
+          // while (this.rowsFormArray.length > 0) {
+          //   this.removeRow(0);
+          //   this.selectedProductNames=[] // clearing the array
+          // }
         },
         error: (error) => {
           console.error('Error:', error);
           // Handle error
         }
       });
-  
       // Further submission logic here
     }
     else {
       //console.log(" form invalid")
-    }
-  
-     
+    }    
   }
   
+   PatchForm(data : any){
+
+    // master data
+    this.masterForm.patchValue({
+
+      challanNo: data.challanNo,
+      remarks: data.remarks,
+      portalReceivedCode: data.portalReceivedCode,
+      portalReceivedDate: data.portalReceivedDate,
+      challanDate: data.challanDate ? data.challanDate.split('T')[0] : null,
+
+
+    });
+ // Details data
+ const detailsFormArray = this.form.get('rows') as FormArray; // Assuming 'rows' is your form array name
+
+ detailsFormArray.clear(); // Clear previous entries if needed
+
+ for (const detail of data.portalReceivedDetailslist) {
+   detailsFormArray.push(this.fb.group({
+     productId: detail.productId,
+     productName: detail.productName,
+     productGroupId: detail.productGroupId,
+     specification: detail.specification,
+     unit: detail.unit,
+     unitId: detail.unitId,
+     price: detail.price,
+     receiveQty: detail.receivedQty,
+     availableQty: detail.availableQty,
+     remarks: detail.remarks,
+   }));
+ }
+
+   }
+
 
   // Inside your component class
 isDropdownVisible(rowIndex: number): boolean {
@@ -192,17 +274,37 @@ isDropdownVisible(rowIndex: number): boolean {
   getDetailsData(){
 
     const userID = localStorage.getItem('code')
-    this.addProductService.GetProductDetailsData(userID) .subscribe({
+    if( this.ProductGroupID && userID){
+      this.addProductService.GetProductDetailsData(userID,this.ProductGroupID) .subscribe({
+        next: (response) => {
+           //console.log( response)
+           this.productDertailsData = response;
+           //console.log("his.productDertailsData ",this.productDertailsData)
+        },
+        error: (error) => {
+         //console.log("error ",error)
+        },
+      });
+    }
+
+  }
+  getGroupName(){
+    const userID = localStorage.getItem('code')
+    this.addProductService.getProductGroupsByUserId(userID).subscribe({
       next: (response) => {
-         //console.log( response)
-         this.productDertailsData = response;
+         console.log( response)
+       this.productGroupData = response;
          //console.log("his.productDertailsData ",this.productDertailsData)
       },
       error: (error) => {
-       //console.log("error ",error)
+       console.log("error ",error)
       },
     });
   }
+  
+
+  
+
   filterFunction(event: Event , className: string): void {
     const input = (event.target as HTMLInputElement).value.toUpperCase();
     const links = document.querySelectorAll(className) as NodeListOf<HTMLAnchorElement>;
@@ -217,6 +319,18 @@ isDropdownVisible(rowIndex: number): boolean {
     });
   }
 
+  SetDropDownGroupName(selectedItem: any, rowIndex: number){
+    this.selectedProductGroup[rowIndex] = selectedItem.productGroupName; // Store selected product name for this row
+    this.ProductGroupID = selectedItem.productGroupID;
+    // reseting the  row if group name is changed
+    const row = this.rowsFormArray.at(rowIndex) as FormGroup;
+    row.reset();
+
+    // reseting the product name 
+
+    this.selectedProductNames[rowIndex] ="Select Product"
+
+  }
 
   SetDropDownName(selectedItem: any, rowIndex: number) {
     this.selectedProduct = selectedItem;
@@ -239,6 +353,32 @@ isDropdownVisible(rowIndex: number): boolean {
     //console.log(" product name ",    this.selectedProductNames)
   }
   
+  getEmptyFields(): string[] {
+    const emptyFields: string[] = [];
   
+    // Loop through the form controls or rows in the form array
+    const formRows = (this.form.get('rows') as FormArray).controls;
+    formRows.forEach((row, index) => {
+      const receiveQtyControl = row.get('receiveQty');
   
+      // Check if the receiveQty field is empty or invalid
+      if (!receiveQtyControl?.value) {
+        emptyFields.push(`Receive Qty in row ${index + 1}`);
+      }
+      // Check other fields in a similar manner
+    });
+  
+    return emptyFields;
+  }
+  clear()
+{
+  this.masterForm.reset(); // Reset the masterForm
+  this.form.reset(); // Reset the nested form (rows)
+ 
+  while (this.rowsFormArray.length > 0) {
+    this.removeRow(0);
+    this.selectedProductNames=[] // clearing the  product array
+    this.selectedProductGroup   = [];
+  }
+}
 }

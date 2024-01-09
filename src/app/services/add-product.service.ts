@@ -13,6 +13,7 @@ export class AddProductService {
   private getdetailsData = `${this.URL}/ProductQuantity/GetProductForAddQtyByUserId`;
   private postData = `${this.URL}/ProductQuantity/PortalReceivedPost`;
   createProductGroupURL = `${this.URL}/api/ProductGroups/CreateProductGroups`;
+  getProductGroupByUserIdURL = `${this.URL}/ProductQuantity/ProductGroupsDropdownByUserId`;
 
   getProductGropURL = `${this.URL}/api/ProductGroups/GetProductGroupsList`;
   GetProductGroupsListByStatusURL = `${this.URL}/api/ProductGroups/GetProductGroupsListByStatus`;
@@ -36,8 +37,8 @@ export class AddProductService {
   }
 
   // get dfetails data
-  GetProductDetailsData(CompanyCode: any) {
-    return this.http.get(`${this.getdetailsData}/${CompanyCode}`);
+  GetProductDetailsData(CompanyCode: any , productGroupId:any) {
+    return this.http.get(`${this.getdetailsData}/${CompanyCode}/${productGroupId}`);
   }
 
   // post data
@@ -77,6 +78,17 @@ export class AddProductService {
   getProductGroups() {
     return this.http.get(this.getProductGropURL);
   }
+     // get group[ by userId]
+//  getProductGroupsByUserId(userID: any) {
+//       return this.http.get(this.getProductGroupByUserIdURL,{
+//         params : {userID}
+//       } );
+// }
+getProductGroupsByUserId(userID: any) {
+  return this.http.get(`${this.getProductGroupByUserIdURL}/${userID}`);
+}
+
+
 
   getUnitGroups() {
     return this.http.get(this.getUnitURL);

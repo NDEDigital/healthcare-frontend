@@ -5,6 +5,9 @@
 .addQuantity_header_text {
     color: var(--color-primary);
   }
+  .details-header {
+    z-index: 100;
+  }
 .field-div{
   background-color: white;
 }
@@ -66,6 +69,9 @@
     color: var(--color-primary);
     font-size: 1rem;
     padding-left: .3rem;
+    border: 1px  solid #88aab6;
+    margin: .2rem;
+    padding: .2rem;
   }
 
   .submit-button .approved{
@@ -139,7 +145,7 @@
     background-color: #f6f6f6;
     min-width: 15rem;
     border: 1px solid #ddd;
-    z-index: 1;
+z-index: 1;
     height: 13rem;
     overflow: scroll;
   }
@@ -158,3 +164,19 @@
   
   /* Show the dropdown menu (use JS to add this class to the .dropdown-groupName container when the user clicks on the dropdown button) */
   .show {display:block;}
+
+  .errorText{
+    color: rgb(197, 8, 8) !important;
+    font-size: 1rem;
+  }
+  .GroupList{
+    height: 10rem;
+    overflow: scroll;
+    padding: .2rem .4rem;
+  }
+  .master-icon{
+    border: 1px  solid #88aab6;
+    margin: .1rem ;
+    padding: .2rem;
+    color: var(--color-primary);
+  }
