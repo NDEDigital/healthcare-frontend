@@ -26,6 +26,7 @@ export class AddProductService {
   createProductListURL = `${this.URL}/api/ProductList/CreateProductList`;
   updateProductURL = `${this.URL}/SellerProductStatusUpdate`;
   updateProductStatusURL = `${this.URL}/api/ProductList/MakeProductActiveOrInactive`;
+  updateProductGroupStatusURL = `${this.URL}/api/ProductGroups/MakeGroupActiveOrInactive`;
 
   CreateSellerProductPriceURL = `${this.URL}/ProductQuantity/CreateSellerProductPriceAndOffer`;
   GetProductsByStatusURL = `${this.URL}/ProductQuantity/GetSellerProductsByCompanyCode`;
@@ -107,6 +108,17 @@ export class AddProductService {
 
     return this.http.put(
       `${this.updateProductStatusURL}?productId=${productId}&IsActive=${convertedIsActive}`,
+      {}
+    );
+  }
+  updateProductGroupStatus(groupId: any, IsActive: any) {
+    // Convert IsActive to boolean
+    const convertedIsActive = IsActive === 1 ? true : false;
+
+    console.log(groupId, convertedIsActive, 'service product is active');
+
+    return this.http.put(
+      `${this.updateProductGroupStatusURL}?groupId=${groupId}&IsActive=${convertedIsActive}`,
       {}
     );
   }

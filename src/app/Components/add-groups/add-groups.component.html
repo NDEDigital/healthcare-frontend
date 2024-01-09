@@ -128,7 +128,7 @@
             <button
               class="actionBtn"
               *ngIf="btnIndex === 0"
-              (click)="updateIsActive(1)"
+              (click)="updateIsActive(1,group.productGroupID)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
@@ -148,7 +148,7 @@
             <button
               class="actionBtn"
               *ngIf="btnIndex === 1"
-              (click)="updateIsActive(0)"
+              (click)="updateIsActive(0, group.productGroupID)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"

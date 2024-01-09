@@ -246,7 +246,20 @@ export class AddGroupsComponent {
     this.AddGroupModalCenterG.nativeElement.click();
   }
 
-  updateIsActive(isActive: any) {
-    console.log(isActive, 'isActive');
+  updateIsActive(isActive: any, groupId: any) {
+    console.log(isActive, 'isActive', groupId, 'groupId');
+    this.addProductService
+      .updateProductGroupStatus(groupId, isActive)
+      .subscribe({
+        next: (response: any) => {
+          console.log(response);
+          this.getProductGroup(isActive);
+          this.btnIndex = isActive;
+        },
+        error: (error: any) => {
+          //console.log(error);
+          this.alertMsg = error.error.message;
+        },
+      });
   }
 }
