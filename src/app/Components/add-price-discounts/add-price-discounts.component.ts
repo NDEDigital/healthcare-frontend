@@ -140,6 +140,7 @@ export class AddPriceDiscountsComponent {
     this.getProducts(-1);
     this.setupFormValueChanges();
     this.getProductList();
+    this.addPriceDiscountForm.get('productId')?.setValue(null);
   }
 
   getProductList() {

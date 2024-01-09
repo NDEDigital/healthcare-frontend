@@ -38,7 +38,7 @@
     <div>
       <button
         class="custom-btn addproduct-btn"
-        (click)="toggleAddProductPriceDiv()"
+
       >
         {{ showPriceProductDiv ? "Show Approval Grid" : "Add Price" }}
       </button>
@@ -133,7 +133,9 @@
           <span class="text-danger">*</span>Product Name
       </label>
       <select id="productId" formControlName="productId" [class.error]="isFieldInvalid('productId')" (change)="onProductChange($event)">
-          <option class="" value="" disabled>Select Product Name</option>
+        <option [value]="null" disabled selected>
+          Select Product Name
+        </option>
           <option *ngFor="let prod of products" [value]="prod.productId">
               {{ prod.productName }}
           </option>
