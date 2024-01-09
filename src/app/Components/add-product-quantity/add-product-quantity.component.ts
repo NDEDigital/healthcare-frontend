@@ -41,10 +41,11 @@ export class AddProductQuantityComponent {
 
   ngOnInit() {
 
+  
 
-    
- 
   }
+
+ 
 
   get rowsFormArray(): FormArray {
     return this.form.get('rows') as FormArray;
@@ -72,7 +73,7 @@ export class AddProductQuantityComponent {
     }
   
     const newRow = this.fb.group({
-
+   
       productName: ['', Validators.required],
       productId: [''],
       productGroupId: [''],
@@ -93,31 +94,19 @@ export class AddProductQuantityComponent {
     this.selectedProductGroup.push('Select Group');
   }
   
+ getPortalData(PortalReceivedId:any){
+  this.addProductService.GetPortalData(PortalReceivedId).subscribe({
+    next: (response) => {
+      console.log('Response:', response);
 
-  // addRow() {
-  //   const newRow = this.fb.group({
-  //     productName: ['',Validators.required],
-  //     productId: ['' ],
-  //     productGroupId: ['' ],
- 
-  //     specification: ['',Validators.required],
-  //     unit: ['',Validators.required],
-  //     unitId: [''],
-  //     price: ['',Validators.required],
-  //     // receiveQty: ['',Validators.required],
-  //     receiveQty: ['', [Validators.required, Validators.pattern(/^-?\d+$/)]],
-  //     availableQty: ['',Validators.required],
-  //     remarks: [''],
-  //     isDropdownOpen: [false], // Ensure isDropdownOpen is initialized for each row
-  //     // ... other fields
-  //   });
-  
-  //   // Access the FormArray and push the new FormGroup
-  //   (this.form.get('rows') as FormArray).push(newRow);
-  //   this.selectedProductNames[this.selectedProductNames.length] = 'select product';
-  // }
-  
-  
+    },
+    error: (error) => {
+      console.error('Error:', error);
+      // Handle error
+    }
+  });
+
+ }
 
   removeRow(index: number) {
     
@@ -192,6 +181,7 @@ export class AddProductQuantityComponent {
           // Handle success response
           this.masterForm.reset(); // Reset the masterForm
           this.form.reset(); // Reset the nested form (rows)
+          this.getPortalData(response.portalReceivedId)
           this.PatchForm(response);
           // while (this.rowsFormArray.length > 0) {
           //   this.removeRow(0);

@@ -180,3 +180,13 @@ z-index: 1;
     padding: .2rem;
     color: var(--color-primary);
   }
+
+  .modalTable{
+    border: 1px solid #87a7b3;
+    text-align: center;
+  }
+  .modalTable .header{
+   font-size: 1rem;
+   color: #181717;
+ font-weight: 500;
+  }

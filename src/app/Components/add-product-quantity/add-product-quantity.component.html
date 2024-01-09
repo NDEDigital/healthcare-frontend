@@ -17,7 +17,7 @@
                   </div>
                   <div class="col-7 d-flex">
                     <input type="text" class="disable" id="portalReceivedCode" formControlName="portalReceivedCode"  readonly />
-                    <i class="fa-solid fa-magnifying-glass  master-icon "></i>
+                    <i class="fa-solid fa-magnifying-glass  master-icon "data-bs-toggle="modal" data-bs-target="#masterModal"></i>
              
                   </div>
                 </div>                      
@@ -212,8 +212,35 @@
      </div>
    </div>
 
-<!-- Button trigger modal -->
 
+
+<!--   MAster Modal -->
+<div class="modal fade" id="masterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+        <div class="modalTable">
+          <div class="row header">
+            <div class="col p-0">
+              Received Code
+            </div> 
+            <div class="col p-0">
+              Received Date
+            </div> 
+           </div>
+           
+
+        </div>
+      
+      </div>
+
+    </div>
+  </div>
+</div>
 
 </div>
   

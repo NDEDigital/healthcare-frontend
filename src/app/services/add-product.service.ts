@@ -30,7 +30,16 @@ export class AddProductService {
   CreateSellerProductPriceURL = `${this.URL}/ProductQuantity/CreateSellerProductPriceAndOffer`;
   GetProductsByStatusURL = `${this.URL}/ProductQuantity/GetSellerProductsByCompanyCode`;
 
+  GetPortalDataURL= `${this.URL}/ProductQuantity/GetPortalData`;
+
   constructor(private http: HttpClient) {}
+
+
+  GetPortalData(PortalReceivedId: any ) {
+    return this.http.get(this.GetPortalDataURL, {
+      params: { PortalReceivedId },
+    });
+  }
 
   createProductGroup(productData: any) {
     return this.http.post(this.createProductGroupURL, productData);
