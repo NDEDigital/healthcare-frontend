@@ -1,5 +1,9 @@
-body {
+.parent {
   background: white;
+  display: flex;
+  min-height: 100vh;
+  flex-direction: column;
+  justify-content: space-between;
 }
 .right-sidebar {
   width: 120px;
@@ -92,7 +96,7 @@ body {
    color: white;
 } */
 .txt-qt {
-  width: 42px;
+  width: 30px;
 }
 /* .currency{
    font-size: 30px;
