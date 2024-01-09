@@ -129,23 +129,29 @@
   <hr />
   <form [formGroup]="addPriceDiscountForm">
     <div class="form-group">
-      <label for="productId"
-        ><span class="text-danger">*</span>Product Name</label
-      >
-      <select
-        id="productId"
-        formControlName="productId"
-        [class.error]="isFieldInvalid('productId')"
-      >
-        <option class="" value="" disabled>Select Product Name</option>
-        <option *ngFor="let prod of products" [value]="prod.productId">
-          {{ prod.productName }}
-        </option>
+      <label for="productId">
+          <span class="text-danger">*</span>Product Name
+      </label>
+      <select id="productId" formControlName="productId" [class.error]="isFieldInvalid('productId')" (change)="onProductChange($event)">
+          <option class="" value="" disabled>Select Product Name</option>
+          <option *ngFor="let prod of products" [value]="prod.productId">
+              {{ prod.productName }}
+          </option>
       </select>
-      <span class="text-danger" *ngIf="isFieldInvalid('productId')"
-        >Product Name is required.</span
-      >
-    </div>
+      <span class="text-danger" *ngIf="isFieldInvalid('productId')">Product Name is required.</span>
+  </div>
+
+  <label for="unitName">
+      <span></span>Unit
+  </label>
+  <input type="text" id="unitName" name="unitName" [value]="selectedUnitName" readonly>
+
+
+
+
+
+
+
 
     <div class="form-group">
       <label for="price"><span class="text-danger">*</span>Price</label>

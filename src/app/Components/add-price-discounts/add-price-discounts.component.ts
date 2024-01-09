@@ -26,6 +26,20 @@ export class AddPriceDiscountsComponent {
   showPriceProductDiv: boolean = false;
   productList: any;
   btnIndex = -1;
+  selectedUnitName = '';
+
+
+  onProductChange(event: any) {
+    const productId = event.target.value;
+    const selectedProduct = this.products.find(prod => prod.productId == productId);
+    this.selectedUnitName = selectedProduct ? selectedProduct.unitName : '';
+    console.log(this.selectedUnitName, "name");
+    console.log(selectedProduct, "product");
+    //console.log(productName, "Prod name");
+
+
+}
+
 
   isDiscountEntered(): boolean {
     const discountAmount = parseFloat(
@@ -132,7 +146,8 @@ export class AddPriceDiscountsComponent {
     this.productService.getallProducts().subscribe(
       (data: any) => {
         this.products = data;
-        //console.log('Products :', this.products);
+
+        console.log('Products :', this.products);
       },
       (error) => {
         console.error('Error fetching product groups:', error);
