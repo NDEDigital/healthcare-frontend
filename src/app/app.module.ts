@@ -72,6 +72,7 @@ import { OrderFlowComponent } from './Components/order-flow/order-flow.component
 import { SellerOrderComponent } from './Components/seller-order/seller-order.component';
 import { UserOrdersComponent } from './Pages/user-orders/user-orders.component';
 import { SellerOrdersComponent } from './Components/seller-orders/seller-orders.component';
+import { LoginPopupComponent } from './Components/login-popup/login-popup.component';
  
 
 @NgModule({
@@ -137,6 +138,7 @@ import { SellerOrdersComponent } from './Components/seller-orders/seller-orders.
     UserOrdersComponent,
     BuyerInvoiceComponent,
     SellerOrdersComponent,
+    LoginPopupComponent,
   ],
   imports: [
     CommonModule,
