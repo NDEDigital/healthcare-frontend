@@ -17,7 +17,7 @@ export class UserDataService {
   loginURL = `${this.URL}/login`;
   getSingleUserURL = `${this.URL}/getSingleUserInfo`;
   passURL = `${this.URL}/updatePass`;
-  updateUserURL = `${this.URL}/UpdateUser`;
+  updateUserURL = `${this.URL}/UpdateUserProfile`;
   bankDataURL = `${this.URL}/api/Goods/BankData`;
   MobileBankingTypeURL = `${this.URL}/api/Goods/MobileBankData`;
   constructor(private http: HttpClient) {}
