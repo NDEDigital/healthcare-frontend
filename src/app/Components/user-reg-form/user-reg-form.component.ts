@@ -83,6 +83,7 @@ export class UserRegFormComponent {
       return null;
     }
   }
+  
   isFieldInvalid(fieldName: string): boolean {
     const field = this.userResistrationForm.get(fieldName);
     // Check if the field is not null before accessing its properties
