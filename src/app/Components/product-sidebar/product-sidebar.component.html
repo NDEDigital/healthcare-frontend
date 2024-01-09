@@ -1,18 +1,21 @@
 <div class="side">
-  <div>
-    <p class="parent">Category</p>
-    <p>Bone & Bone Marrow Biopsy</p>
-    <p>Breast Biopsy Site Marker</p>
-    <p>Breast Implant</p>
-    <p>Drainage Catheter</p>
-    <p>Expander</p>
-    <p>Huber Needle</p>
-    <p>Mammography</p>
-    <p>Soft Tissue Biopsy</p>
-    <p>Umbilical Catheter</p>
-    <p>Ventilator</p>
-    <a href=""><p>View More</p></a>
+  <p class="parent">Categories</p> 
+  <div *ngFor="let entry of groupData | keyvalue; let i = index">
+    <div *ngIf="showAll || i < initialLimit">
+      <p class=""  style="cursor: pointer;">{{ entry.value }}</p>
+    </div>
   </div>
+  <h5 
+  *ngIf="groupData && groupData.size > initialLimit" 
+  (click)="showAll = !showAll" 
+  class="text-primary"
+  style="cursor: pointer;"
+  >
+    {{ showAll ? 'Show Less' : 'Show All' }}
+  </h5>
+  
+
+   
   <hr />
   <div>
     <p class="parent">Brands</p>
