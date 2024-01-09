@@ -126,6 +126,8 @@ export class BuyerOrderComponent {
         this.ratingValidator,
       ]),
     });
+    // Set the default value for typeId form control
+    this.returnForm.get('typeId')?.setValue(null);
   }
   setDetail(detail: any) {
     this.detailData = detail;
