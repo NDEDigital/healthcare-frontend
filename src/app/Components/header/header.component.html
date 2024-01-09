@@ -116,14 +116,20 @@
     <div class="logo_container col-3 d-flex justify-content-between">
       <!-- <a href="" -->
       <a class="companyName">
-        <span *ngIf="isSeller || isAdmin">Nimpex HealthCare</span>
+        <!-- <span *ngIf="isSeller || isAdmin">Nimpex HealthCare</span>
         <span
           *ngIf="!isSeller || !isAdmin"
           [routerLink]="'/'"
           style="cursor: pointer"
         >
           Nimpex HealthCare</span
-        >
+        > -->
+        <span *ngIf="!isSeller || !isAdmin" 
+          [routerLink]="(!isSeller || !isAdmin) ? '/' : null"
+      style="cursor: pointer">
+          Nimpex HealthCare
+        </span>
+
         <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" />-->
       </a>
 
