@@ -39,13 +39,13 @@ export class SellerOrderOverviewService {
     status: string,
     sellerSalesMasterDto: any
   ) {
-    //console.log('Data sent to server:', '1', status, sellerSalesMasterDto);
+    console.log('Data sent to server:', '1', status, sellerSalesMasterDto);
     const updateOrder = {
       orderdetailsIds: orderdetailsIds,
       status: status,
       sellerSalesMasterDto: sellerSalesMasterDto,
     };
-    //console.log(updateOrder, 'updateOrder');
+    console.log(updateOrder, 'updateOrder');
 
     return this.http.put(this.UpdateSellerOrderDetailsStatusURL, updateOrder);
   }
@@ -139,7 +139,7 @@ export class SellerOrderOverviewService {
   getInvoiceForSeller(OrderID: number) {
     //console.log('service e aise');
     return this.http.get(this.getInvoiceForSellerURL, {
-      params: {  OrderID },
+      params: { OrderID },
     });
   }
 }

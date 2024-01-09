@@ -5,6 +5,19 @@ import { SellerOrderOverviewService } from 'src/app/services/seller-order-overvi
 import { OrderApiService } from 'src/app/services/order-api.service';
 import { ProductReturnServiceService } from 'src/app/services/product-return-service.service';
 import { ReviewRatingsService } from 'src/app/services/review-ratings.service';
+interface ProductType {
+  orderNo: any;
+  productId: any;
+  specification: any;
+  stockQty: any;
+  saleQty: any;
+  unitId: any;
+  netPrice: any;
+  address: any;
+  productGroupID: any;
+  addedBy: string;
+  addedPC: string;
+}
 @Component({
   selector: 'app-seller-orders',
   templateUrl: './seller-orders.component.html',
@@ -146,14 +159,14 @@ export class SellerOrdersComponent {
         console.log(response, 'newsellerorder');
         this.sellerOrder = response;
 
-        setTimeout(() => {
-          console.log(
-            this.sellerOrder,
-            'byer order array',
-            this.sellerOrder.length,
-            'this.sellerOrder.length'
-          );
-        }, 500);
+        // setTimeout(() => {
+        //   console.log(
+        //     this.sellerOrder,
+        //     'byer order array',
+        //     this.sellerOrder.length,
+        //     'this.sellerOrder.length'
+        //   );
+        // }, 500);
         this.loading = false;
       },
       error: (error: any) => {
@@ -170,14 +183,14 @@ export class SellerOrdersComponent {
         console.log(response, 'newsellerorder');
         this.sellerOrder = response;
 
-        setTimeout(() => {
-          console.log(
-            this.sellerOrder,
-            'seller order array',
-            this.sellerOrder.length,
-            'this.sellerOrder.length'
-          );
-        }, 500);
+        // setTimeout(() => {
+        //   console.log(
+        //     this.sellerOrder,
+        //     'seller order array',
+        //     this.sellerOrder.length,
+        //     'this.sellerOrder.length'
+        //   );
+        // }, 500);
         this.loading = false;
       },
       error: (error: any) => {
@@ -219,70 +232,139 @@ export class SellerOrdersComponent {
     let uidS = localStorage.getItem('code');
     let uid: any;
     if (uidS) uid = parseInt(uidS, 10);
-    console.log(order.orderDetailsListForSeller);
-
-    order.orderDetailsListForSeller.forEach((product: any) => {
-      console.log(product);
-      let status = 'status';
-      let detailID = product.orderDetailId.toString();
-
-      const sellerSalesMasterDto = {
-        userId: uid,
-        totalPrice: product.netPrice,
-
-        bUserId: product.bUserId,
-        addedBy: 'user',
-        addedPC: '0.0.0.0',
-        sellerSalesDetailsList: [
-          {
-            orderNo: product.orderNo,
-            productId: product.productId,
-            specification: product.specification,
-            stockQty: product.stockQty,
-            saleQty: product.saleQty,
-            unitId: product.unitId,
-            netPrice: product.netPrice,
-            address: product.address,
-            productGroupID: product.productGroupID,
-            addedBy: 'user',
-            addedPC: '0.0.0.0',
-          },
-        ],
-      };
-
-      // console.log(
-      //   orderdetailsIds.toString(),
-      //   this.statusArray[this.btnIndex],
-      //   status,
-      //   sellerSalesMasterDto
-      // );
+    let status = 'status';
+    let detailIDs = '';
+    if (this.btnIndex === -1) {
       if (stat === 'Rejected') {
         status = 'Rejected';
       } else {
-        status = this.statusArray[this.btnIndex];
+        status = 'Processing';
       }
-      this.sellerService
-        .UpdateSellerOrderDetailsStatus(detailID, status, sellerSalesMasterDto)
-        .subscribe({
-          next: (response: any) => {
-            console.log(response);
-            // this.productsData = response;
-            // //console.log(this.productsData);
-            // if ((this.btnIndex = -1)) {
-            //   this.getData('Pending');
-            // } else if ((this.btnIndex = 1)) {
-            //   this.getData('Approved');
-            // } else {
-            //   this.getData('Rejected');
-            // }
-            this.btnIndex = -1;
-            this.getData('');
-          },
-          error: (error: any) => {
-            //console.log(error);
-          },
-        });
+    }
+    if (this.btnIndex === 3) {
+      status = 'ReadyToShip';
+    }
+    if (this.btnIndex === 4) {
+      status = 'ToDeliver';
+    }
+    if (this.btnIndex === 5) {
+      status = 'Delivered';
+    }
+    if (this.btnIndex === 8) {
+      status = 'Returned';
+    }
+    console.log(order.orderDetailsListForSeller);
+
+    //detailID = product.orderDetailId.toString();
+    console.log(order, 'order');
+    console.log(order.orderDetailsListForSeller, 'orderDetailsListForSeller');
+
+    // if (btnIndex === 2) {
+    //   status = 'Rejected';
+    // }
+
+    // const sellerSalesMasterDto = {
+    //   userId: uid,
+    //   totalPrice: order.netPrice,
+    //   bUserId: order.buyerUserId,
+    //   addedBy: 'user',
+    //   addedPC: '0.0.0.0',
+    //   sellerSalesDetailsList: [
+    //     // {
+    //     //   orderNo: product.orderNo,
+    //     //   productId: product.productId,
+    //     //   specification: product.specification,
+    //     //   stockQty: product.stockQty,
+    //     //   saleQty: product.saleQty,
+    //     //   unitId: product.unitId,
+    //     //   netPrice: product.netPrice,
+    //     //   address: product.address,
+    //     //   productGroupID: product.productGroupID,
+    //     //   addedBy: 'user',
+    //     //   addedPC: '0.0.0.0',
+    //     // },
+    //   ],
+    // };
+    // order.orderDetailsListForSeller.forEach((product: any, index: number) => {
+    //   detailIDs += product.orderDetailId;
+
+    //   if (index < order.orderDetailsListForSeller.length - 1) {
+    //     detailIDs += ',';
+    //   }
+    // });
+    const sellerSalesMasterDto = {
+      userId: uid,
+      totalPrice: order.totalPrice,
+      bUserId: order.buyerUserId,
+      addedBy: 'user',
+      addedPC: '0.0.0.0',
+      sellerSalesDetailsList: [] as ProductType[],
+    };
+
+    order.orderDetailsListForSeller.forEach((product: any, index: number) => {
+      detailIDs += product.orderDetailId;
+
+      if (index < order.orderDetailsListForSeller.length - 1) {
+        detailIDs += ',';
+      }
+
+      // Creating an object based on the commented-out code
+      const salesDetail: ProductType = {
+        orderNo: order.orderNo,
+        productId: product.productId,
+        specification: product.specification,
+        stockQty: product.stockQty,
+        saleQty: product.saleQty,
+        unitId: product.unitId,
+        netPrice: product.netPrice,
+        address: order.buyerAddress,
+        productGroupID: product.productGroupID,
+        addedBy: 'user',
+        addedPC: '0.0.0.0',
+      };
+
+      // Adding the created object to the sellerSalesDetailsList array
+      sellerSalesMasterDto.sellerSalesDetailsList.push(salesDetail);
     });
+    console.log(status, 'status');
+    this.sellerService
+      .UpdateSellerOrderDetailsStatus(detailIDs, status, sellerSalesMasterDto)
+      .subscribe({
+        next: (response: any) => {
+          console.log(response);
+          // this.productsData = response;
+          // //console.log(this.productsData);
+          // if ((this.btnIndex = -1)) {
+          //   this.getData('Pending');
+          // } else if ((this.btnIndex = 1)) {
+          //   this.getData('Approved');
+          // } else {
+          //   this.getData('Rejected');
+          // }
+          if (status === 'Rejected') {
+            this.btnIndex = 2;
+          } else if (status === 'Processing') {
+            // Set btnIndex to the appropriate value for Processing
+            this.btnIndex = 3;
+          } else if (status === 'ReadyToShip') {
+            this.btnIndex = 4;
+          } else if (status === 'ToDeliver') {
+            this.btnIndex = 5;
+          } else if (status === 'Delivered') {
+            this.btnIndex = 6;
+          } else if (status === 'Returned') {
+            this.btnIndex = 9;
+          } else {
+            // Handle other status values as needed
+            // You may want to set a default value for btnIndex or handle unknown status
+            // this.btnIndex = ???;
+          }
+          this.getData(status);
+        },
+        error: (error: any) => {
+          //console.log(error);
+        },
+      });
   }
   gotoInvoice(orderId: any) {
     sessionStorage.setItem('orderMasterID', orderId);
