@@ -148,19 +148,19 @@ export class OrderFlowComponent {
         console.log(`${key}: ${value}`);
       });
 
-      // this.productReturnService
-      //   .ReturnProductAndChangeOrderDetailsStatus(returnData)
-      //   .subscribe({
-      //     next: (Response: any) => {
-      //       console.log('return post and status change response', Response);
-      //       this.getData('Delivered');
-      //       this.CloseReturnFormModalBTN.nativeElement.click();
-      //     },
-      //     error: (error: any) => {
-      //       console.log(error);
-      //       alert(error);
-      //     },
-      //   });
+      this.productReturnService
+        .ReturnProductAndChangeOrderDetailsStatus(returnData)
+        .subscribe({
+          next: (Response: any) => {
+            console.log('return post and status change response', Response);
+            this.getData('Delivered');
+            this.CloseReturnFormModalBTN.nativeElement.click();
+          },
+          error: (error: any) => {
+            console.log(error);
+            alert(error);
+          },
+        });
     }
   }
 
