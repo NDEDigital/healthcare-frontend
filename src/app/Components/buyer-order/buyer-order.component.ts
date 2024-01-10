@@ -440,8 +440,12 @@ export class BuyerOrderComponent {
         .subscribe({
           next: (Response: any) => {
             console.log('return post and status change response', Response);
-            this.getData('Delivered');
-            this.closeModalButton.nativeElement.click();
+            setTimeout(() => {
+              this.getData('Delivered');
+              this.closeModalButton.nativeElement.click();
+              alert(Response.message);
+            }, 100);
+
           },
           error: (error: any) => {
             console.log(error);
