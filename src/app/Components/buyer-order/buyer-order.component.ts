@@ -452,8 +452,10 @@ export class BuyerOrderComponent {
             alert(error);
           },
         });
-    } else {
-      this.returnType = true;
+    } 
+    else {
+      // this.returnType = true;
+      alert("Please Select a return type.")
     }
   }
   // Create a helper function to convert FormData to a plain object
