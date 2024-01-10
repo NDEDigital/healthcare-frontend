@@ -1,5 +1,5 @@
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { Component, ComponentFactoryResolver,ElementRef, ViewChild  } from '@angular/core';
+import { Component, ComponentFactoryResolver,ElementRef, ViewChild,QueryList   } from '@angular/core';
 import { AddProductService } from 'src/app/services/add-product.service';
 
 @Component({
@@ -9,6 +9,9 @@ import { AddProductService } from 'src/app/services/add-product.service';
 })
 export class AddProductQuantityComponent   {
   @ViewChild('searchInputRef') searchInputRef!: ElementRef;
+  @ViewChild('receivedCode') receivedCode!: ElementRef;
+  @ViewChild('receiveQtyField')  receiveQtyFieldRefList!: QueryList<ElementRef<HTMLInputElement>>;
+  
   portalReceivedId:any;
   isGoodsNameDropdownOpen: boolean = false
   isGroupNameDropdownOpen: boolean = false
@@ -44,7 +47,10 @@ export class AddProductQuantityComponent   {
 
 
   ngOnInit() {
-
+  //   if( this.receivedCode.nativeElement.value)
+  // {
+  //   this.receiveQtyField.nativeElement.setAttribute('readonly', 'true');
+  // }
 
 
   }
@@ -78,6 +84,13 @@ export class AddProductQuantityComponent   {
   }
 
   addRow() {
+   
+ 
+  if( this.receivedCode.nativeElement.value)
+  {
+    this.clear()
+  }
+
     const rowsArray = this.form.get('rows') as FormArray;
     
     if (rowsArray.length > 0) {
@@ -107,7 +120,9 @@ export class AddProductQuantityComponent   {
     rowsArray.push(newRow);
     this.selectedProductNames.push('Select product');
     this.selectedProductGroup.push('Select Group');
-  }
+ 
+
+ }
   
  getPortalData(PortalReceivedId:any){
   this.addProductService.GetPortalData(PortalReceivedId).subscribe({
@@ -205,7 +220,17 @@ export class AddProductQuantityComponent   {
   }
   
    PatchForm(data : any){
+    // if ( this.receiveQtyField) {
+    //   this.receiveQtyField.nativeElement.setAttribute('readonly', 'true');
+    // } else {
+    //   console.log("tururtu6iu65 ")
+    //   //this.receiveQtyField.nativeElement.removeAttribute('readonly');
+    // }
 
+    // this.receiveQtyFieldRefList.forEach((field, index) => {
+    //   field.nativeElement.value = '';
+    // });
+   
     // master data
     this.masterForm.patchValue({
       challanNo: data.challanNo,
@@ -376,8 +401,8 @@ export class AddProductQuantityComponent   {
   
     return emptyFields;
   }
-  clear()
-{
+
+  clear(){
   this.masterForm.reset(); // Reset the masterForm
   this.form.reset(); // Reset the nested form (rows)
  
@@ -387,7 +412,9 @@ export class AddProductQuantityComponent   {
     this.selectedProductGroup= [];
     console.log("    this.selectedProductGroup",    this.selectedProductGroup)
   }
-}
+
+  }
+ 
    rowClicked(index:any, Id:any){
     this.portalReceivedId=Id;
     console.log(" i",index)
@@ -406,8 +433,6 @@ export class AddProductQuantityComponent   {
     }
     else{ console.log("error");
     }
-  
-
   }
 
 }

@@ -16,7 +16,7 @@
                     <label for="website">Portal Received Code</label>
                   </div>
                   <div class="col-7 d-flex">
-                    <input type="text" class="disable" id="portalReceivedCode" formControlName="portalReceivedCode"  readonly />
+                    <input type="text" class="disable" id="portalReceivedCode" formControlName="portalReceivedCode"  readonly   #receivedCode/>
                     <i class="fa-solid fa-magnifying-glass  master-icon "data-bs-toggle="modal" data-bs-target="#masterModal" (click)="GetAddQuantityDataByUserId()"></i>
              
                   </div>
@@ -121,7 +121,7 @@
                 <td><input formControlName="unit" placeholder="Unit" readonly class="center-placeholder"></td>
                 <td><input formControlName="price" placeholder="Price" readonly class="center-placeholder"></td>
                 <td>
-                  <input formControlName="receiveQty" placeholder="Receive Qty" class="non-readonly-input">
+                  <input formControlName="receiveQty" placeholder="Receive Qty" class="non-readonly-input" #receiveQtyField>
                   <div *ngIf="rowsFormArray.controls[i].get('receiveQty')?.invalid ">
                     <span  class="errorText" *ngIf="rowsFormArray.controls[i].get('receiveQty')?.hasError('pattern')">
                       Please enter a valid integer number.
@@ -148,7 +148,8 @@
             type="button"
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
-            class="btn  approved py-1 px-2 m-1">
+            class="btn  approved py-1 px-2 m-1"
+            *ngIf="!receivedCode.value">
             Submit
           </button>
          </div>
@@ -227,7 +228,6 @@
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-
      
         <input type="text" class="searchInput popUpSearch" placeholder="Search.." (keyup)="filterFunction($event, '.rowData ')"  #searchInputRef>
         <div class="modalTable ">
