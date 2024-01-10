@@ -1,5 +1,5 @@
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { Component, ComponentFactoryResolver,ElementRef, ViewChild,QueryList   } from '@angular/core';
+import { Component,ElementRef, ViewChild,QueryList   } from '@angular/core';
 import { AddProductService } from 'src/app/services/add-product.service';
 
 @Component({

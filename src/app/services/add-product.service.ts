@@ -7,7 +7,7 @@ import { Observable } from 'rxjs'; // Import Observable from 'rxjs'
 })
 export class AddProductService {
   URL = API_URL;
-  // URL = 'https://localhost:7006';
+  // URL = 'https://localhost:7006';getdetailsData
   // URL = 'http://172.16.5.18:8081'; // liveURL
 
   private getdetailsData = `${this.URL}/ProductQuantity/GetProductForAddQtyByUserId`;
