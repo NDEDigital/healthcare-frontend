@@ -73,7 +73,7 @@ export class UserProfileComponent {
     });
 
     this.updateUserForm = new FormGroup({
-      email: new FormControl('',Validators.required),
+      email: new FormControl('',[Validators.required, Validators.email]),
       address: new FormControl('', Validators.required),
       companyName: new FormControl(''),
       website: new FormControl(''),
