@@ -124,9 +124,11 @@
         >
           Nimpex HealthCare</span
         > -->
-        <span *ngIf="!isSeller || !isAdmin" 
-          [routerLink]="(!isSeller || !isAdmin) ? '/' : null"
-      style="cursor: pointer">
+        <span
+          *ngIf="!isSeller && !isAdmin"
+          [routerLink]="!isSeller && !isAdmin ? '/' : null"
+          style="cursor: pointer"
+        >
           Nimpex HealthCare
         </span>
 
@@ -221,7 +223,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="col-3 d-flex align-items-center justify-content-between">
       <ul
         class="d-flex justify-content-around justify-content-md-between align-items-center p-0 mb-0"
@@ -505,7 +507,14 @@
       </div>
 
       <div class="col-4 logo_container d-flex">
-        <img src="assets/images/Logo/final-logo-6.png" alt="logo" />
+        <span
+          *ngIf="!isSeller && !isAdmin"
+          [routerLink]="!isSeller && !isAdmin ? '/' : null"
+          style="cursor: pointer"
+        >
+          Nimpex HealthCare
+        </span>
+        <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" /> -->
 
         <!-- <div class="dropdown mt-3 ms-5 ps-4" *ngIf="isCategoriesVisible">
           <button
