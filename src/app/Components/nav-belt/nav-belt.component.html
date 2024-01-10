@@ -9,7 +9,7 @@
   >
     <div
       *ngFor="let entry of products | keyvalue"
-      class="nav_item d-flex flex-column m-1 border border-1 rounded-2"
+      class="nav_item d-flex flex-column m-1"
       (click)="setSelectData(entry.key, entry.value)"
       [class.active]="entry.value === activeEntry"
     >
@@ -24,7 +24,7 @@
       <div class="navbelt_title fw-bold">
         {{
           entry.value.length > 10
-            ? (entry.value | slice:0:10) + "..."
+            ? (entry.value | slice : 0 : 10) + "..."
             : entry.value
         }}
       </div>
