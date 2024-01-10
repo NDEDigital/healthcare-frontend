@@ -23,7 +23,7 @@ export class ProductApprovalComponent {
   getData(status: string) {
     this.productService.getProductData(status).subscribe({
       next: (response: any) => {
-        //console.log(response);
+        console.log(response);
         this.productsData = response;
         //console.log(this.productsData);
       },
@@ -46,18 +46,23 @@ export class ProductApprovalComponent {
       ProductId,
       Status,
     };
+    console.log(Status, 'Status');
+
     this.productService.updateProduct(productStatus).subscribe({
       next: (response: any) => {
         //console.log(response);
         // this.productsData = response;
         // //console.log(this.productsData);
-        if ((this.btnIndex = -1)) {
-          this.getData('Pending');
-        } else if ((this.btnIndex = 1)) {
-          this.getData('Approved');
-        } else {
-          this.getData('Rejected');
-        }
+        // if ((this.btnIndex = -1)) {
+        //   this.getData('Pending');
+        // } else if ((this.btnIndex = 1)) {
+        //   this.getData('Approved');
+        // } else {
+        //   this.getData('Rejected');
+        // }
+        this.getData(Status);
+        if (Status == 'Approved') this.btnIndex = 1;
+        if (Status == 'Rejected') this.btnIndex = 0;
       },
       error: (error: any) => {
         //console.log(error);

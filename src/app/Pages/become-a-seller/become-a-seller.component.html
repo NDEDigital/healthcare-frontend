@@ -104,7 +104,7 @@
             type="file"
             id="tradeLicense"
             formControlName="tradeLicense"
-            accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
+            accept="image/jpeg, image/jpg, image/png,image/webp"
             [class.error]="isFieldInvalid('tradeLicense')"
             #TradeLicenseInput
           />
@@ -124,7 +124,7 @@
             type="file"
             id="companyImage"
             formControlName="companyImage"
-            accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
+            accept="image/jpeg, image/jpg, image/png,image/webp"
             [class.error]="isFieldInvalid('companyImage')"
             #CompanyImageInput
           /><span class="text-danger" *ngIf="isFieldInvalid('companyImage')">

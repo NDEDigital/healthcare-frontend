@@ -9,7 +9,7 @@
   margin: auto;
 } */
 
-.modal-content {
+#showImgModal .modal-content {
   width: 95vw;
   height: 75vh;
   overflow: scroll;
