@@ -5,6 +5,9 @@
 .addQuantity_header_text {
     color: var(--color-primary);
   }
+  .details-header {
+    z-index: 100;
+  }
 .field-div{
   background-color: white;
 }
@@ -60,12 +63,15 @@
     border: 1px #6a93a3;
   }
   .disable{
-    background-color: #c7c7c7;
+    background-color: #e9e9e9;
   }
   .div-button .icons i{
     color: var(--color-primary);
     font-size: 1rem;
     padding-left: .3rem;
+    border: 1px  solid #88aab6;
+    margin: .2rem;
+    padding: .2rem;
   }
 
   .submit-button .approved{
@@ -139,7 +145,7 @@
     background-color: #f6f6f6;
     min-width: 15rem;
     border: 1px solid #ddd;
-    z-index: 1;
+z-index: 1;
     height: 13rem;
     overflow: scroll;
   }
@@ -158,3 +164,48 @@
   
   /* Show the dropdown menu (use JS to add this class to the .dropdown-groupName container when the user clicks on the dropdown button) */
   .show {display:block;}
+
+  .errorText{
+    color: rgb(197, 8, 8) !important;
+    font-size: 1rem;
+  }
+  .GroupList{
+    height: 10rem;
+    overflow: scroll;
+    padding: .2rem .4rem;
+  }
+  .master-icon{
+    border: 1px  solid #88aab6;
+    margin: .1rem ;
+    padding: .2rem;
+    color: var(--color-primary);
+  }
+
+  .modalTable{
+    border: 1px solid  #d0dfe4;
+    text-align: center;
+    height: 20rem;
+    overflow: scroll;
+  }
+  .modalTable .row{
+    border-bottom:  1px solid #d0dfe4;
+   cursor: pointer;
+  }
+  .modalTable .header{
+   top: 0;
+   position: sticky;
+   font-size: 1rem;
+   color: #181717;
+  font-weight: 500;
+  background-color: #fff;
+  }
+  .selected-row {
+    background-color: rgb(214, 227, 233); /* Change to the color you want */
+    /* Other styling */
+  }
+  .popUpSearch{
+    border: 2px solid #5f8794;
+    width: 100%;
+    margin: .4rem 0;
+    padding: 0 .2rem;
+  }

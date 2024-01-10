@@ -1,72 +1,66 @@
 <section
-class="mid-body d-flex flex-column justify-content-center align-items-end"
+  class="mid-body d-flex flex-column justify-content-center align-items-end"
 >
-<form
-  [formGroup]="loginForm"
-  class="d-flex flex-column justify-content-center ps-3 pe-3 me-5 rounded"
->
-  <div>
-    <label class="fw-bold" for="phoneNumber">Phone Number</label>
-    <br />
-    <input
-      type="text"
-      class="w-100"
-      formControlName="phoneNumber"
-      [class.error]="isFieldInvalid('phoneNumber')"
-    />
-    <div class="text-danger" *ngIf="isFieldInvalid('phoneNumber')">
-      <span>{{ getPhoneNumberErrorMessage() }}</span>
-    </div>
-  </div>
-
-  <div class="mt-3">
-    <label class="fw-bold" for="password">Password</label>
-    <br />
-    <input
-      type="password"
-      class="w-100"
-      formControlName="password"
-      [class.error]="isFieldInvalid('password')"
-    />
-    <div class="text-danger" *ngIf="isFieldInvalid('password')">
-      Password is required.
-    </div>
-  </div>
-
-  <div *ngIf="errorMessage" class="error-message text-danger">
-    {{ errorMessage }}
-  </div>
-
-  <div class="text-end">
-    <a href="">Forgot Password?</a>
-  </div>
-
-  <button class="sign-in w-100 mt-2" (click)="onLoginClick()">
-    Sign In
-  </button>
-
-  <div class="text-end">
-    <!-- <a routerLink="/register">Create account</a> -->
-    <a routerLink="/userRegistration">Create account</a>
-  </div>
-
-  <hr />
-
-  <div class="social d-flex align-items-center">
-    <label for="">Sign in With:</label>
-    <div class="ms-2">
-      <img class="" src="/assets/images/Social Icon/fb.png" alt="" />
-      <img
-        class="ms-3"
-        src="/assets/images/Social Icon/google.png"
-        alt=""
+  <form
+    [formGroup]="loginForm"
+    class="d-flex flex-column justify-content-center ps-3 pe-3 me-5 rounded"
+  >
+    <div>
+      <label class="fw-bold" for="phoneNumber">Phone Number</label>
+      <br />
+      <input
+        type="text"
+        class="w-100"
+        formControlName="phoneNumber"
+        [class.error]="isFieldInvalid('phoneNumber')"
       />
-      <img
-        class="ms-3"
-        src="/assets/images/Social Icon/linkedIn.png"
-        alt=""
-      />
+      <div class="text-danger" *ngIf="isFieldInvalid('phoneNumber')">
+        <span>{{ getPhoneNumberErrorMessage() }}</span>
+      </div>
     </div>
-  </div>
-</form>
+
+    <div class="mt-3">
+      <label class="fw-bold" for="password">Password</label>
+      <br />
+      <input
+        type="password"
+        class="w-100"
+        formControlName="password"
+        [class.error]="isFieldInvalid('password')"
+      />
+      <div class="text-danger" *ngIf="isFieldInvalid('password')">
+        Password is required.
+      </div>
+    </div>
+
+    <div *ngIf="errorMessage" class="error-message text-danger">
+      {{ errorMessage }}
+    </div>
+
+    <div class="text-end">
+      <a href="">Forgot Password?</a>
+    </div>
+
+    <button class="sign-in w-100 mt-2" (click)="onLoginClick()">Sign In</button>
+
+    <div class="text-end">
+      <!-- <a routerLink="/register">Create account</a> -->
+      <a href="/userRegistration">Create account</a>
+    </div>
+
+    <hr />
+
+    <div class="social d-flex align-items-center">
+      <label for="">Sign in With:</label>
+      <div class="ms-2">
+        <img class="" src="/assets/images/Social Icon/fb.png" alt="" />
+        <img class="ms-3" src="/assets/images/Social Icon/google.png" alt="" />
+        <img
+          class="ms-3"
+          src="/assets/images/Social Icon/linkedIn.png"
+          alt=""
+        />
+      </div>
+    </div>
+  </form>
 </section>

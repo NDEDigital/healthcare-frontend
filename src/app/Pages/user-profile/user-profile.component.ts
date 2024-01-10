@@ -1,5 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
-import { FormControl, FormGroup } from '@angular/forms';
+import { FormControl,Validators, FormGroup } from '@angular/forms';
 import { SharedService } from 'src/app/services/shared.service';
 import { UserDataService } from 'src/app/services/user-data.service';
 
@@ -73,8 +73,8 @@ export class UserProfileComponent {
     });
 
     this.updateUserForm = new FormGroup({
-      email: new FormControl(''),
-      address: new FormControl(''),
+      email: new FormControl('',[Validators.required, Validators.email]),
+      address: new FormControl('', Validators.required),
       companyName: new FormControl(''),
       website: new FormControl(''),
       yearsInBusiness: new FormControl(''),
@@ -118,28 +118,37 @@ export class UserProfileComponent {
     // input.classList.remove('editable');
   }
 
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.updateUserForm.get(fieldName);
+    // Check if the field is not null before accessing its properties
+    return field ? field.invalid && (field.dirty || field.touched) : false;
+  }
+
+
+
   updateUser(section: string) {
     if (this.updateUserForm.valid) {
       // Perform the update operation using the updated form values
       // const updatedUser = { ...this.user, ...this.updateUserForm.value };
       this.user.email = this.updateUserForm.value.email;
       this.user.address = this.updateUserForm.value.address;
-      this.user.companyName = this.updateUserForm.value.companyName;
-      this.user.website = this.updateUserForm.value.website;
-      this.user.yearsInBusiness = this.updateUserForm.value.yearsInBusiness;
-      this.user.businessRegistrationNumber =
-        this.updateUserForm.value.businessRegNum;
-      this.user.taxIDNumber = this.updateUserForm.value.taxIdNum;
+      //this.user.companyName = this.updateUserForm.value.companyName;
+      //this.user.website = this.updateUserForm.value.website;
+      //this.user.yearsInBusiness = this.updateUserForm.value.yearsInBusiness;
+      //this.user.businessRegistrationNumber =
+        //this.updateUserForm.value.businessRegNum;
+      //this.user.taxIDNumber = this.updateUserForm.value.taxIdNum;
       const updatedUser = this.user;
       // //console.log(updatedUser, 'updatedUser');
       this.userDataService.updateUser(updatedUser).subscribe({
         next: (response: any) => {
-          // location.reload();
-          // //console.log(response);
-          // //console.log(updatedUser, 'userData');
+          location.reload();
+          console.log(response);
+          //console.log(updatedUser, 'userData');
           // Clear the form
           // this.userForm.reset();
-          // alert(response.message);
+          alert(response.message);
 
           //
           this.sharedService.loggedInUserInfo(response.user);

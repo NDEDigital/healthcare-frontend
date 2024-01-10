@@ -6,7 +6,7 @@ import { Router } from '@angular/router';
 @Component({
   selector: 'app-login-popup',
   templateUrl: './login-popup.component.html',
-  styleUrls: ['./login-popup.component.css']
+  styleUrls: ['./login-popup.component.css'],
 })
 export class LoginPopupComponent {
   loginForm: FormGroup;
@@ -60,7 +60,7 @@ export class LoginPopupComponent {
         // this.sharedServiceData.loggedInUserInfo(response.user);
         if (response.role === 'buyer') {
           // this.router.navigate(['/']);
-          window.location.href = '/';
+          window.location.href = '/cartView';
 
           // const localStorageRefresh = localStorage.getItem('RefreshToken');
 
@@ -74,10 +74,10 @@ export class LoginPopupComponent {
           //     //console.log(error);
           //   },
           // });
-        } else{
+        } else {
           // this.router.navigate(['/dashboard']);
-          window.location.href = '/dashboard'
-        } 
+          window.location.href = '/dashboard';
+        }
       },
       error: (error: any) => {
         //console.log(error);

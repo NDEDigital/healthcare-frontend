@@ -46,6 +46,7 @@
             formControlName="companyFoundationDate"
             class="w-100 p-1 rounded-1"
             [class.error]="isFieldInvalid('companyFoundationDate')"
+            [max]="maxDate"
           />
           <span
             class="text-danger"
