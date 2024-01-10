@@ -11,8 +11,10 @@ export class AddProductService {
   // URL = 'http://172.16.5.18:8081'; // liveURL
 
   private getdetailsData = `${this.URL}/ProductQuantity/GetProductForAddQtyByUserId`;
+  getAddQuantityDatabyUserId = `${this.URL}/ProductQuantity/GetPortalReceivedByUserId`;
   private postData = `${this.URL}/ProductQuantity/PortalReceivedPost`;
   createProductGroupURL = `${this.URL}/api/ProductGroups/CreateProductGroups`;
+  getProductGroupByUserIdURL = `${this.URL}/ProductQuantity/ProductGroupsDropdownByUserId`;
 
   getProductGropURL = `${this.URL}/api/ProductGroups/GetProductGroupsList`;
   GetProductGroupsListByStatusURL = `${this.URL}/api/ProductGroups/GetProductGroupsListByStatus`;
@@ -35,15 +37,24 @@ export class AddProductService {
 
   updateProductListURL = `${this.URL}/api/ProductList/UpdateProductList`;
 
+  GetPortalDataURL= `${this.URL}/ProductQuantity/GetPortalData`;
+
   constructor(private http: HttpClient) {}
+
+
+  GetPortalData(PortalReceivedId: any ) {
+    return this.http.get(this.GetPortalDataURL, {
+      params: { PortalReceivedId },
+    });
+  }
 
   createProductGroup(productData: any) {
     return this.http.post(this.createProductGroupURL, productData);
   }
 
   // get dfetails data
-  GetProductDetailsData(CompanyCode: any) {
-    return this.http.get(`${this.getdetailsData}/${CompanyCode}`);
+  GetProductDetailsData(CompanyCode: any , productGroupId:any) {
+    return this.http.get(`${this.getdetailsData}/${CompanyCode}/${productGroupId}`);
   }
 
   // post data
@@ -83,6 +94,17 @@ export class AddProductService {
   getProductGroups() {
     return this.http.get(this.getProductGropURL);
   }
+     // get group[ by userId]
+//  getProductGroupsByUserId(userID: any) {
+//       return this.http.get(this.getProductGroupByUserIdURL,{
+//         params : {userID}
+//       } );
+// }
+getProductGroupsByUserId(userID: any) {
+  return this.http.get(`${this.getProductGroupByUserIdURL}/${userID}`);
+}
+
+
 
   getUnitGroups() {
     return this.http.get(this.getUnitURL);
@@ -139,5 +161,11 @@ export class AddProductService {
       this.CreateSellerProductPriceURL,
       productListInsertData
     );
+  }
+
+  GetAddQuantityDataByUserId(userId: any) {
+    return this.http.get(this.getAddQuantityDatabyUserId, {
+      params: { userId },
+    });
   }
 }
