@@ -41,6 +41,7 @@
       <div class="col tableHeader">Email</div>
       <div class="col tableHeader">Tax Id. Number</div>
       <div class="col tableHeader">Foundation Date</div>
+      <div class="col tableHeader">Business Registration Number</div>
       <div class="col tableHeader">Trade Licence File</div>
       <div class="col tableHeader">Company Image</div>
       <div class="col tableHeader">Prefered Method</div>
@@ -64,7 +65,12 @@
 
         @{{ cmp.email.split("@")[1] }}
       </div>
-      <div class="col tableBody">{{ cmp.taxIdentificationNumber }}</div>
+      <div class="col tableBody text-break">
+        {{ cmp.businessRegistrationNumber }}
+      </div>
+      <div class="col tableBody text-break">
+        {{ cmp.taxIdentificationNumber }}
+      </div>
       <div class="col tableBody">
         {{ cmp.companyFoundationDate | date : "dd MMM yyyy" }}
       </div>
