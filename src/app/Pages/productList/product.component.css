@@ -1,9 +1,6 @@
 .parent {
   background: white;
-  display: flex;
-  min-height: 100vh;
-  flex-direction: column;
-  justify-content: space-between;
+
 }
 .right-sidebar {
   width: 120px;
@@ -118,6 +115,21 @@
 }
 .activeDiv {
   cursor: pointer;
+}
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 2.5rem;    /* Footer height */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
 }
 
 @media (max-width: 1500px) {
