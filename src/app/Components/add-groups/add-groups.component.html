@@ -56,6 +56,7 @@
       <div class="col tableHeader">Product Group Prefix</div>
       <div class="col tableHeader">Product Group Details</div>
       <div class="col tableHeader">Date Added</div>
+      <div class="col tableHeader" *ngIf="btnIndex != -1">Actions</div>
     </div>
 
     <!-- table body -->
@@ -122,13 +123,13 @@
         {{ group.dateAdded | date : "dd MMM yyyy" }}
       </div>
 
-      <div class="col tableBody">
+      <div class="col tableBody" *ngIf="btnIndex != -1">
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button
               class="actionBtn"
               *ngIf="btnIndex === 0"
-              (click)="updateIsActive(1,group.productGroupID)"
+              (click)="updateIsActive(1, group.productGroupID)"
             >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
