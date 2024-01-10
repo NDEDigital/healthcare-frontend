@@ -415,6 +415,8 @@ export class BuyerOrderComponent {
   }
 
   SaveReturnData() {
+    this.formData = new FormData();
+    
     //console.log(' type', this.returnForm.value.typeId);
     if (this.returnForm.value.typeId != null) {
       //console.log(' RETURN fORM ', this.returnForm.value);
@@ -430,10 +432,10 @@ export class BuyerOrderComponent {
       this.formData.append('AddedPc', '0.0.0.0');
 
       // Assuming you have already populated the `this.formData` object
-      //const formDataObject = this.formDataToObject(this.formData);
+      const formDataObject = this.formDataToObject(this.formData);
 
       // Log the FormData as an object
-      //console.log(' form data ', formDataObject);
+      console.log(' form data ', formDataObject);
 
       this.returnService
         .ReturnProductAndChangeOrderDetailsStatus(this.formData)
@@ -444,6 +446,7 @@ export class BuyerOrderComponent {
               this.getData('Delivered');
               this.closeModalButton.nativeElement.click();
               alert(Response.message);
+              this.returnForm.reset();
             }, 100);
 
           },
