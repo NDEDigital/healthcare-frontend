@@ -120,7 +120,9 @@
     >
       <div class="col tableBody">#{{ i + 1 }}</div>
       <div class="col tableBody">
-        <a  class="invoice"(click)="gotoInvoice( row.orderMasterId)">{{ row.orderNo }}</a>
+        <a class="invoice" (click)="gotoInvoice(row.orderMasterId)">{{
+          row.orderNo
+        }}</a>
       </div>
       <div class="col tableBody">
         {{ row.productName }}
@@ -401,7 +403,7 @@
                   id="imageFile"
                   formControlName="imageFile"
                   #ProductImageInput
-                  accept="image/jpeg, image/jpg, image/png, image/svg+xml, image/webp"
+                  accept="image/jpeg, image/jpg, image/png,image/webp"
                 />
               </div>
 
@@ -430,5 +432,4 @@
       </div>
     </div>
   </section>
-
 </div>
