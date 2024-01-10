@@ -11,7 +11,7 @@ export class AddProductQuantityComponent   {
   @ViewChild('searchInputRef') searchInputRef!: ElementRef;
   @ViewChild('receivedCode') receivedCode!: ElementRef;
   @ViewChild('receiveQtyField')  receiveQtyFieldRefList!: QueryList<ElementRef<HTMLInputElement>>;
-  
+  isReceiveQtyReadOnly = false;
   portalReceivedId:any;
   isGoodsNameDropdownOpen: boolean = false
   isGroupNameDropdownOpen: boolean = false
@@ -22,13 +22,14 @@ export class AddProductQuantityComponent   {
   selectedProduct :any;
   selectedGroup : any
   productdropDownIndex:any
+  NoProductFound  =true
 
   masterForm: FormGroup;
   form!: FormGroup;
   productDertailsData:any;
   productGroupData : any
   portaldata: any;
-
+  NoProduct = " No product found"
   // ModalText = "Give some entry"
  
   constructor(private fb: FormBuilder , private addProductService :AddProductService) {
@@ -61,17 +62,17 @@ export class AddProductQuantityComponent   {
      if (this.searchInputRef && this.searchInputRef.nativeElement) {
       this.searchInputRef.nativeElement.value = '';
     }
-    else{ console.log("error");
+    else{// console.log("error");
     }
     const userID = localStorage.getItem('code')
     this.addProductService.GetAddQuantityDataByUserId(userID).subscribe({
       next: (response:any) => {
-        console.log('Response data:', response);
+     //   console.log('Response data:', response);
        // this.PatchForm(response.portalAfterInsert);
        this.allQuantyData= response
       },
       error: (error) => {
-        console.error('Error:', error);
+      //  console.error('Error:', error);
 
       }
     });
@@ -84,20 +85,18 @@ export class AddProductQuantityComponent   {
   }
 
   addRow() {
-   
- 
-  if( this.receivedCode.nativeElement.value)
-  {
-    this.clear()
-  }
-
+    if( this.receivedCode.nativeElement.value)
+    {
+      this.clear()
+    }  
     const rowsArray = this.form.get('rows') as FormArray;
     
     if (rowsArray.length > 0) {
       const lastRow = rowsArray.at(rowsArray.length - 1) as FormGroup;
       if(!lastRow.valid){
-        console.log(" sjgio")
+       // console.log(" sjgio")
       }
+      this.invisibleProductDropDown()
     }
   
     const newRow = this.fb.group({
@@ -127,11 +126,11 @@ export class AddProductQuantityComponent   {
  getPortalData(PortalReceivedId:any){
   this.addProductService.GetPortalData(PortalReceivedId).subscribe({
     next: (response:any) => {
-      console.log('Response data:', response);
+     // console.log('Response data:', response);
       this.PatchForm(response.portalAfterInsert);
     },
     error: (error) => {
-      console.error('Error:', error);
+     // console.error('Error:', error);
       // Handle error
     }
   });
@@ -142,15 +141,9 @@ export class AddProductQuantityComponent   {
     
     // Remove a specific row from the FormArray by index
     (this.form.get('rows') as FormArray).removeAt(index);
-
- 
     const selectedProductNames = this.selectedProductNames;
-    //console.log(" before selectedProductNames ",selectedProductNames)
-    // Remove the corresponding selected product name from selectedProductNames array
     if (selectedProductNames[index] ) {
       selectedProductNames.splice(index, 1);
-      // You might need to update other indexes of selectedProductNames
-      // if there are further changes to the array's indexes.
     }
     if ( this.selectedProductGroup[index] ) {
       this.selectedProductGroup.splice(index, 1);
@@ -201,7 +194,7 @@ export class AddProductQuantityComponent   {
       // API call
       this.addProductService.insertPortalReceived(this.portaldata).subscribe({
         next: (response) => {
-          console.log('Response:', response);
+        //  console.log('Response:', response);
           // Handle success response
           this.masterForm.reset(); // Reset the masterForm
           this.form.reset(); // Reset the nested form (rows)
@@ -210,7 +203,7 @@ export class AddProductQuantityComponent   {
           this.getPortalData(response.portalReceivedId)
         },
         error: (error) => {
-          console.error('Error:', error);
+         // console.error('Error:', error);
         }
       });
     }
@@ -220,17 +213,14 @@ export class AddProductQuantityComponent   {
   }
   
    PatchForm(data : any){
-    // if ( this.receiveQtyField) {
-    //   this.receiveQtyField.nativeElement.setAttribute('readonly', 'true');
-    // } else {
-    //   console.log("tururtu6iu65 ")
-    //   //this.receiveQtyField.nativeElement.removeAttribute('readonly');
-    // }
 
-    // this.receiveQtyFieldRefList.forEach((field, index) => {
-    //   field.nativeElement.value = '';
-    // });
-   
+    if( this.receivedCode.nativeElement.value)
+    {
+      this.isReceiveQtyReadOnly = true
+    }
+    else{
+    //  console.log(" readOnly");
+     }
     // master data
     this.masterForm.patchValue({
       challanNo: data.challanNo,
@@ -244,7 +234,7 @@ export class AddProductQuantityComponent   {
     detailsFormArray.clear(); // Clear previous entries if needed
     this.selectedProductGroup=[];
     this.selectedProductNames=[]
-    console.log(" before  this.selectedProductNames,      this.selectedProductGroup", this.selectedProductNames,      this.selectedProductGroup)
+    //console.log(" before  this.selectedProductNames,      this.selectedProductGroup", this.selectedProductNames,      this.selectedProductGroup)
     for (const detail of data.portalReceivedDetailAfterInsertlList) {
       detailsFormArray.push(this.fb.group({
         productId: detail.productId,
@@ -262,7 +252,7 @@ export class AddProductQuantityComponent   {
       this.selectedProductNames.push(detail.productName);
       this.selectedProductGroup.push(detail.productGroupName);
     }
-    console.log(" after  this.selectedProductNames,      this.selectedProductGroup", this.selectedProductNames,      this.selectedProductGroup)
+   // console.log(" after  this.selectedProductNames,      this.selectedProductGroup", this.selectedProductNames,      this.selectedProductGroup)
    }
 
   // Inside your component class
@@ -287,30 +277,51 @@ export class AddProductQuantityComponent   {
     const currentValue = rowGroup.get('isDropdownOpen')?.value || false;
     rowGroup.patchValue({ isDropdownOpen: !currentValue });
     const groupName = this.selectedProductGroup[rowIndex];
-    console.log("index", rowIndex, groupName);
-    const matchGroupName = this.productGroupData.find((group:any)=> group.productGroupName === groupName) // (Find) return 1st matching element not arrray
-    console.log(" matchGroupName",matchGroupName)
-    if(matchGroupName.productGroupID){
-     this.getDetailsData(matchGroupName.productGroupID);
+    //console.log("index", rowIndex, groupName);
+    // if group Name is not selected
+    if(groupName=="Select Group"){
+
+      this.NoProductFound=true;
+      this.NoProduct="please select group Name"
+      this.productDertailsData=[]
     }
     else{
-     console.log(" group Id not found")
+    // if group Name is selected
+      const matchGroupName = this.productGroupData.find((group:any)=> group.productGroupName === groupName) // (Find) return 1st matching element not arrray
+    //  console.log(" matchGroupName",matchGroupName)
+      if(matchGroupName.productGroupID){
+      
+       this.getDetailsData(matchGroupName.productGroupID);
+      }
+      else{
+       //console.log(" group Id not found")
+      }
     }
+
   }
   
 
   getDetailsData(productGroupID: number){
+   // console.log("matchGroupName.productGroupID ",productGroupID)
     const userID = localStorage.getItem('code')
     if(productGroupID && userID){
       this.addProductService.GetProductDetailsData(userID,productGroupID) .subscribe({
         next: (response) => {
            //console.log( response)
            this.productDertailsData = response;
-           console.log("his.productDertailsData ",this.productDertailsData)
+         //  console.log("his.productDertailsData ",this.productDertailsData)
+        if(this.productDertailsData.length>0){
+
+          this.NoProductFound= false;
+        }
+        else{
+          this.NoProductFound= true;
+        }
+
         },
         error: (error) => {
    
-         console.log("error ",error)
+        // console.log("error ",error)
          this.productDertailsData =[]
         },
       });
@@ -318,7 +329,7 @@ export class AddProductQuantityComponent   {
 
   }
   invisibleProductDropDown(){
-    console.log("this.productdropDownIndex",this.productdropDownIndex)
+ //   console.log("this.productdropDownIndex",this.productdropDownIndex)
     const rowGroup = this.rowsFormArray.at(this.productdropDownIndex) as FormGroup;
     const isDropdownOpen = rowGroup.get('isDropdownOpen');
     if (isDropdownOpen) {
@@ -331,12 +342,12 @@ export class AddProductQuantityComponent   {
     const userID = localStorage.getItem('code')
     this.addProductService.getProductGroupsByUserId(userID).subscribe({
       next: (response) => {
-         console.log( response)
+        // console.log( response)
        this.productGroupData = response;
          //console.log("his.productDertailsData ",this.productDertailsData)
       },
       error: (error) => {
-       console.log("error ",error)
+       //console.log("error ",error)
       },
     });
   }
@@ -403,21 +414,23 @@ export class AddProductQuantityComponent   {
   }
 
   clear(){
+
   this.masterForm.reset(); // Reset the masterForm
   this.form.reset(); // Reset the nested form (rows)
- 
+  this.productDertailsData=[]
+  this.productGroupData=[]
   while (this.rowsFormArray.length > 0) {
     this.removeRow(0);
     this.selectedProductNames=[] // clearing the  product array
     this.selectedProductGroup= [];
-    console.log("    this.selectedProductGroup",    this.selectedProductGroup)
+   // console.log("    this.selectedProductGroup",    this.selectedProductGroup)
   }
 
   }
  
    rowClicked(index:any, Id:any){
     this.portalReceivedId=Id;
-    console.log(" i",index)
+    //console.log(" i",index)
     this.allQuantyData.forEach((row, i) => {
       row.isSelected = i === index;
     });
@@ -431,7 +444,7 @@ export class AddProductQuantityComponent   {
     if (this.searchInputRef && this.searchInputRef.nativeElement) {
       this.searchInputRef.nativeElement.value = '';
     }
-    else{ console.log("error");
+    else{// console.log("error");
     }
   }
 
