@@ -37,8 +37,10 @@
         </div>
       </div>
       <div class="user_info">
-        <p class="row info_field">
-          <span class="col-4 text-muted text-end">Email:</span>
+        <p class="row info_field p-0 m-0">
+          <span class="col-4 text-muted text-end"><span class="col-8 email text-danger" 
+            >*</span
+          >Email:</span>
           <input
             formControlName="email"
             #emailInput
@@ -51,9 +53,23 @@
             (focus)="onInputFocus(emailInput)"
             (blur)="onInputBlur(emailInput)"
           />
+
         </p>
-        <p class="row info_field">
-          <span class="col-4 text-muted text-end">Address:</span>
+        <div class="row">
+          <div class="col-4">
+           
+          </div>
+          <div class="col-8">
+            <p class="text-danger p-0 m-0" *ngIf="isFieldInvalid('email')"
+            >email is required.</p>
+          </div>
+        </div>
+
+
+        <p class="row info_field m-0">
+          <span class="col-4 text-muted text-end">
+          <span class="address text-danger">*</span
+          >Address:</span>
           <!-- <input
             formControlName="address"
             #address
@@ -76,8 +92,21 @@
             (focus)="onInputFocus(address)"
             (blur)="onInputBlur(address)"
           ></textarea>
+
+
+
         </p>
-        <p class="row info_field">
+
+        <div class="row">
+          <div class="col-4">
+           
+          </div>
+          <div class="col-8">
+            <p class="text-danger p-0 m-0" *ngIf="isFieldInvalid('address')"
+            >Address is required.</p>
+          </div>
+        </div>
+        <!-- <p class="row info_field">
           <span class="col-4 text-muted text-end">Alternative Phone:</span>
           <input
             #phoneInput
@@ -104,9 +133,11 @@
             (focus)="onInputFocus(socialInput)"
             (blur)="onInputBlur(socialInput)"
           />
-        </p>
+        </p> -->
+
+
         <div
-          class="d-flex flex-column align-items-end"
+          class="d-flex flex-column align-items-end mt-2"
           *ngIf="editMode1 === 'contact'"
         >
           <button class="update-btn rounded-2" (click)="updateUser('contact')">
@@ -122,9 +153,9 @@
     >
       <div class="details_title d-flex justify-content-between ms-5 me-3">
         <h5 class="">Company Information</h5>
-        <div #editBTN class="edit_btn" (click)="toggleEditMode('companyInfo')">
+        <!-- <div #editBTN class="edit_btn" (click)="toggleEditMode('companyInfo')">
           <i class="fa-solid fa-pen-to-square fs-5"></i>
-        </div>
+        </div> -->
       </div>
       <div class="user_info">
         <p class="row info_field">
