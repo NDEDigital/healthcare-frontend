@@ -1,5 +1,5 @@
 import { FormGroup, Validators, FormBuilder, FormArray } from '@angular/forms';
-import { Component } from '@angular/core';
+import { Component, ComponentFactoryResolver,ElementRef, ViewChild  } from '@angular/core';
 import { AddProductService } from 'src/app/services/add-product.service';
 
 @Component({
@@ -7,21 +7,25 @@ import { AddProductService } from 'src/app/services/add-product.service';
   templateUrl: './add-product-quantity.component.html',
   styleUrls: ['./add-product-quantity.component.css']
 })
-export class AddProductQuantityComponent {
+export class AddProductQuantityComponent   {
+  @ViewChild('searchInputRef') searchInputRef!: ElementRef;
+  portalReceivedId:any;
   isGoodsNameDropdownOpen: boolean = false
   isGroupNameDropdownOpen: boolean = false
   dropdown_ProductName: string = "Product Name"; // Set an initial value
   selectedProductNames: string[] = []; // Initialize an array to hold selected product names for each row
-
+  selectedProductGroup :any[] = [];
+  allQuantyData:any[]=[];
   selectedProduct :any;
   selectedGroup : any
-  selectedProductGroup :string[] = [];
+  productdropDownIndex:any
+
   masterForm: FormGroup;
   form!: FormGroup;
   productDertailsData:any;
   productGroupData : any
   portaldata: any;
-  ProductGroupID:any;
+
   // ModalText = "Give some entry"
  
   constructor(private fb: FormBuilder , private addProductService :AddProductService) {
@@ -41,11 +45,33 @@ export class AddProductQuantityComponent {
 
   ngOnInit() {
 
-  
+
 
   }
 
  
+  GetAddQuantityDataByUserId( ){
+
+     if (this.searchInputRef && this.searchInputRef.nativeElement) {
+      this.searchInputRef.nativeElement.value = '';
+    }
+    else{ console.log("error");
+    }
+    const userID = localStorage.getItem('code')
+    this.addProductService.GetAddQuantityDataByUserId(userID).subscribe({
+      next: (response:any) => {
+        console.log('Response data:', response);
+       // this.PatchForm(response.portalAfterInsert);
+       this.allQuantyData= response
+      },
+      error: (error) => {
+        console.error('Error:', error);
+
+      }
+    });
+  
+   }
+  
 
   get rowsFormArray(): FormArray {
     return this.form.get('rows') as FormArray;
@@ -59,17 +85,6 @@ export class AddProductQuantityComponent {
       if(!lastRow.valid){
         console.log(" sjgio")
       }
-      // const controls = lastRow.controls;
-      // const emptyFields = Object.keys(controls).filter(controlName => {
-      //   const control = controls[controlName];
-      //   return control.value === '' || control.value === null;
-      // });
-      
-      // if (emptyFields.length > 0) {
-      //   // Do something (alert, validation message, etc.) indicating there are empty fields.
-      //   console.log('Previous row has empty fields');
-      //   return; // Abort adding a new row
-      // }
     }
   
     const newRow = this.fb.group({
@@ -85,7 +100,7 @@ export class AddProductQuantityComponent {
       availableQty: ['', Validators.required],
       remarks: [''],
       isDropdownOpen: [false],
-      isGroDropdownOpen: [false],
+ 
       // ... other fields
     });
   
@@ -96,9 +111,9 @@ export class AddProductQuantityComponent {
   
  getPortalData(PortalReceivedId:any){
   this.addProductService.GetPortalData(PortalReceivedId).subscribe({
-    next: (response) => {
-      console.log('Response:', response);
-
+    next: (response:any) => {
+      console.log('Response data:', response);
+      this.PatchForm(response.portalAfterInsert);
     },
     error: (error) => {
       console.error('Error:', error);
@@ -117,14 +132,15 @@ export class AddProductQuantityComponent {
     const selectedProductNames = this.selectedProductNames;
     //console.log(" before selectedProductNames ",selectedProductNames)
     // Remove the corresponding selected product name from selectedProductNames array
-    if (selectedProductNames[index]) {
+    if (selectedProductNames[index] ) {
       selectedProductNames.splice(index, 1);
       // You might need to update other indexes of selectedProductNames
       // if there are further changes to the array's indexes.
     }
-
-    //console.log(" after selectedProductNames ",selectedProductNames)
-    
+    if ( this.selectedProductGroup[index] ) {
+      this.selectedProductGroup.splice(index, 1);
+      
+    }
   }
 
   onSubmit() {
@@ -137,15 +153,8 @@ export class AddProductQuantityComponent {
     return this.form.valid;
   }
   submit() {
-
     if (this.form.valid && this.rowsFormArray.length) {
- 
-   
-
       const formData = this.form.value;
-   
-      
-    
       this.portaldata = {
         // portalReceivedCode: this.masterForm.value.portalReceivedCode,
         // portalReceivedDate: this.masterForm.value.portalReceivedDate,
@@ -181,19 +190,14 @@ export class AddProductQuantityComponent {
           // Handle success response
           this.masterForm.reset(); // Reset the masterForm
           this.form.reset(); // Reset the nested form (rows)
+          this.selectedProductNames=[] // clearing the  product array
+          this.selectedProductGroup= [];
           this.getPortalData(response.portalReceivedId)
-          this.PatchForm(response);
-          // while (this.rowsFormArray.length > 0) {
-          //   this.removeRow(0);
-          //   this.selectedProductNames=[] // clearing the array
-          // }
         },
         error: (error) => {
           console.error('Error:', error);
-          // Handle error
         }
       });
-      // Further submission logic here
     }
     else {
       //console.log(" form invalid")
@@ -204,46 +208,46 @@ export class AddProductQuantityComponent {
 
     // master data
     this.masterForm.patchValue({
-
       challanNo: data.challanNo,
       remarks: data.remarks,
       portalReceivedCode: data.portalReceivedCode,
-      portalReceivedDate: data.portalReceivedDate,
+      portalReceivedDate:data.materialReceivedDate ?  data.materialReceivedDate.split('T')[0] : null,
       challanDate: data.challanDate ? data.challanDate.split('T')[0] : null,
-
-
     });
- // Details data
- const detailsFormArray = this.form.get('rows') as FormArray; // Assuming 'rows' is your form array name
-
- detailsFormArray.clear(); // Clear previous entries if needed
-
- for (const detail of data.portalReceivedDetailslist) {
-   detailsFormArray.push(this.fb.group({
-     productId: detail.productId,
-     productName: detail.productName,
-     productGroupId: detail.productGroupId,
-     specification: detail.specification,
-     unit: detail.unit,
-     unitId: detail.unitId,
-     price: detail.price,
-     receiveQty: detail.receivedQty,
-     availableQty: detail.availableQty,
-     remarks: detail.remarks,
-   }));
- }
-
+    // Details data
+    const detailsFormArray = this.form.get('rows') as FormArray; // Assuming 'rows' is your form array name
+    detailsFormArray.clear(); // Clear previous entries if needed
+    this.selectedProductGroup=[];
+    this.selectedProductNames=[]
+    console.log(" before  this.selectedProductNames,      this.selectedProductGroup", this.selectedProductNames,      this.selectedProductGroup)
+    for (const detail of data.portalReceivedDetailAfterInsertlList) {
+      detailsFormArray.push(this.fb.group({
+        productId: detail.productId,
+        productName: detail.productName,
+        GroupName: detail.productGroupName,
+        productGroupId: detail.productGroupId,
+        specification: detail.specification,
+        unit: detail.unit,
+        unitId: detail.unitId,
+        price: detail.price,
+        receiveQty: detail.receivedQty,
+        availableQty: detail.availableQty,
+        remarks: detail.remarks,
+      }));
+      this.selectedProductNames.push(detail.productName);
+      this.selectedProductGroup.push(detail.productGroupName);
+    }
+    console.log(" after  this.selectedProductNames,      this.selectedProductGroup", this.selectedProductNames,      this.selectedProductGroup)
    }
 
-
   // Inside your component class
-isDropdownVisible(rowIndex: number): boolean {
-  const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
-  const isDropdownOpen = rowGroup.get('isDropdownOpen');
-  return isDropdownOpen?.value === true;
-}
-
-
+  isDropdownVisible(rowIndex: number): boolean {
+    this.productdropDownIndex = rowIndex;
+    const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
+    const isDropdownOpen = rowGroup.get('isDropdownOpen');
+    return isDropdownOpen?.value === true;
+  }
+  
   toggleDropdown( rowIndex: number): void {
     // Close all dropdowns
     for (let i = 0; i < this.rowsFormArray.length; i++) {
@@ -257,28 +261,48 @@ isDropdownVisible(rowIndex: number): boolean {
     const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
     const currentValue = rowGroup.get('isDropdownOpen')?.value || false;
     rowGroup.patchValue({ isDropdownOpen: !currentValue });
-    this.getDetailsData();
+    const groupName = this.selectedProductGroup[rowIndex];
+    console.log("index", rowIndex, groupName);
+    const matchGroupName = this.productGroupData.find((group:any)=> group.productGroupName === groupName) // (Find) return 1st matching element not arrray
+    console.log(" matchGroupName",matchGroupName)
+    if(matchGroupName.productGroupID){
+     this.getDetailsData(matchGroupName.productGroupID);
+    }
+    else{
+     console.log(" group Id not found")
+    }
   }
   
 
-  getDetailsData(){
-
+  getDetailsData(productGroupID: number){
     const userID = localStorage.getItem('code')
-    if( this.ProductGroupID && userID){
-      this.addProductService.GetProductDetailsData(userID,this.ProductGroupID) .subscribe({
+    if(productGroupID && userID){
+      this.addProductService.GetProductDetailsData(userID,productGroupID) .subscribe({
         next: (response) => {
            //console.log( response)
            this.productDertailsData = response;
-           //console.log("his.productDertailsData ",this.productDertailsData)
+           console.log("his.productDertailsData ",this.productDertailsData)
         },
         error: (error) => {
-         //console.log("error ",error)
+   
+         console.log("error ",error)
+         this.productDertailsData =[]
         },
       });
     }
 
   }
+  invisibleProductDropDown(){
+    console.log("this.productdropDownIndex",this.productdropDownIndex)
+    const rowGroup = this.rowsFormArray.at(this.productdropDownIndex) as FormGroup;
+    const isDropdownOpen = rowGroup.get('isDropdownOpen');
+    if (isDropdownOpen) {
+      isDropdownOpen.setValue(false);
+    }
+  } 
+  
   getGroupName(){
+   this.invisibleProductDropDown()
     const userID = localStorage.getItem('code')
     this.addProductService.getProductGroupsByUserId(userID).subscribe({
       next: (response) => {
@@ -292,39 +316,33 @@ isDropdownVisible(rowIndex: number): boolean {
     });
   }
   
-
-  
-
   filterFunction(event: Event , className: string): void {
     const input = (event.target as HTMLInputElement).value.toUpperCase();
     const links = document.querySelectorAll(className) as NodeListOf<HTMLAnchorElement>;
   
-    links.forEach((a: HTMLAnchorElement) => {
-      const txtValue = a.textContent || a.innerText || '';
+    links.forEach((b: HTMLAnchorElement) => {
+      const txtValue = b.textContent || b.innerText || '';
       if (txtValue.toUpperCase().indexOf(input) > -1) {
-        a.style.display = '';
+        b.style.display = '';
       } else {
-        a.style.display = 'none';
+        b.style.display = 'none';
       }
     });
   }
 
   SetDropDownGroupName(selectedItem: any, rowIndex: number){
     this.selectedProductGroup[rowIndex] = selectedItem.productGroupName; // Store selected product name for this row
-    this.ProductGroupID = selectedItem.productGroupID;
+
     // reseting the  row if group name is changed
     const row = this.rowsFormArray.at(rowIndex) as FormGroup;
     row.reset();
-
     // reseting the product name 
-
     this.selectedProductNames[rowIndex] ="Select Product"
 
   }
 
   SetDropDownName(selectedItem: any, rowIndex: number) {
-    this.selectedProduct = selectedItem;
-    
+    this.selectedProduct = selectedItem;   
     const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
     rowGroup.patchValue({
       productName: selectedItem.productName,
@@ -345,12 +363,10 @@ isDropdownVisible(rowIndex: number): boolean {
   
   getEmptyFields(): string[] {
     const emptyFields: string[] = [];
-  
     // Loop through the form controls or rows in the form array
     const formRows = (this.form.get('rows') as FormArray).controls;
     formRows.forEach((row, index) => {
       const receiveQtyControl = row.get('receiveQty');
-  
       // Check if the receiveQty field is empty or invalid
       if (!receiveQtyControl?.value) {
         emptyFields.push(`Receive Qty in row ${index + 1}`);
@@ -368,7 +384,30 @@ isDropdownVisible(rowIndex: number): boolean {
   while (this.rowsFormArray.length > 0) {
     this.removeRow(0);
     this.selectedProductNames=[] // clearing the  product array
-    this.selectedProductGroup   = [];
+    this.selectedProductGroup= [];
+    console.log("    this.selectedProductGroup",    this.selectedProductGroup)
   }
 }
+   rowClicked(index:any, Id:any){
+    this.portalReceivedId=Id;
+    console.log(" i",index)
+    this.allQuantyData.forEach((row, i) => {
+      row.isSelected = i === index;
+    });
+  }
+  popUpOk(){
+    if(this.portalReceivedId)
+    {
+      this.getPortalData( this.portalReceivedId)
+    }
+  
+    if (this.searchInputRef && this.searchInputRef.nativeElement) {
+      this.searchInputRef.nativeElement.value = '';
+    }
+    else{ console.log("error");
+    }
+  
+
+  }
+
 }

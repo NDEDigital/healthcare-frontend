@@ -11,6 +11,7 @@ export class AddProductService {
   // URL = 'http://172.16.5.18:8081'; // liveURL
 
   private getdetailsData = `${this.URL}/ProductQuantity/GetProductForAddQtyByUserId`;
+  getAddQuantityDatabyUserId = `${this.URL}/ProductQuantity/GetPortalReceivedByUserId`;
   private postData = `${this.URL}/ProductQuantity/PortalReceivedPost`;
   createProductGroupURL = `${this.URL}/api/ProductGroups/CreateProductGroups`;
   getProductGroupByUserIdURL = `${this.URL}/ProductQuantity/ProductGroupsDropdownByUserId`;
@@ -119,5 +120,11 @@ getProductGroupsByUserId(userID: any) {
       this.CreateSellerProductPriceURL,
       productListInsertData
     );
+  }
+
+  GetAddQuantityDataByUserId(userId: any) {
+    return this.http.get(this.getAddQuantityDatabyUserId, {
+      params: { userId },
+    });
   }
 }

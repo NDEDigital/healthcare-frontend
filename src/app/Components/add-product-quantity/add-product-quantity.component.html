@@ -17,7 +17,7 @@
                   </div>
                   <div class="col-7 d-flex">
                     <input type="text" class="disable" id="portalReceivedCode" formControlName="portalReceivedCode"  readonly />
-                    <i class="fa-solid fa-magnifying-glass  master-icon "data-bs-toggle="modal" data-bs-target="#masterModal"></i>
+                    <i class="fa-solid fa-magnifying-glass  master-icon "data-bs-toggle="modal" data-bs-target="#masterModal" (click)="GetAddQuantityDataByUserId()"></i>
              
                   </div>
                 </div>                      
@@ -111,7 +111,7 @@
                   <!-- dropdown -->
                    <div id="myDropdown" class="dropdown-groupName " [ngClass]="{ 'show': isDropdownVisible(i) }">
                     <!-- search field -->
-                    <input type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')">
+                    <input    type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')"  >
                     <a *ngFor="let item of productDertailsData; let j = index" (click)="SetDropDownName(item, i)">
                       {{item.productName}}</a>
                   </div>
@@ -176,8 +176,9 @@
            ></button>
          </div>
          <div class="modal-body">
-        <span  *ngIf="!isFormValid() || rowsFormArray.length==0">
-        <span *ngIf="!this.productDertailsData">Please select product</span>
+        <span  *ngIf="!isFormValid() ">
+        <span *ngIf="!this.productGroupData">Please select group name</span>
+        <span *ngIf="!this.productDertailsData && this.productGroupData">Please select product name</span>
           <span *ngIf="!isFormValid() && this.productDertailsData">Please fill in all required fields.</span>
           <div *ngIf="productDertailsData"> 
             <ul *ngFor="let field of getEmptyFields()">
@@ -187,6 +188,9 @@
         </span>
         <span  *ngIf="isFormValid() && rowsFormArray.length>0 ">
           Want to submit?
+        </span>
+        <span  *ngIf="rowsFormArray.length==0 ">
+          Give an entry
         </span>
          </div>
          <div class="modal-footer">
@@ -219,25 +223,38 @@
   <div class="modal-dialog">
     <div class="modal-content">
       <div class="modal-header">
-        <h1 class="modal-title fs-5" id="exampleModalLabel">Modal title</h1>
+        <h1 class="modal-title fs-5" id="exampleModalLabel">History</h1>
         <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
       </div>
       <div class="modal-body">
-        <div class="modalTable">
-          <div class="row header">
+
+     
+        <input type="text" class="searchInput popUpSearch" placeholder="Search.." (keyup)="filterFunction($event, '.rowData ')"  #searchInputRef>
+        <div class="modalTable ">
+          <div class="row header ">
             <div class="col p-0">
               Received Code
             </div> 
             <div class="col p-0">
               Received Date
             </div> 
-           </div>
-           
-
+          </div>
+          <div class="row rowData"  *ngFor="let row of allQuantyData; let i = index;" (click)="rowClicked(i,row.portalReceivedId)" [ngClass]="{ 'selected-row': row.isSelected }">
+            <div class="col p-0">
+              {{row.portalReceivedCode}}
+            </div> 
+            <div class="col p-0">
+ 
+              {{ row.materialReceivedDate.split('T')[0] }}
+            </div> 
+          </div>
         </div>
       
       </div>
-
+      <div class="modal-footer">
+ 
+        <button type="button"  class="btn  btn-Approved px-2 py-1"   data-bs-dismiss="modal" aria-label="Close" (click)="popUpOk()">ok</button>
+      </div>
     </div>
   </div>
 </div>

@@ -63,7 +63,7 @@
     border: 1px #6a93a3;
   }
   .disable{
-    background-color: #c7c7c7;
+    background-color: #e9e9e9;
   }
   .div-button .icons i{
     color: var(--color-primary);
@@ -182,11 +182,30 @@ z-index: 1;
   }
 
   .modalTable{
-    border: 1px solid #87a7b3;
+    border: 1px solid  #d0dfe4;
     text-align: center;
+    height: 20rem;
+    overflow: scroll;
+  }
+  .modalTable .row{
+    border-bottom:  1px solid #d0dfe4;
+   cursor: pointer;
   }
   .modalTable .header{
+   top: 0;
+   position: sticky;
    font-size: 1rem;
    color: #181717;
- font-weight: 500;
+  font-weight: 500;
+  background-color: #fff;
+  }
+  .selected-row {
+    background-color: rgb(214, 227, 233); /* Change to the color you want */
+    /* Other styling */
+  }
+  .popUpSearch{
+    border: 2px solid #5f8794;
+    width: 100%;
+    margin: .4rem 0;
+    padding: 0 .2rem;
   }
