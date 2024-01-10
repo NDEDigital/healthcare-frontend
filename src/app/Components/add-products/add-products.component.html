@@ -60,7 +60,7 @@
       <div class="col tableHeader">Specification</div>
       <div class="col tableHeader">Image</div>
       <div class="col tableHeader">Date Added</div>
-      <div class="col tableHeader">Action</div>
+      <div class="col tableHeader" *ngIf="btnIndex != -1">Actions</div>
     </div>
 
     <!-- table body -->
@@ -136,7 +136,7 @@
         {{ product.addedDate | date : "dd MMM yyyy" }}
       </div>
 
-      <div class="col tableBody">
+      <div class="col tableBody" *ngIf="btnIndex != -1">
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button
@@ -328,9 +328,7 @@
             </div>
 
             <div class="form-group">
-              <label for="unitId"
-                ><span class="text-danger">*</span>unitId</label
-              >
+              <label for="unitId"><span class="text-danger">*</span>Unit</label>
 
               <select
                 name="unitId"
