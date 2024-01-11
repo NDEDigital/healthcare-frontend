@@ -8,6 +8,8 @@ export interface DetailsModel {
     deliveryCharge : number;
     orderDetailId : number;
     productName :string
+    discountAmount :number
+    unit : string
     // Other properties...
   }
  
