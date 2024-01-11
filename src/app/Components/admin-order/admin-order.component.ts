@@ -207,20 +207,20 @@ export class AdminOrderComponent {
 
     console.log(" orderMasterId",orderMasterId)
     // Toggle the rotation state ot icon
-    //this.isIconRotatedMap ={};
+  //this.isIconRotatedMap ={};
     // this.showPendingDetails = true;
     // this.status = 'PendingsDetails'
    // console.log("this.isIconRotatedMap ",this.isIconRotatedMap)
-    // Object.keys(this.isIconRotatedMap).forEach((key) => {
-    //   if (key !== orderMasterId) {
-    //     this.isIconRotatedMap[key] = false;
-    //     // this.showPendingDetails = false;
-    //      this.status = 'Pending';
-    //   }
-    // });
+    Object.keys(this.isIconRotatedMap).forEach((key) => {
+      if (key !== orderMasterId) {
+        this.isIconRotatedMap[key] = false;
+        // this.showPendingDetails = false;
+         this.status = 'Pending';
+      }
+    });
    // console.log(" after making false  ",this.isIconRotatedMap)
 
-    //this.isIconRotatedMap[orderMasterId] =  !this.isIconRotatedMap[orderMasterId];
+    this.isIconRotatedMap[orderMasterId] =  !this.isIconRotatedMap[orderMasterId];
 
    // console.log(" after making  toggle  ",this.isIconRotatedMap)
 
