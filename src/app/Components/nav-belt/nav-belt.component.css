@@ -139,6 +139,34 @@
 /* Your existing media queries and other CSS */
 /*  */
 
+@media (max-width: 2350px) {
+  /* w-75 */
+  .button-container.w-75 .slider-btn:first-of-type {
+    left: 10.5%;
+  }
+
+  .button-container.w-75 .slider-btn:nth-child(2) {
+    right: 10.5%;
+  }
+
+  /* for w-50 */
+  .button-container.w-50 .slider-btn:first-of-type {
+    left: 22.8%;
+  }
+
+  .button-container.w-50 .slider-btn:nth-child(2) {
+    right: 22.8%;
+  }
+  /* for w-25 */
+  .button-container.w-25 .slider-btn:first-of-type {
+    left: 35.5%;
+  }
+
+  .button-container.w-25 .slider-btn:nth-child(2) {
+    right: 35.5%;
+  }
+}
+
 @media (max-width: 1500px) {
   /* w-75 */
   .button-container.w-75 .slider-btn:first-of-type {
