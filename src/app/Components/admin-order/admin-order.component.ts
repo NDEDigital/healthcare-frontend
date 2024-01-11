@@ -16,6 +16,7 @@ import { SellerOrderOverviewService } from 'src/app/services/SellerOrderOverview
 })
 export class AdminOrderComponent {
   @ViewChild(PaginationComponent) pagination: PaginationComponent;
+  @ViewChild ('allCheck') allCheck!: ElementRef
   ModalText: string = 'No product is selected!';
 
   selectedButtonIndex: string = 'Pending'; // Default selected index is 0
@@ -157,6 +158,7 @@ export class AdminOrderComponent {
     this.detailsCancelledArray = [];
     this.masterId = '';
     this.detailsUnCheckedId = '';
+    this.allCheck.nativeElement.checked=false;
   }
 
   GetData() {
@@ -201,23 +203,28 @@ export class AdminOrderComponent {
     }
   }
 
+  
+
   GetDetailsData(orderMasterId: any, index: any) {
 
-    //console.log(" orderMasterId",orderMasterId)
+    console.log(" orderMasterId",orderMasterId)
     // Toggle the rotation state ot icon
-    // this.isIconRotatedMap ={};
+  //this.isIconRotatedMap ={};
     // this.showPendingDetails = true;
     // this.status = 'PendingsDetails'
-
+   // console.log("this.isIconRotatedMap ",this.isIconRotatedMap)
     Object.keys(this.isIconRotatedMap).forEach((key) => {
       if (key !== orderMasterId) {
         this.isIconRotatedMap[key] = false;
         // this.showPendingDetails = false;
-        this.status = 'Pending';
+         this.status = 'Pending';
       }
     });
-    this.isIconRotatedMap[orderMasterId] =
-      !this.isIconRotatedMap[orderMasterId];
+   // console.log(" after making false  ",this.isIconRotatedMap)
+
+    this.isIconRotatedMap[orderMasterId] =  !this.isIconRotatedMap[orderMasterId];
+
+   // console.log(" after making  toggle  ",this.isIconRotatedMap)
 
     if (this.detailsData.length === 0) {
       this.service.getOrderDetailData(orderMasterId).subscribe((data: any) => {
@@ -226,7 +233,7 @@ export class AdminOrderComponent {
         // Add the isChecked property with a default value of false to each object
         this.detailsData = data.map((item: any) => ({ ...item, isChecked: false }));  
         //  this.togglingDetailsCheckbox(index);
-        //console.log('details data dataaaaaa',    this.detailsData); // Use a type if possible for better type checking
+        console.log('details data dataaaaaa',    this.detailsData); // Use a type if possible for better type checking
         setTimeout(() => {
           this.togglingDetailsCheckbox(index, this.detailsData);
     
@@ -237,8 +244,10 @@ export class AdminOrderComponent {
       //   'this.detailsData.orderMasterId ',
       //   this.detailsData[0].orderMasterId
       // );
-      this.service.GetDetatilsData(orderMasterId).subscribe((data: any) => {
-        //console.log('details data else if', data); // Use a type if possible for better type checking
+      this.detailsData =[];
+      console.log(" orderMasterId tytr",orderMasterId)
+      this.service.getOrderDetailData(orderMasterId).subscribe((data: any) => {
+        console.log('details data else if', data); // Use a type if possible for better type checking
         this.detailsData = data;
         
         // Add the isChecked property with a default value of false to each object

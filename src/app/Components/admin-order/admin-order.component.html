@@ -185,7 +185,7 @@
           class="col-1 checkbox_col fw-bold"
           *ngIf="this.status === 'to Return' || this.status === 'Pending'"
         >
-          <input
+          <input #allCheck
             type="checkbox"
             class="check_all_Master"
             (click)="
@@ -197,7 +197,7 @@
             "
           />
           <span *ngIf="this.status === 'to Return' || this.status === 'Pending'"
-            >All
+            >All   
           </span>
         </div>
         <div
@@ -331,7 +331,7 @@
             {{ row.address }}
           </div>
           <div class="col-1 order_col_big" *ngIf="!returnProduct">
-            {{ row.orderDate }}
+            {{ row.orderDate.split('T')[0] }}
           </div>
           <div class="col-1 order_col" *ngIf="!returnProduct">
             {{ row.paymentMethod }}
@@ -435,14 +435,16 @@
               class="Admin_order_container_row order_details_HederRow row bg-light p-0 m-0"
             >
               <div class="col-1 checkbox_col fw-bold"></div>
-              <div class="col-1 order_col">Company</div>
+          
               <div class="col-1 order_col">Product</div>
               <div class="col-1 order_col_big">Description</div>
+              <div class="col-1 order_col">Unit</div>
               <div class="col-1 order_col">Quantity</div>
               <div class="col-1 order_col">price</div>
+              <div class="col-1 order_col">discount</div>
               <div class="col-1 order_col">Delivery Charge</div>
               <div class="col-1 order_col">Sub Total</div>
-              <div class="col-1 order_col">Sub Total</div>
+        
             </div>
           </div>
           <!-- ------------  details data   ------- ---->
@@ -465,18 +467,18 @@
                 />
               </div>
 
-              <div class="col-1 order_col">{{ row.companyName }}</div>
-              <div class="col-1 order_col">{{ row.goodsName }}</div>
-              <div class="col-1 order_col_big">{{ row.specification }}</div>
-              <div class="col-1 order_col">{{ row.quantity }}</div>
+         
+              <div class="col-1 order_col">{{ row.productName }}</div>
+              <div class="col-1 order_col_big">{{ row.specification }}</div>           
+              <div class="col-1 order_col">{{ row.unit }}</div>
+              <div class="col-1 order_col">{{ row.qty }}</div>
               <div class="col-1 order_col">{{ row.price }}</div>
+              <div class="col-1 order_col">{{ row.discountAmount }}</div>
               <div class="col-1 order_col">{{ row.deliveryCharge }}</div>
               <div class="col-1 order_col">
-                {{ row.price + row.deliveryCharge }}
+                {{ row.price + row.deliveryCharge - row.discountAmount}}
               </div>
-              <div class="col-1 order_col">
-                {{ row.price + row.deliveryCharge }}
-              </div>
+          
             </div>
           </div>
         </div>

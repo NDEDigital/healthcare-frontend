@@ -106,6 +106,7 @@
     border: none;
     cursor: pointer;
     width:10rem;
+    color: #181717;
   }
   
   /* Dropdown button on hover & focus */
