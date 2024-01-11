@@ -2,12 +2,12 @@ export interface DetailsModel {
     orderMasterId: number; // Assuming orderMasterId is of type number
     isChecked: boolean;   // Assuming isChecked is of type boolean
     companyName:string;
-    goodsName : string;
     specification : string;
-    quantity : number;
+    qty : number;
     price : number;
     deliveryCharge : number;
     orderDetailId : number;
+    productName :string
     // Other properties...
   }
  

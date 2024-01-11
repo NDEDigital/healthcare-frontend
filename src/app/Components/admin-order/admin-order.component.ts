@@ -226,10 +226,6 @@ export class AdminOrderComponent {
 
    // console.log(" after making  toggle  ",this.isIconRotatedMap)
 
-
-   
-
-
     if (this.detailsData.length === 0) {
       this.service.getOrderDetailData(orderMasterId).subscribe((data: any) => {
     
