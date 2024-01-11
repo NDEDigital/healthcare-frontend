@@ -84,13 +84,11 @@
         {{ row.totalPrice }}
       </div>
       <div class="col tableBody">
-        {{ row.effectivateDate | date : "dd MMM yyyy"
-        }}<span *ngIf="row.effectivateDate">,</span><br />
+        {{ row.effectivateDate | date : "dd MMM yyyy" }}<br />
         {{ row.effectivateDate | date : "hh:mm a" }}
       </div>
       <div class="col tableBody">
-        {{ row.endDate | date : "dd MMM yyyy"
-        }}<span *ngIf="row.endDate">,</span><br />
+        {{ row.endDate | date : "dd MMM yyyy" }}<br />
         {{ row.endDate | date : "hh:mm a" }}
       </div>
 
