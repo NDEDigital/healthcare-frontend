@@ -16,6 +16,7 @@ import { SellerOrderOverviewService } from 'src/app/services/SellerOrderOverview
 })
 export class AdminOrderComponent {
   @ViewChild(PaginationComponent) pagination: PaginationComponent;
+  @ViewChild ('allCheck') allCheck!: ElementRef
   ModalText: string = 'No product is selected!';
 
   selectedButtonIndex: string = 'Pending'; // Default selected index is 0
@@ -157,6 +158,7 @@ export class AdminOrderComponent {
     this.detailsCancelledArray = [];
     this.masterId = '';
     this.detailsUnCheckedId = '';
+    this.allCheck.nativeElement.checked=false;
   }
 
   GetData() {
@@ -235,7 +237,7 @@ export class AdminOrderComponent {
         // Add the isChecked property with a default value of false to each object
         this.detailsData = data.map((item: any) => ({ ...item, isChecked: false }));  
         //  this.togglingDetailsCheckbox(index);
-        //console.log('details data dataaaaaa',    this.detailsData); // Use a type if possible for better type checking
+        console.log('details data dataaaaaa',    this.detailsData); // Use a type if possible for better type checking
         setTimeout(() => {
           this.togglingDetailsCheckbox(index, this.detailsData);
     
@@ -249,7 +251,7 @@ export class AdminOrderComponent {
       this.detailsData =[];
       console.log(" orderMasterId tytr",orderMasterId)
       this.service.getOrderDetailData(orderMasterId).subscribe((data: any) => {
-        //console.log('details data else if', data); // Use a type if possible for better type checking
+        console.log('details data else if', data); // Use a type if possible for better type checking
         this.detailsData = data;
         
         // Add the isChecked property with a default value of false to each object

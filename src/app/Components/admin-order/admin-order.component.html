@@ -185,7 +185,7 @@
           class="col-1 checkbox_col fw-bold"
           *ngIf="this.status === 'to Return' || this.status === 'Pending'"
         >
-          <input
+          <input #allCheck
             type="checkbox"
             class="check_all_Master"
             (click)="
@@ -197,7 +197,7 @@
             "
           />
           <span *ngIf="this.status === 'to Return' || this.status === 'Pending'"
-            >All
+            >All   
           </span>
         </div>
         <div
@@ -331,7 +331,7 @@
             {{ row.address }}
           </div>
           <div class="col-1 order_col_big" *ngIf="!returnProduct">
-            {{ row.orderDate }}
+            {{ row.orderDate.split('T')[0] }}
           </div>
           <div class="col-1 order_col" *ngIf="!returnProduct">
             {{ row.paymentMethod }}
