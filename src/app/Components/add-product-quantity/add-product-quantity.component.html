@@ -93,7 +93,7 @@
             <tbody>
               <tr  class="border border-1 details-row "  *ngFor="let row of rowsFormArray.controls; let i = index;" [formGroupName]="i">
                 <td><div class="dropdown">
-                  <button   (click)="getGroupName()" class="btn   dropdown-toggle border border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false"  [disabled]="receivedCode.value">
+                  <button   (click)="getGroupName()" class="dropbtn   dropdown-toggle border border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false"  [disabled]="receivedCode.value">
                    {{selectedProductGroup[i]}}
                   </button>
                   <ul class="dropdown-menu GroupList">
