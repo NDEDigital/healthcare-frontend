@@ -102,3 +102,10 @@ background-color: #dee9ee;
   border-bottom: #636363 !important;
   border-top: #636363 !important;
 } */
+.downloadButton{
+  background-color: #fff;
+  border-radius: 6px;
+  padding: .3rem;
+  border:2px solid   #3a98b9;
+  color: #3a98b9;
+}
