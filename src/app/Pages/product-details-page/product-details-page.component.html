@@ -548,7 +548,7 @@
               "
             />
           </div> -->
-          <div class="reviewImage d-flex mb-2"  *ngIf="row.imagePath !== ' '">
+          <div class="reviewImage d-flex mb-2"  *ngIf="row.imagePath !== ''">
             <img
             [src]="
             row.imagePath
@@ -562,7 +562,7 @@
         </div>
         <!-- review part end -->
 
-        <div class="reviewEdit" *ngIf="row.buyerCode == buyerCode">
+        <div class="reviewEdit" *ngIf="row.buyerId == buyerCode">
           <a
             #reviewBTN
             data-bs-toggle="modal"
