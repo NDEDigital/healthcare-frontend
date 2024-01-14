@@ -1,9 +1,10 @@
 
 <!-- Invoice design  -->
-<section>
-  <div class="invoice">
+<section class="d-flex mt-3 justify-content-center">
+  <div class="invoice" #content>
     <div class="header py-2">
-      <h3 class="invoiceText">Invoice</h3>
+      <h3 class="invoiceText">Nimpex HealthCare</h3>
+ 
     </div>
     <div class="content border-top-0 p-0">
       <div class="info">
@@ -33,7 +34,7 @@
              
             </div>
             <div class="col-3 text-end p-0">
-              <div class="div d-flex">
+              <div class="div d-flex justify-content-end">
                   <span><strong>invoice: </strong></span>
                   <span class="field_data">{{ invoice.invoiceNumber }}</span>
               </div>
@@ -43,38 +44,13 @@
       </div>
 
       <div class="row d-flex mt-3 justify-content-center">
-      
-          <!-- <div class="row py-2 seller_info">
-         
-            <div class="col-8 p-0">
-              <div class="row"><h6 class="fst-italic">Bill From:</h6></div>
-              <div class="div d-flex">
-                <span><strong>Name: </strong></span>
-                <span class="field_data">{{invoice.orderInvoiceDetailList[0].selesPerson }}</span>
-              </div>
-              <div class="div d-flex">
-                <span><strong>Address: </strong></span>
-                <span class="field_data"> {{invoice.orderInvoiceDetailList[0].selesAddress }}</span>
-              </div>
-            </div>
-           
-            <div class="col-4 text-end p-0">
-              <div class="div d-flex justify-content-end">
-                <span><strong>Delivery Date: </strong></span>
-                <span class="field_data"> {{invoice.orderInvoiceDetailList[0].selesPerson }}</span>
-              </div>
-              <div class="div d-flex justify-content-end">
-                <span><strong>Phone: </strong></span>
-                <span class="field_data">{{invoice.orderInvoiceDetailList[0].sellerContact }} </span>
-              </div>
-            </div>
-          </div> -->
+ 
 
           <div class="table-responsive">
             <table class="items table">
               <tr class="table_header">
-                <th>Porduct</th>
-                <th>Description</th>
+                <th>Product</th>
+                <th>Specification</th>
                 <!-- <th>Seller Address</th>
                 <th>Seller contact</th> -->
                 <th>Delivery Date</th>
@@ -88,7 +64,7 @@
                   <td>{{ product.specification }}</td>
                   <!-- <td>{{ product.selesAddress }}</td>  
                   <td>{{ product.sellerContact }}</td> -->
-                  <td>{{ product.deliveryDate }}</td>
+                  <td>{{ product.deliveryDate.split('T')[0]  }}</td>
                   <td>{{ product.quantity }}</td>
                   <td>{{ product.price }}Tk</td>
                   <td>{{ product.netPrice }}Tk</td>
@@ -97,34 +73,7 @@
  
             </table>
           </div>
-          
-            <!-- <div class="table-responsive">
-              <table class="items table">
-                <tr class="table_header">
-                  <th>Product Name</th>
-                  <th>Description</th>
-                  <th>Quantity</th>
-                  <th>Price</th>
-                  <th>Sub Total</th>
-                </tr>
-             
-                 <tr> 
-                  <td>{{ invoice.orderInvoiceDetailList[0].productName }}</td>
-                  <td>{{ invoice.orderInvoiceDetailList[0].specification }}</td>
-                  <td>{{ invoice.orderInvoiceDetailList[0].quantity }}</td>
-                  <td>{{ invoice.orderInvoiceDetailList[0].price }}Tk</td>
-                  <td>{{ invoice.orderInvoiceDetailList[0].subTotalPrice }}Tk</td>
-                </tr>
-              </table>
-            </div> -->
-         
  
-        <!-- <div class="total">
-          <p>
-            <strong>Total:</strong>
-            {{ invoice.totalPrice }}Tk
-          </p>
-        </div> -->
         <div class="table-responsive" *ngIf="invoice.orderInvoiceDetailList">
           <table class="items table">
             <tr>
@@ -139,5 +88,11 @@
         </div>
       </div>
     </div>
+  </div>
+  
+  <div class=" px-2">
+    <!-- <button (click)="downloadAsPDF()">Download as PDF</button> -->
+    <!-- <i class="fa-solid fa-download" (click)="downloadAsPDF()"></i> -->
+    <button class ="downloadButton " (click)="downloadAsPDF()">Download <i class="fa-solid fa-download" ></i></button>
   </div>
 </section>

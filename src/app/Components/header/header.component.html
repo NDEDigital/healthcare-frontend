@@ -116,14 +116,22 @@
     <div class="logo_container col-3 d-flex justify-content-between">
       <!-- <a href="" -->
       <a class="companyName">
-        <span *ngIf="isSeller || isAdmin">Nimpex HealthCare</span>
+        <!-- <span *ngIf="isSeller || isAdmin">Nimpex HealthCare</span>
         <span
           *ngIf="!isSeller || !isAdmin"
           [routerLink]="'/'"
           style="cursor: pointer"
         >
           Nimpex HealthCare</span
+        > -->
+        <span
+          *ngIf="!isSeller && !isAdmin"
+          [routerLink]="!isSeller && !isAdmin ? '/' : null"
+          style="cursor: pointer"
         >
+          Nimpex HealthCare
+        </span>
+
         <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" />-->
       </a>
 
@@ -215,7 +223,7 @@
         </div>
       </div>
     </div>
-    
+
     <div class="col-3 d-flex align-items-center justify-content-between">
       <ul
         class="d-flex justify-content-around justify-content-md-between align-items-center p-0 mb-0"
@@ -238,7 +246,7 @@
             <div *ngIf="isBuyer" class="delimiter-horizontal"></div>
 
             <div class="popup-item mt-1" *ngIf="isBuyer">
-              <a href="/buyerOrder" class="d-flex">
+              <a href="/buyerOrders" class="d-flex">
                 <i
                   class="fa-brands fa-first-order menu_nav_icon fs-6 me-2 mt-1"
                 ></i>
@@ -292,7 +300,7 @@
 
               <div class="delimiter-horizontal"></div>
               <div class="popup-item mt-1" *ngIf="isBuyer">
-                <a href="/buyerOrder" class="d-flex">
+                <a href="/buyerOrders" class="d-flex">
                   <i
                     class="fa-brands fa-first-order menu_nav_icon fs-6 me-2 mt-1"
                   ></i>
@@ -499,7 +507,14 @@
       </div>
 
       <div class="col-4 logo_container d-flex">
-        <img src="assets/images/Logo/final-logo-6.png" alt="logo" />
+        <span
+          *ngIf="!isSeller && !isAdmin"
+          [routerLink]="!isSeller && !isAdmin ? '/' : null"
+          style="cursor: pointer"
+        >
+          Nimpex HealthCare
+        </span>
+        <!-- <img src="assets/images/Logo/final-logo-6.png" alt="logo" /> -->
 
         <!-- <div class="dropdown mt-3 ms-5 ps-4" *ngIf="isCategoriesVisible">
           <button

@@ -307,10 +307,16 @@ html {
   .logo_container img {
     width: 12rem;
   }
+  .companyName {
+    font-size: 1.8rem;
+  }
 }
 @media (max-width: 992px) {
   .logo_container img {
     width: 10rem;
+  }
+  .companyName {
+    font-size: 1.5rem;
   }
 }
 @media (max-width: 768px) {

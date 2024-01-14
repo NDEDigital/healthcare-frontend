@@ -153,10 +153,11 @@
           class="d-flex align-items-center justify-content-end text-muted me-3"
         >
           <P class="mt-2">{{ cartDataDetail.size }} Item(s).</P>
+          
           <P class="fw-semibold">
             <span> Subtotal: </span>
             <span class="color-primary">
-              <span class="fs-3">৳</span> {{ totalPrice }}</span
+              <span class="fs-3">৳</span> {{ totalPriceWithDiscount }}</span
             >
           </P>
         </div>
@@ -177,6 +178,18 @@
               </div>
             </div>
             <div class="row">
+              <h6 class="col-5 mt-2">Discount Amount</h6>
+              <div class="col-5 text-end">
+                <span class="fs-3">৳</span> - {{totalPrice - totalPriceWithDiscount }}
+              </div>
+            </div>
+            <div class="row">
+              <h6 class="col-5 mt-2">Total Items Price</h6>
+              <div class="col-5 text-end">
+                <span class="fs-3">৳</span> {{ totalPriceWithDiscount }}
+              </div>
+            </div>
+            <div class="row">
               <h6 class="col-5 mt-2">Delivery Fee</h6>
               <div class="col-5 text-end">
                 <span class="fs-3">৳</span> {{ deliveryFee }}
@@ -185,7 +198,7 @@
             <div class="row">
               <h6 class="col-5 mt-2">Total Payment</h6>
               <div class="col-5 text-end">
-                <span class="fs-3">৳</span> {{ totalPrice + deliveryFee }}
+                <span class="fs-3">৳</span> {{ totalPriceWithDiscount + deliveryFee }}
               </div>
             </div>
           </div>

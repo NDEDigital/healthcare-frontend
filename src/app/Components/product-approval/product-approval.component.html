@@ -37,15 +37,15 @@
     <div class="row headerRow sticky-top fw-bolder">
       <div class="col tableHeader"></div>
       <div class="col tableHeader">Image</div>
-      <div class="col tableHeader">ProductName</div>
-      <div class="col tableHeader">Full Name</div>
-      <div class="col tableHeader">Company Name</div>
+      <div class="col tableHeader">Product Name</div>
+      <div class="col tableHeader">Seller Name</div>
+      <div class="col tableHeader">Company</div>
+      <div class="col tableHeader">Price</div>
       <div class="col tableHeader">Discount Amount</div>
       <div class="col tableHeader">Discount %</div>
+      <div class="col tableHeader">Net Price</div>
       <div class="col tableHeader">Effective Date</div>
       <div class="col tableHeader">End Date</div>
-      <div class="col tableHeader">Price</div>
-
       <div class="col tableHeader">Action</div>
     </div>
 
@@ -72,22 +72,26 @@
         {{ row.companyName }}
       </div>
       <div class="col tableBody">
+        {{ row.price }}
+      </div>
+      <div class="col tableBody">
         {{ row.discountAmount }}
       </div>
       <div class="col tableBody">
         {{ row.discountPct }}
       </div>
       <div class="col tableBody">
-        {{ row.effectivateDate | date : "dd MMM yyyy" }},<br />
+        {{ row.totalPrice }}
+      </div>
+      <div class="col tableBody">
+        {{ row.effectivateDate | date : "dd MMM yyyy" }}<br />
         {{ row.effectivateDate | date : "hh:mm a" }}
       </div>
       <div class="col tableBody">
-        {{ row.endDate | date : "dd MMM yyyy" }},<br />
+        {{ row.endDate | date : "dd MMM yyyy" }}<br />
         {{ row.endDate | date : "hh:mm a" }}
       </div>
-      <div class="col tableBody">
-        {{ row.price }}
-      </div>
+
       <div class="col tableBody">
         <div class="d-flex justify-content-center align-items-center">
           <div>

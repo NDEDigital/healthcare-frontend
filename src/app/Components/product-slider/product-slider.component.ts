@@ -197,7 +197,7 @@ export class ProductSliderComponent {
         }
 
         // //console.log(this.products3, ' products3');
-         this.updateQuantity();
+        //  this.updateQuantity();
 
         // Add any other code or logic you need here
       },

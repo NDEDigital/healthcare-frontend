@@ -1,5 +1,6 @@
-body {
+.parent {
   background: white;
+
 }
 .right-sidebar {
   width: 120px;
@@ -92,7 +93,7 @@ body {
    color: white;
 } */
 .txt-qt {
-  width: 42px;
+  width: 30px;
 }
 /* .currency{
    font-size: 30px;
@@ -114,6 +115,21 @@ body {
 }
 .activeDiv {
   cursor: pointer;
+}
+#page-container {
+  position: relative;
+  min-height: 100vh;
+}
+
+#content-wrap {
+  padding-bottom: 2.5rem;    /* Footer height */
+}
+
+#footer {
+  position: absolute;
+  bottom: 0;
+  width: 100%;
+  height: 2.5rem;            /* Footer height */
 }
 
 @media (max-width: 1500px) {

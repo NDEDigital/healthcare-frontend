@@ -15,7 +15,7 @@
       [ngClass]="{ selected_button_pending: selectedButtonIndex === 'Pending' }"
       (click)="statusChange('Pending', 'Pending')"
     >
-    Pending 
+      Pending
       <!-- Pending ({{ statusData["pendingCount"] }}) -->
     </button>
     <button
@@ -26,7 +26,7 @@
       }"
       (click)="statusChange('Approved', 'Approved')"
     >
-    Approved 
+      Approved
       <!-- Approved ({{ statusData["approvedCount"] }}) -->
     </button>
 
@@ -71,7 +71,7 @@
       }"
       (click)="statusChange('Cancelled', 'Cancelled')"
     >
-    Cancelled 
+      Cancelled
       <!-- Cancelled ({{ statusData["cancelledCount"] }}) -->
     </button>
   </div>
@@ -185,15 +185,19 @@
           class="col-1 checkbox_col fw-bold"
           *ngIf="this.status === 'to Return' || this.status === 'Pending'"
         >
-          <input
+          <input #allCheck
             type="checkbox"
             class="check_all_Master"
             (click)="
-              checkAll('.check_all_Master', '.individual_checkbox_Master','.individual_checkbox_details')
+              checkAll(
+                '.check_all_Master',
+                '.individual_checkbox_Master',
+                '.individual_checkbox_details'
+              )
             "
           />
           <span *ngIf="this.status === 'to Return' || this.status === 'Pending'"
-            >All
+            >All   
           </span>
         </div>
         <div
@@ -243,7 +247,10 @@
         </div>
         <div *ngIf="returnProduct" class="col-1 order_col fw-bold">Price</div>
         <div *ngIf="returnProduct" class="col-1 order_col fw-bold">Remarks</div>
-        <div class="col-1 order_col fw-bold">Status</div>
+        <div class="col-1 order_col fw-bold">
+          <span *ngIf="this.status === 'Pending'">Actions</span>
+          <span *ngIf="this.status !== 'Pending'">Status</span>
+        </div>
       </div>
     </div>
     <!--------------------- Master Data  ----------------------->
@@ -278,7 +285,7 @@
               class="individual_checkbox_Master"
               type="checkbox"
               [id]="row.orderMasterId"
-              (change)="callFunctionIfChecked($event,row.orderMasterId)"
+              (change)="callFunctionIfChecked($event, row.orderMasterId)"
               (click)="
                 checkboxFunctions(
                   '.check_all_Master',
@@ -294,8 +301,7 @@
               "
               class="fa-solid fa-caret-down rotate-icon ms-2"
               [ngClass]="{ rotate: isIconRotatedMap[row.orderMasterId] }"
-
-              (click)="GetDetailsData(row.orderMasterId,i)"
+              (click)="GetDetailsData(row.orderMasterId, i)"
             ></i>
           </div>
 
@@ -313,7 +319,9 @@
             <span>{{ dataIndexNumber + i }}</span>
           </div>
           <div class="col-1 order_col" *ngIf="!returnProduct">
-            <a class= "invoice" (click)="GotoInvoice(row.orderMasterId)"> invoice </a>
+            <a class="invoice" (click)="GotoInvoice(row.orderMasterId)">
+              invoice
+            </a>
           </div>
           <div class="col-1 order_col">
             {{ row.orderNo }}
@@ -323,7 +331,7 @@
             {{ row.address }}
           </div>
           <div class="col-1 order_col_big" *ngIf="!returnProduct">
-            {{ row.orderDate  }}
+            {{ row.orderDate.split('T')[0] }}
           </div>
           <div class="col-1 order_col" *ngIf="!returnProduct">
             {{ row.paymentMethod }}
@@ -378,21 +386,19 @@
                 selectedButtonIndex == 'ToReturn'
               "
             >
- 
               <img
                 *ngIf="selectedButtonIndex == 'Pending'"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                (click)="setID(row.orderMasterId, 'Approved',i)"
+                (click)="setID(row.orderMasterId, 'Approved', i)"
                 src="../../../assets/images/Icons/check.png"
               />
 
               <img
                 *ngIf="selectedButtonIndex == 'Pending'"
                 data-bs-toggle="modal"
-       
                 data-bs-target="#exampleModal"
-                (click)="setID(row.orderMasterId, 'Cancelled',i)"
+                (click)="setID(row.orderMasterId, 'Cancelled', i)"
                 src="../../../assets/images/Icons/close.png"
               />
 
@@ -401,7 +407,7 @@
                 *ngIf="selectedButtonIndex == 'ToReturn'"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                (click)="setID(row.detailsId, 'Returned',i)"
+                (click)="setID(row.detailsId, 'Returned', i)"
                 src="../../../assets/images/Icons/check.png"
               />
 
@@ -409,7 +415,7 @@
                 *ngIf="selectedButtonIndex == 'ToReturn'"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                (click)="setID(row.detailsId, 'Return Cancelled',i)"
+                (click)="setID(row.detailsId, 'Return Cancelled', i)"
                 src="../../../assets/images/Icons/close.png"
               />
             </div>
@@ -428,17 +434,17 @@
             <div
               class="Admin_order_container_row order_details_HederRow row bg-light p-0 m-0"
             >
-              <div class="col-1 checkbox_col fw-bold">
-        
-              </div>
-              <div class="col-1 order_col">Company</div>
+              <div class="col-1 checkbox_col fw-bold"></div>
+          
               <div class="col-1 order_col">Product</div>
               <div class="col-1 order_col_big">Description</div>
+              <div class="col-1 order_col">Unit</div>
               <div class="col-1 order_col">Quantity</div>
               <div class="col-1 order_col">price</div>
+              <div class="col-1 order_col">discount</div>
               <div class="col-1 order_col">Delivery Charge</div>
               <div class="col-1 order_col">Sub Total</div>
-              <div class="col-1 order_col">Sub Total</div>
+        
             </div>
           </div>
           <!-- ------------  details data   ------- ---->
@@ -450,22 +456,29 @@
                   type="checkbox"
                   [id]="row.orderDetailId"
                   [checked]="row.isChecked"
-                  (click)="detailsCheckBox($event,row.orderMasterId ,row.orderDetailId, i)"
+                  (click)="
+                    detailsCheckBox(
+                      $event,
+                      row.orderMasterId,
+                      row.orderDetailId,
+                      i
+                    )
+                  "
                 />
               </div>
 
-              <div class="col-1 order_col">{{ row.companyName }}</div>
-              <div class="col-1 order_col">{{ row.goodsName }}</div>
-              <div class="col-1 order_col_big">{{ row.specification }}</div>
-              <div class="col-1 order_col">{{ row.quantity }}</div>
+         
+              <div class="col-1 order_col">{{ row.productName }}</div>
+              <div class="col-1 order_col_big">{{ row.specification }}</div>           
+              <div class="col-1 order_col">{{ row.unit }}</div>
+              <div class="col-1 order_col">{{ row.qty }}</div>
               <div class="col-1 order_col">{{ row.price }}</div>
+              <div class="col-1 order_col">{{ row.discountAmount }}</div>
               <div class="col-1 order_col">{{ row.deliveryCharge }}</div>
               <div class="col-1 order_col">
-                {{ row.price + row.deliveryCharge }}
+                {{ row.price + row.deliveryCharge - row.discountAmount}}
               </div>
-              <div class="col-1 order_col">
-                {{ row.price + row.deliveryCharge }}
-              </div>
+          
             </div>
           </div>
         </div>
@@ -522,13 +535,11 @@
           <h1 class="modal-title fs-5" id="exampleModalLabel">Massage</h1>
           <button
             type="button"
-            class="btn-close  "
+            class="btn-close"
             data-bs-dismiss="modal"
             aria-label="Close"
             (click)="popUpClose()"
           ></button>
-
-
         </div>
         <div class="modal-body">
           {{ ModalText }}
@@ -544,7 +555,7 @@
           </button>
           <button
             type="button"
-            class="btn  btn-Approved"
+            class="btn btn-Approved"
             data-bs-dismiss="modal"
             *ngIf="checked"
             (click)="statusCheck()"

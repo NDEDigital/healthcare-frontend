@@ -1,6 +1,7 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
 import { FormControl, FormGroup, Validators } from '@angular/forms';
 import { CompanyService } from 'src/app/services/company.service';
+import { EmailService } from 'src/app/services/email.service';
 
 @Component({
   selector: 'app-become-a-seller',
@@ -11,6 +12,8 @@ export class BecomeASellerComponent {
   @ViewChild('userExistModalBTN') UserExistModalBTN!: ElementRef;
   @ViewChild('CompanyImageInput') CompanyImageInput!: ElementRef;
   @ViewChild('TradeLicenseInput') TradeLicenseInput!: ElementRef;
+
+  maxDate: any; // Add this variable
   compnay: any;
   alertTitile: string = 'alertTitile';
   alertmsg: string = 'alertmsg';
@@ -23,9 +26,16 @@ export class BecomeASellerComponent {
   showBankingInfo: boolean = false; // Variable to control the visibility of banking information fields
   showMobileBankingInfo: boolean = false;
 
-  constructor(private companyService: CompanyService) {}
+  constructor(
+    private companyService: CompanyService,
+    private emailService: EmailService) {}
 
   ngOnInit() {
+
+        // Set maxDate to the current date in 'YYYY-MM-DD' format
+        const currentDate = new Date();
+        this.maxDate = currentDate.toISOString().split('T')[0];
+    
     this.companyResistrationForm = new FormGroup({
       companyName: new FormControl('', Validators.required),
       email: new FormControl('', [
@@ -116,7 +126,7 @@ export class BecomeASellerComponent {
       this.TradeLicenseInput.nativeElement.files[0]
     );
     formData.forEach((value, key) => {
-      //console.log(key, value);
+      console.log("company data",key, value);
     });
 
     if (
@@ -135,6 +145,8 @@ export class BecomeASellerComponent {
             'Your company is Registered! Wait for the approval mail for further, Thank you.';
           this.modalColor = true;
           this.UserExistModalBTN.nativeElement.click();
+
+          this.sendEmailToCompany(formData.get('companyName'), formData.get('email'));
         },
         error: (error: any) => {
           //console.log(error);
@@ -147,6 +159,49 @@ export class BecomeASellerComponent {
       });
     }
   }
+
+
+
+  // company mail
+  sendEmailToCompany(companyname: any, mail: any) {
+    let sub = "Company Registration - Admin Approval Pending";
+    // You can customize the email message to include companyId, max users, and admin info
+    let message = `
+    Dear Concern,
+    
+    Thank you for registering with ${companyname}. We have received your company registration details, and we appreciate your interest in joining our platform.
+
+    Please be informed that your registration is currently pending approval from our administration team. This process ensures the quality and authenticity of companies on our platform.
+    
+    Here are the next steps:
+    
+    1. **Approval Process:** Our administration team will review your registration details shortly.
+    
+    2. **Notification:** Once your registration is approved, you will receive a confirmation email with further instructions on how to proceed.
+    
+    In the meantime, if you have any urgent inquiries or if you believe there might be an issue with your registration, please feel free to contact our support team at ndedigitalmarket@gmail.com.
+    
+    Thank you for your patience and understanding. We look forward to having your company on board with us.
+
+    Best regards,
+
+    Nimpex HealthCare
+    `;
+    this.emailService
+      .sendEmail(mail, sub, message)
+      .subscribe({
+        next: (response: any) => {
+          //console.log(response);
+          // Handle success
+        },
+        error: (error: any) => {
+          //console.log(error);
+          // Handle error
+        },
+      });
+  }
+
+
 
   // payment
 

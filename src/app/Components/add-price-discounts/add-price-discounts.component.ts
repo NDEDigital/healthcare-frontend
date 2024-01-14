@@ -26,6 +26,21 @@ export class AddPriceDiscountsComponent {
   showPriceProductDiv: boolean = false;
   productList: any;
   btnIndex = -1;
+  selectedUnitName = '';
+
+
+  onProductChange(event: any) {
+    const productId = event.target.value;
+    const selectedProduct = this.products.find(prod => prod.productId == productId);
+    this.selectedUnitName = selectedProduct ? selectedProduct.unitName : '';
+    console.log(this.selectedUnitName, "name");
+    console.log(selectedProduct, "product");
+    //console.log(productName, "Prod name");
+
+
+}
+
+
   isDiscountEntered(): boolean {
     const discountAmount = parseFloat(
       this.addPriceDiscountForm.get('discountAmount')?.value
@@ -80,6 +95,19 @@ export class AddPriceDiscountsComponent {
     };
   }
 
+  maxDiscountPctValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value || control.value === '') {
+        return null; // No error if the field is empty
+      }
+
+      const discountPct = parseFloat(control.value);
+      return discountPct >= 0 && discountPct <= 100 ? null : { maxDiscountPct: true };
+    };
+  }
+
+
+
   ngOnInit() {
     this.addPriceDiscountForm = new FormGroup({
       productId: new FormControl('', Validators.required),
@@ -95,11 +123,13 @@ export class AddPriceDiscountsComponent {
       discountPct: new FormControl('0.00', [
         Validators.pattern(/^\d*\.?\d+$/),
         this.nonNegativeNumberValidator(),
+        this.maxDiscountPctValidator(),
       ]),
       effectivateDate: new FormControl(''),
       endDate: new FormControl(''),
       productImage: new FormControl('', Validators.required),
       totalPrice: new FormControl(''),
+      //uniteName: new FormControl('')
     });
 
     // Fetch product groups when the component is initialized
@@ -111,14 +141,15 @@ export class AddPriceDiscountsComponent {
     this.getProducts(-1);
     this.setupFormValueChanges();
     this.getProductList();
-
+    this.addPriceDiscountForm.get('productId')?.setValue(null);
   }
 
   getProductList() {
     this.productService.getallProducts().subscribe(
       (data: any) => {
         this.products = data;
-        //console.log('Products :', this.products);
+
+        console.log('Products :', this.products);
       },
       (error) => {
         console.error('Error fetching product groups:', error);
@@ -126,6 +157,13 @@ export class AddPriceDiscountsComponent {
     );
   }
 
+  resetForm(): void {
+    this.addPriceDiscountForm.reset();
+    this.selectedUnitName = '';
+    //console.log(this.addPriceDiscountForm, "price form");
+
+
+  }
 
   // setupFormValueChanges() {
   //   const form = this.addPriceDiscountForm;
@@ -160,11 +198,29 @@ export class AddPriceDiscountsComponent {
   //   });
   // }
 
+  // function maxDiscountAmountValidator(priceControl: FormControl): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     const discountAmount = parseFloat(control.value);
+  //     const price = parseFloat(priceControl.value);
+  //     return discountAmount <= price ? null : { maxDiscountAmount: true };
+  //   };
+  // }
+
+  // function maxDiscountPctValidator(): ValidatorFn {
+  //   return (control: AbstractControl): ValidationErrors | null => {
+  //     const discountPct = parseFloat(control.value);
+  //     return discountPct <= 100 ? null : { maxDiscountPct: true };
+  //   };
+  // }
+
+
+
   setupFormValueChanges() {
     const form = this.addPriceDiscountForm;
     const priceControl = form.get('price');
     const discountAmountControl = form.get('discountAmount');
     const discountPctControl = form.get('discountPct');
+
 
     // Subscribe to changes in discount amount
     discountAmountControl?.valueChanges.subscribe((value) => {
@@ -180,8 +236,9 @@ export class AddPriceDiscountsComponent {
 
     // Subscribe to changes in Price
     priceControl?.valueChanges.subscribe((value) => {
-      if(value) {
+      if (value) {
         discountPctControl?.setValue('0', { emitEvent: false });
+        discountAmountControl?.setValue('0', { emitEvent: false });
       }
       this.calculateTotalPrice();
     });
@@ -392,12 +449,17 @@ export class AddPriceDiscountsComponent {
           this.isError = false; // Set isError to false for a success message
           this.PrdouctExistModalBTN.nativeElement.click();
           this.addPriceDiscountForm.reset();
+          this.resetForm();
+          this.getProducts(-1);
         },
         error: (error: any) => {
           //console.log(error);
           this.alertMsg = error.error.message;
           this.isError = true; // Set isError to true for an error message
           this.PrdouctExistModalBTN.nativeElement.click();
+          this.addPriceDiscountForm.reset();
+          this.resetForm();
+          this.getProducts(-1);
         },
       });
     } else {

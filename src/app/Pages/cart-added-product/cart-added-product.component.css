@@ -1,69 +1,80 @@
 section{
-        font-family: "Amazon Ember",Arial,sans-serif;
+    font-family: "Amazon Ember",Arial,sans-serif;
 }
 .product-name{
-     font-size: 1.4rem;
+ font-size: 1.4rem;
 }
 .cart-detail{
-    background-color: #EAEDED;
+background-color: #EAEDED;
+display: flex;
+min-height: 100vh;
+flex-direction: column;
+justify-content: space-between;
 }
 .price{
-     font-size: 1.2rem;
+ font-size: 1.2rem;
 }
 p{
-    margin-bottom: 0;
-    font-size: 1rem;
+margin-bottom: 0;
+font-size: 1rem;
 }
 hr{
-    margin-top: 0;
+margin-top: 0;
 }
 .full-detail{
 
-    width: 80%;
+width: 80%;
 }
 .product-img{
-     width: 15rem;
+ width: 15rem;
 }
 .product-detail{
-     width: 63%;
-     line-height: 2.1em;
+ width: 63%;
+ line-height: 2.1em;
 }
 .product-foot{
-     color: #007185;
+ color: #007185;
 }
 .subtotal{
-    background-color: white;
+background-color: white;
 }
 .subtotal-parent{
-    width: 20%;
+width: 20%;
 }
 .cart-product{
-     background-color: white;
+ background-color: white;
 }
 .subtotal-title{
-     font-size: 1.5rem;
+ font-size: 1.5rem;
 }
 button{
-    font-size: 1rem;
+font-size: 1rem;
 }
 .cursor{
-     cursor: pointer;
+ cursor: pointer;
 }
 
 /*  for stickey footer */
 
 .base-footer{
-  position: fixed;
-    left: 0;
-    bottom: 0;
-    width: 100%;
+position: fixed;
+left: 0;
+bottom: 0;
+width: 100%;
 }
-/* .base-footer{
-  position: absolute;
-    left: 0;
+#page-container {
+    position: relative;
+    min-height: 100vh;
+  }
+  
+  #content-wrap {
+    padding-bottom: 2.5rem;    /* Footer height */
+  }
+  
+  #footer {
+    position: absolute;
     bottom: 0;
     width: 100%;
-} */
-
-
+    height: 2.5rem;            /* Footer height */
+  }
 

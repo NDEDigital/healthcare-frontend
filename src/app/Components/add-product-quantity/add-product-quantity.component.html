@@ -15,8 +15,10 @@
                   <div class="col-5">
                     <label for="website">Portal Received Code</label>
                   </div>
-                  <div class="col-7">
-                    <input type="text" class="disable" id="portalReceivedCode" formControlName="portalReceivedCode"  readonly />
+                  <div class="col-7 d-flex">
+                    <input type="text" class="disable" id="portalReceivedCode" formControlName="portalReceivedCode"  readonly   #receivedCode/>
+                    <i class="fa-solid fa-magnifying-glass  master-icon "data-bs-toggle="modal" data-bs-target="#masterModal" (click)="GetAddQuantityDataByUserId()"></i>
+             
                   </div>
                 </div>                      
               </div>
@@ -76,8 +78,8 @@
             <!-- Table header -->
             <thead>
               <tr class="details-header ">
+                <th >Group Name</th>
                 <th >Product Name</th>
-
                 <th>Specification</th>
                 <th>Unit</th>
                 <th>Price</th>
@@ -90,28 +92,46 @@
             <!-- Table body - rows -->
             <tbody>
               <tr  class="border border-1 details-row "  *ngFor="let row of rowsFormArray.controls; let i = index;" [formGroupName]="i">
-       
+                <td><div class="dropdown">
+                  <button   (click)="getGroupName()" class="dropbtn   dropdown-toggle border border-0" type="button" data-bs-toggle="dropdown" aria-expanded="false"  [disabled]="receivedCode.value">
+                   {{selectedProductGroup[i]}}
+                  </button>
+                  <ul class="dropdown-menu GroupList">
+                    <li *ngFor="let item of productGroupData; let j = index" (click)="SetDropDownGroupName(item, i)">  
+                        {{item.productGroupName}}
+                   </li>
+                    
+                  </ul>
+                </div></td>
                 <!-- <td><input formControlName="productName" placeholder="ProductName"></td> -->
                 <td><div class="dropdown mx-2" (click)="toggleDropdown(i)" >
-                  <button class="dropbtn dropdown-toggle">{{ selectedProductNames[i]   }}</button>
+                  <button class="dropbtn dropdown-toggle"  >{{ selectedProductNames[i]   }}</button>
                   <!-- <input type="button" class="custom-button dropdown-toggle" [formControlName]="'selectedProduct'" value="{{ selectedProductNames[i] || 'Select Product' }}"> -->
-
-                   <!-- dropdown -->
-                   <div id="myDropdown" class="dropdown-groupName" [ngClass]="{ 'show': isDropdownVisible(i) }">
+                   
+                  <!-- dropdown -->
+                   <div id="myDropdown" class="dropdown-groupName " [ngClass]="{ 'show': isDropdownVisible(i) }">
                     <!-- search field -->
-                    <input type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')">
-                    <a *ngFor="let item of productDertailsData; let j = index" (click)="SetDropDownName(item, i)">{{item.productName}}</a>
+                    <input    type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')"  >
+                    <span *ngIf ="NoProductFound" > {{NoProduct}}</span>
+                    <a   *ngFor="let item of productDertailsData; let j = index" (click)="SetDropDownName(item, i)">
+                      {{item.productName}}</a>
                   </div>
-                </div></td>
-              
+                </div></td>           
                 <!-- Add input fields for other columns -->
                 <td><input formControlName="specification" placeholder="Specification" readonly class="center-placeholder"></td>
                 <td><input formControlName="unit" placeholder="Unit" readonly class="center-placeholder"></td>
                 <td><input formControlName="price" placeholder="Price" readonly class="center-placeholder"></td>
-                <td><input formControlName="receiveQty" placeholder="Receive Qty" class="non-readonly-input"></td>
+                <td>
+                  <input formControlName="receiveQty"  [readonly]="receivedCode.value" placeholder="Receive Qty" class="non-readonly-input" #receiveQtyField>
+                  <div *ngIf="rowsFormArray.controls[i].get('receiveQty')?.invalid ">
+                    <span  class="errorText" *ngIf="rowsFormArray.controls[i].get('receiveQty')?.hasError('pattern')">
+                      Please enter a valid integer number.
+                    </span>
+                  </div>
+                </td>         
                 <td><input formControlName="availableQty" placeholder="Available Qty" readonly class="center-placeholder"></td>
-                <td><input formControlName="remarks" placeholder="Remarks" class="non-readonly-input"  ></td>
-                <td><button type="button" class="btn btn-secondary py-1 px-2  m-1" (click)="removeRow(i)"  >Remove</button></td>
+                <td><input formControlName="remarks" [readonly]="receivedCode.value" placeholder="Remarks" class="non-readonly-input"></td>
+                <td><button type="button" class="btn btn-secondary py-1 px-2  m-1" (click)="removeRow(i) " *ngIf="!receivedCode.value" >Remove</button></td>
               </tr>
             </tbody>
           </table>
@@ -121,8 +141,8 @@
          <!-- button div -->
        <div class="div-button justify-content-between d-flex">
          <div class="icons">
-          <i class="fa-solid fa-plus" (click)="addRow()"></i>
-         
+          <i class="fa-solid fa-plus px-1" (click)="addRow()"></i>   
+          <i class="fa-solid fa-broom px-1 "(click)="clear()"></i>  
          </div>
          <div class=" submit-button ">
           <button
@@ -130,11 +150,9 @@
             data-bs-toggle="modal"
             data-bs-target="#exampleModal"
             class="btn  approved py-1 px-2 m-1"
-    
-   >
+            *ngIf="!receivedCode.value">
             Submit
           </button>
-
          </div>
        </div>
      </div>
@@ -160,11 +178,21 @@
            ></button>
          </div>
          <div class="modal-body">
-        <span  *ngIf="!isFormValid() || rowsFormArray.length==0">
-          Give some entry
+        <span  *ngIf="!isFormValid() ">
+        <span *ngIf="!this.productGroupData">Please select group name</span>
+        <span *ngIf="!this.productDertailsData && this.productGroupData">Please select product name</span>
+          <span *ngIf="!isFormValid() && this.productDertailsData">Please fill in all required fields.</span>
+          <div *ngIf="productDertailsData"> 
+            <ul *ngFor="let field of getEmptyFields()">
+              <li>{{ field }}</li>
+            </ul>
+          </div> 
         </span>
         <span  *ngIf="isFormValid() && rowsFormArray.length>0 ">
           Want to submit?
+        </span>
+        <span  *ngIf="rowsFormArray.length==0 ">
+          Give an entry
         </span>
          </div>
          <div class="modal-footer">
@@ -189,6 +217,48 @@
        </div>
      </div>
    </div>
+
+
+
+<!--   MAster Modal -->
+<div class="modal fade" id="masterModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h1 class="modal-title fs-5" id="exampleModalLabel">History</h1>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body">
+     
+        <input type="text" class="searchInput popUpSearch" placeholder="Search.." (keyup)="filterFunction($event, '.rowData ')"  #searchInputRef>
+        <div class="modalTable ">
+          <div class="row header ">
+            <div class="col p-0">
+              Received Code
+            </div> 
+            <div class="col p-0">
+              Received Date
+            </div> 
+          </div>
+          <div class="row rowData"  *ngFor="let row of allQuantyData; let i = index;" (click)="rowClicked(i,row.portalReceivedId)" [ngClass]="{ 'selected-row': row.isSelected }">
+            <div class="col p-0">
+              {{row.portalReceivedCode}}
+            </div> 
+            <div class="col p-0">
+ 
+              {{ row.materialReceivedDate.split('T')[0] }}
+            </div> 
+          </div>
+        </div>
+      
+      </div>
+      <div class="modal-footer">
+ 
+        <button type="button"  class="btn  btn-Approved px-2 py-1"   data-bs-dismiss="modal" aria-label="Close" (click)="popUpOk()">ok</button>
+      </div>
+    </div>
+  </div>
+</div>
 
 </div>
   

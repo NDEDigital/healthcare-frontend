@@ -1,26 +1,30 @@
 /* ===================  Invoice design  =================== */
-
-.invoice {
-    width: 100%;
+ 
+ 
+  .invoice {
+    background-color: #ffffff;
+    width: 70%;
     max-width: 900px;
-    margin: auto;
+
     border: 1px solid #ddd;
     padding: 20px;
-    box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1);
-    margin-top: 2rem;
+    /* Consider reducing or removing box shadow */
+    /* box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.1); */
+
   }
   
   .invoiceText {
     font-style: italic;
   }
   
-  .header {
+ 
+   .header {
     text-align: center;
     margin-bottom: 20px;
     color: white;
+    /* Simplify background color */
     background-color: #3a98b9;
   }
-  
   .content {
     border-top: 1px solid #ddd;
     padding-top: 20px;
@@ -65,11 +69,11 @@
   /* by marufa */
   
   .table_header{
-    background-color: #dee9ee;
+ background-color: #dee9ee;
     color: #3b3a3a;
   }
   .buyer_information {
-    /* width: 34%; */
+    /* width: 34%; */      
     background-color: aliceblue;
   }
   .seller_info{
@@ -98,4 +102,10 @@
     border-bottom: #636363 !important;
     border-top: #636363 !important;
   } */
-  
+  .downloadButton{
+    background-color: #fff;
+    border-radius: 6px;
+    padding: .3rem;
+    border:2px solid   #3a98b9;
+    color: #3a98b9;
+  }

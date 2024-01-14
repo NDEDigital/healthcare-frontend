@@ -23,7 +23,7 @@ interface OrderDetail {
   discountPct: number;
   price: number;
   deliveryCharge: number;
-  deliveryDate:string;
+  deliveryDate: string;
   specification: string;
   productGroupId: string;
   userId: number;
@@ -61,8 +61,10 @@ export class OrderApiService {
   //URL = 'https://localhost:7006';
   orderPostUrl = `${this.URL}/api/Order/InsertOrderData`;
   getUserInfoURL = `${this.URL}/api/Order/getOrderUserInfo`;
-  getAllOrderForBuyerURL = `${this.URL}/api/Order/getAllOrderForBuyer`;
+  // getAllOrderForBuyerURL = `${this.URL}/api/Order/getAllOrderForBuyer`;
   getOrdersForBuyerURL = `${this.URL}/api/Order/getAllOrderForBuyer`;
+  getSingleOrderForBuyerURL = `${this.URL}/api/Order/getOrderDetailsForBuyerBasedOnOrderNo`;
+  getOrdersForSellerURL = `${this.URL}/api/Order/getAllOrderForSeller`;
   checkUnderOrderProccessURL = `${this.URL}/api/Order/checkUnderOrderProccess`;
 
   // ============== new code  ==================
@@ -93,9 +95,11 @@ export class OrderApiService {
       .replace(/\//g, '-');
     return bdDateTime;
   }
-  getDeliveryDateAndTime():string{
+  getDeliveryDateAndTime(): string {
     const currentDate = new Date(); // This will give you the current date and time
-    const futureDate = new Date(currentDate.getTime() + 7 * 24 * 60 * 60 * 1000); // Adding 7 days in milliseconds
+    const futureDate = new Date(
+      currentDate.getTime() + 7 * 24 * 60 * 60 * 1000
+    ); // Adding 7 days in milliseconds
     return futureDate.toISOString(); // Converting to ISO 8601 string format
   }
 
@@ -103,8 +107,7 @@ export class OrderApiService {
     const cart = this.cartDataService.getCartData();
     this.cartDataDetail = cart.cartDataDetail;
     this.cartDataQt = cart.cartDataQt;
-    this.totalPriceWithDeliveryCharge =
-      this.cartDataService.getTotalPrice() + 100;
+    this.totalPriceWithDeliveryCharge = this.cartDataService.getTotalPrice(); //+ 100;
 
     this.buyerCode = localStorage.getItem('code');
 
@@ -113,7 +116,8 @@ export class OrderApiService {
       address: this.address,
       paymentMethod: 'CashOnDelivery',
       numberOfItem: this.cartDataDetail.size,
-      totalPrice: this.totalPriceWithDeliveryCharge,
+      totalPrice:
+        this.totalPriceWithDeliveryCharge + this.cartDataDetail.size * 100,
       phoneNumber: this.phone,
       deliveryCharge: 100,
       addedBy: 'me',
@@ -128,13 +132,13 @@ export class OrderApiService {
       }
       qt =
         qt === undefined ? 0 : typeof qt === 'string' ? parseInt(qt, 10) : qt;
-       
+
       const detailData: OrderDetail = {
         productId: parseInt(entry.goodsId),
         qty: qt,
         price: entry.netPrice,
         deliveryCharge: 100,
-        deliveryDate:this.getDeliveryDateAndTime(),
+        deliveryDate: this.getDeliveryDateAndTime(),
         specification: entry.specification,
         productGroupId: entry.groupCode.toString(),
         userId: parseInt(entry.sellerCode),
@@ -161,23 +165,23 @@ export class OrderApiService {
   getUserInfo(UserId: any) {
     return this.http.get(this.getUserInfoURL, { params: { UserId } });
   }
-  getAllOrderForBuyer(
-    buyerCode: any,
-    PageNumber: number,
-    rowCount: number,
-    status: string
-  ) {
-    //console.log(buyerCode, PageNumber, rowCount, status);
+  // getAllOrderForBuyer(
+  //   buyerCode: any,
+  //   PageNumber: number,
+  //   rowCount: number,
+  //   status: string
+  // ) {
+  //   //console.log(buyerCode, PageNumber, rowCount, status);
 
-    return this.http.get(this.getAllOrderForBuyerURL, {
-      params: {
-        buyerCode,
-        PageNumber,
-        rowCount,
-        status,
-      },
-    });
-  }
+  //   return this.http.get(this.getAllOrderForBuyerURL, {
+  //     params: {
+  //       buyerCode,
+  //       PageNumber,
+  //       rowCount,
+  //       status,
+  //     },
+  //   });
+  // }
   getOrdersForBuyer(userid: any, status: any) {
     //console.log(buyerCode, PageNumber, rowCount, status);
     if (status === '') {
@@ -195,7 +199,31 @@ export class OrderApiService {
       });
     }
   }
+  getOrdersForSeller(userid: any, status: any) {
+    console.log(status, userid);
 
+    //console.log(buyerCode, PageNumber, rowCount, status);
+    if (status === '') {
+      return this.http.get(this.getOrdersForSellerURL, {
+        params: {
+          userid,
+        },
+      });
+    } else {
+      return this.http.get(this.getOrdersForSellerURL, {
+        params: {
+          userid,
+          status,
+        },
+      });
+    }
+  }
+
+  getSingleOrderForBuyer(orderNo: string) {
+    return this.http.get(this.getSingleOrderForBuyerURL, {
+      params: { orderNo },
+    });
+  }
   checkUnderOrderProccess(GoodsId: number, GroupCode: string) {
     return this.http.get(this.checkUnderOrderProccessURL, {
       params: { GoodsId, GroupCode },

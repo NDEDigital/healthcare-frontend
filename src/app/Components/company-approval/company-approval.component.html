@@ -41,6 +41,7 @@
       <div class="col tableHeader">Email</div>
       <div class="col tableHeader">Tax Id. Number</div>
       <div class="col tableHeader">Foundation Date</div>
+      <div class="col tableHeader">Business Registration Number</div>
       <div class="col tableHeader">Trade Licence File</div>
       <div class="col tableHeader">Company Image</div>
       <div class="col tableHeader">Prefered Method</div>
@@ -64,7 +65,12 @@
 
         @{{ cmp.email.split("@")[1] }}
       </div>
-      <div class="col tableBody">{{ cmp.taxIdentificationNumber }}</div>
+      <div class="col tableBody text-break">
+        {{ cmp.businessRegistrationNumber }}
+      </div>
+      <div class="col tableBody text-break">
+        {{ cmp.taxIdentificationNumber }}
+      </div>
       <div class="col tableBody">
         {{ cmp.companyFoundationDate | date : "dd MMM yyyy" }}
       </div>
@@ -72,7 +78,7 @@
         <button
           class="custom-btn btn-trade-company"
           data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
+          data-bs-target="#showImgModal"
           (click)="showImage(cmp.tradeLicense, 'Trade License')"
         >
           view
@@ -82,7 +88,7 @@
         <button
           class="custom-btn btn-trade-company"
           data-bs-toggle="modal"
-          data-bs-target="#staticBackdrop"
+          data-bs-target="#showImgModal"
           (click)="showImage(cmp.companyImage, 'Company Image')"
         >
           view
@@ -146,17 +152,19 @@
       <!-- Modal for tadeLicence -->
       <div
         class="modal fade"
-        id="staticBackdrop"
+        id="showImgModal"
         data-bs-backdrop="static"
         data-bs-keyboard="false"
         tabindex="-1"
-        aria-labelledby="staticBackdropLabel"
+        aria-labelledby="showImgModalLabel"
         aria-hidden="true"
       >
-        <div class="modal-dialog modal-xl">
+        <div
+          class="modal-dialog modal-xl d-flex align-items-center justify-content-center"
+        >
           <div class="modal-content">
             <div class="modal-header modal-heading">
-              <h1 class="modal-title text-light fs-5" id="staticBackdropLabel">
+              <h1 class="modal-title text-light fs-5" id="showImgModalLabel">
                 {{ imageTitle }}
               </h1>
               <button
@@ -173,16 +181,6 @@
                 alt="no image was uploaded!"
               />
             </div>
-            <!-- <div class="modal-footer">
-              <button
-                type="button"
-                class="btn btn-secondary"
-                data-bs-dismiss="modal"
-              >
-                Close
-              </button>
-              <button type="button" class="btn btn-primary">Understood</button>
-            </div> -->
           </div>
         </div>
       </div>

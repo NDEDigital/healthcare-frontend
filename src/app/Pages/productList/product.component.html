@@ -1,7 +1,6 @@
-<body>
+<section id="page-container">
   <app-header [cartCount]="cartCount"></app-header>
   <app-nav-belt></app-nav-belt>
-
   <!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body scrolling</button> -->
 
   <div
@@ -58,7 +57,7 @@
             }}
           </p>
           <p class="fw-bold">
-            <span class="money-icon">৳</span>{{ entry.value.price }}
+            <span class="money-icon">৳</span>{{ entry.value.netPrice }}
           </p>
         </div>
         <div class="d-flex justify-content-between align-items-center px-1">
@@ -202,7 +201,7 @@
   </div>
 
   <div *ngIf="loading" class="text-center">Loading products...</div>
-  <div *ngIf="!loading">
+  <div id="content-wrap" class="parent" *ngIf="!loading">
     <div class="container justify-content-around">
       <div class="product_sidebar_container">
         <!-- <app-product-sidebar></app-product-sidebar> -->
@@ -251,9 +250,9 @@
             <section
               class="product d-flex justify-content-center pb-3 align-items-center border rounded border-1 mt-3 mb-5 w-100"
             >
-              <div class="mt-1 mb-1 d-flex flex-column align-items-center px-2  ">
+              <div class="mt-1 mb-1 d-flex flex-column align-items-center px-2">
                 <div class="d-flex">
-                  <div class="activeDiv " (click)="dataClick(entry)">
+                  <div class="activeDiv" (click)="dataClick(entry)">
                     <div>
                       <p class="product-title">
                         {{
@@ -374,9 +373,9 @@
           </div>
         </div>
       </div>
-    </div>
-    <div class="base-footer">
-      <app-footer></app-footer>
-    </div>
+    </div> 
   </div>
-</body>
+  <div id="footer">
+    <app-footer></app-footer>
+  </div>
+</section>
