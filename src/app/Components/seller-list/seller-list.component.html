@@ -1,0 +1,230 @@
+<div class="container">
+    <div
+      class="bg-white d-flex justify-content-center p-2 border border-1 rounded"
+    >
+      <h1 class="companyApproval_header_text">Seller List</h1>
+    </div>
+    <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2">
+      <div class="headerbtns">
+        <button
+          class="custom-btn new-btn active"
+          [ngClass]="{ active: btnIndex === -1 }"
+          (click)="btnIndex = -1"
+          (click)="getData()"
+        >
+          New
+        </button>
+        <button
+          class="custom-btn btn-active"
+          [ngClass]="{ active: btnIndex === 1 }"
+          (click)="btnIndex = 1"
+          (click)="getData()"
+        >
+          Active
+        </button>
+        <button
+          class="custom-btn btn-inactive"
+          [ngClass]="{ active: btnIndex === 0 }"
+          (click)="btnIndex = 0"
+          (click)="getData()"
+        >
+          Inactive
+        </button>
+      </div>
+    </div>
+    <div class="scrollable-table border border-1 bg-light">
+      <!-- TABLE header -->
+      <div class="row headerRow sticky-top fw-bolder">
+        <div class="col tableHeader">UserID</div>
+        <div class="col tableHeader">Full Name</div>
+        <div class="col tableHeader">Phone</div>
+        <div class="col tableHeader">Email</div>
+        <div class="col tableHeader">Address</div>
+        <div class="col tableHeader">Added Date</div>
+        <div class="col tableHeader">Company </div>
+        <div class="col tableHeader">Action </div>
+
+       
+      </div>
+  
+      <!-- table body -->
+  
+      <section
+        class="row tablebodyRow fw-semibold"
+        *ngFor="let cmp of companies; let i = index"
+      >
+        <div class="col tableBody">#{{ i + 1 }}</div>
+        <div class="col tableBody">{{ cmp.companyCode }}</div>
+        <div class="col tableBody">
+          {{ cmp.companyName }}
+        </div>
+        <div class="col tableBody">
+          {{ cmp.email.split("@")[0] }}
+  
+          @{{ cmp.email.split("@")[1] }}
+        </div>
+        <div class="col tableBody text-break">
+          {{ cmp.businessRegistrationNumber }}
+        </div>
+        <div class="col tableBody text-break">
+          {{ cmp.taxIdentificationNumber }}
+        </div>
+        <div class="col tableBody">
+          {{ cmp.companyFoundationDate | date : "dd MMM yyyy" }}
+        </div>
+        <div class="col tableBody">
+          <button
+            class="custom-btn btn-trade-company"
+            data-bs-toggle="modal"
+            data-bs-target="#showImgModal"
+            (click)="showImage(cmp.tradeLicense, 'Trade License')"
+          >
+            view
+          </button>
+        </div>
+        <div class="col tableBody">
+          <button
+            class="custom-btn btn-trade-company"
+            data-bs-toggle="modal"
+            data-bs-target="#showImgModal"
+            (click)="showImage(cmp.companyImage, 'Company Image')"
+          >
+            view
+          </button>
+        </div>
+        <div class="col tableBody">{{ cmp.preferredPaymentMethodName }}</div>
+        <div class="col tableBody">
+          <input
+            [(ngModel)]="selectedCompanyCodeValues[cmp.companyCode]"
+            type="number"
+            class="border border-1 p-2 w-75"
+            min="0"
+          />
+        </div>
+        <div class="col tableBody">
+          <div class="d-flex justify-content-center align-items-center">
+            <div>
+              <button class="actionBtn">
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="30"
+                  height="30"
+                  fill="green"
+                  class="bi bi-check2 me-3"
+                  viewBox="0 0 16 16"
+                  (click)="
+                    updateCompany(cmp.email, cmp.companyCode, 1, cmp.maxUser)
+                  "
+                >
+                  <path
+                    d="M13.854 3.646a.5.5 0 0 1 0 .708l-7 7a.5.5 0 0 1-.708 0l-3.5-3.5a.5.5 0 1 1 .708-.708L6.5 10.293l6.646-6.647a.5.5 0 0 1 .708 0z"
+                  />
+                </svg>
+              </button>
+            </div>
+            <div>
+              <button
+                class="actionBtn"
+                *ngIf="btnIndex != 0"
+                (click)="
+                  updateCompany(cmp.email, cmp.companyCode, 0, cmp.maxUser)
+                "
+              >
+                <svg
+                  xmlns="http://www.w3.org/2000/svg"
+                  width="25"
+                  height="25"
+                  fill="red"
+                  class="bi bi-x-lg fw-bolder"
+                  viewBox="0 0 16 16"
+                >
+                  <path
+                    d="M2.146 2.854a.5.5 0 1 1 .708-.708L8 7.293l5.146-5.147a.5.5 0 0 1 .708.708L8.707 8l5.147 5.146a.5.5 0 0 1-.708.708L8 8.707l-5.146 5.147a.5.5 0 0 1-.708-.708L7.293 8z"
+                  />
+                </svg>
+              </button>
+            </div>
+          </div>
+        </div>
+  
+        <!-- Modal for tadeLicence -->
+        <div
+          class="modal fade"
+          id="showImgModal"
+          data-bs-backdrop="static"
+          data-bs-keyboard="false"
+          tabindex="-1"
+          aria-labelledby="showImgModalLabel"
+          aria-hidden="true"
+        >
+          <div
+            class="modal-dialog modal-xl d-flex align-items-center justify-content-center"
+          >
+            <div class="modal-content">
+              <div class="modal-header modal-heading">
+                <h1 class="modal-title text-light fs-5" id="showImgModalLabel">
+                  {{ imageTitle }}
+                </h1>
+                <button
+                  type="button"
+                  class="btn-close"
+                  data-bs-dismiss="modal"
+                  aria-label="Close"
+                ></button>
+              </div>
+              <div class="modal-body text-center">
+                <img
+                  class="company_images"
+                  [src]="imagePath"
+                  alt="no image was uploaded!"
+                />
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+  </div>
+  <button
+    type="button"
+    class="btn btn-primary d-none"
+    data-bs-toggle="modal"
+    data-bs-target="#msgModal"
+    #msgModalBTN
+  >
+    Launch demo modal
+  </button>
+  
+  <!-- Modal -->
+  <div
+    class="modal fade"
+    id="msgModal"
+    tabindex="-1"
+    aria-labelledby="msgModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header fs-5 fw-bold">
+          <h1 class="modal-title fs-5" id="msgModalLabel">
+            {{ alertTitle }}
+          </h1>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body">
+          {{ alertMsg }}
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+            OK
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+  

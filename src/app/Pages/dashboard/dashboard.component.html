@@ -346,6 +346,24 @@
       </div>
       <div *ngIf="isSeller" class="sidebar_delimiter"></div>
       <div
+        *ngIf="isSeller"
+        class="sidebar_item d-flex justify-content-between p-1 py-3"
+      >
+        <div class="d-flex">
+          <a
+            class="d-flex menu_link"
+            [ngClass]="{ active: SidebarIndex === 11 }"
+            (click)="SidebarIndex = 11"
+          >
+            <span class="title_icon text-start me-2"
+              ><i class="fa-solid fa-cart-shopping"></i
+            ></span>
+            <h5>{{ sidebarCol11Title }}</h5>
+          </a>
+        </div>
+      </div>
+      <div *ngIf="isSeller" class="sidebar_delimiter"></div>
+      <div
         *ngIf="isAdmin"
         class="sidebar_item d-flex justify-content-between p-1 py-3"
       >
@@ -422,6 +440,9 @@
     </section>
     <section class="productApproval" *ngIf="SidebarIndex === 10">
       <app-product-approval></app-product-approval>
+    </section>
+    <section class="sellerList" *ngIf="SidebarIndex === 11">
+     <app-seller-list></app-seller-list>
     </section>
     <section class="sellerOrder" *ngIf="SidebarIndex === 6">
       <!-- <app-seller-order></app-seller-order> -->
