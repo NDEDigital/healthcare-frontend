@@ -264,7 +264,7 @@
         <div class="Admin_order_container_row master_data_row row p-0 m-0">
           <div
             class="col-1 checkbox_col"
-            *ngIf="status === 'to Return' || status === 'Pending'"
+            
           >
             <!--  for return -->
             <input
@@ -296,9 +296,7 @@
 
             <!-- for pending icon -->
             <i
-              *ngIf="
-                this.status === 'Pending' || this.status === 'PendingsDetails'
-              "
+            
               class="fa-solid fa-caret-down rotate-icon ms-2"
               [ngClass]="{ rotate: isIconRotatedMap[row.orderMasterId] }"
               (click)="GetDetailsData(row.orderMasterId, i)"

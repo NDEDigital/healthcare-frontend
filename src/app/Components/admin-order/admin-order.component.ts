@@ -217,7 +217,7 @@ export class AdminOrderComponent {
       if (key !== orderMasterId) {
         this.isIconRotatedMap[key] = false;
         // this.showPendingDetails = false;
-         this.status = 'Pending';
+         //this.status = 'Pending';
       }
     });
    // console.log(" after making false  ",this.isIconRotatedMap)
