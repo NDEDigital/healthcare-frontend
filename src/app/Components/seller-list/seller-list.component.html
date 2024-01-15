@@ -15,7 +15,7 @@
           New
         </button>
         <button
-          class="custom-btn btn-active"
+          class="custom-btn btn-active active"
           [ngClass]="{ active: btnIndex === 1 }"
           (click)="btnIndex = 1"
           (click)="getData()"
@@ -116,7 +116,7 @@
                   class="bi bi-check2 me-3"
                   viewBox="0 0 16 16"
                   (click)="
-                    updateCompany(cmp.email, cmp.companyCode, 1, cmp.maxUser)
+                    updateCompany(cmp.userId, 1)
                   "
                 >
                   <path
@@ -130,7 +130,7 @@
                 class="actionBtn"
                 *ngIf="btnIndex != 0"
                 (click)="
-                  updateCompany(cmp.email, cmp.companyCode, 0, cmp.maxUser)
+                  updateCompany(cmp.userId, 0)
                 "
               >
                 <svg

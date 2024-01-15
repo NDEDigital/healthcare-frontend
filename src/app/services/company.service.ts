@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { API_URL } from '../config';
 import { HttpClient } from '@angular/common/http';
+import { reload } from 'firebase/auth';
 
 @Injectable({
   providedIn: 'root',
@@ -34,9 +35,20 @@ export class CompanyService {
       status=false;
     }
     return this.http.get(`${this.URL}/CompanySellerDetails/${localStorage.getItem('code')}/${status}`);
+    
   }
   UpdateCompany(companyDto: any) {
+  //  alert(companyDto.Isactive);
+  //  alert(companyDto.userId);
+   if(companyDto.Isactive==1){
+    companyDto.Isactive=true
+  }
+  else{
+    companyDto.Isactive=false;
+  }
+
     //console.log('Data sent to server:', companyDto);
-    return this.http.put(this.UpdateCompanyURL, companyDto);
+    return this.http.put(`${this.URL}/CompanySellerDetailsUpdateUserStatus/${companyDto.userId}/${companyDto.Isactive}`, null);
+
   }
 }

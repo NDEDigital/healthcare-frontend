@@ -1,4 +1,5 @@
 import { Component, ElementRef, ViewChild } from '@angular/core';
+import { reload } from 'firebase/auth';
 
 
 import { CompanyService } from 'src/app/services/company.service';
@@ -24,20 +25,38 @@ export class SellerListComponent {
 
   ngOnInit() {
     this.getData();
-
+    
   }
 
   getData() {
     this.companyService.GetCompaniesBasedOnStatus(this.btnIndex).subscribe({
       next: (response: any) => {
+        // alert(response);
         this.companies = response;
         console.log(response);
+        // alert(this.btnIndex);
+        return this.btnIndex;
       },
       error: (error: any) => {
         //console.log(error);
       },
     });
   }
+
+  // getData1() {
+  //   alert(this.btnIndex);
+  //   this.companyService.GetCompaniesBasedOnStatus(this.btnIndex).subscribe({
+  //     next: (response: any) => {
+  //       this.companies = response;
+  //       console.log(response);
+  //     },
+  //     error: (error: any) => {
+  //       //console.log(error);
+  //     },
+  //   });
+  // }
+
+
 
 
 
@@ -50,10 +69,10 @@ export class SellerListComponent {
   }
 
   updateCompany(
-    companyEmail: any,
-    companyCode: any,
+    userId: any,
+
     Isactive: any,
-    maxUser: any
+
   ) {
     //console.log(companyCode, Isactive, companyEmail);
     // const selectedCompany = this.companies.find(
@@ -70,26 +89,32 @@ export class SellerListComponent {
     //   'Selected Company Code Value:',
     //   this.selectedCompanyCodeValues[companyCode]
     // );
-    const userCnt = this.selectedCompanyCodeValues[companyCode] || maxUser;
-    if (userCnt < 0) {
-      // Handle the invalid input (e.g., display an error message)
-      this.alertTitle = 'Error!';
-      this.alertMsg = 'Please enter a non-negative value for the user count.';
-      this.msgModalBTN.nativeElement.click();
-      return; // Prevent further processing
-    }
+    // const userCnt = this.selectedCompanyCodeValues[companyCode] || maxUser;
+    // if (userCnt < 0) {
+    //   // Handle the invalid input (e.g., display an error message)
+    //   this.alertTitle = 'Error!';
+    //   this.alertMsg = 'Please enter a non-negative value for the user count.';
+    //   this.msgModalBTN.nativeElement.click();
+    //   return; // Prevent further processing
+    // }
 
     const cmp = {
-      companyCode: companyCode,
-      isActive: Isactive,
-      maxUser: userCnt,
+     
+      Isactive: Isactive,
+      userId:userId
+      // maxUser: userCnt,
     };
+   
     this.companyService.UpdateCompany(cmp).subscribe({
       next: (response: any) => {
         //console.log(response);
         this.getData();
-        this.sendEmailToCompany(companyEmail, companyCode, userCnt, Isactive);
-        this.selectedCompanyCodeValues[companyCode] = null;
+        // alert(Isactive);
+     
+        if ( Isactive== false) this.btnIndex = 1;
+        if (Isactive == true) this.btnIndex = 0;
+        // this.sendEmailToCompany(companyEmail, companyCode, userCnt, Isactive);
+     
 
         if (Isactive) {
           this.alertTitle = 'Success!';
