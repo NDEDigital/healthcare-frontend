@@ -54,9 +54,9 @@
         *ngFor="let cmp of companies; let i = index"
       >
         <div class="col tableBody">#{{ i + 1 }}</div>
-        <div class="col tableBody">{{ cmp.companyCode }}</div>
+        <div class="col tableBody">{{ cmp.fullName }}</div>
         <div class="col tableBody">
-          {{ cmp.companyName }}
+          {{ cmp.phoneNumber }}
         </div>
         <div class="col tableBody">
           {{ cmp.email.split("@")[0] }}
@@ -64,15 +64,18 @@
           @{{ cmp.email.split("@")[1] }}
         </div>
         <div class="col tableBody text-break">
-          {{ cmp.businessRegistrationNumber }}
+          {{ cmp.address }}
+        </div>
+        <!-- <div class="col tableBody text-break">
+          {{ cmp.addedDate }}
+        </div> -->
+        <div class="col tableBody">
+          {{ cmp.addedDate | date : "dd MMM yyyy" }}
         </div>
         <div class="col tableBody text-break">
-          {{ cmp.taxIdentificationNumber }}
+          {{ cmp.companyCode }}
         </div>
-        <div class="col tableBody">
-          {{ cmp.companyFoundationDate | date : "dd MMM yyyy" }}
-        </div>
-        <div class="col tableBody">
+        <!-- <div class="col tableBody">
           <button
             class="custom-btn btn-trade-company"
             data-bs-toggle="modal"
@@ -81,8 +84,8 @@
           >
             view
           </button>
-        </div>
-        <div class="col tableBody">
+        </div> -->
+        <!-- <div class="col tableBody">
           <button
             class="custom-btn btn-trade-company"
             data-bs-toggle="modal"
@@ -91,16 +94,16 @@
           >
             view
           </button>
-        </div>
-        <div class="col tableBody">{{ cmp.preferredPaymentMethodName }}</div>
-        <div class="col tableBody">
+        </div> -->
+        <!-- <div class="col tableBody">{{ cmp.preferredPaymentMethodName }}</div> -->
+        <!-- <div class="col tableBody">
           <input
             [(ngModel)]="selectedCompanyCodeValues[cmp.companyCode]"
             type="number"
             class="border border-1 p-2 w-75"
             min="0"
           />
-        </div>
+        </div> -->
         <div class="col tableBody">
           <div class="d-flex justify-content-center align-items-center">
             <div>

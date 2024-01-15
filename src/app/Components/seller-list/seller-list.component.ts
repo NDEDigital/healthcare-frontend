@@ -24,6 +24,7 @@ export class SellerListComponent {
 
   ngOnInit() {
     this.getData();
+
   }
 
   getData() {
@@ -37,6 +38,9 @@ export class SellerListComponent {
       },
     });
   }
+
+
+
 
   showImage(path: any, title: any) {
     console.log(path);

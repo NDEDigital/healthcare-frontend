@@ -10,7 +10,7 @@ export class CompanyService {
   createCompanyURL = `${this.URL}/api/CompanyRegistration/CreateCompany`;
   payMethodCompanyURL = `${this.URL}/api/HK_Gets/PreferredPaymentMethods`;
   preferredBankNamesURL = `${this.URL}/api/HK_Gets/PreferredBankNames`;
-  GetCompaniesBasedOnStatusURL = `${this.URL}/api/CompanyRegistration/GetCompaniesBasedOnStatus`;
+  GetCompaniesBasedOnStatusURL = `${this.URL}/CompanySellerDetails/${localStorage.getItem('code')}`;
   UpdateCompanyURL = `${this.URL}/api/CompanyRegistration/UpdateCompany`;
   constructor(private http: HttpClient) {}
   createCompany(companyData: any) {
@@ -26,9 +26,14 @@ export class CompanyService {
     });
   }
   GetCompaniesBasedOnStatus(status: any) {
-    return this.http.get(this.GetCompaniesBasedOnStatusURL, {
-      params: { status },
-    });
+    // alert(`${this.URL}/CompanySellerDetails/${localStorage.getItem('code')}/${status}`)
+    if(status==1){
+      status=true
+    }
+    else{
+      status=false;
+    }
+    return this.http.get(`${this.URL}/CompanySellerDetails/${localStorage.getItem('code')}/${status}`);
   }
   UpdateCompany(companyDto: any) {
     //console.log('Data sent to server:', companyDto);
