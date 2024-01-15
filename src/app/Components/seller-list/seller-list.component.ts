@@ -20,7 +20,6 @@ export class SellerListComponent {
   alertMsg: string = '';
   constructor(
     private companyService: CompanyService,
-    private emailService: EmailService
   ) {}
 
   ngOnInit() {
@@ -29,130 +28,50 @@ export class SellerListComponent {
   }
 
   getData() {
-    this.companyService.GetCompaniesBasedOnStatus(this.btnIndex).subscribe({
+    console.log("bebe");
+    
+    this.companyService.GetSellerList(this.btnIndex).subscribe({
       next: (response: any) => {
-        // alert(response);
-        this.companies = response;
-        console.log(response);
-        // alert(this.btnIndex);
-        return this.btnIndex;
+       this.companies = response;   
       },
       error: (error: any) => {
-        //console.log(error);
+        console.log(error);
       },
     });
   }
 
-  // getData1() {
-  //   alert(this.btnIndex);
-  //   this.companyService.GetCompaniesBasedOnStatus(this.btnIndex).subscribe({
-  //     next: (response: any) => {
-  //       this.companies = response;
-  //       console.log(response);
-  //     },
-  //     error: (error: any) => {
-  //       //console.log(error);
-  //     },
-  //   });
-  // }
 
 
-
-
-
-
-  showImage(path: any, title: any) {
-    console.log(path);
-
-    this.imagePath = '/asset' + path.split('asset')[1];
-    this.imageTitle = title;
-  }
 
   updateCompany(
     userId: any,
-
     Isactive: any,
-
   ) {
-    //console.log(companyCode, Isactive, companyEmail);
-    // const selectedCompany = this.companies.find(
-    //   (cmp: any) => cmp.companyCode === companyCode
-    // );
-    // if (selectedCompany) {
-    //   this.selectedCompanyCodeValue = selectedCompany.companyCode;
-    //   //console.log(
-    //     'Selected Company Code Value:',
-    //     this.selectedCompanyCodeValue
-    //   );
-    // }
-    // console.log(
-    //   'Selected Company Code Value:',
-    //   this.selectedCompanyCodeValues[companyCode]
-    // );
-    // const userCnt = this.selectedCompanyCodeValues[companyCode] || maxUser;
-    // if (userCnt < 0) {
-    //   // Handle the invalid input (e.g., display an error message)
-    //   this.alertTitle = 'Error!';
-    //   this.alertMsg = 'Please enter a non-negative value for the user count.';
-    //   this.msgModalBTN.nativeElement.click();
-    //   return; // Prevent further processing
-    // }
-
-    const cmp = {
-     
+    const cmp = { 
       Isactive: Isactive,
       userId:userId
       // maxUser: userCnt,
     };
    
-    this.companyService.UpdateCompany(cmp).subscribe({
+    this.companyService.UpdateSellerActiveInActive(cmp).subscribe({
       next: (response: any) => {
-        //console.log(response);
+        if(this.btnIndex === 1){
+          this.alertTitle = "Seller InActive";
+          this.alertMsg = "InActivate Success";
+        }   
+        else{
+          this.alertTitle = "Seller InActive";
+          this.alertMsg = "Seller Activate Success";
+        } 
+      
+        this.msgModalBTN.nativeElement.click();    
         this.getData();
-        // alert(Isactive);
-     
-        if ( Isactive== false) this.btnIndex = 1;
-        if (Isactive == true) this.btnIndex = 0;
-        // this.sendEmailToCompany(companyEmail, companyCode, userCnt, Isactive);
-     
-
-        if (Isactive) {
-          this.alertTitle = 'Success!';
-          this.alertMsg = 'Company is approved sucessfully.';
-        } else {
-          this.alertTitle = 'Rejected!';
-          this.alertMsg = 'Company is rejected.';
-        }
-        this.msgModalBTN.nativeElement.click();
       },
       error: (error: any) => {
-        //console.log(error);
+        console.log(error);
       },
     });
   }
 
-  sendEmailToCompany(email: any, companyId: any, maxUser: any, Isactive: any) {
-    // You can customize the email message to include companyId, max users, and admin info
-    let message = '';
-    if (Isactive === 1) {
-      message = `Thank you for registering your company! Your Company ID is ${companyId}.
-   You can add up to ${maxUser} users as sellers, and the first added user will be the Company Admin.`;
-    } else if (Isactive === 0) {
-      message = `Your request for registering your company is rejected!`;
-    } else {
-      message = `We updated your max USer Limit!`;
-    }
-    this.emailService
-      .sendEmail(email, 'Company Registration Successful', message)
-      .subscribe({
-        next: (response: any) => {
-          //console.log(response);
-          // Handle success
-        },
-        error: (error: any) => {
-          //console.log(error);
-          // Handle error
-        },
-      });
-  }
+ 
 }

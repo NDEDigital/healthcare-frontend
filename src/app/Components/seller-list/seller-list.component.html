@@ -66,48 +66,17 @@
         <div class="col tableBody text-break">
           {{ cmp.address }}
         </div>
-        <!-- <div class="col tableBody text-break">
-          {{ cmp.addedDate }}
-        </div> -->
         <div class="col tableBody">
           {{ cmp.addedDate | date : "dd MMM yyyy" }}
         </div>
         <div class="col tableBody text-break">
           {{ cmp.companyCode }}
         </div>
-        <!-- <div class="col tableBody">
-          <button
-            class="custom-btn btn-trade-company"
-            data-bs-toggle="modal"
-            data-bs-target="#showImgModal"
-            (click)="showImage(cmp.tradeLicense, 'Trade License')"
-          >
-            view
-          </button>
-        </div> -->
-        <!-- <div class="col tableBody">
-          <button
-            class="custom-btn btn-trade-company"
-            data-bs-toggle="modal"
-            data-bs-target="#showImgModal"
-            (click)="showImage(cmp.companyImage, 'Company Image')"
-          >
-            view
-          </button>
-        </div> -->
-        <!-- <div class="col tableBody">{{ cmp.preferredPaymentMethodName }}</div> -->
-        <!-- <div class="col tableBody">
-          <input
-            [(ngModel)]="selectedCompanyCodeValues[cmp.companyCode]"
-            type="number"
-            class="border border-1 p-2 w-75"
-            min="0"
-          />
-        </div> -->
+     
         <div class="col tableBody">
           <div class="d-flex justify-content-center align-items-center">
-            <div>
-              <button class="actionBtn">
+            <div >
+              <button *ngIf = "btnIndex === 0" class="actionBtn">
                 <svg
                   xmlns="http://www.w3.org/2000/svg"
                   width="30"
@@ -128,7 +97,7 @@
             <div>
               <button
                 class="actionBtn"
-                *ngIf="btnIndex != 0"
+                *ngIf="btnIndex === 1"
                 (click)="
                   updateCompany(cmp.userId, 0)
                 "
