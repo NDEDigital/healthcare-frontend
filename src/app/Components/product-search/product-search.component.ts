@@ -15,6 +15,8 @@ export class ProductSearchComponent {
   
   constructor(private router: Router) {}
   sendData() {
+    console.log(this.compare," pepe");
+    
     const data = {
       ind: this.indx,
     };
