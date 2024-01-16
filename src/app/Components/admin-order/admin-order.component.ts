@@ -240,6 +240,12 @@ export class AdminOrderComponent {
             ...item,
             isChecked: false,
           }));
+        }else{
+          this.detailsData = data;
+          this.detailsData = this.detailsData.map((item: any) => ({
+            ...item,
+            isChecked: false,
+          }));
         }
 
         //  this.togglingDetailsCheckbox(index);
@@ -275,8 +281,13 @@ export class AdminOrderComponent {
     // }
 
 
+
+
+
     else {
-      this.detailsData.length = 0; // clearing the array for  hiding the details data div
+      // this.detailsData.length = 0; // clearing the array for  hiding the details data div
+
+
     }
 
     //console.log(' isIconRotatedMap', this.isIconRotatedMap);
