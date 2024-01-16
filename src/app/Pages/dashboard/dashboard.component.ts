@@ -65,6 +65,7 @@ export class DashboardComponent {
   approvedCount = 0;
   rejectedCount = 0;
 
+
   selectAllChecked: boolean = false;
   selectedCheckboxIds: string[] = [];
   publicIP = '0.0.0.0';
@@ -128,7 +129,7 @@ export class DashboardComponent {
       { validators: this.passwordMatchValidator }
     );
   }
-
+  userId:any;
   ngOnInit() {
     // const order = sessionStorage.getItem('checkSidebar');
     // //console.log('  admin order clicked ', order);
@@ -139,6 +140,8 @@ export class DashboardComponent {
     // } else {
     //   this.isAdminOrder = false;
     // }
+    this.userId=localStorage.getItem('code');
+    // alert(this.userId);
     this.getDashboardContents();
 
     setTimeout(() => {

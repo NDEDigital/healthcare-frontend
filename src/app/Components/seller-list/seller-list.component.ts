@@ -1,4 +1,4 @@
-import { Component, ElementRef, ViewChild } from '@angular/core';
+import { Component, ElementRef, Input, Output, ViewChild } from '@angular/core';
 import { reload } from 'firebase/auth';
 
 
@@ -10,11 +10,12 @@ import { EmailService } from 'src/app/services/email.service';
   styleUrls: ['./seller-list.component.css']
 })
 export class SellerListComponent {
-  btnIndex = -1;
-  companies: any;
+  btnIndex = 1;
+  sellerList: any;
   imagePath = '';
   imageTitle = 'No Data Found!';
   selectedCompanyCodeValues: { [key: string]: any } = {};
+  UserId:any;
   @ViewChild('msgModalBTN') msgModalBTN!: ElementRef;
   alertTitle: string = '';
   alertMsg: string = '';
@@ -23,16 +24,24 @@ export class SellerListComponent {
   ) {}
 
   ngOnInit() {
-    this.getData();
-    
-  }
 
+    this.getData();
+    this.UserId=localStorage.getItem('code');
+    // alert(this.UserId);
+  }
+//  currentIndex: number = 0;
+//   incrementIndex(): void {
+//     this.currentIndex++;
+//     alert(this.currentIndex);
+//   }
   getData() {
     console.log("bebe");
     
     this.companyService.GetSellerList(this.btnIndex).subscribe({
       next: (response: any) => {
-       this.companies = response;   
+       this.sellerList = response.filter((u:any) => u.userId!== Number(this.UserId));   
+         console.log(this.sellerList,"sdsd");
+         
       },
       error: (error: any) => {
         console.log(error);

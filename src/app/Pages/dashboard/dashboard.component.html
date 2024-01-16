@@ -442,7 +442,7 @@
       <app-product-approval></app-product-approval>
     </section>
     <section class="sellerList" *ngIf="SidebarIndex === 11">
-     <app-seller-list></app-seller-list>
+     <app-seller-list *ngIf="userId"></app-seller-list>
     </section>
     <section class="sellerOrder" *ngIf="SidebarIndex === 6">
       <!-- <app-seller-order></app-seller-order> -->
