@@ -1,6 +1,8 @@
 import { Injectable } from '@angular/core';
 import { API_URL } from '../config';
 import { HttpClient } from '@angular/common/http';
+import { reload } from 'firebase/auth';
+import { tap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root',
@@ -33,5 +35,28 @@ export class CompanyService {
   UpdateCompany(companyDto: any) {
     //console.log('Data sent to server:', companyDto);
     return this.http.put(this.UpdateCompanyURL, companyDto);
+  }
+  GetSellerList(status: any) {
+    if(status==1){
+      status=true
+    }
+    else{
+      status=false;
+    }
+    return this.http.get(`${this.URL}/CompanySellerDetails/${localStorage.getItem('code')}/${status}`);
+    
+  }
+  UpdateSellerActiveInActive(companyDto: any) {
+   if(companyDto.Isactive == 1){
+    companyDto.Isactive=true
+  }
+  else{
+    companyDto.Isactive=false;
+  }
+  return this.http.put(`${this.URL}/CompanySellerDetailsUpdateUserStatus/${companyDto.userId}/${companyDto.Isactive}`, null)
+  .pipe(
+    tap(response => console.log('Response from server:', response)),
+  );
+
   }
 }

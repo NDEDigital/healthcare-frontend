@@ -52,6 +52,7 @@ export class DashboardComponent {
   sidebarCol8Title = 'Company Approval';
   sidebarCol9Title = 'Price & Discounts';
   sidebarCol10Title = 'Product Approval';
+  sidebarCol11Title='Seller List';
   sidebarCol4Link = '/payment';
   sidebarCol2Link = '/addProduct';
   sidebarCol3Link = '/ordersOverview';
@@ -63,6 +64,7 @@ export class DashboardComponent {
   editedCount = 0;
   approvedCount = 0;
   rejectedCount = 0;
+
 
   selectAllChecked: boolean = false;
   selectedCheckboxIds: string[] = [];
@@ -127,7 +129,7 @@ export class DashboardComponent {
       { validators: this.passwordMatchValidator }
     );
   }
-
+  userId:any;
   ngOnInit() {
     // const order = sessionStorage.getItem('checkSidebar');
     // //console.log('  admin order clicked ', order);
@@ -138,6 +140,8 @@ export class DashboardComponent {
     // } else {
     //   this.isAdminOrder = false;
     // }
+    this.userId=localStorage.getItem('code');
+    // alert(this.userId);
     this.getDashboardContents();
 
     setTimeout(() => {
