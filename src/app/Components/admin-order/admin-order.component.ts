@@ -212,7 +212,7 @@ export class AdminOrderComponent {
 
     if (this.detailsData.length === 0) {
       this.service.getOrderDetailData(orderMasterId).subscribe((data: any) => {
-        this.detailsData = [];
+        // this.detailsData = [];
         if (this.selectedButtonIndex === 'Cancelled') {
           console.log(data, 'all data');
 
@@ -226,9 +226,8 @@ export class AdminOrderComponent {
             ...item,
             isChecked: false,
           }));
-
-        } else if(this.selectedButtonIndex === 'Approved') {
-          console.log("dsagashd");
+        } else if (this.selectedButtonIndex === 'Approved') {
+          console.log('dsagashd');
 
           this.detailsData = data;
 
@@ -240,7 +239,7 @@ export class AdminOrderComponent {
             ...item,
             isChecked: false,
           }));
-        }else{
+        } else if (this.selectedButtonIndex === 'Pending') {
           this.detailsData = data;
           this.detailsData = this.detailsData.map((item: any) => ({
             ...item,
@@ -279,15 +278,8 @@ export class AdminOrderComponent {
     //     }, 10);
     //   });
     // }
-
-
-
-
-
     else {
-      // this.detailsData.length = 0; // clearing the array for  hiding the details data div
-
-
+      this.detailsData.length = 0; // clearing the array for  hiding the details data div
     }
 
     //console.log(' isIconRotatedMap', this.isIconRotatedMap);
