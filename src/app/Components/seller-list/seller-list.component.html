@@ -60,8 +60,23 @@
         >
           Inactive
         </button>
+     
+
+
+
+        
+        
        
       </div>
+      <div [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
+        <select class="form-control font-weight-bold px-5 " id="allcategory" name="Category" (change)="onCategoryChange($event)" style="box-shadow:10px 10px 20px rgba(0, 0, 0, 0.1) ;">
+          <option  (click)="getUser()">All</option>
+          <option class="" *ngFor="let sl of dropdownValues; let i = index;">{{sl.companyCode}}</option>
+          <!-- Add more options as needed -->
+        </select>
+      </div>
+      
+      
       
         <div class="headerbtns">
           <!-- <button

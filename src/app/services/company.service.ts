@@ -48,7 +48,7 @@ export class CompanyService {
     
   }
 
-  GetSellerInAdmin(status:any){
+  GetSellerInAdmin(status:any,selectedValue:any){
     if(status==1){
       status=true
     }
@@ -56,9 +56,10 @@ export class CompanyService {
       status=false;
     }
     
-    return this.http.get(`${this.URL}/getSellerActive&Inactive/${true}?CompanyCode=${"demo"}&IsActive=${status}`);
+    return this.http.get(`${this.URL}/getSellerActive&Inactive/${true}?CompanyCode=${selectedValue}&IsActive=${status}`);
     // getSellerActive&Inactive/false?CompanyCode=dfasd&IsActive=true
   }
+
 
   GetBuyerInAdmin(status:any){
     if(status==1){
@@ -72,6 +73,17 @@ export class CompanyService {
 
 
   }
+
+  GetDropdownValues(){
+ 
+    return this.http.get(`${this.URL}/getSellerActive&Inactive/${true}?CompanyCode=${'demo'}&IsActive=${true}`);
+
+
+
+  }
+
+
+
 
 
 

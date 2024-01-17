@@ -10,6 +10,7 @@ import { EmailService } from 'src/app/services/email.service';
   styleUrls: ['./seller-list.component.css']
 })
 export class SellerListComponent {
+  dropdownValues: any[] = [];
   userBtnIndex=0;
   btnIndex = 1;
   sellerList: any;
@@ -41,7 +42,7 @@ export class SellerListComponent {
       
         this.getSeller();
     }
-   
+   this.getDropdownValues();
     
     // alert(this.UserId);
   }
@@ -66,25 +67,53 @@ export class SellerListComponent {
       },
     });
   }
-getSeller(){
-  // console.log("bebe");
-   
-  this.companyService.GetSellerInAdmin(this.btnIndex).subscribe({
-    next: (response: any) => {
+  
+  selectedValue: any;
 
-      // console.log("This is ")
-      console.log(this.btnIndex,"admin",response);
-      
-     this.sellerList = response; 
-      
+  onCategoryChange(event: any): void {
+    // Handle the change event here
+    this.selectedValue = event.target.value;
+    console.log('Selected value:', this.selectedValue);
+  
+    // Call getSeller without passing selectedValue as a parameter
+    this.getSeller();
+  
+    // Add your logic here based on the selected value
+  }
+  
+  getSeller(): void {
+    console.log("got in getSeller", this.selectedValue);
+    
+    // Assuming this.btnIndex is defined somewhere in your code
+    this.companyService.GetSellerInAdmin(this.btnIndex,this.selectedValue).subscribe({
+      next: (response: any) => {
+        console.log(this.btnIndex, "admin", response);
+        this.sellerList = response;
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
+  }
+  getDropdownValues(): void {
+    // Assuming this.btnIndex is defined somewhere in your code
+    this.companyService.GetDropdownValues().subscribe({
+      next: (response: any) => {
+       this.dropdownValues=response;
        
-    },
-    error: (error: any) => {
-      console.log(error);
-    },
-  });
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
+  }
+  
 
-}
+
+  
+
+  
+
 getBuyer(){
   this.companyService.GetBuyerInAdmin(this.btnIndex).subscribe({
     next: (response: any) => {
