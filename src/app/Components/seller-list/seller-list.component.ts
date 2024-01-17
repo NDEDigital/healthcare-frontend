@@ -10,8 +10,10 @@ import { EmailService } from 'src/app/services/email.service';
   styleUrls: ['./seller-list.component.css']
 })
 export class SellerListComponent {
+  userBtnIndex=0;
   btnIndex = 1;
   sellerList: any;
+  whoUser:any;
   imagePath = '';
   imageTitle = 'No Data Found!';
   selectedCompanyCodeValues: { [key: string]: any } = {};
@@ -22,11 +24,25 @@ export class SellerListComponent {
   constructor(
     private companyService: CompanyService,
   ) {}
-
+ 
   ngOnInit() {
 
-    this.getData();
+  
     this.UserId=localStorage.getItem('code');
+    this.whoUser=localStorage.getItem('role');
+    
+    if(this.whoUser === 'seller'){
+      
+      
+      this.getData();
+    }
+    else{
+     
+      
+        this.getSeller();
+    }
+   
+    
     // alert(this.UserId);
   }
 //  currentIndex: number = 0;
@@ -39,8 +55,10 @@ export class SellerListComponent {
     
     this.companyService.GetSellerList(this.btnIndex).subscribe({
       next: (response: any) => {
+        console.log(this.btnIndex);
+        // alert(this.btnIndex);
        this.sellerList = response.filter((u:any) => u.userId!== Number(this.UserId));   
-         console.log(this.sellerList,"sdsd");
+         console.log(this.sellerList,"seller");
          
       },
       error: (error: any) => {
@@ -48,11 +66,71 @@ export class SellerListComponent {
       },
     });
   }
+getSeller(){
+  // console.log("bebe");
+   
+  this.companyService.GetSellerInAdmin(this.btnIndex).subscribe({
+    next: (response: any) => {
+
+      // console.log("This is ")
+      console.log(this.btnIndex,"admin",response);
+      
+     this.sellerList = response; 
+      
+       
+    },
+    error: (error: any) => {
+      console.log(error);
+    },
+  });
+
+}
+getBuyer(){
+  this.companyService.GetBuyerInAdmin(this.btnIndex).subscribe({
+    next: (response: any) => {
+
+      // console.log("This is ")
+      console.log(this.btnIndex,"getBuyerInAdmin",response);
+      
+     this.sellerList = response; 
+      
+       
+    },
+    error: (error: any) => {
+      console.log(error);
+    },
+  });
+
+
+
+}
+
+getBuyerIn(){
+this.getBuyer()
 
 
 
 
-  updateCompany(
+}
+getSellerIn(){
+this.getSeller();
+  
+}
+
+
+getUser(){
+  if(this.userBtnIndex===1){
+    this.getBuyerIn();
+  }
+  else{
+    this.getSellerIn();
+  }
+}
+
+
+
+
+  UpdatedSellerBuyer(
     userId: any,
     Isactive: any,
   ) {
@@ -64,17 +142,52 @@ export class SellerListComponent {
    
     this.companyService.UpdateSellerActiveInActive(cmp).subscribe({
       next: (response: any) => {
-        if(this.btnIndex === 1){
-          this.alertTitle = "Seller InActive";
-          this.alertMsg = "InActivate Success";
-        }   
+        console.log(response);
+        
+     
+        if(this.btnIndex === 1&& this.userBtnIndex===1){
+
+          this.alertTitle = "Buyer Activation!";
+          this.alertMsg = "Buyer is Activated Successfully.";
+        } 
+       else if(this.btnIndex === 1&& this.userBtnIndex===0){
+
+          this.alertTitle = "Seller Activation!";
+          this.alertMsg = "Seller is Activated Successfully.";
+        } 
+        
+        
+       else if(this.btnIndex === 0&& this.userBtnIndex===1){
+
+          this.alertTitle = "Buyer Deactivation!";
+          this.alertMsg = "Buyer is Deactivated Successfully.";
+        } 
+
+        
         else{
-          this.alertTitle = "Seller InActive";
-          this.alertMsg = "Seller Activate Success";
+          this.alertTitle = "Seller Deactivation!";
+          this.alertMsg = "Seller Deactivated Successfully.";
         } 
       
-        this.msgModalBTN.nativeElement.click();    
-        this.getData();
+        this.msgModalBTN.nativeElement.click();  
+        
+        if(this.whoUser === 'seller'){
+          this.getData();
+          console.log('getData');
+          }
+          else{
+            //  this.getSeller();
+             this.getUser();
+             console.log('getSeller')
+          }
+
+
+
+         
+        
+          
+          
+         
       },
       error: (error: any) => {
         console.log(error);

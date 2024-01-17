@@ -4,7 +4,7 @@
     >
       <h1 class="companyApproval_header_text">Seller List</h1>
     </div>
-    <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2">
+    <div class="mt-2 bg-light border border-1 px-3 py-2 rounded my-2" *ngIf="this.whoUser==='seller'">
       <div class="headerbtns">
         <!-- <button
           class="custom-btn new-btn active"
@@ -31,7 +31,101 @@
           Inactive
         </button>
       </div>
+      
     </div>
+
+    <div class="mt-2 bg-light border d-flex justify-content-between border-1 px-3 py-2 rounded my-2" *ngIf="this.whoUser==='admin'">
+      <div class="headerbtns">
+        <!-- <button
+          class="custom-btn new-btn active"
+          [ngClass]="{ active: btnIndex === -1 }"
+          (click)="btnIndex = -1"
+          (click)="getData()"
+        >
+          New
+        </button> -->
+        <button
+          class="custom-btn btn-active active"
+          [ngClass]="{ active: btnIndex === 1 }"
+          (click)="btnIndex = 1"
+          (click)="getUser()"
+        >
+          Active
+        </button>
+        <button
+          class="custom-btn btn-inactive"
+          [ngClass]="{ active: btnIndex === 0}"
+          (click)="btnIndex = 0"
+          (click)="getUser()"
+        >
+          Inactive
+        </button>
+       
+      </div>
+      
+        <div class="headerbtns">
+          <!-- <button
+            class="custom-btn new-btn active"
+            [ngClass]="{ active: btnIndex === -1 }"
+            (click)="btnIndex = -1"
+            (click)="getData()"
+          >
+            New
+          </button> -->
+           <button
+        class="custom-btn btn-active active"
+        [ngClass]="{ active: userBtnIndex === 1 }"
+        (click)="userBtnIndex = 1"
+        (click)="getBuyerIn()"
+      >
+        Buyer
+      </button>
+         
+          <button
+            class="custom-btn btn-active"
+            [ngClass]="{ active: userBtnIndex === 0 }"
+            (click)="userBtnIndex = 0"
+            (click)="getSellerIn()"
+          >
+            Seller
+          </button>
+  
+      </div>
+
+
+
+
+
+
+
+
+
+
+
+      
+      
+    </div>
+
+
+
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
     <div class="scrollable-table border border-1 bg-light">
       <!-- TABLE header -->
       <div class="row headerRow sticky-top fw-bolder">
@@ -41,7 +135,8 @@
         <div class="col tableHeader">Email</div>
         <div class="col tableHeader">Address</div>
         <div class="col tableHeader">Added Date</div>
-        <div class="col tableHeader">Company </div>
+        <div class="col tableHeader" [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">Company</div>
+
         <div class="col tableHeader">Action </div>
 
        
@@ -73,7 +168,7 @@
         <div class="col tableBody">
           {{ sl.addedDate | date : "dd MMM yyyy" }}
         </div>
-        <div class="col tableBody text-break">
+        <div class="col tableBody text-break" [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
           {{ sl.companyName }}
         </div>
      
@@ -89,7 +184,7 @@
                   class="bi bi-check2 me-3"
                   viewBox="0 0 16 16"
                   (click)="
-                    updateCompany(sl.userId, 1)
+                    UpdatedSellerBuyer(sl.userId, 1)
                   "
                 >
                   <path
@@ -103,7 +198,7 @@
                 class="actionBtn"
                 *ngIf="btnIndex === 1"
                 (click)="
-                  updateCompany(sl.userId, 0)
+                  UpdatedSellerBuyer(sl.userId, 0)
                 "
               >
                 <svg
