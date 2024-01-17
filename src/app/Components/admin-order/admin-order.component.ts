@@ -129,6 +129,13 @@ export class AdminOrderComponent {
       this.pagination.reloadData(); // You need to create this method in your pagination component
     }
   }
+  ngAfterViewInit() {
+    // Now, allCheck is defined
+    if (this.allCheck && this.allCheck.nativeElement) {
+      const nativeElement = this.allCheck.nativeElement;
+      nativeElement.checked = false;
+    }
+  }
 
   loadData() {
     //console.log(' load data function');
@@ -148,7 +155,7 @@ export class AdminOrderComponent {
     this.detailsCancelledArray = [];
     this.masterId = '';
     this.detailsUnCheckedId = '';
-    this.allCheck.nativeElement.checked = false;
+    //this.allCheck.nativeElement.checked = false;
   }
 
   GetData() {
@@ -286,24 +293,26 @@ export class AdminOrderComponent {
   }
 
   togglingDetailsCheckbox(index: any, detailsData: any) {
-    //console.log(' index ', index);
+    // console.log(' index ', index);
+
     // toggling the checkbox
     const individual_check_master =
-      this.elementRef.nativeElement.querySelectorAll(
-        '.individual_checkbox_Master'
-      );
+      this.elementRef.nativeElement.querySelectorAll('.individual_checkbox_Master');
     const individual_check_details =
-      this.elementRef.nativeElement.querySelectorAll(
-        '.individual_checkbox_details'
-      );
+      this.elementRef.nativeElement.querySelectorAll('.individual_checkbox_details');
 
-    if (individual_check_master[index].checked) {
-      //console.log(' details map ', this.detailsMap);
+    // Ensure that individual_check_master[index] is defined before accessing checked property
+    if (
+      individual_check_master &&
+      individual_check_master.length > index &&
+      individual_check_master[index].checked
+    ) {
+      // console.log(' details map ', this.detailsMap);
 
       for (let i = 0; i < individual_check_details.length; i++) {
-        //console.log(' jafhwafhowauifw');
+        // console.log(' jafhwafhowauifw');
         const id = individual_check_details[i].getAttribute('id');
-        //console.log(' id ', id);
+        // console.log(' id ', id);
 
         if (this.detailsMap[id]) {
           this.detailsData[i].isChecked = false;
@@ -313,6 +322,7 @@ export class AdminOrderComponent {
       }
     }
   }
+
 
   //   ****************** UPDATE STATUS *************
   actionBtn(masterId: any, cancelledId: any, str: string) {
