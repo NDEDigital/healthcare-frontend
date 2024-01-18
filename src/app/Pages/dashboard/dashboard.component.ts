@@ -32,6 +32,7 @@ export class DashboardComponent {
   indx: number = 0;
   sellerCode: any;
   productID: any;
+  companyAdminId:any;
   filteredProducts: any[] = []; // Array to hold the filtered products
   showSidebar = true;
   isAdmin: boolean = false;
@@ -140,6 +141,8 @@ export class DashboardComponent {
     // } else {
     //   this.isAdminOrder = false;
     // }
+    this.companyAdminId=localStorage.getItem('isCompanyAd');
+    // console.log(this.companyAdminId);
     this.userId=localStorage.getItem('code');
     // alert(this.userId);
     this.getDashboardContents();

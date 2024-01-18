@@ -172,6 +172,7 @@
         <div class="col tableHeader">Address</div>
         <div class="col tableHeader">Added Date</div>
         <div class="col tableHeader" [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">Company</div>
+        <div class="col tableHeader" [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">Role</div>
 
         <div class="col tableHeader">Action </div>
 
@@ -179,7 +180,14 @@
       </div>
   
       <!-- table body -->
-      <h1 *ngIf="responseLength==0" class="text-center " style="color: red;margin-top: 15%"> Seller Not Found</h1>
+      <div *ngIf="userBtnIndex==0">
+
+        <h1 *ngIf="responseLength==0" class="text-center " style="color: red;margin-top: 15%"> Seller Not Found</h1>
+      </div>
+      <div *ngIf="userBtnIndex==1">
+
+        <h1 *ngIf="buyerResponse==0" class="text-center " style="color: red;margin-top: 15%"> Buyer Not Found</h1>
+      </div>
       <section
         class="row tablebodyRow fw-semibold"
         *ngFor="let sl of sellerList; let i = index; "
@@ -208,6 +216,16 @@
         <div class="col tableBody text-break" [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
           {{ sl.companyName }}
         </div>
+
+        <div class="col tableBody text-break"  *ngIf="sl.userId===sl.companyAdminId else elseBlock"       [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
+          Manager
+        </div>
+        <ng-template #elseBlock>
+          <!-- Content to be displayed when the condition is not met -->
+          <div class="col tableBody text-break"  [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
+           Seller
+          </div>
+        </ng-template>
      
         <div class="col tableBody">
           <div class="d-flex justify-content-center align-items-center">
@@ -314,7 +332,7 @@
   >
     <div class="modal-dialog">
       <div class="modal-content">
-        <div class="modal-header fs-5 fw-bold">
+        <div class="modal-header fs-5 fw-bold text-success">
           <h1 class="modal-title fs-5" id="msgModalLabel">
             {{ alertTitle }}
           </h1>
@@ -329,7 +347,7 @@
           {{ alertMsg }}
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          <button type="button" class="btn btn-success" data-bs-dismiss="modal">
             OK
           </button>
         </div>

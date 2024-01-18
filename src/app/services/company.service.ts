@@ -96,9 +96,7 @@ export class CompanyService {
     companyDto.Isactive=false;
   }
   return this.http.put(`${this.URL}/CompanySellerDetailsUpdateUserStatus/${companyDto.userId}/${companyDto.Isactive}`, null)
-  .pipe(
-    tap(response => console.log('Response from server:', response)),
-  );
+  
 
   }
 }

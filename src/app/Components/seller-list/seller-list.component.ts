@@ -10,6 +10,7 @@ import { EmailService } from 'src/app/services/email.service';
   styleUrls: ['./seller-list.component.css']
 })
 export class SellerListComponent {
+  buyerResponse:any;
   responseLength:any;
   dropdownValues: any[] = [];
   dropdownValuesWithNames:any[]=[];
@@ -24,6 +25,7 @@ export class SellerListComponent {
   @ViewChild('msgModalBTN') msgModalBTN!: ElementRef;
   alertTitle: string = '';
   alertMsg: string = '';
+ 
   constructor(
     private companyService: CompanyService,
   ) {}
@@ -33,7 +35,7 @@ export class SellerListComponent {
   
     this.UserId=localStorage.getItem('code');
     this.whoUser=localStorage.getItem('role');
-    
+ 
     if(this.whoUser === 'seller'){
       
       
@@ -54,14 +56,14 @@ export class SellerListComponent {
 //     alert(this.currentIndex);
 //   }
   getData() {
-    console.log("bebe");
+    // console.log("bebe");
     
     this.companyService.GetSellerList(this.btnIndex).subscribe({
       next: (response: any) => {
-        console.log(this.btnIndex);
+        // console.log(this.btnIndex);
         // alert(this.btnIndex);
        this.sellerList = response.filter((u:any) => u.userId!== Number(this.UserId));   
-         console.log(this.sellerList,"seller");
+        //  console.log(this.sellerList,"seller");
          
       },
       error: (error: any) => {
@@ -75,7 +77,7 @@ export class SellerListComponent {
   onCategoryChange(event: any): void {
     // Handle the change event here
     this.selectedValue = event.target.value;
-    console.log('Selected value:', this.selectedValue);
+    // console.log('Selected value:', this.selectedValue);
   
     // Call getSeller without passing selectedValue as a parameter
     this.getSeller();
@@ -84,15 +86,15 @@ export class SellerListComponent {
   }
   
   getSeller(): void {
-    console.log("got in getSeller", this.selectedValue);
+    // console.log("got in getSeller", this.selectedValue);
     let responseCount = 0;
     // Assuming this.btnIndex is defined somewhere in your code
     this.companyService.GetSellerInAdmin(this.btnIndex,this.selectedValue).subscribe({
       next: (response: any) => {
-        console.log(this.btnIndex, "admin", response);
+        // console.log(this.btnIndex, "admin", response);
         this.sellerList = response;
         this.responseLength=response.length
-        console.log("dfladkfja",this.responseLength);
+        // console.log("dfladkfja",this.responseLength);
         // console.log(typeof this.responseLength);
         
       },
@@ -107,7 +109,7 @@ export class SellerListComponent {
     // Assuming this.btnIndex is defined somewhere in your code
     this.companyService.GetDropdownValues().subscribe({
       next: (response: any) => {
-        console.log("response",response);
+        // console.log("response",response);
         // this.dropdownValues=response;
         //  this.dropdownValues = Array.from(new Set(response.map((item: any) => item.companyCode)));
        /// this.dropdownValuesWithNames =response.filter((item: any) => item.companyCode === targetCompanyCode);
@@ -124,7 +126,7 @@ export class SellerListComponent {
         
         // Convert the values of the map to an array to get the final result
          this.dropdownValues = Array.from(uniqueCompanyCodesMap.values());
-        console.log("dropdonwn",this.dropdownValues);
+        // console.log("dropdonwn",this.dropdownValues);
 
   
        
@@ -146,9 +148,11 @@ getBuyer(){
     next: (response: any) => {
 
       // console.log("This is ")
-      console.log(this.btnIndex,"getBuyerInAdmin",response);
-      
+      // console.log(this.btnIndex,"getBuyerInAdmin",response);
+      this.buyerResponse=response.length;
+      // console.log("This is the buyer", this.buyerResponse);
      this.sellerList = response; 
+
       
        
     },
@@ -198,43 +202,43 @@ getUser(){
    
     this.companyService.UpdateSellerActiveInActive(cmp).subscribe({
       next: (response: any) => {
-        console.log(response);
+        // console.log(response);
         
      
         if(this.btnIndex === 1&& this.userBtnIndex===1){
 
-          this.alertTitle = "Buyer Activation!";
-          this.alertMsg = "Buyer is Activated Successfully.";
+          this.alertTitle = "Buyer Deactivation!";
+          this.alertMsg = "Buyer is Deactivated Successfully.";
         } 
        else if(this.btnIndex === 1&& this.userBtnIndex===0){
 
-          this.alertTitle = "Seller Activation!";
-          this.alertMsg = "Seller is Activated Successfully.";
+          this.alertTitle = "Seller Deactivation!";
+          this.alertMsg = "Seller is Deactivation Successfully.";
         } 
         
         
        else if(this.btnIndex === 0&& this.userBtnIndex===1){
 
-          this.alertTitle = "Buyer Deactivation!";
-          this.alertMsg = "Buyer is Deactivated Successfully.";
+          this.alertTitle = "Buyer Activation!";
+          this.alertMsg = "Buyer is Activation Successfully.";
         } 
 
         
         else{
-          this.alertTitle = "Seller Deactivation!";
-          this.alertMsg = "Seller Deactivated Successfully.";
+          this.alertTitle = "Seller Activation!";
+          this.alertMsg = "Seller Activation Successfully.";
         } 
       
         this.msgModalBTN.nativeElement.click();  
         
         if(this.whoUser === 'seller'){
           this.getData();
-          console.log('getData');
+          // console.log('getData');
           }
           else{
             //  this.getSeller();
              this.getUser();
-             console.log('getSeller')
+            //  console.log('getSeller')
           }
 
 
