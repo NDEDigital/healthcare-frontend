@@ -42,10 +42,52 @@ export class CompanyService {
     }
     else{
       status=false;
+      // alert(status);
     }
     return this.http.get(`${this.URL}/CompanySellerDetails/${localStorage.getItem('code')}/${status}`);
     
   }
+
+  GetSellerInAdmin(status:any,selectedValue:any){
+    if(status==1){
+      status=true
+    }
+    else{
+      status=false;
+    }
+    // console.log(selectedValue);
+    
+    return this.http.get(`${this.URL}/getSellerActive&Inactive/${true}?CompanyCode=${selectedValue}&IsActive=${status}`);
+    // getSellerActive&Inactive/false?CompanyCode=dfasd&IsActive=true
+  }
+
+
+  GetBuyerInAdmin(status:any){
+    if(status==1){
+      status=true
+    }
+    else{
+      status=false;
+    }
+    
+    return this.http.get(`${this.URL}/getBuyerInAdmin/${true}?IsActive=${status}`);
+
+
+  }
+
+  GetDropdownValues(){
+ 
+    return this.http.get(`${this.URL}/api/CompanyRegistration/GetCompaniesBasedOnStatus?status=${1}`);
+
+
+
+  }
+
+
+
+
+
+
   UpdateSellerActiveInActive(companyDto: any) {
    if(companyDto.Isactive == 1){
     companyDto.Isactive=true
