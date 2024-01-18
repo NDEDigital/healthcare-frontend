@@ -130,6 +130,7 @@ export class AddProductsComponent implements OnInit {
       for (let pair of (formData as any).entries()) {
         //console.log(`${pair[0]}: `, pair[1]);
       }
+      
       if (!this.isEditMode) {
         this.productService.createProductList(formData).subscribe({
           next: (response: any) => {
@@ -246,8 +247,8 @@ export class AddProductsComponent implements OnInit {
       unitId: product.unitId,
     });
 
-    this.displayImage(product.imagepath);
-    this.existingImagePath = product.imagepath;
+    this.displayImage(product.imagePath);
+    this.existingImagePath = product.imagePath;
   }
 
   displayImage(imagePath: string): void {
