@@ -539,6 +539,7 @@ export class AddPriceDiscountsComponent {
 
     this.displayImage(product.imagePath);
     this.existingImagePath = product.imagepath;
+    this.selectedUnitName = product.unitName;
   }
 
   displayImage(imagePath: string): void {
