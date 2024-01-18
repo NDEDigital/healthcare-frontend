@@ -81,9 +81,9 @@
       <div [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
         <!-- <p *ngFor="let sl of dropdownValues; let i = index;"> paragraph{{sl}}</p> -->
 
-        <label for="allcategory " class="font-weight-bold">Select Company Name:</label>
+        <!-- <label for="allcategory " class="font-weight-bold">Select Company Name:</label> -->
         <select 
-          class="form-control " 
+          class="p-2 border border-1 rounded " 
           id="allcategory" 
           name="Category" 
           (change)="onCategoryChange($event)" 
