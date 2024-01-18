@@ -40,6 +40,7 @@
         class="custom-btn addproduct-btn"
         data-bs-toggle="modal"
         data-bs-target="#addGroupModalCenter"
+        #addGroupModalCenterG
       >
         Add Price
       </button>
@@ -64,6 +65,7 @@
     <section
       class="row tablebodyRow fw-semibold"
       *ngFor="let product of productList; let i = index"
+      (dblclick)="openModalWithData(product)"
     >
       <div class="col tableBody">#{{ i + 1 }}</div>
       <div class="col tableBody">{{ product.productId }}</div>
@@ -123,7 +125,13 @@
             <!-- Back Button on the left -->
 
             <!-- Title in the middle -->
-            <h2 class="register_title">Add Price & Discounts</h2>
+            <h2 class="register_title">
+            {{
+              isEditMode
+                ? "Edit Price & Discounts"
+                : "Add Price & Discounts"
+            }}
+            </h2>
 
             <!-- Placeholder for right alignment -->
           </div>
@@ -248,6 +256,15 @@
                   >End Date is not valid.</span
                 >
               </div>
+            </div>
+
+            <div *ngIf="isEditMode" class="image-preview">
+              <label for="productImage"> Product Image Preview </label>
+              <img
+                [src]="imagePathPreview"
+                alt="Product Image"
+                class="product_image"
+              />
             </div>
 
             <div class="form-group">

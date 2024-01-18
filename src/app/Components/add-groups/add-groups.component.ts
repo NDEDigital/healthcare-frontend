@@ -245,6 +245,7 @@ export class AddGroupsComponent {
     }
     this.AddGroupModalCenterG.nativeElement.click();
   }
+  
 
   updateIsActive(isActive: any, groupId: any) {
     console.log(isActive, 'isActive', groupId, 'groupId');

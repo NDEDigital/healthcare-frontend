@@ -37,12 +37,13 @@ export class AddProductService {
 
   updateProductListURL = `${this.URL}/api/ProductList/UpdateProductList`;
 
-  GetPortalDataURL= `${this.URL}/ProductQuantity/GetPortalData`;
+  GetPortalDataURL = `${this.URL}/ProductQuantity/GetPortalData`;
+
+  updateSellerProductPriceURL = `${this.URL}/ProductQuantity/UpdateSellerProductPriceAndOffer`;
 
   constructor(private http: HttpClient) {}
 
-
-  GetPortalData(PortalReceivedId: any ) {
+  GetPortalData(PortalReceivedId: any) {
     return this.http.get(this.GetPortalDataURL, {
       params: { PortalReceivedId },
     });
@@ -53,8 +54,10 @@ export class AddProductService {
   }
 
   // get dfetails data
-  GetProductDetailsData(CompanyCode: any , productGroupId:any) {
-    return this.http.get(`${this.getdetailsData}/${CompanyCode}/${productGroupId}`);
+  GetProductDetailsData(CompanyCode: any, productGroupId: any) {
+    return this.http.get(
+      `${this.getdetailsData}/${CompanyCode}/${productGroupId}`
+    );
   }
 
   // post data
@@ -94,17 +97,15 @@ export class AddProductService {
   getProductGroups() {
     return this.http.get(this.getProductGropURL);
   }
-     // get group[ by userId]
-//  getProductGroupsByUserId(userID: any) {
-//       return this.http.get(this.getProductGroupByUserIdURL,{
-//         params : {userID}
-//       } );
-// }
-getProductGroupsByUserId(userID: any) {
-  return this.http.get(`${this.getProductGroupByUserIdURL}/${userID}`);
-}
-
-
+  // get group[ by userId]
+  //  getProductGroupsByUserId(userID: any) {
+  //       return this.http.get(this.getProductGroupByUserIdURL,{
+  //         params : {userID}
+  //       } );
+  // }
+  getProductGroupsByUserId(userID: any) {
+    return this.http.get(`${this.getProductGroupByUserIdURL}/${userID}`);
+  }
 
   getUnitGroups() {
     return this.http.get(this.getUnitURL);
@@ -116,6 +117,7 @@ getProductGroupsByUserId(userID: any) {
   updateProduct(productListData: any) {
     return this.http.put(this.updateProductURL, productListData);
   }
+
   // updateProductStatus(productId: any, IsActive: any) {
   //   console.log(productId, IsActive, 'service prduct is active');
   //   return this.http.put(this.updateProductStatusURL, {
@@ -161,6 +163,10 @@ getProductGroupsByUserId(userID: any) {
       this.CreateSellerProductPriceURL,
       productListInsertData
     );
+  }
+
+  updateSellerProductPrice(ProductPrice: any) {
+    return this.http.put(this.updateSellerProductPriceURL, ProductPrice);
   }
 
   GetAddQuantityDataByUserId(userId: any) {
