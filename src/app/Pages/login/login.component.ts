@@ -49,7 +49,7 @@ export class LoginComponent {
         this.userData.SetRefreshToken(response.newRefreshToken);
         this.refreshToken = response.newRefreshToken;
         this.isCompanyAdmin = response.isSellerAdmin;
-        console.log(this.isCompanyAdmin);
+       
         
         if(this.isCompanyAdmin){
         localStorage.setItem("isCompanyAd","true");
