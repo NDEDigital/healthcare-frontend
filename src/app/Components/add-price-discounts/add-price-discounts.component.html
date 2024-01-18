@@ -67,10 +67,19 @@
       *ngFor="let product of productList; let i = index"
       (dblclick)="openModalWithData(product)"
     >
-      <div class="col tableBody">#{{ i + 1 }}</div>
-      <div class="col tableBody">{{ product.productId }}</div>
-      <div class="col tableBody">{{ product.productName }}</div>
-      <div class="col tableBody">
+      <div class="col tableBody"
+      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
+
+      >#{{ i + 1 }}</div>
+      <div class="col tableBody"
+      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
+      >{{ product.productId }}</div>
+      <div class="col tableBody"
+      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
+      >{{ product.productName }}</div>
+      <div class="col tableBody"
+      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
+      >
         <img
           class="product_image"
           [src]="
@@ -81,11 +90,22 @@
           alt="no image was uploaded!"
         />
       </div>
-      <div class="col tableBody">{{ product.price }}</div>
-      <div class="col tableBody">{{ product.discountAmount }}</div>
-      <div class="col tableBody">{{ product.discountPct }}</div>
-      <div class="col tableBody">{{ product.totalPrice }}</div>
-      <div class="col tableBody">
+      <div class="col tableBody"
+      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
+
+      >{{ product.price }}</div>
+      <div class="col tableBody"
+      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
+      >{{ product.discountAmount }}</div>
+      <div class="col tableBody"
+      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
+      >{{ product.discountPct }}</div>
+      <div class="col tableBody"
+      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
+      >{{ product.totalPrice }}</div>
+      <div class="col tableBody"
+      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
+      >
         {{ product.addedDate | date : "dd MMM yyyy" }},<br />
         {{ product.addedDate | date : "hh:mm a" }}
       </div>

@@ -1,9 +1,0 @@
-interface FormValues {
-  productId: any;
-  price: any;
-  discountAmount: any;
-  discountPct: any;
-  totalPrice: any;
-  effectivateDate?: any; // Optional property
-  endDate?: any; // Optional property
-}
