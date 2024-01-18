@@ -55,6 +55,7 @@ export class CompanyService {
     else{
       status=false;
     }
+    // console.log(selectedValue);
     
     return this.http.get(`${this.URL}/getSellerActive&Inactive/${true}?CompanyCode=${selectedValue}&IsActive=${status}`);
     // getSellerActive&Inactive/false?CompanyCode=dfasd&IsActive=true
@@ -76,7 +77,7 @@ export class CompanyService {
 
   GetDropdownValues(){
  
-    return this.http.get(`${this.URL}/getSellerActive&Inactive/${true}?CompanyCode=${'demo'}&IsActive=${true}`);
+    return this.http.get(`${this.URL}/api/CompanyRegistration/GetCompaniesBasedOnStatus?status=${1}`);
 
 
 

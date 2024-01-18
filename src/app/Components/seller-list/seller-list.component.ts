@@ -10,7 +10,9 @@ import { EmailService } from 'src/app/services/email.service';
   styleUrls: ['./seller-list.component.css']
 })
 export class SellerListComponent {
+  responseLength:any;
   dropdownValues: any[] = [];
+  dropdownValuesWithNames:any[]=[];
   userBtnIndex=0;
   btnIndex = 1;
   sellerList: any;
@@ -83,23 +85,48 @@ export class SellerListComponent {
   
   getSeller(): void {
     console.log("got in getSeller", this.selectedValue);
-    
+    let responseCount = 0;
     // Assuming this.btnIndex is defined somewhere in your code
     this.companyService.GetSellerInAdmin(this.btnIndex,this.selectedValue).subscribe({
       next: (response: any) => {
         console.log(this.btnIndex, "admin", response);
         this.sellerList = response;
+        this.responseLength=response.length
+        console.log("dfladkfja",this.responseLength);
+        // console.log(typeof this.responseLength);
+        
       },
       error: (error: any) => {
         console.log(error);
       },
+      
     });
+    // console.log("Total responses received:", responseCount);
   }
   getDropdownValues(): void {
     // Assuming this.btnIndex is defined somewhere in your code
     this.companyService.GetDropdownValues().subscribe({
       next: (response: any) => {
-       this.dropdownValues=response;
+        console.log("response",response);
+        // this.dropdownValues=response;
+        //  this.dropdownValues = Array.from(new Set(response.map((item: any) => item.companyCode)));
+       /// this.dropdownValuesWithNames =response.filter((item: any) => item.companyCode === targetCompanyCode);
+
+        // this.dropdownValuesWithNames = Array.from(new Set(response.map((item: any) => ({ companyCode: item.companyCode, companyName: item.companyName }))));
+        const uniqueCompanyCodesMap = new Map<string, any>();
+
+        // Use the map to filter out objects with duplicate companyCode values
+        response.forEach((item:any) => {
+          if (!uniqueCompanyCodesMap.has(item.companyCode)) {
+            uniqueCompanyCodesMap.set(item.companyCode, item);
+          }
+        });
+        
+        // Convert the values of the map to an array to get the final result
+         this.dropdownValues = Array.from(uniqueCompanyCodesMap.values());
+        console.log("dropdonwn",this.dropdownValues);
+
+  
        
       },
       error: (error: any) => {

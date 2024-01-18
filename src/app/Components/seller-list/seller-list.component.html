@@ -68,13 +68,34 @@
         
        
       </div>
+
+
+
+
+
+
+
+
+
+
       <div [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
-        <select class="form-control font-weight-bold px-5 " id="allcategory" name="Category" (change)="onCategoryChange($event)" style="box-shadow:10px 10px 20px rgba(0, 0, 0, 0.1) ;">
-          <option  (click)="getUser()">All</option>
-          <option class="" *ngFor="let sl of dropdownValues; let i = index;">{{sl.companyCode}}</option>
+        <!-- <p *ngFor="let sl of dropdownValues; let i = index;"> paragraph{{sl}}</p> -->
+
+        <label for="allcategory " class="font-weight-bold">Select Company Name:</label>
+        <select 
+          class="form-control " 
+          id="allcategory" 
+          name="Category" 
+          (change)="onCategoryChange($event)" 
+          style="box-shadow: 10px 10px 20px rgba(0, 0, 0, 0.1);"
+        >
+          <option (click)="getUser()"  >All </option>
+          <option *ngFor="let sl of dropdownValues; let i = index;"    [value]="sl.companyCode">{{sl.companyName}}</option>
+          
           <!-- Add more options as needed -->
         </select>
       </div>
+      
       
       
       
@@ -158,12 +179,13 @@
       </div>
   
       <!-- table body -->
-  
+      <h1 *ngIf="responseLength==0" class="text-center " style="color: red;margin-top: 15%"> Seller Not Found</h1>
       <section
         class="row tablebodyRow fw-semibold"
         *ngFor="let sl of sellerList; let i = index; "
       >
       <div class="d-flex"  >
+       
       
         <!-- <div>{{UserId}}</div> -->
  <!-- <div>{{cmp.companyAdminId}}</div> -->
