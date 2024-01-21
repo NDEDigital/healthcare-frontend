@@ -482,7 +482,7 @@ export class AddPriceDiscountsComponent {
             this.isError = true;
             this.isEditMode = false;
             this.PrdouctExistModalBTN.nativeElement.click();
-
+            this.getProducts(-1);
             // Show the error modal or message
             //this.UserExistModalBTN.nativeElement.click();
           },
