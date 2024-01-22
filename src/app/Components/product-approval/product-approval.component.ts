@@ -14,6 +14,9 @@ export class ProductApprovalComponent {
   imageTitle = 'No Data Found!';
   selectedCompanyCodeValues: { [key: string]: number } = {};
 
+  showModal = false;
+  selectedProduct: any = null;
+
   constructor(private productService: AddProductService) {}
 
   ngOnInit() {
@@ -31,6 +34,14 @@ export class ProductApprovalComponent {
         //console.log(error);
       },
     });
+  }
+
+
+  showDetails(product: any) {
+    this.selectedProduct = product;
+    this.showModal = true;
+    console.log("click", product.productId);
+
   }
 
   showImage(path: any, title: any) {

@@ -465,8 +465,9 @@ export class AddPriceDiscountsComponent {
           next: (response: any) => {
             // Handle successful response here
             console.log('Update successful:', response);
-            this.alertMsg = 'Product price updated successfully';
+            this.alertMsg = response.message;
             this.isEditMode = false;
+            this.isError = false;
             // Optionally, reset the form and refresh the group list
             this.addPriceDiscountForm.reset();
             this.getProducts(-1);
@@ -477,12 +478,11 @@ export class AddPriceDiscountsComponent {
           error: (error: any) => {
             // Handle error response here
             console.error('Error updating product price:', error);
-            this.alertMsg =
-              error.error.message || 'Error updating product price';
+            this.alertMsg = error.error.message;
             this.isError = true;
             this.isEditMode = false;
             this.PrdouctExistModalBTN.nativeElement.click();
-
+            this.getProducts(-1);
             // Show the error modal or message
             //this.UserExistModalBTN.nativeElement.click();
           },
