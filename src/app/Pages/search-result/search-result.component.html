@@ -61,7 +61,7 @@
       </div>
     </div>
     <div class="" *ngFor="let product of searchData; let i = index">
-      <div (click)="done(product)">
+      <div>
         <app-product-search
           [totalSize]="compareData.length"
           (dataEvent)="receiveDataFromChild($event)"

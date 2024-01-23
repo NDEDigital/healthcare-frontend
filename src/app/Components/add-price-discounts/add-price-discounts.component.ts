@@ -17,6 +17,7 @@ import { AddProductService } from 'src/app/services/add-product.service';
 export class AddPriceDiscountsComponent {
   @ViewChild('ProductImageInput') ProductImageInput!: ElementRef;
   @ViewChild('prdouctExistModalBTN') PrdouctExistModalBTN!: ElementRef;
+  @ViewChild('addGroupModalCenterG') AddGroupModalCenterG!: ElementRef;
 
   addPriceDiscountForm!: FormGroup;
   products: any[] = [];
@@ -27,19 +28,22 @@ export class AddPriceDiscountsComponent {
   productList: any;
   btnIndex = -1;
   selectedUnitName = '';
-
+  isEditMode = false;
+  currentProductPrice: any = null;
+  activeProductPriceId: number | null = null;
+  existingImagePath: string = '';
+  imagePathPreview: string = '';
 
   onProductChange(event: any) {
     const productId = event.target.value;
-    const selectedProduct = this.products.find(prod => prod.productId == productId);
+    const selectedProduct = this.products.find(
+      (prod) => prod.productId == productId
+    );
     this.selectedUnitName = selectedProduct ? selectedProduct.unitName : '';
-    console.log(this.selectedUnitName, "name");
-    console.log(selectedProduct, "product");
+    console.log(this.selectedUnitName, 'name');
+    console.log(selectedProduct, 'product');
     //console.log(productName, "Prod name");
-
-
-}
-
+  }
 
   isDiscountEntered(): boolean {
     const discountAmount = parseFloat(
@@ -102,11 +106,11 @@ export class AddPriceDiscountsComponent {
       }
 
       const discountPct = parseFloat(control.value);
-      return discountPct >= 0 && discountPct <= 100 ? null : { maxDiscountPct: true };
+      return discountPct >= 0 && discountPct <= 100
+        ? null
+        : { maxDiscountPct: true };
     };
   }
-
-
 
   ngOnInit() {
     this.addPriceDiscountForm = new FormGroup({
@@ -144,6 +148,13 @@ export class AddPriceDiscountsComponent {
     this.addPriceDiscountForm.get('productId')?.setValue(null);
   }
 
+  openAddGroupModal(): void {
+    this.resetForm();
+    this.isEditMode = false;
+    this.currentProductPrice = null;
+    this.AddGroupModalCenterG.nativeElement.click();
+  }
+
   getProductList() {
     this.productService.getallProducts().subscribe(
       (data: any) => {
@@ -160,9 +171,10 @@ export class AddPriceDiscountsComponent {
   resetForm(): void {
     this.addPriceDiscountForm.reset();
     this.selectedUnitName = '';
+    this.isEditMode = false;
+    this.currentProductPrice = null;
+    this.activeProductPriceId = null;
     //console.log(this.addPriceDiscountForm, "price form");
-
-
   }
 
   // setupFormValueChanges() {
@@ -213,14 +225,11 @@ export class AddPriceDiscountsComponent {
   //   };
   // }
 
-
-
   setupFormValueChanges() {
     const form = this.addPriceDiscountForm;
     const priceControl = form.get('price');
     const discountAmountControl = form.get('discountAmount');
     const discountPctControl = form.get('discountPct');
-
 
     // Subscribe to changes in discount amount
     discountAmountControl?.valueChanges.subscribe((value) => {
@@ -375,38 +384,10 @@ export class AddPriceDiscountsComponent {
       // Create FormData object
       const formData = new FormData();
 
-      // Object.keys(this.addPriceDiscountForm.value).forEach((key) => {
-      //   let value = this.addPriceDiscountForm.value[key];
-
-      //   if (key === 'discountAmount' || key === 'discountPct') {
-      //     // Check if the value is a valid number, otherwise set to '0.00'
-      //     const numberValue = parseFloat(value);
-      //     value = !isNaN(numberValue) ? numberValue.toFixed(2) : '0.00';
-      //   } else if (key === 'effectivateDate' || key === 'endDate') {
-      //     // If date is null, set to empty string
-      //     value = value || '';
-      //   } else if (key === 'productId' || key === 'userId') {
-      //     value = String(Math.floor(Number(value)));
-      //   } else if (key === 'price') {
-      //     value = parseFloat(value).toFixed(2);
-      //   }
-
-      //   formData.append(key, value);
-      // });
-
       Object.keys(this.addPriceDiscountForm.value).forEach((key) => {
         let value = this.addPriceDiscountForm.value[key];
 
         if (key === 'discountAmount' || key === 'discountPct') {
-          // Parse the value as a float and check if it's NaN or zero
-
-          // const numberValue = parseFloat(value);
-          // if (isNaN(numberValue) || numberValue === 0 ) {
-          //   value = '0.00'; // Set to '0.00' if the value is NaN or zero
-          // } else {
-          //   value = numberValue.toFixed(2); // Format valid numbers to two decimal places
-          // }
-
           value =
             value === '' || isNaN(parseFloat(value)) || parseFloat(value) === 0
               ? '0.00'
@@ -441,29 +422,137 @@ export class AddPriceDiscountsComponent {
       for (let pair of (formData as any).entries()) {
         //console.log(`${pair[0]}: `, pair[1]);
       }
+      console.log(this.isEditMode, 'edit modal...');
 
-      this.productService.createSellerProductPrice(formData).subscribe({
-        next: (response: any) => {
-          //console.log(response);
-          this.alertMsg = response.message;
-          this.isError = false; // Set isError to false for a success message
-          this.PrdouctExistModalBTN.nativeElement.click();
-          this.addPriceDiscountForm.reset();
-          this.resetForm();
-          this.getProducts(-1);
-        },
-        error: (error: any) => {
-          //console.log(error);
-          this.alertMsg = error.error.message;
-          this.isError = true; // Set isError to true for an error message
-          this.PrdouctExistModalBTN.nativeElement.click();
-          this.addPriceDiscountForm.reset();
-          this.resetForm();
-          this.getProducts(-1);
-        },
-      });
+      if (!this.isEditMode) {
+        console.log('submit mode!');
+
+        this.productService.createSellerProductPrice(formData).subscribe({
+          next: (response: any) => {
+            //console.log(response);
+            this.alertMsg = response.message;
+            this.isError = false; // Set isError to false for a success message
+            this.PrdouctExistModalBTN.nativeElement.click();
+            this.addPriceDiscountForm.reset();
+            this.resetForm();
+            this.getProducts(-1);
+          },
+          error: (error: any) => {
+            //console.log(error);
+            this.alertMsg = error.error.message;
+            this.isError = true; // Set isError to true for an error message
+            this.PrdouctExistModalBTN.nativeElement.click();
+            this.addPriceDiscountForm.reset();
+            this.resetForm();
+            this.getProducts(-1);
+          },
+        });
+      }
+      if (this.isEditMode) {
+        let updateByUser = localStorage.getItem('code');
+        console.log(updateByUser, 'code...');
+
+        console.log('edit mode');
+        // formData.append('ProductGroupID', this.currentGroup.productGroupID);
+        if (updateByUser !== null) {
+          formData.append('UpdatedBy', updateByUser);
+        } else {
+          console.error('Update by code not found in localStorage');
+        }
+        formData.append('UpdatedPC', '0.0.0.0');
+
+        this.productService.updateSellerProductPrice(formData).subscribe({
+          next: (response: any) => {
+            // Handle successful response here
+            console.log('Update successful:', response);
+            this.alertMsg = response.message;
+            this.isEditMode = false;
+            this.isError = false;
+            // Optionally, reset the form and refresh the group list
+            this.addPriceDiscountForm.reset();
+            this.getProducts(-1);
+
+            // Close the modal if you have one open
+            this.PrdouctExistModalBTN.nativeElement.click();
+          },
+          error: (error: any) => {
+            // Handle error response here
+            console.error('Error updating product price:', error);
+            this.alertMsg = error.error.message;
+            this.isError = true;
+            this.isEditMode = false;
+            this.PrdouctExistModalBTN.nativeElement.click();
+            this.getProducts(-1);
+            // Show the error modal or message
+            //this.UserExistModalBTN.nativeElement.click();
+          },
+        });
+      }
     } else {
       //console.log('Form is not valid');
     }
+  }
+
+  updateFormValidators(): void {
+    // Check if the control exists
+    const productGroupImageControl =
+      this.addPriceDiscountForm.get('productImage');
+    if (productGroupImageControl) {
+      if (this.isEditMode) {
+        productGroupImageControl.clearValidators();
+      } else {
+        productGroupImageControl.setValidators(Validators.required);
+      }
+      productGroupImageControl.updateValueAndValidity();
+    }
+  }
+
+  openModalWithData(product: any): void {
+    this.isEditMode = true;
+    this.updateFormValidators();
+    console.log('product', product);
+    this.populateForm(product);
+    this.currentProductPrice = product;
+
+    // Ensure the modal is opened before calling displayImage
+
+    this.displayImage(product.imagePath);
+    this.activeProductPriceId = product.productId;
+  }
+
+  populateForm(product: any): void {
+    const isDefaultDate = (date: string) =>
+      date.startsWith('0001-01-01T00:00:00');
+    this.addPriceDiscountForm.patchValue({
+      productId: product.productId,
+      price: product.price,
+      discountAmount: product.discountAmount,
+      discountPct: product.discountPct,
+      // effectivateDate: product.effectivateDate,
+      // endDate: product.endDate,
+      effectivateDate: isDefaultDate(product.effectivateDate)
+        ? null
+        : product.effectivateDate,
+      endDate: isDefaultDate(product.endDate) ? null : product.endDate,
+      totalPrice: product.totalPrice,
+    });
+
+    this.displayImage(product.imagePath);
+    this.existingImagePath = product.imagepath;
+    this.selectedUnitName = product.unitName;
+  }
+
+  displayImage(imagePath: string): void {
+    console.log('Received imagePath:', imagePath);
+
+    if (imagePath) {
+      const imageUrl = '/asset' + imagePath.split('asset')[1];
+
+      console.log('Constructed imageUrl:', imageUrl);
+      this.imagePathPreview = imageUrl;
+    } else {
+      this.imagePathPreview = 'not upload yet';
+    }
+    this.AddGroupModalCenterG.nativeElement.click();
   }
 }

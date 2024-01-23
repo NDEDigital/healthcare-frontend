@@ -72,7 +72,7 @@ export class SearchResultComponent {
           totalCount: this.goods[i].totalCount,
           netPrice: this.goods[i].totalPrice
         };
-        //console.log(obj, this.searchData, 's data');
+        // console.log(obj, this.searchData, 's data');
 
         this.searchData.push(obj);
       }
@@ -120,9 +120,7 @@ export class SearchResultComponent {
       this.start();
     }
   }
-  done(product: any) {
-    //console.log(product, ' done');
-  }
+ 
 
   updateCompareValue(index: number) {
     if (this.compareValues[index] === 'Compare product') {

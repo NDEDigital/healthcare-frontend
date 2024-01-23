@@ -6,7 +6,7 @@
       [ngClass]="{ selected_button: selectedButtonIndex === 'All' }"
       (click)="statusChange('All', 'All')"
     >
-  
+
       All Orders ({{ statusData["totalRowCount"] }})
     </button> -->
     <button
@@ -38,8 +38,8 @@
       }"
       (click)="statusChange('Delivered', 'Delivered')"
     >
-    Delivered 
-     
+    Delivered
+
     </button> -->
     <!-- <button
       type="button"
@@ -49,7 +49,7 @@
       }"
       (click)="statusChange('ToReturn', 'to Return')"
     >
- 
+
       To Return ({{ statusData["toReturnCount"] }})
     </button>
     <button
@@ -60,7 +60,7 @@
       }"
       (click)="statusChange('Returned', 'Returned')"
     >
- 
+
       Returned ({{ statusData["returnedCount"] }})
     </button> -->
     <button
@@ -185,7 +185,8 @@
           class="col-1 checkbox_col fw-bold"
           *ngIf="this.status === 'to Return' || this.status === 'Pending'"
         >
-          <input #allCheck
+          <input
+            #allCheck
             type="checkbox"
             class="check_all_Master"
             (click)="
@@ -197,7 +198,7 @@
             "
           />
           <span *ngIf="this.status === 'to Return' || this.status === 'Pending'"
-            >All   
+            >All
           </span>
         </div>
         <div
@@ -262,10 +263,7 @@
         (getSelectedButtonName() === 'All Orders' && i < selectedValue)
       " -->
         <div class="Admin_order_container_row master_data_row row p-0 m-0">
-          <div
-            class="col-1 checkbox_col"
-            *ngIf="status === 'to Return' || status === 'Pending'"
-          >
+          <div class="col-1 checkbox_col">
             <!--  for return -->
             <input
               *ngIf="this.status === 'to Return'"
@@ -282,7 +280,7 @@
             <!--   pending Checkbox-->
             <input
               *ngIf="this.status === 'Pending'"
-              class="individual_checkbox_Master"
+              class="individual_checkbox_Master border border-danger"
               type="checkbox"
               [id]="row.orderMasterId"
               (change)="callFunctionIfChecked($event, row.orderMasterId)"
@@ -296,27 +294,26 @@
 
             <!-- for pending icon -->
             <i
-              *ngIf="
-                this.status === 'Pending' || this.status === 'PendingsDetails'
-              "
               class="fa-solid fa-caret-down rotate-icon ms-2"
               [ngClass]="{ rotate: isIconRotatedMap[row.orderMasterId] }"
-              (click)="GetDetailsData(row.orderMasterId, i)"
+              (click)="GetDetailsData(row.orderMasterId, i, row)"
             ></i>
           </div>
 
           <div
-            class="col-1 checkbox_col"
+            class="col-1 checkbox_col border border-danger"
             *ngIf="
               !(
                 status === 'Pending' ||
                 status === 'to Return' ||
-                status === 'PendingsDetails'
+                status === 'PendingsDetails' ||
+                status === 'Approved' ||
+                status === 'Cancelled'
               )
             "
           >
             <!-- for All -->
-            <span>{{ dataIndexNumber + i }}</span>
+            <!-- <span>{{ dataIndexNumber + i }}</span> -->
           </div>
           <div class="col-1 order_col" *ngIf="!returnProduct">
             <a class="invoice" (click)="GotoInvoice(row.orderMasterId)">
@@ -331,7 +328,7 @@
             {{ row.address }}
           </div>
           <div class="col-1 order_col_big" *ngIf="!returnProduct">
-            {{ row.orderDate.split('T')[0] }}
+            {{ row.orderDate.split("T")[0] }}
           </div>
           <div class="col-1 order_col" *ngIf="!returnProduct">
             {{ row.paymentMethod }}
@@ -372,12 +369,16 @@
               class="Container_button"
               [ngClass]="{
                 order_Pending_status: row.status === 'Pending',
-                order_shipped_status: row.status === 'Approved',
-                order_cancelled_status: row.status === 'Cancelled',
+                order_shipped_status: selectedButtonIndex === 'Approved',
+                order_cancelled_status: selectedButtonIndex === 'Cancelled',
                 order_returned_status: row.status === 'Returned'
               }"
             >
-              {{ row.status }}
+              <!-- {{ row.status }} -->
+
+              {{
+                selectedButtonIndex === "Approved" ? "Approved" : "Cancelled"
+              }}
             </button>
             <div
               class="approval_icon"
@@ -390,7 +391,8 @@
                 *ngIf="selectedButtonIndex == 'Pending'"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                (click)="setID(row.orderMasterId, 'Approved', i)"
+                class=""
+                (click)="setID(row, row.orderMasterId, 'Approved', i)"
                 src="../../../assets/images/Icons/check.png"
               />
 
@@ -398,26 +400,27 @@
                 *ngIf="selectedButtonIndex == 'Pending'"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
-                (click)="setID(row.orderMasterId, 'Cancelled', i)"
+                class=""
+                (click)="setID(row, row.orderMasterId, 'Cancelled', i)"
                 src="../../../assets/images/Icons/close.png"
               />
 
               <!-- for to return -->
-              <img
+              <!-- <img
                 *ngIf="selectedButtonIndex == 'ToReturn'"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
                 (click)="setID(row.detailsId, 'Returned', i)"
                 src="../../../assets/images/Icons/check.png"
-              />
-
+              /> -->
+              <!--
               <img
                 *ngIf="selectedButtonIndex == 'ToReturn'"
                 data-bs-toggle="modal"
                 data-bs-target="#exampleModal"
                 (click)="setID(row.detailsId, 'Return Cancelled', i)"
                 src="../../../assets/images/Icons/close.png"
-              />
+              /> -->
             </div>
           </div>
         </div>
@@ -435,7 +438,7 @@
               class="Admin_order_container_row order_details_HederRow row bg-light p-0 m-0"
             >
               <div class="col-1 checkbox_col fw-bold"></div>
-          
+
               <div class="col-1 order_col">Product</div>
               <div class="col-1 order_col_big">Description</div>
               <div class="col-1 order_col">Unit</div>
@@ -444,7 +447,6 @@
               <div class="col-1 order_col">discount</div>
               <div class="col-1 order_col">Delivery Charge</div>
               <div class="col-1 order_col">Sub Total</div>
-        
             </div>
           </div>
           <!-- ------------  details data   ------- ---->
@@ -467,18 +469,16 @@
                 />
               </div>
 
-         
               <div class="col-1 order_col">{{ row.productName }}</div>
-              <div class="col-1 order_col_big">{{ row.specification }}</div>           
+              <div class="col-1 order_col_big">{{ row.specification }}</div>
               <div class="col-1 order_col">{{ row.unit }}</div>
               <div class="col-1 order_col">{{ row.qty }}</div>
               <div class="col-1 order_col">{{ row.price }}</div>
               <div class="col-1 order_col">{{ row.discountAmount }}</div>
               <div class="col-1 order_col">{{ row.deliveryCharge }}</div>
               <div class="col-1 order_col">
-                {{ row.price + row.deliveryCharge - row.discountAmount}}
+                {{ row.price + row.deliveryCharge - row.discountAmount }}
               </div>
-          
             </div>
           </div>
         </div>
