@@ -115,7 +115,7 @@
   <div class="row justify-content-around laptop-menu m-0">
     <div class="logo_container col-3 d-flex justify-content-between">
       <!-- <a href="" -->
-      <a class="companyName">
+      <a class="companyName border border-danger">
         <!-- <span *ngIf="isSeller || isAdmin">Nimpex HealthCare</span>
         <span
           *ngIf="!isSeller || !isAdmin"
@@ -127,6 +127,7 @@
         <span
           *ngIf="!isSeller && !isAdmin"
           [routerLink]="!isSeller && !isAdmin ? '/' : null"
+          [class.small-font]="isCategoriesVisible"
           style="cursor: pointer"
         >
           Nimpex HealthCare
@@ -168,7 +169,7 @@
       <!-- admin -->
       <div class="dropdown mt-3 ms-2" *ngIf="isCategoriesVisible">
         <button
-          class="dropdown-toggle catergoriesButton"
+          class="dropdown-toggle catergoriesButton category-design"
           type="button"
           id="dropdownMenuButton1"
           data-bs-toggle="dropdown"
@@ -506,7 +507,7 @@
         <!-- =========== END OF Side NAV ============= -->
       </div>
 
-      <div class="col-4 logo_container d-flex">
+      <div class="col-4 logo_container d-flex border border-danger">
         <span
           *ngIf="!isSeller && !isAdmin"
           [routerLink]="!isSeller && !isAdmin ? '/' : null"
