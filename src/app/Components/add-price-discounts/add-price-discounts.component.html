@@ -15,7 +15,7 @@
         [ngClass]="{ active: btnIndex === -1 }"
         (click)="btnIndex = -1"
       >
-        New
+        Pending
       </button>
       <button
         class="custom-btn btn-active"
@@ -23,7 +23,7 @@
         [ngClass]="{ active: btnIndex === 1 }"
         (click)="btnIndex = 1"
       >
-        Active
+        Approved
       </button>
       <button
         class="custom-btn btn-inactive"
@@ -31,7 +31,7 @@
         [ngClass]="{ active: btnIndex === 0 }"
         (click)="btnIndex = 0"
       >
-        Inactive
+        Cancelled
       </button>
     </div>
 

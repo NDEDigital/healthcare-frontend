@@ -120,7 +120,7 @@ export class AddPriceDiscountsComponent {
         Validators.pattern(/^\d*\.?\d+$/),
         this.nonNegativeNumberValidator(),
       ]),
-      discountAmount: new FormControl('0.00', [
+      discountAmount: new FormControl('', [
         Validators.pattern(/^\d*\.?\d+$/),
         this.nonNegativeNumberValidator(),
       ]),
@@ -328,6 +328,14 @@ export class AddPriceDiscountsComponent {
       this.addPriceDiscountForm
         .get('discountPct')
         ?.setValue('0.00', { emitEvent: false });
+
+      this.addPriceDiscountForm
+        .get('effectivateDate')
+        ?.setValue('', { emitEvent: false });
+
+      this.addPriceDiscountForm
+        .get('endDate')
+        ?.setValue('', { emitEvent: false });
     } else if (price > 0 && discountAmount > 0) {
       const discountPct = (discountAmount / price) * 100;
       this.addPriceDiscountForm
@@ -348,6 +356,14 @@ export class AddPriceDiscountsComponent {
       this.addPriceDiscountForm
         .get('discountAmount')
         ?.setValue('0.00', { emitEvent: false });
+
+      this.addPriceDiscountForm
+        .get('effectivateDate')
+        ?.setValue('', { emitEvent: false });
+
+      this.addPriceDiscountForm
+        .get('endDate')
+        ?.setValue('', { emitEvent: false });
     } else if (price > 0 && discountPct > 0) {
       const discountAmount = (discountPct / 100) * price;
       this.addPriceDiscountForm
@@ -536,6 +552,8 @@ export class AddPriceDiscountsComponent {
       endDate: isDefaultDate(product.endDate) ? null : product.endDate,
       totalPrice: product.totalPrice,
     });
+
+    console.log('product price:  ', product.discountAmount);
 
     this.displayImage(product.imagePath);
     this.existingImagePath = product.imagepath;
