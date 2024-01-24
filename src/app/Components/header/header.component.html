@@ -127,6 +127,7 @@
         <span
           *ngIf="!isSeller && !isAdmin"
           [routerLink]="!isSeller && !isAdmin ? '/' : null"
+          [class.small-font]="isCategoriesVisible"
           style="cursor: pointer"
         >
           Nimpex HealthCare
@@ -168,7 +169,7 @@
       <!-- admin -->
       <div class="dropdown mt-3 ms-2" *ngIf="isCategoriesVisible">
         <button
-          class="dropdown-toggle catergoriesButton"
+          class="dropdown-toggle catergoriesButton category-design"
           type="button"
           id="dropdownMenuButton1"
           data-bs-toggle="dropdown"
