@@ -19,6 +19,8 @@ html {
   font-size: 2.2rem;
   color: white;
   text-decoration: none;
+  display: flex;
+  align-items: center;
   /* margin: .4rem 0; */
 }
 .header_container {
@@ -284,6 +286,14 @@ html {
   font-size: 1rem;
 }
 
+/* .small-font {
+  font-size: 1.3rem;
+} */
+
+.category-design{
+  margin-right: -64px;
+}
+
 /* =============== Toggle bar and mbl menu ============== */
 .toggle_menu {
   background: var(--color-primary);
@@ -308,7 +318,9 @@ html {
     width: 12rem;
   }
   .companyName {
-    font-size: 1.8rem;
+    font-size: 1.5rem;
+
+
   }
 }
 @media (max-width: 992px) {
@@ -320,6 +332,9 @@ html {
   }
 }
 @media (max-width: 768px) {
+  .category-design{
+    margin-right: -33px;
+  }
 }
 @media (max-width: 576px) {
   .col-4 {

@@ -200,9 +200,11 @@ select {
 
 .headerbtns .btn-active {
   border: 1px solid #78ac8b;
+  padding: 0 0rem;
 }
 .headerbtns .btn-inactive {
   border: 1px solid #a4a554;
+  padding: 0 0rem;
 }
 
 .headerbtns .new-btn.active {

@@ -296,16 +296,16 @@ export class ProductDetailsPageComponent {
   setCart(entry: any, inputQt: string) {
     //console.log(entry.approveSalesQty, 'approveSalesQty');
 
-    if (entry.netPrice === '' || entry.netPrice === undefined) {
-      entry.netPrice = 0;
+    if (entry.price === '' || entry.price === undefined) {
+      entry.price = '0';
     }
-    let groupCode_groupId = entry.groupCode + '&' + entry.goodsId;
+    let groupCodeIdSellerId = entry.groupCode + '&' + entry.goodsId + '&' + entry.sellerCode;
 
-    this.cartDataService.setCartCount(groupCode_groupId);
+    this.cartDataService.setCartCount(groupCodeIdSellerId);
     this.cartDataService.setPrice(
       entry.netPrice,
       parseInt(inputQt),
-      groupCode_groupId
+      groupCodeIdSellerId
     );
     this.cartDataService.setCartData(entry, inputQt);
     this.setServiceData();

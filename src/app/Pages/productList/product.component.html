@@ -1,7 +1,7 @@
 <section id="page-container">
+  <div id="content-wrap">
   <app-header [cartCount]="cartCount"></app-header>
   <app-nav-belt></app-nav-belt>
-  <!-- <button class="btn btn-primary" type="button" data-bs-toggle="offcanvas" data-bs-target="#offcanvasScrolling" aria-controls="offcanvasScrolling">Enable body scrolling</button> -->
 
   <div
     [ngClass]="{ show: cartDataDetail.size > 0 }"
@@ -64,7 +64,7 @@
           <span class="fw-bold"
             >Qty:
             {{
-              cartDataQt.get(entry.value.groupCode + "&" + entry.value.goodsId)
+              cartDataQt.get(entry.value.groupCode + "&" + entry.value.goodsId + "&" + entry.value.sellerCode)
             }}</span
           >
           <svg
@@ -201,7 +201,7 @@
   </div>
 
   <div *ngIf="loading" class="text-center">Loading products...</div>
-  <div id="content-wrap" class="parent" *ngIf="!loading">
+  <div *ngIf="!loading">
     <div class="container justify-content-around">
       <div class="product_sidebar_container">
         <!-- <app-product-sidebar></app-product-sidebar> -->
@@ -373,8 +373,9 @@
           </div>
         </div>
       </div>
-    </div> 
+    </div>
   </div>
+</div>
   <div id="footer">
     <app-footer></app-footer>
   </div>
