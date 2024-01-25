@@ -452,6 +452,7 @@ export class AddPriceDiscountsComponent {
             this.addPriceDiscountForm.reset();
             this.resetForm();
             this.getProducts(-1);
+            this.btnIndex = -1;
           },
           error: (error: any) => {
             //console.log(error);
@@ -461,6 +462,7 @@ export class AddPriceDiscountsComponent {
             this.addPriceDiscountForm.reset();
             this.resetForm();
             this.getProducts(-1);
+            this.btnIndex = -1;
           },
         });
       }
@@ -487,6 +489,7 @@ export class AddPriceDiscountsComponent {
             // Optionally, reset the form and refresh the group list
             this.addPriceDiscountForm.reset();
             this.getProducts(-1);
+            this.btnIndex = -1;
 
             // Close the modal if you have one open
             this.PrdouctExistModalBTN.nativeElement.click();
@@ -499,6 +502,7 @@ export class AddPriceDiscountsComponent {
             this.isEditMode = false;
             this.PrdouctExistModalBTN.nativeElement.click();
             this.getProducts(-1);
+            this.btnIndex = -1;
             // Show the error modal or message
             //this.UserExistModalBTN.nativeElement.click();
           },
