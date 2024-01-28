@@ -246,6 +246,12 @@
                     >{{ selectedProduct?.previousDiscountPct }}%</span
                   >
                 </p>
+                <p class="card-text">
+                  Total Price:
+                  <span class="text-muted fw-bold">{{
+                    selectedProduct?.previousTotalPrice
+                  }}</span>
+                </p>
               </div>
             </div>
           </div>
@@ -272,6 +278,13 @@
                   <span class="text-muted fw-bold"
                     >{{ selectedProduct?.discountPct }}%</span
                   >
+                </p>
+
+                <p class="card-text">
+                  Total Price:
+                  <span class="text-muted fw-bold">{{
+                    selectedProduct?.totalPrice
+                  }}</span>
                 </p>
               </div>
             </div>
