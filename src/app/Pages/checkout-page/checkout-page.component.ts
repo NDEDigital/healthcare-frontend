@@ -66,7 +66,7 @@ export class CheckoutPageComponent {
     // }, 90);
     for(let entry of this.cartDataDetail){
       let Qty = Number(this.cartDataQt.get(entry[0]));
-      let price =  parseInt(entry[1].price);
+      let price =  parseFloat(entry[1].price);
      
       if (typeof Qty === 'number') {
           this.totalPrice += Qty * price;
