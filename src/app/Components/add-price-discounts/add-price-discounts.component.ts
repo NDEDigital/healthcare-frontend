@@ -6,8 +6,10 @@ import {
   ValidatorFn,
   AbstractControl,
   ValidationErrors,
+  FormBuilder,
 } from '@angular/forms';
 import { AddProductService } from 'src/app/services/add-product.service';
+import { GoodsDataService } from 'src/app/services/goods-data.service';
 
 @Component({
   selector: 'app-add-price-discounts',
@@ -18,7 +20,8 @@ export class AddPriceDiscountsComponent {
   @ViewChild('ProductImageInput') ProductImageInput!: ElementRef;
   @ViewChild('prdouctExistModalBTN') PrdouctExistModalBTN!: ElementRef;
   @ViewChild('addGroupModalCenterG') AddGroupModalCenterG!: ElementRef;
-
+  @ViewChild('groupSelect') groupSelect!: ElementRef;
+  @ViewChild('productSelect') productSelect!: ElementRef;
   addPriceDiscountForm!: FormGroup;
   products: any[] = [];
   isDisabled: boolean = true;
@@ -33,6 +36,14 @@ export class AddPriceDiscountsComponent {
   activeProductPriceId: number | null = null;
   existingImagePath: string = '';
   imagePathPreview: string = '';
+
+  selectedGroup: any = null;
+  selectedGroupId: any = null;
+
+  allGroupData: any[] = [];
+  filteredProducts: any[] = [];
+  selectedProduct: any;
+  allProducts: any[] = [];
 
   onProductChange(event: any) {
     const productId = event.target.value;
@@ -70,7 +81,7 @@ export class AddPriceDiscountsComponent {
     let userID = localStorage.getItem('code');
     this.productService.GetProductsByStatus(userID, status).subscribe({
       next: (response: any) => {
-        //console.log(response, 'get products');
+        console.log(response, 'get products');
         this.productList = response;
       },
       error: (error: any) => {
@@ -83,34 +94,10 @@ export class AddPriceDiscountsComponent {
     this.showPriceProductDiv = false;
   }
 
-  constructor(private productService: AddProductService) {}
-
-  isFieldInvalid(fieldName: string): boolean {
-    const field = this.addPriceDiscountForm.get(fieldName);
-    return field ? field.invalid && (field.dirty || field.touched) : false;
-  }
-
-  nonNegativeNumberValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      const value = control.value;
-      return value !== null && !isNaN(value) && value >= 0
-        ? null
-        : { nonNegativeNumber: true };
-    };
-  }
-
-  maxDiscountPctValidator(): ValidatorFn {
-    return (control: AbstractControl): ValidationErrors | null => {
-      if (!control.value || control.value === '') {
-        return null; // No error if the field is empty
-      }
-
-      const discountPct = parseFloat(control.value);
-      return discountPct >= 0 && discountPct <= 100
-        ? null
-        : { maxDiscountPct: true };
-    };
-  }
+  constructor(
+    private productService: AddProductService,
+    private goodsService: GoodsDataService
+  ) {}
 
   ngOnInit() {
     this.addPriceDiscountForm = new FormGroup({
@@ -145,7 +132,65 @@ export class AddPriceDiscountsComponent {
     this.getProducts(-1);
     this.setupFormValueChanges();
     this.getProductList();
+    this.getGroupList();
     this.addPriceDiscountForm.get('productId')?.setValue(null);
+    console.log(this.addPriceDiscountForm.get('productGroupID'), 'group');
+
+    //this.addPriceDiscountForm.get('productGroupID')?.setValue(null);
+  }
+
+  onGroupChange(event: any) {
+    const selectedGroupId = event.target.value;
+
+      console.log(this.allProducts, "products of all");
+
+
+    // Filter from allProducts, not products
+    this.filteredProducts = this.allProducts.filter(
+      (prod) => prod.productGroupId == selectedGroupId
+    );
+
+
+    // Update products for display
+    this.products = [...this.filteredProducts];
+
+    // Reset selected product and unit name if needed
+    this.selectedProduct = null;
+    this.selectedUnitName = '';
+    if (this.addPriceDiscountForm.get('productId')) {
+      this.addPriceDiscountForm.get('productId')!.setValue(null);
+    }
+
+    // Debugging logs
+    console.log('Selected Group ID:', selectedGroupId);
+    console.log('Filtered Products:', this.filteredProducts);
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    const field = this.addPriceDiscountForm.get(fieldName);
+    return field ? field.invalid && (field.dirty || field.touched) : false;
+  }
+
+  nonNegativeNumberValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      const value = control.value;
+      return value !== null && !isNaN(value) && value >= 0
+        ? null
+        : { nonNegativeNumber: true };
+    };
+  }
+
+  maxDiscountPctValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
+      if (!control.value || control.value === '') {
+        return null; // No error if the field is empty
+      }
+
+      const discountPct = parseFloat(control.value);
+      return discountPct >= 0 && discountPct <= 100
+        ? null
+        : { maxDiscountPct: true };
+    };
   }
 
   openAddGroupModal(): void {
@@ -158,7 +203,9 @@ export class AddPriceDiscountsComponent {
   getProductList() {
     this.productService.getallProducts().subscribe(
       (data: any) => {
-        this.products = data;
+        // this.products = data;
+        this.allProducts = data; // Store all products
+        this.products = [...this.allProducts];
 
         console.log('Products :', this.products);
       },
@@ -168,13 +215,22 @@ export class AddPriceDiscountsComponent {
     );
   }
 
+  getGroupList() {
+    this.goodsService.getNavData().subscribe((data: any[]) => {
+      this.allGroupData = data;
+      console.log(data, 'data:: ');
+    });
+  }
+
   resetForm(): void {
     this.addPriceDiscountForm.reset();
     this.selectedUnitName = '';
     this.isEditMode = false;
     this.currentProductPrice = null;
     this.activeProductPriceId = null;
-    //console.log(this.addPriceDiscountForm, "price form");
+    this.groupSelect.nativeElement.value = null;
+
+    //this.addPriceDiscountForm.controls['productGroupID'].setValue(null);
   }
 
   // setupFormValueChanges() {
@@ -336,6 +392,7 @@ export class AddPriceDiscountsComponent {
       this.addPriceDiscountForm
         .get('endDate')
         ?.setValue('', { emitEvent: false });
+
     } else if (price > 0 && discountAmount > 0) {
       const discountPct = (discountAmount / price) * 100;
       this.addPriceDiscountForm
@@ -364,6 +421,7 @@ export class AddPriceDiscountsComponent {
       this.addPriceDiscountForm
         .get('endDate')
         ?.setValue('', { emitEvent: false });
+
     } else if (price > 0 && discountPct > 0) {
       const discountAmount = (discountPct / 100) * price;
       this.addPriceDiscountForm
@@ -562,6 +620,11 @@ export class AddPriceDiscountsComponent {
     this.displayImage(product.imagePath);
     this.existingImagePath = product.imagepath;
     this.selectedUnitName = product.unitName;
+    // this.groupSelect.nativeElement.value = product.productGroupName;
+    this.groupSelect.nativeElement.value = product.productGroupID;
+    //this.groupSelect.nativeElement.value = null;
+
+    console.log(product.unitName, this.selectedUnitName, 'unit name::');
   }
 
   displayImage(imagePath: string): void {
