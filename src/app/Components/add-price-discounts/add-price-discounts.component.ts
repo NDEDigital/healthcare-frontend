@@ -44,15 +44,18 @@ export class AddPriceDiscountsComponent {
   filteredProducts: any[] = [];
   selectedProduct: any;
   allProducts: any[] = [];
+  allProductAndGroup: any[] = [];
 
   onProductChange(event: any) {
     const productId = event.target.value;
+    console.log(productId, 'productId..');
+
     const selectedProduct = this.products.find(
       (prod) => prod.productId == productId
     );
     this.selectedUnitName = selectedProduct ? selectedProduct.unitName : '';
     console.log(this.selectedUnitName, 'name');
-    console.log(selectedProduct, 'product');
+    console.log(selectedProduct, 'product name of unit');
     //console.log(productName, "Prod name");
   }
 
@@ -129,9 +132,11 @@ export class AddPriceDiscountsComponent {
       .get('discountAmount')
       ?.valueChanges.subscribe(() => {});
 
+
+
     this.getProducts(-1);
     this.setupFormValueChanges();
-    this.getProductList();
+    //this.getProductList();
     this.getGroupList();
     this.addPriceDiscountForm.get('productId')?.setValue(null);
     console.log(this.addPriceDiscountForm.get('productGroupID'), 'group');
@@ -140,26 +145,53 @@ export class AddPriceDiscountsComponent {
   }
 
   onGroupChange(event: any) {
-    const selectedGroupId = event.target.value;
+    // Parse the selected group ID as an integer
+    const selectedGroupId = parseInt(event.target.value, 10);
 
-    // Filter from allProducts, not products
-    this.filteredProducts = this.allProducts.filter(
-      (prod) => prod.productGroupId == selectedGroupId
-    );
+    // // Check if a valid group ID is actually selected
+    // if (!isNaN(selectedGroupId)) {
+    //   // Filter from allProducts
+    //   this.filteredProducts = this.allProducts.filter(
+    //     (prod) => prod.productGroupId === selectedGroupId
+    //   );
 
-    // Update products for display
-    this.products = [...this.filteredProducts];
+    //   // Update products for display
+    //   this.products = [...this.filteredProducts];
+    // } else {
+    //   // Clear the products array if no valid group ID is selected
+    //   this.products = [];
+    // }
 
-    // Reset selected product and unit name if needed
+    // Reset the selected product and unit name
     this.selectedProduct = null;
     this.selectedUnitName = '';
     if (this.addPriceDiscountForm.get('productId')) {
-      this.addPriceDiscountForm.get('productId')!.setValue(null);
+      this.addPriceDiscountForm.get('productId')?.setValue(null);
     }
 
     // Debugging logs
     console.log('Selected Group ID:', selectedGroupId);
     console.log('Filtered Products:', this.filteredProducts);
+
+    this.getProductData(selectedGroupId);
+  }
+
+  getProductData(GroupID: number) {
+    console.log(GroupID, 'group id : ');
+
+    this.productService.GetProductByGroupName(GroupID).subscribe({
+      next: (response: any) => {
+        this.allProductAndGroup = response;
+        console.log(this.allProductAndGroup, 'get products');
+        this.products = [...this.allProductAndGroup];
+        console.log(this.products, 'products...');
+      },
+      error: (error: any) => {
+        //console.log(error);
+        this.alertMsg = error.error.message;
+      },
+    });
+    console.log(this.products, 'products after subscribe call');
   }
 
   isFieldInvalid(fieldName: string): boolean {
@@ -196,20 +228,20 @@ export class AddPriceDiscountsComponent {
     this.AddGroupModalCenterG.nativeElement.click();
   }
 
-  getProductList() {
-    this.productService.getallProducts().subscribe(
-      (data: any) => {
-        // this.products = data;
-        this.allProducts = data; // Store all products
-        this.products = [...this.allProducts];
+  // getProductList() {
+  //   this.productService.getallProducts().subscribe(
+  //     (data: any) => {
+  //       // this.products = data;
+  //       this.allProducts = data; // Store all products
+  //       this.products = [...this.allProducts];
 
-        console.log('Products :', this.products);
-      },
-      (error) => {
-        console.error('Error fetching product groups:', error);
-      }
-    );
-  }
+  //       console.log('Products :', this.products);
+  //     },
+  //     (error) => {
+  //       console.error('Error fetching product groups:', error);
+  //     }
+  //   );
+  // }
 
   getGroupList() {
     this.goodsService.getNavData().subscribe((data: any[]) => {
@@ -226,7 +258,9 @@ export class AddPriceDiscountsComponent {
     this.activeProductPriceId = null;
     this.groupSelect.nativeElement.value = null;
 
-    this.getProductList();
+    this.products = [];
+
+    // this.getProductList();
 
     //this.addPriceDiscountForm.controls['productGroupID'].setValue(null);
   }
@@ -390,7 +424,6 @@ export class AddPriceDiscountsComponent {
       this.addPriceDiscountForm
         .get('endDate')
         ?.setValue('', { emitEvent: false });
-
     } else if (price > 0 && discountAmount > 0) {
       const discountPct = (discountAmount / price) * 100;
       this.addPriceDiscountForm
@@ -419,7 +452,6 @@ export class AddPriceDiscountsComponent {
       this.addPriceDiscountForm
         .get('endDate')
         ?.setValue('', { emitEvent: false });
-
     } else if (price > 0 && discountPct > 0) {
       const discountAmount = (discountPct / 100) * price;
       this.addPriceDiscountForm
@@ -587,6 +619,11 @@ export class AddPriceDiscountsComponent {
     this.isEditMode = true;
     this.updateFormValidators();
     console.log('product', product);
+
+
+    this.getProductData(product.productGroupID);
+
+
     this.populateForm(product);
     this.currentProductPrice = product;
 
@@ -597,6 +634,11 @@ export class AddPriceDiscountsComponent {
   }
 
   populateForm(product: any): void {
+    console.log(product, 'populate form.. ');
+
+    console.log('Product ID:', product.productName);
+    console.log(this.products, "products all");
+
     const isDefaultDate = (date: string) =>
       date.startsWith('0001-01-01T00:00:00');
     this.addPriceDiscountForm.patchValue({
@@ -619,7 +661,7 @@ export class AddPriceDiscountsComponent {
     this.existingImagePath = product.imagepath;
     this.selectedUnitName = product.unitName;
     this.groupSelect.nativeElement.value = product.productGroupID;
-
+    this.productSelect.nativeElement.value = product.productId
 
     console.log(product.unitName, this.selectedUnitName, 'unit name::');
   }
