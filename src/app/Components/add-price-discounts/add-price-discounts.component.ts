@@ -142,14 +142,10 @@ export class AddPriceDiscountsComponent {
   onGroupChange(event: any) {
     const selectedGroupId = event.target.value;
 
-      console.log(this.allProducts, "products of all");
-
-
     // Filter from allProducts, not products
     this.filteredProducts = this.allProducts.filter(
       (prod) => prod.productGroupId == selectedGroupId
     );
-
 
     // Update products for display
     this.products = [...this.filteredProducts];
@@ -229,6 +225,8 @@ export class AddPriceDiscountsComponent {
     this.currentProductPrice = null;
     this.activeProductPriceId = null;
     this.groupSelect.nativeElement.value = null;
+
+    this.getProductList();
 
     //this.addPriceDiscountForm.controls['productGroupID'].setValue(null);
   }
@@ -620,9 +618,8 @@ export class AddPriceDiscountsComponent {
     this.displayImage(product.imagePath);
     this.existingImagePath = product.imagepath;
     this.selectedUnitName = product.unitName;
-    // this.groupSelect.nativeElement.value = product.productGroupName;
     this.groupSelect.nativeElement.value = product.productGroupID;
-    //this.groupSelect.nativeElement.value = null;
+
 
     console.log(product.unitName, this.selectedUnitName, 'unit name::');
   }
