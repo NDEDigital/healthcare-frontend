@@ -177,11 +177,13 @@
           <hr />
           <form [formGroup]="addPriceDiscountForm">
             <div>
-              <label for="productId">
+              <label for="productGroup">
                 <span class="text-danger" *ngIf="!isEditMode">*</span>Product
                 Group Name
               </label>
-              <select #groupSelect (change)="onGroupChange($event)">
+              <select #groupSelect (change)="onGroupChange($event)"
+              [disabled]="isEditMode"
+              >
                 <option [value]="null" disabled selected>
                   Select Group Name
                 </option>
@@ -205,6 +207,7 @@
                 formControlName="productId"
                 [class.error]="isFieldInvalid('productId')"
                 (change)="onProductChange($event)"
+                [attr.disabled]="isEditMode ? true : null"
               >
                 <option [value]="null" disabled selected>
                   Select Product Name
