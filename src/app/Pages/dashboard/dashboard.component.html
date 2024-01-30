@@ -213,20 +213,20 @@
         </div>
       </a> -->
 
-      <div class="sidebar_delimiter"></div>
+      <!-- <div class="sidebar_delimiter"></div>
 
       <div *ngIf="isSeller">
         <div class="sidebar_item d-flex justify-content-between p-1 py-3">
           <div class="d-flex">
             <a
               class="d-flex menu_link"
-              [ngClass]="{ active: SidebarIndex === 4 }"
-              (click)="SidebarIndex = 4"
+              [ngClass]="{ active: SidebarIndex === 1 }"
+              (click)="SidebarIndex = 1"
             >
               <span class="title_icon text-start me-2"
                 ><i class="fa-solid fa-cart-shopping"></i
               ></span>
-              <h5>{{ sidebarCol4Title }}</h5>
+              <h5>Inventory</h5>
             </a>
           </div>
         </div>
@@ -304,7 +304,6 @@
           </div>
         </div>
 
-        <!-- <div *ngIf="isSeller" class="sidebar_delimiter"></div> -->
       </div>
 
       <div *ngIf="isSeller" class="sidebar_delimiter"></div>
@@ -344,25 +343,6 @@
           </a>
         </div>
       </div>
-     
-    
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-      
-
       <div *ngIf="isSeller" class="sidebar_delimiter"></div>
       <div
         *ngIf="isSeller&&companyAdminId==='true'"
@@ -381,6 +361,35 @@
           </a>
         </div>
       </div>
+      
+      <div *ngIf="isSeller" class="sidebar_delimiter"></div>
+      <div
+        *ngIf="isSeller&&companyAdminId==='true'"
+        class="sidebar_item d-flex justify-content-between p-1 py-3"
+      >
+        <div class="d-flex">
+          <a
+            class="d-flex menu_link"
+            [ngClass]="{ active: SidebarIndex === 12 }"
+            (click)="SidebarIndex = 12"
+          >
+            <span class="title_icon text-start me-2"
+              ><i class="fa-solid fa-cart-shopping"></i
+            ></span>
+            <h5>{{ sidebarCol12Title }}</h5>
+          </a>
+        </div>
+      </div>
+
+
+
+
+
+
+
+
+
+      
       <div *ngIf="isSeller" class="sidebar_delimiter"></div>
       <div
         *ngIf="isAdmin"
@@ -399,6 +408,13 @@
           </a>
         </div>
       </div>
+
+
+
+
+
+
+      
       <div *ngIf="isAdmin" class="sidebar_delimiter"></div>
       <div
         *ngIf="isAdmin"
@@ -434,22 +450,42 @@
           </div>
         </div>
       </div>
-      <div *ngIf="isAdmin" class="sidebar_delimiter"></div>
+      <div *ngIf="isAdmin" class="sidebar_delimiter"></div> -->
+      <div *ngFor="let permission of userPermission">
+        <div class="sidebar_delimiter"></div>
+        <div class="sidebar_item d-flex justify-content-between p-1 py-3">
+          <div class="d-flex">
+            <a
+              class="d-flex menu_link"
+              [ngClass]="{ active: SidebarIndex === permission.menuId }"
+              (click)="SidebarIndex = permission.menuId"
+            >
+              <span class="title_icon text-start me-2"
+                ><i class="fa-solid fa-cart-shopping"></i
+              ></span>
+              <h5>{{ permission.menuName }}</h5>
+            </a>
+          </div>
+        </div>
+      </div>
+      <div class="sidebar_delimiter"></div>
     </div>
   </div>
+
+
   <!-- ================  end of sidebar =============  -->
-  <div class="dashboard_body px-5 py-2">
+  <div class="dashboard_body px-5 py-2" *ngIf="this.userPermission.length > 0">
     <!-- Sellers Add Quantity -->
-    <section *ngIf="SidebarIndex === 5" class="seller_inventory_body">
+    <section *ngIf="SidebarIndex === 2" class="seller_inventory_body">
       <app-add-product-quantity></app-add-product-quantity>
     </section>
 
     <!-- <section class="admin_order_body" *ngIf="isAdmin && SidebarIndex === 3">
-      <app-admin-order></app-admin-order>
-    </section> -->
+  <app-admin-order></app-admin-order>
+</section> -->
 
     <!-- sellers inventory -->
-    <section class="seller_inventory_body" *ngIf="SidebarIndex === 4">
+    <section class="seller_inventory_body" *ngIf="SidebarIndex === 1">
       <app-seller-inventory></app-seller-inventory>
     </section>
     <!-- sellers inventory end-->
@@ -462,31 +498,43 @@
     </section>
 
     <!-- Add products fields here -->
-    <section class="addProducts" *ngIf="SidebarIndex === 2">
+    <section class="addProducts" *ngIf="SidebarIndex === 7">
       <app-add-products></app-add-products>
     </section>
     <!-- Add groups fields here -->
-    <section class="addgroups" *ngIf="SidebarIndex === 7">
+    <section class="addgroups" *ngIf="SidebarIndex === 12">
       <app-add-groups></app-add-groups>
     </section>
     <section class="companyApproval" *ngIf="SidebarIndex === 8">
       <app-company-approval></app-company-approval>
     </section>
-    <section class="priceNdiscounts" *ngIf="SidebarIndex === 9">
+    <section class="priceNdiscounts" *ngIf="SidebarIndex === 4">
       <app-add-price-discounts></app-add-price-discounts>
     </section>
-    <section class="productApproval" *ngIf="SidebarIndex === 10">
+    <section class="productApproval" *ngIf="SidebarIndex === 9">
       <app-product-approval></app-product-approval>
     </section>
-    <section class="sellerList" *ngIf="SidebarIndex === 11">
-     <app-seller-list *ngIf="userId"></app-seller-list>
+    <section
+      class="sellerList"
+      *ngIf="SidebarIndex === 5 || SidebarIndex === 10"
+    >
+      <app-seller-list *ngIf="userId"></app-seller-list>
     </section>
-    <section class="sellerOrder" *ngIf="SidebarIndex === 6">
+
+    <section class="sellerPermission" *ngIf="SidebarIndex === 6">
+      <app-seller-permission *ngIf="userId"></app-seller-permission>
+    </section>
+
+    <section class="sellerOrder" *ngIf="SidebarIndex === 11">
       <!-- <app-seller-order></app-seller-order> -->
       <app-seller-orders></app-seller-orders>
     </section>
   </div>
-
+  <div *ngIf="userPermission.length === 0" class="bg-white pt-5">
+    <h1 class="text-center mx-auto my-auto text-danger">
+      Contact Your Company Manager For Permission
+    </h1>
+       </div>
   <!-- </div> -->
 
   <!--  ------ admin-order component call ------ -->

@@ -62,10 +62,13 @@ export class SellerListComponent {
       next: (response: any) => {
         // console.log(this.btnIndex);
         // alert(this.btnIndex);
+        // console.log("this is the active",response);
        this.sellerList = response.filter((u:any) => u.userId!== Number(this.UserId));   
-        //  console.log(this.sellerList,"seller");
-        this.responseLength=response.length
-        // console.log("dfladkfja",this.responseLength);
+        //  console.log("btn index is",this.btnIndex);
+// console.log("")
+         this.responseLength=response.length;
+        //  console.log("the response is :",this.responseLength);
+         
       },
       error: (error: any) => {
         console.log(error);
@@ -89,12 +92,15 @@ export class SellerListComponent {
   getSeller(): void {
     // console.log("got in getSeller", this.selectedValue);
     let responseCount = 0;
+    
     // Assuming this.btnIndex is defined somewhere in your code
     this.companyService.GetSellerInAdmin(this.btnIndex,this.selectedValue).subscribe({
       next: (response: any) => {
         // console.log(this.btnIndex, "admin", response);
+        // console.log("hello helo koi tuii",response);
         this.sellerList = response;
-        this.responseLength=response.length
+        this.responseLength=response.length;
+       
         // console.log("dfladkfja",this.responseLength);
         // console.log(typeof this.responseLength);
         
@@ -139,7 +145,6 @@ export class SellerListComponent {
   }
   
 
-
   
 
   
@@ -147,7 +152,8 @@ export class SellerListComponent {
 getBuyer(){
   this.companyService.GetBuyerInAdmin(this.btnIndex).subscribe({
     next: (response: any) => {
-
+      console.log("btn index is ",this.userBtnIndex);
+    
       // console.log("This is ")
       // console.log(this.btnIndex,"getBuyerInAdmin",response);
       this.buyerResponse=response.length;
@@ -167,6 +173,7 @@ getBuyer(){
 }
 
 getBuyerIn(){
+  this.getDropdownValues();
 this.getBuyer()
 
 
