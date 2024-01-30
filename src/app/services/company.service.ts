@@ -44,8 +44,8 @@ export class CompanyService {
       status=false;
       // alert(status);
     }
-    console.log("status is",status);
-    console.log("code is",localStorage.getItem('code'));
+    // console.log("status is",status);
+    // console.log("code is",localStorage.getItem('code'));
     return this.http.get(`${this.URL}/CompanySellerDetails/${localStorage.getItem('code')}/${status}`);
     
   }

@@ -49,14 +49,14 @@ selectedMenu: any;
 
 
   getDashboarItem(sellerId:any) {
-    console.log("the sellerId is",sellerId)
+    // console.log("the sellerId is",sellerId)
   
     // console.log("the getDashoard",  sellerId);
     this.SellerDasboardPermissionService.GetSellerDashboardPermission(sellerId).subscribe({
       next: (response: any) => {
       
          this.dropdownValues=response;
-         console.log("the response is",response);
+        //  console.log("the response is",response);
          
       },
       error: (error: any) => {
@@ -79,10 +79,10 @@ selectedMenu: any;
         // console.log("this is the data for dropdown",response);
        this.sellerList = response.filter((u:any) => u.userId!== Number(this.UserId));   
         //  console.log(this.sellerList,"this is the data for dropdown");
-console.log("the seller list ",this.sellerList)
+// console.log("the seller list ",this.sellerList)
 
         this.responseLength=response.length
-         console.log("the length is",response.length);
+        //  console.log("the length is",response.length);
          
       },
       error: (error: any) => {
