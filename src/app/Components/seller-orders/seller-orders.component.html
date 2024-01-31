@@ -236,7 +236,8 @@
                 'red-bg': detail.status === 'Cancelled'
               }"
             >
-              {{ detail.status }}
+              <!-- {{ detail.status }} -->
+              {{ btnIndex === -1 ? "New Order" : detail.status }}
             </button>
           </div>
           <div class="col-2 text-success fw-semibold">
