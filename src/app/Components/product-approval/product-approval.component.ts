@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, ElementRef, ViewChild } from '@angular/core';
 import { CompanyService } from 'src/app/services/company.service';
 import { AddProductService } from 'src/app/services/add-product.service';
 @Component({
@@ -17,6 +17,13 @@ export class ProductApprovalComponent {
   showModal = false;
   selectedProduct: any = null;
 
+  alertTitle: string = '';
+  alertMsg: string = '';
+
+  isApproved: boolean = false;
+  isRejected: boolean = false;
+
+  @ViewChild('msgModalBTN') msgModalBTN!: ElementRef;
   constructor(private productService: AddProductService) {}
 
   ngOnInit() {
@@ -36,12 +43,10 @@ export class ProductApprovalComponent {
     });
   }
 
-
   showDetails(product: any) {
     this.selectedProduct = product;
     this.showModal = true;
-    console.log("click", product.productId);
-
+    console.log('click', product.productId);
   }
 
   showImage(path: any, title: any) {
@@ -72,8 +77,22 @@ export class ProductApprovalComponent {
         //   this.getData('Rejected');
         // }
         this.getData(Status);
-        if (Status == 'Approved') this.btnIndex = 1;
-        if (Status == 'Rejected') this.btnIndex = 0;
+        if (Status == 'Approved') {
+          this.btnIndex = 1;
+          this.isApproved = true;
+          this.isRejected = false;
+          this.alertTitle = 'Success!';
+          this.alertMsg = 'Product is approved sucessfully.';
+        }
+        if (Status == 'Rejected') {
+          this.btnIndex = 0;
+          this.isApproved = false;
+          this.isRejected = true;
+          this.alertTitle = 'Rejected!';
+          this.alertMsg = 'Product is rejected.';
+        }
+
+        this.msgModalBTN.nativeElement.click();
       },
       error: (error: any) => {
         //console.log(error);

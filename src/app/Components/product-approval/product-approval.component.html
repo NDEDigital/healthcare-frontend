@@ -294,3 +294,58 @@
     </div>
   </div>
 </div>
+
+<!-- modal for success or rejected product -->
+
+<button
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#msgModal"
+  #msgModalBTN
+>
+  Launch demo modal
+</button>
+
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="msgModal"
+  tabindex="-1"
+  aria-labelledby="msgModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header fs-5 fw-bold">
+        <h1 class="modal-title fs-5" id="msgModalLabel">
+          <span
+            [ngClass]="{
+              'text-success': isApproved,
+              'text-danger': isRejected
+            }"
+          >
+            {{ alertTitle }}</span
+          >
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <span
+          [ngClass]="{ 'text-success': isApproved, 'text-danger': isRejected }"
+          >{{ alertMsg }}</span
+        >
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
