@@ -41,6 +41,8 @@ export class AddProductService {
 
   updateSellerProductPriceURL = `${this.URL}/ProductQuantity/UpdateSellerProductPriceAndOffer`;
 
+  GetProductNameByProductGroupIdURL = `${this.URL}/api/ProductList/GetProductNameByProductGroupId`;
+
   constructor(private http: HttpClient) {}
 
   GetPortalData(PortalReceivedId: any) {
@@ -172,6 +174,12 @@ export class AddProductService {
   GetAddQuantityDataByUserId(userId: any) {
     return this.http.get(this.getAddQuantityDatabyUserId, {
       params: { userId },
+    });
+  }
+
+  GetProductByGroupName(ProductGroupId: number){
+    return this.http.get(this.GetProductNameByProductGroupIdURL, {
+      params: {ProductGroupId},
     });
   }
 }

@@ -84,8 +84,6 @@ export class CartDataService {
   }
 
   setCartCount(key: string) {
-
-    
     const count = this.cartDataQt.get(key);
    
     if (count === undefined) {
@@ -124,10 +122,8 @@ export class CartDataService {
   }
 
   setCartData(obj: any, qt: any) {
-    let groupCode_groupId = obj.groupCode + '&' + obj.goodsId;
+    let groupCode_groupId = obj.groupCode + '&' + obj.goodsId + '&' + obj.sellerCode;
     this.cartDataDetail.set(groupCode_groupId, obj);
-     
-     
       
     this.cartDataQt.set(groupCode_groupId, qt);
 

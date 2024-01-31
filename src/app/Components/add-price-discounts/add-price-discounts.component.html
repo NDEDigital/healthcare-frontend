@@ -15,7 +15,7 @@
         [ngClass]="{ active: btnIndex === -1 }"
         (click)="btnIndex = -1"
       >
-        New
+        Pending
       </button>
       <button
         class="custom-btn btn-active"
@@ -23,7 +23,7 @@
         [ngClass]="{ active: btnIndex === 1 }"
         (click)="btnIndex = 1"
       >
-        Active
+        Approved
       </button>
       <button
         class="custom-btn btn-inactive"
@@ -31,7 +31,7 @@
         [ngClass]="{ active: btnIndex === 0 }"
         (click)="btnIndex = 0"
       >
-        Inactive
+        Cancelled
       </button>
     </div>
 
@@ -67,18 +67,27 @@
       *ngFor="let product of productList; let i = index"
       (dblclick)="openModalWithData(product)"
     >
-      <div class="col tableBody"
-      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
-
-      >#{{ i + 1 }}</div>
-      <div class="col tableBody"
-      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
-      >{{ product.productId }}</div>
-      <div class="col tableBody"
-      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
-      >{{ product.productName }}</div>
-      <div class="col tableBody"
-      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId }"
+      >
+        #{{ i + 1 }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId }"
+      >
+        {{ product.productId }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId }"
+      >
+        {{ product.productName }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId }"
       >
         <img
           class="product_image"
@@ -90,21 +99,33 @@
           alt="no image was uploaded!"
         />
       </div>
-      <div class="col tableBody"
-      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
-
-      >{{ product.price }}</div>
-      <div class="col tableBody"
-      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
-      >{{ product.discountAmount }}</div>
-      <div class="col tableBody"
-      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
-      >{{ product.discountPct }}</div>
-      <div class="col tableBody"
-      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
-      >{{ product.totalPrice }}</div>
-      <div class="col tableBody"
-      [ngClass]="{ 'active-row': product.productId === activeProductPriceId}"
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId }"
+      >
+        {{ product.price }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId }"
+      >
+        {{ product.discountAmount }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId }"
+      >
+        {{ product.discountPct }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId }"
+      >
+        {{ product.totalPrice }}
+      </div>
+      <div
+        class="col tableBody"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId }"
       >
         {{ product.addedDate | date : "dd MMM yyyy" }},<br />
         {{ product.addedDate | date : "hh:mm a" }}
@@ -146,26 +167,47 @@
 
             <!-- Title in the middle -->
             <h2 class="register_title">
-            {{
-              isEditMode
-                ? "Edit Price & Discounts"
-                : "Add Price & Discounts"
-            }}
+              {{
+                isEditMode ? "Edit Price & Discounts" : "Add Price & Discounts"
+              }}
             </h2>
 
             <!-- Placeholder for right alignment -->
           </div>
           <hr />
           <form [formGroup]="addPriceDiscountForm">
+            <div>
+              <label for="productGroup">
+                <span class="text-danger" *ngIf="!isEditMode">*</span>Product
+                Group Name
+              </label>
+              <select #groupSelect (change)="onGroupChange($event)"
+              [disabled]="isEditMode"
+              >
+                <option [value]="null" disabled selected>
+                  Select Group Name
+                </option>
+                <option
+                  *ngFor="let group of allGroupData"
+                  [value]="group.productGroupID"
+                >
+                  {{ group.productGroupName }}
+                </option>
+              </select>
+            </div>
+
             <div class="form-group">
               <label for="productId">
-                <span class="text-danger">*</span>Product Name
+                <span class="text-danger" *ngIf="!isEditMode">*</span>Product
+                Name
               </label>
               <select
+                #productSelect
                 id="productId"
                 formControlName="productId"
                 [class.error]="isFieldInvalid('productId')"
                 (change)="onProductChange($event)"
+                [attr.disabled]="isEditMode ? true : null"
               >
                 <option [value]="null" disabled selected>
                   Select Product Name
@@ -188,12 +230,14 @@
                 [value]="selectedUnitName"
                 readonly
                 disabled
-
               />
             </div>
 
             <div class="form-group">
-              <label for="price"><span class="text-danger">*</span>Price</label>
+              <label for="price"
+                ><span class="text-danger" *ngIf="!isEditMode">*</span
+                >Price</label
+              >
               <input
                 type="number"
                 id="price"
@@ -290,7 +334,8 @@
 
             <div class="form-group">
               <label for="productImage"
-                ><span class="text-danger">*</span>Upload Product Image
+                ><span class="text-danger" *ngIf="!isEditMode">*</span>Upload
+                Product Image
               </label>
 
               <input

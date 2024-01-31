@@ -10,6 +10,6 @@ export interface DetailsModel {
     productName :string
     discountAmount :number
     unit : string
+    netPrice: number
     // Other properties...
   }
- 

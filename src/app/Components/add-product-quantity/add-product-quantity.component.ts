@@ -31,7 +31,7 @@ export class AddProductQuantityComponent   {
   portaldata: any;
   NoProduct = " No product found"
   // ModalText = "Give some entry"
- 
+
   constructor(private fb: FormBuilder , private addProductService :AddProductService) {
     this.masterForm = this.fb.group({
       portalReceivedCode: [''],
@@ -39,12 +39,12 @@ export class AddProductQuantityComponent   {
       challanNo: ['', Validators.required],
       challanDate: ['', Validators.required],
       remarks: [''],
-    }); 
+    });
     this.form = this.fb.group({
       rows: this.fb.array([])
     });
   }
- 
+
 
 
   ngOnInit() {
@@ -56,7 +56,7 @@ export class AddProductQuantityComponent   {
 
   }
 
- 
+
   GetAddQuantityDataByUserId( ){
 
      if (this.searchInputRef && this.searchInputRef.nativeElement) {
@@ -76,9 +76,9 @@ export class AddProductQuantityComponent   {
 
       }
     });
-  
+
    }
-  
+
 
   get rowsFormArray(): FormArray {
     return this.form.get('rows') as FormArray;
@@ -88,9 +88,9 @@ export class AddProductQuantityComponent   {
     if( this.receivedCode.nativeElement.value)
     {
       this.clear()
-    }  
+    }
     const rowsArray = this.form.get('rows') as FormArray;
-    
+
     if (rowsArray.length > 0) {
       const lastRow = rowsArray.at(rowsArray.length - 1) as FormGroup;
       if(!lastRow.valid){
@@ -98,9 +98,9 @@ export class AddProductQuantityComponent   {
       }
       this.invisibleProductDropDown()
     }
-  
+
     const newRow = this.fb.group({
-   
+
       productName: ['', Validators.required],
       productId: [''],
       productGroupId: [''],
@@ -112,17 +112,17 @@ export class AddProductQuantityComponent   {
       availableQty: ['', Validators.required],
       remarks: [''],
       isDropdownOpen: [false],
- 
+
       // ... other fields
     });
-  
+
     rowsArray.push(newRow);
     this.selectedProductNames.push('Select product');
     this.selectedProductGroup.push('Select Group');
- 
+
 
  }
-  
+
  getPortalData(PortalReceivedId:any){
   this.addProductService.GetPortalData(PortalReceivedId).subscribe({
     next: (response:any) => {
@@ -138,7 +138,7 @@ export class AddProductQuantityComponent   {
  }
 
   removeRow(index: number) {
-    
+
     // Remove a specific row from the FormArray by index
     (this.form.get('rows') as FormArray).removeAt(index);
     const selectedProductNames = this.selectedProductNames;
@@ -147,7 +147,7 @@ export class AddProductQuantityComponent   {
     }
     if ( this.selectedProductGroup[index] ) {
       this.selectedProductGroup.splice(index, 1);
-      
+
     }
   }
 
@@ -186,11 +186,11 @@ export class AddProductQuantityComponent   {
           addedPC: "string"
         }))
       };
-      
+
       // Check if challanDate exists and is not empty before adding it to portaldata
       if (this.masterForm.value.challanDate) {
         this.portaldata.challanDate = this.masterForm.value.challanDate;
-      } 
+      }
       // API call
       this.addProductService.insertPortalReceived(this.portaldata).subscribe({
         next: (response) => {
@@ -209,9 +209,9 @@ export class AddProductQuantityComponent   {
     }
     else {
       //console.log(" form invalid")
-    }    
+    }
   }
-  
+
    PatchForm(data : any){
 
     if( this.receivedCode.nativeElement.value)
@@ -262,7 +262,7 @@ export class AddProductQuantityComponent   {
     const isDropdownOpen = rowGroup.get('isDropdownOpen');
     return isDropdownOpen?.value === true;
   }
-  
+
   toggleDropdown( rowIndex: number): void {
     // Close all dropdowns
     for (let i = 0; i < this.rowsFormArray.length; i++) {
@@ -271,7 +271,7 @@ export class AddProductQuantityComponent   {
         rowGroup.patchValue({ isDropdownOpen: false });
       }
     }
-  
+
     // Toggle the dropdown for the clicked row
     const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
     const currentValue = rowGroup.get('isDropdownOpen')?.value || false;
@@ -282,7 +282,7 @@ export class AddProductQuantityComponent   {
     if(groupName=="Select Group"){
 
       this.NoProductFound=true;
-      this.NoProduct="please select group Name"
+      this.NoProduct="please select Product Name"
       this.productDertailsData=[]
     }
     else{
@@ -290,7 +290,7 @@ export class AddProductQuantityComponent   {
       const matchGroupName = this.productGroupData.find((group:any)=> group.productGroupName === groupName) // (Find) return 1st matching element not arrray
     //  console.log(" matchGroupName",matchGroupName)
       if(matchGroupName.productGroupID){
-      
+
        this.getDetailsData(matchGroupName.productGroupID);
       }
       else{
@@ -299,7 +299,7 @@ export class AddProductQuantityComponent   {
     }
 
   }
-  
+
 
   getDetailsData(productGroupID: number){
    // console.log("matchGroupName.productGroupID ",productGroupID)
@@ -320,7 +320,7 @@ export class AddProductQuantityComponent   {
 
         },
         error: (error) => {
-   
+
         // console.log("error ",error)
          this.productDertailsData =[]
         },
@@ -335,8 +335,8 @@ export class AddProductQuantityComponent   {
     if (isDropdownOpen) {
       isDropdownOpen.setValue(false);
     }
-  } 
-  
+  }
+
   getGroupName(){
    this.invisibleProductDropDown()
     const userID = localStorage.getItem('code')
@@ -351,11 +351,11 @@ export class AddProductQuantityComponent   {
       },
     });
   }
-  
+
   filterFunction(event: Event , className: string): void {
     const input = (event.target as HTMLInputElement).value.toUpperCase();
     const links = document.querySelectorAll(className) as NodeListOf<HTMLAnchorElement>;
-  
+
     links.forEach((b: HTMLAnchorElement) => {
       const txtValue = b.textContent || b.innerText || '';
       if (txtValue.toUpperCase().indexOf(input) > -1) {
@@ -379,13 +379,13 @@ export class AddProductQuantityComponent   {
     // reseting the  row if group name is changed
     const row = this.rowsFormArray.at(rowIndex) as FormGroup;
     row.reset();
-    // reseting the product name 
+    // reseting the product name
     this.selectedProductNames[rowIndex] ="Select Product"
 
   }
 
   SetDropDownName(selectedItem: any, rowIndex: number) {
-    this.selectedProduct = selectedItem;   
+    this.selectedProduct = selectedItem;
     const rowGroup = this.rowsFormArray.at(rowIndex) as FormGroup;
     rowGroup.patchValue({
       productName: selectedItem.productName,
@@ -399,11 +399,11 @@ export class AddProductQuantityComponent   {
       availableQty: selectedItem.availableQty,
       remarks: '',
     });
-  
+
     this.selectedProductNames[rowIndex] = selectedItem.productName; // Store selected product name for this row
     //console.log(" product name ",    this.selectedProductNames)
   }
-  
+
   getEmptyFields(): string[] {
     const emptyFields: string[] = [];
     // Loop through the form controls or rows in the form array
@@ -416,7 +416,7 @@ export class AddProductQuantityComponent   {
       }
       // Check other fields in a similar manner
     });
-  
+
     return emptyFields;
   }
 
@@ -434,7 +434,7 @@ export class AddProductQuantityComponent   {
   }
 
   }
- 
+
    rowClicked(index:any, Id:any){
     this.portalReceivedId=Id;
     //console.log(" i",index)
@@ -447,7 +447,7 @@ export class AddProductQuantityComponent   {
     {
       this.getPortalData( this.portalReceivedId)
     }
-  
+
     if (this.searchInputRef && this.searchInputRef.nativeElement) {
       this.searchInputRef.nativeElement.value = '';
     }
