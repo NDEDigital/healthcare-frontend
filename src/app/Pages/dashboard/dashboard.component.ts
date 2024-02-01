@@ -5,6 +5,8 @@ import { SharedService } from 'src/app/services/shared.service';
 import { LoginComponent } from '../login/login.component';
 import { DashboardDataService } from 'src/app/services/dashboard-data.service';
 import { Subscription } from 'rxjs';
+import { SellerDasboardPermissionService } from 'src/app/services/seller-dasboard-permission.service';
+
 import {
   AbstractControl,
   FormControl,
@@ -65,7 +67,9 @@ export class DashboardComponent {
   editedCount = 0;
   approvedCount = 0;
   rejectedCount = 0;
+  userPermission: any[] = [];
 
+  AdminStatus:any;
 
   selectAllChecked: boolean = false;
   selectedCheckboxIds: string[] = [];
@@ -94,7 +98,9 @@ export class DashboardComponent {
     private dashboardService: DashboardDataService,
     private sharedService: SharedService,
     private userDataService: UserDataService,
-    private emailService: EmailService
+    private emailService: EmailService,
+    private SellerDasboardPermissionService:SellerDasboardPermissionService
+
   ) {
     this.sellerCode = localStorage.getItem('code');
     fetch('https://api.ipify.org?format=json')
@@ -146,6 +152,7 @@ export class DashboardComponent {
     this.userId=localStorage.getItem('code');
     // alert(this.userId);
     this.getDashboardContents();
+    this.getPermissionUser();
 
     setTimeout(() => {
       const role = localStorage.getItem('role');
@@ -168,6 +175,34 @@ export class DashboardComponent {
       }
     }, 15);
     this.toggleSidebar();
+  }
+  getPermissionUser() {
+    // console.log("it enter in ts");
+    // console.log("bebe");
+    // console.log("admin",this.companyAdminId);
+    // console.log("type ki bol",typeof this.companyAdminId)
+    if(this.companyAdminId==='true'){
+      // console.log("true bol");
+      this.AdminStatus=1;
+      // console.log("admin Status",typeof this.AdminStatus);
+
+    }
+    else{
+      this.AdminStatus=0;
+    }
+    this.SellerDasboardPermissionService.getUserPermission(this.userId,this.AdminStatus).subscribe({
+      next: (response: any) => {
+     
+      //  console.log("response it+",      response);
+       
+        this.userPermission=response;
+    
+        this.SidebarIndex = this.userPermission[0].menuId;
+      },
+      error: (error: any) => {
+        console.log(error);
+      },
+    });
   }
   editMode() {
     sessionStorage.clear();
