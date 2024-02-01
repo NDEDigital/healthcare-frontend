@@ -107,7 +107,9 @@
       <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         <div class="d-flex justify-content-center align-items-center">
           <div>
-            <button class="actionBtn">
+            <button class="actionBtn"
+            *ngIf="btnIndex != 1"
+            >
               <svg
                 xmlns="http://www.w3.org/2000/svg"
                 width="30"
@@ -152,42 +154,44 @@
 
       <!-- Modal for tadeLicence -->
       <div
-        class="modal fade"
-        id="showImgModal"
-        data-bs-backdrop="static"
-        data-bs-keyboard="false"
-        tabindex="-1"
-        aria-labelledby="showImgModalLabel"
-        aria-hidden="true"
+      class="modal fade"
+      id="showImgModal"
+      data-bs-backdrop="static"
+      data-bs-keyboard="false"
+      tabindex="-1"
+      aria-labelledby="showImgModalLabel"
+      aria-hidden="true"
+    >
+      <div
+        class="modal-dialog modal-xl d-flex align-items-center justify-content-center"
       >
-        <div
-          class="modal-dialog modal-xl d-flex align-items-center justify-content-center"
-        >
-          <div class="modal-content">
-            <div class="modal-header modal-heading">
-              <h1 class="modal-title text-light fs-5" id="showImgModalLabel">
-                {{ imageTitle }}
-              </h1>
-              <button
-                type="button"
-                class="btn-close"
-                data-bs-dismiss="modal"
-                aria-label="Close"
-              ></button>
-            </div>
-            <div class="modal-body text-center">
-              <img
-                class="company_images"
-                [src]="imagePath"
-                alt="no image was uploaded!"
-              />
-            </div>
+        <div class="modal-content">
+          <div class="modal-header modal-heading">
+            <h1 class="modal-title text-light fs-5" id="showImgModalLabel">
+              {{ imageTitle }}
+            </h1>
+            <button
+              type="button"
+              class="btn-close"
+              data-bs-dismiss="modal"
+              aria-label="Close"
+            ></button>
+          </div>
+          <div class="modal-body text-center">
+            <img
+              class="company_images"
+              [src]="imagePath"
+              alt="no image was uploaded!"
+            />
           </div>
         </div>
       </div>
+    </div>
     </section>
   </div>
 </div>
+
+
 <button
   type="button"
   class="btn btn-primary d-none"
@@ -197,6 +201,7 @@
 >
   Launch demo modal
 </button>
+
 
 <!-- Modal -->
 <div
@@ -210,7 +215,14 @@
     <div class="modal-content">
       <div class="modal-header fs-5 fw-bold">
         <h1 class="modal-title fs-5" id="msgModalLabel">
-          {{ alertTitle }}
+          <span
+          [ngClass]="{
+            'text-success': isApproved,
+            'text-danger': isRejected
+          }"
+        >
+          {{ alertTitle }}</span
+        >
         </h1>
         <button
           type="button"
@@ -220,7 +232,10 @@
         ></button>
       </div>
       <div class="modal-body">
-        {{ alertMsg }}
+        <span
+        [ngClass]="{ 'text-success': isApproved, 'text-danger': isRejected }"
+        >{{ alertMsg }}</span
+      >
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">

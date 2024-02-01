@@ -16,6 +16,9 @@ export class CompanyApprovalComponent {
   @ViewChild('msgModalBTN') msgModalBTN!: ElementRef;
   alertTitle: string = '';
   alertMsg: string = '';
+  isApproved: boolean = false;
+  isRejected: boolean = false;
+
   isHovered: any | null = null;
 
   constructor(
@@ -31,7 +34,7 @@ export class CompanyApprovalComponent {
     this.companyService.GetCompaniesBasedOnStatus(this.btnIndex).subscribe({
       next: (response: any) => {
         this.companies = response;
-        console.log(response);
+        console.log(this.companies, 'companies....');
       },
       error: (error: any) => {
         //console.log(error);
@@ -89,9 +92,13 @@ export class CompanyApprovalComponent {
         this.selectedCompanyCodeValues[companyCode] = null;
 
         if (Isactive) {
+          this.isApproved = true;
+          this.isRejected = false;
           this.alertTitle = 'Success!';
           this.alertMsg = 'Company is approved sucessfully.';
         } else {
+          this.isApproved = false;
+          this.isRejected = true;
           this.alertTitle = 'Rejected!';
           this.alertMsg = 'Company is rejected.';
         }
