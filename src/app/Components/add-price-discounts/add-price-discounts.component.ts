@@ -45,7 +45,7 @@ export class AddPriceDiscountsComponent {
   selectedProduct: any;
   allProducts: any[] = [];
   allProductAndGroup: any[] = [];
-
+  isHovered: any | null = null;
   onProductChange(event: any) {
     const productId = event.target.value;
     console.log(productId, 'productId..');
@@ -312,7 +312,9 @@ export class AddPriceDiscountsComponent {
   //     return discountPct <= 100 ? null : { maxDiscountPct: true };
   //   };
   // }
-
+  // checkHoveredValue() {
+  //   console.log('isHovered value:', this.isHovered);
+  // }
   setupFormValueChanges() {
     const form = this.addPriceDiscountForm;
     const priceControl = form.get('price');
