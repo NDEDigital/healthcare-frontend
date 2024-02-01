@@ -104,7 +104,7 @@
         <p class="subtotal-title">
           Subtotal ({{ this.cartCount }}): <b>৳{{ this.totalPrice }}</b>
         </p>
-        <button class="btn btn-warning mt-2 w-100" (click)="procced()">
+        <button class="btn btn-warning mt-2 w-100" [disabled]="this.totalPrice === 0" (click)="procced()">
           Proceed to checkout
         </button>
       </div>
