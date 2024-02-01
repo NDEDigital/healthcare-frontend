@@ -20,6 +20,7 @@ export class AddProductsComponent implements OnInit {
   showProductDiv: boolean = false;
   productList: any;
   btnIndex = -1;
+  isHovered: any | null = null;
 
   isEditMode = false;
   activeProductId: number | null = null;

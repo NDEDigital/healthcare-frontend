@@ -203,44 +203,45 @@
     </div>
     <section
       class="row tablebodyRow fw-semibold"
-      *ngFor="let sl of sellerList; let i = index; "
+      *ngFor="let sl of sellerList; let i = index; "   (mouseover)="isHovered = i;"
+      (mouseout)="isHovered = null"
     >
     <div class="d-flex"  >
      
     
       <!-- <div>{{UserId}}</div> -->
 <!-- <div>{{cmp.companyAdminId}}</div> -->
-      <div class="col tableBody">#{{i+1 }}</div>
-      <div class="col tableBody">{{ sl.fullName }}</div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i }" >#{{i+1 }}</div>
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i }" >{{ sl.fullName }}</div>
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i }" >
         {{ sl.phoneNumber }}
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i }" >
         {{ sl.email.split("@")[0] }}
 
         @{{ sl.email.split("@")[1] }}
       </div>
-      <div class="col tableBody text-break">
+      <div class="col tableBody text-break" [ngClass]="{ 'active-row':isHovered===i }" >
         {{ sl.address }}
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i }" >
         {{ sl.addedDate | date : "dd MMM yyyy" }}
       </div>
-      <div class="col tableBody text-break" [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
+      <div class="col tableBody text-break" [ngClass]="{ 'active-row':isHovered===i }" [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
         {{ sl.companyName }}
       </div>
 
-      <div class="col tableBody text-break"  *ngIf="sl.userId===sl.companyAdminId else elseBlock"       [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
+      <div class="col tableBody text-break" [ngClass]="{ 'active-row':isHovered===i }"   *ngIf="sl.userId===sl.companyAdminId else elseBlock"       [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
         Manager
       </div>
       <ng-template #elseBlock>
         <!-- Content to be displayed when the condition is not met -->
-        <div class="col tableBody text-break"  [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
+        <div class="col tableBody text-break" [ngClass]="{ 'active-row':isHovered===i }"  [ngStyle]="{'display': userBtnIndex === 1 ? 'none' : 'block'}">
          Seller
         </div>
       </ng-template>
    
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i }" >
         <div class="d-flex justify-content-center align-items-center">
           <div >
             <button *ngIf = "btnIndex === 0" class="actionBtn">

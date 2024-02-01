@@ -53,28 +53,29 @@
 
     <section
       class="row tablebodyRow fw-semibold"
-      *ngFor="let cmp of companies; let i = index"
+      *ngFor="let cmp of companies; let i = index"  (mouseover)="isHovered = i;"
+      (mouseout)="isHovered = null"
     >
-      <div class="col tableBody">#{{ i + 1 }}</div>
-      <div class="col tableBody">{{ cmp.companyCode }}</div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">#{{ i + 1 }}</div>
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">{{ cmp.companyCode }}</div>
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         {{ cmp.companyName }}
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         {{ cmp.email.split("@")[0] }}
 
         @{{ cmp.email.split("@")[1] }}
       </div>
-      <div class="col tableBody text-break">
+      <div class="col tableBody text-break" [ngClass]="{ 'active-row':isHovered===i}">
         {{ cmp.businessRegistrationNumber }}
       </div>
-      <div class="col tableBody text-break">
+      <div class="col tableBody text-break" [ngClass]="{ 'active-row':isHovered===i}">
         {{ cmp.taxIdentificationNumber }}
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         {{ cmp.companyFoundationDate | date : "dd MMM yyyy" }}
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         <button
           class="custom-btn btn-trade-company"
           data-bs-toggle="modal"
@@ -84,7 +85,7 @@
           view
         </button>
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         <button
           class="custom-btn btn-trade-company"
           data-bs-toggle="modal"
@@ -94,8 +95,8 @@
           view
         </button>
       </div>
-      <div class="col tableBody">{{ cmp.preferredPaymentMethodName }}</div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">{{ cmp.preferredPaymentMethodName }}</div>
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         <input
           [(ngModel)]="selectedCompanyCodeValues[cmp.companyCode]"
           type="number"
@@ -103,7 +104,7 @@
           min="0"
         />
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button class="actionBtn">

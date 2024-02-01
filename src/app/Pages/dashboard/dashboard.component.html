@@ -476,13 +476,13 @@
   <!-- ================  end of sidebar =============  -->
   <div class="dashboard_body px-5 py-2" *ngIf="this.userPermission.length > 0">
     <!-- Sellers Add Quantity -->
-    <section *ngIf="SidebarIndex === 2" class="seller_inventory_body">
+    <section *ngIf="SidebarIndex === 2" class="seller_quantity_body">
       <app-add-product-quantity></app-add-product-quantity>
     </section>
 
-    <!-- <section class="admin_order_body" *ngIf="isAdmin && SidebarIndex === 3">
+    <section class="admin_order_body" *ngIf="isAdmin && SidebarIndex === 11">
   <app-admin-order></app-admin-order>
-</section> -->
+</section>
 
     <!-- sellers inventory -->
     <section class="seller_inventory_body" *ngIf="SidebarIndex === 1">
@@ -494,7 +494,7 @@
     <section class="order_body" *ngIf="SidebarIndex === 3">
       <!-- <app-orders-overview></app-orders-overview> -->
 
-      <app-admin-order></app-admin-order>
+      <app-seller-orders></app-seller-orders>
     </section>
 
     <!-- Add products fields here -->
@@ -525,11 +525,9 @@
       <app-seller-permission *ngIf="userId"></app-seller-permission>
     </section>
 
-    <section class="sellerOrder" *ngIf="SidebarIndex === 11">
-      <!-- <app-seller-order></app-seller-order> -->
-      <app-seller-orders></app-seller-orders>
-    </section>
+ 
   </div>
+
   <div *ngIf="userPermission.length === 0" class="bg-white pt-5">
     <h1 class="text-center mx-auto my-auto text-danger">
       Contact Your Company Manager For Permission
