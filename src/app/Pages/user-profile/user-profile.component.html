@@ -14,7 +14,7 @@
       <div class="user_info header_user-info p-2">
         <p class="info_field fs-3">
           <span class="text-muted" hidden>Full Name:</span> {{ user.fullName }}
-          <span class="role mt-2"  *ngIf="isCompanyAdmin === 'true'; else elseBlock">Manager</span>
+          <span class="role mt-2"  *ngIf="isCompanyAdmin === 'true'; else elseBlock">(Manager)</span>
           <ng-template #elseBlock>
             <span class="role mt-2">({{ Role }})</span>
           </ng-template>
