@@ -11,6 +11,8 @@ import { UserDataService } from 'src/app/services/user-data.service';
 export class UserProfileComponent {
   user$ = this.sharedService.user$;
   user: any;
+  isCompanyAdmin:any;
+
   @ViewChild('editBTN')
   editBTN!: ElementRef;
   updateUserForm: FormGroup;
@@ -23,6 +25,8 @@ export class UserProfileComponent {
     if (role) {
       this.Role = role;
     }
+    this.isCompanyAdmin=localStorage.getItem('isDigitalCompanyAd');
+
     const userCode = localStorage.getItem('code');
 
     // //console.log(userCode, 'code');
