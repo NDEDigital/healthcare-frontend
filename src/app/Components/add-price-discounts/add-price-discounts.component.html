@@ -71,37 +71,25 @@
     >
       <div
         class="col tableBody"
-        [ngClass]="{
-          'active-row':
-            product.productId === activeProductPriceId || isHovered === i
-        }"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId ||isHovered===i }"
       >
         #{{ i + 1 }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{
-          'active-row':
-            product.productId === activeProductPriceId || isHovered === i
-        }"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId ||isHovered===i }"
       >
         {{ product.productId }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{
-          'active-row':
-            product.productId === activeProductPriceId || isHovered === i
-        }"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId ||isHovered===i }"
       >
         {{ product.productName }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{
-          'active-row':
-            product.productId === activeProductPriceId || isHovered === i
-        }"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId ||isHovered===i }"
       >
         <img
           class="product_image"
@@ -115,46 +103,31 @@
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{
-          'active-row':
-            product.productId === activeProductPriceId || isHovered === i
-        }"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId ||isHovered===i }"
       >
         {{ product.price }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{
-          'active-row':
-            product.productId === activeProductPriceId || isHovered === i
-        }"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId ||isHovered===i}"
       >
         {{ product.discountAmount }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{
-          'active-row':
-            product.productId === activeProductPriceId || isHovered === i
-        }"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId ||isHovered===i}"
       >
         {{ product.discountPct }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{
-          'active-row':
-            product.productId === activeProductPriceId || isHovered === i
-        }"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId ||isHovered===i}"
       >
         {{ product.totalPrice }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{
-          'active-row':
-            product.productId === activeProductPriceId || isHovered === i
-        }"
+        [ngClass]="{ 'active-row': product.productId === activeProductPriceId ||isHovered===i}"
       >
         {{ product.addedDate | date : "dd MMM yyyy" }},<br />
         {{ product.addedDate | date : "hh:mm a" }}

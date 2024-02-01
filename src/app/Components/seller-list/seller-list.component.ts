@@ -25,6 +25,7 @@ export class SellerListComponent {
   @ViewChild('msgModalBTN') msgModalBTN!: ElementRef;
   alertTitle: string = '';
   alertMsg: string = '';
+  isHovered: any | null = null;
  
   constructor(
     private companyService: CompanyService,

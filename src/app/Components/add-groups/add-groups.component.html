@@ -63,12 +63,13 @@
 
     <section
       class="row tablebodyRow fw-semibold"
-      *ngFor="let group of groupList; let i = index"
+      *ngFor="let group of groupList; let i = index" (mouseover)="isHovered = i;"
+      (mouseout)="isHovered = null"
       (dblclick)="openModalWithData(group)"
     >
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
       >
         #{{ i + 1 }}
       </div>
@@ -80,7 +81,7 @@
       </div> -->
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
       >
         <img
           #groupImage
@@ -93,37 +94,37 @@
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
       >
         {{ group.productGroupCode }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
       >
         {{ group.productGroupName }}
       </div>
 
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
       >
         {{ group.productGroupPrefix }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
       >
         {{ group.productGroupDetails }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId }"
+        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
       >
         {{ group.dateAdded | date : "dd MMM yyyy" }}
       </div>
 
-      <div class="col tableBody" *ngIf="btnIndex != -1">
+      <div class="col tableBody" *ngIf="btnIndex != -1" [ngClass]="{ 'active-row': isHovered===i}">
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button

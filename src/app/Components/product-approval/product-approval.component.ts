@@ -16,6 +16,7 @@ export class ProductApprovalComponent {
 
   showModal = false;
   selectedProduct: any = null;
+  isHovered: any | null = null;
 
   alertTitle: string = '';
   alertMsg: string = '';

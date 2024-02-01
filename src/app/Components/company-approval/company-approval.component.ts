@@ -19,6 +19,8 @@ export class CompanyApprovalComponent {
   isApproved: boolean = false;
   isRejected: boolean = false;
 
+  isHovered: any | null = null;
+
   constructor(
     private companyService: CompanyService,
     private emailService: EmailService

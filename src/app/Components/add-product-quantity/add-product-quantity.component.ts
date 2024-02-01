@@ -365,6 +365,13 @@ export class AddProductQuantityComponent   {
       }
     });
   }
+  onInputBlur() {
+    
+    const searchInput = document.getElementById('searchGroupName') as HTMLInputElement;
+    if (searchInput) {
+      searchInput.value = '';
+    }
+  }
 
   SetDropDownGroupName(selectedItem: any, rowIndex: number){
     this.selectedProductGroup[rowIndex] = selectedItem.productGroupName; // Store selected product name for this row

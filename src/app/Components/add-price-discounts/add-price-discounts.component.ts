@@ -39,6 +39,7 @@ export class AddPriceDiscountsComponent {
 
   selectedGroup: any = null;
   selectedGroupId: any = null;
+  isHovered: any | null = null;
 
   allGroupData: any[] = [];
   filteredProducts: any[] = [];

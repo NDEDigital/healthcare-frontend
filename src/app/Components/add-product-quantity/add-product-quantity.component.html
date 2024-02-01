@@ -111,7 +111,7 @@
                   <!-- dropdown -->
                    <div id="myDropdown" class="dropdown-groupName " [ngClass]="{ 'show': isDropdownVisible(i) }">
                     <!-- search field -->
-                    <input    type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')"  >
+                    <input    type="text" class="searchInput" placeholder="Search.." id="searchGroupName" (click)="$event.stopPropagation()"  (keyup)="filterFunction($event, '.dropdown-groupName a')" (blur)="onInputBlur()"  >
                     <span *ngIf ="NoProductFound" > {{NoProduct}}</span>
                     <a   *ngFor="let item of productDertailsData; let j = index" (click)="SetDropDownName(item, i)">
                       {{item.productName}}</a>

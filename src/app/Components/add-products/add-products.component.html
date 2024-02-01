@@ -67,12 +67,13 @@
 
     <section
       class="row tablebodyRow fw-semibold"
-      *ngFor="let product of productList; let i = index"
+      *ngFor="let product of productList; let i = index" (mouseover)="isHovered = i;"
+      (mouseout)="isHovered = null"
       (dblclick)="openModalWithData(product)"
     >
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
       >
         #{{ i + 1 }}
       </div>
@@ -86,38 +87,38 @@
 
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
       >
         {{ product.productGroupName }}
       </div>
 
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
       >
         {{ product.productName }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
       >
         {{ product.productSubName }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
       >
         {{ product.unit }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
       >
         {{ product.specification }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
       >
         <img
           class="product_image"
@@ -131,12 +132,12 @@
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId }"
+        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
       >
         {{ product.addedDate | date : "dd MMM yyyy" }}
       </div>
 
-      <div class="col tableBody" *ngIf="btnIndex != -1">
+      <div class="col tableBody" *ngIf="btnIndex != -1" [ngClass]="{ 'active-row':isHovered===i}">
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button

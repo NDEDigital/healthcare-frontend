@@ -90,3 +90,6 @@
   height: 4rem;
   width: 6rem;
 }
+.active-row {
+  background-color:rgb(233, 238, 243);
+}

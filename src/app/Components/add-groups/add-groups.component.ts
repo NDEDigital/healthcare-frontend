@@ -19,6 +19,7 @@ export class AddGroupsComponent {
   @ViewChild('addGroupModalCenterG') AddGroupModalCenterG!: ElementRef;
   //@ViewChild('modalGroupImage') ModalGroupImage!: ElementRef;
   @ViewChild('modalGroupImage') ModalGroupImage!: ElementRef<HTMLImageElement>;
+  isHovered: any | null = null;
 
   addGroupForm!: FormGroup;
   alertMsg = '';

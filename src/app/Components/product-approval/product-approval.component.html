@@ -56,10 +56,11 @@
 
     <section
       class="row tablebodyRow fw-semibold"
-      *ngFor="let row of productsData; let i = index"
+      *ngFor="let row of productsData; let i = index"  (mouseover)="isHovered = i;"
+      (mouseout)="isHovered = null"
     >
-      <div class="col tableBody">#{{ i + 1 }}</div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">#{{ i + 1 }}</div>
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         <!-- {{ row.imagePath }} -->
         <img
           class="product_image"
@@ -67,35 +68,35 @@
           alt="no image was uploaded!"
         />
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         {{ row.productName }}
       </div>
-      <div class="col tableBody">{{ row.fullName }}</div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">{{ row.fullName }}</div>
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         {{ row.companyName }}
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         {{ row.price }}
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         {{ row.discountAmount }}
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         {{ row.discountPct }}
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         {{ row.totalPrice }}
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         {{ row.effectivateDate | date : "dd MMM yyyy" }}<br />
         {{ row.effectivateDate | date : "hh:mm a" }}
       </div>
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         {{ row.endDate | date : "dd MMM yyyy" }}<br />
         {{ row.endDate | date : "hh:mm a" }}
       </div>
 
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         <button
           class="custom-btn"
           data-bs-toggle="modal"
@@ -106,7 +107,7 @@
         </button>
       </div>
 
-      <div class="col tableBody">
+      <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button class="actionBtn" *ngIf="btnIndex != 1">
