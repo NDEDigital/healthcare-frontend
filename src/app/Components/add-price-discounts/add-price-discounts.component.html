@@ -66,7 +66,7 @@
       class="row tablebodyRow fw-semibold"
       *ngFor="let product of productList; let i = index"
       (dblclick)="openModalWithData(product)"
-      (mouseover)="isHovered = i;"
+      (mouseover)="isHovered = i"
       (mouseout)="isHovered = null"
     >
       <div
@@ -183,8 +183,10 @@
                 <span class="text-danger" *ngIf="!isEditMode">*</span>Product
                 Group Name
               </label>
-              <select #groupSelect (change)="onGroupChange($event)"
-              [disabled]="isEditMode"
+              <select
+                #groupSelect
+                (change)="onGroupChange($event)"
+                [disabled]="isEditMode"
               >
                 <option [value]="null" disabled selected>
                   Select Group Name
@@ -326,7 +328,7 @@
             </div>
 
             <div *ngIf="isEditMode" class="image-preview">
-              <label for="productImage"> Product Image Preview </label>
+              <label> Product Image Preview </label>
               <img
                 [src]="imagePathPreview"
                 alt="Product Image"
@@ -335,7 +337,7 @@
             </div>
 
             <div class="form-group">
-              <label for="productImage"
+              <label
                 ><span class="text-danger" *ngIf="!isEditMode">*</span>Upload
                 Product Image
               </label>

@@ -46,7 +46,6 @@ export class AddPriceDiscountsComponent {
   selectedProduct: any;
   allProducts: any[] = [];
   allProductAndGroup: any[] = [];
-
   onProductChange(event: any) {
     const productId = event.target.value;
     console.log(productId, 'productId..');
@@ -132,8 +131,6 @@ export class AddPriceDiscountsComponent {
     this.addPriceDiscountForm
       .get('discountAmount')
       ?.valueChanges.subscribe(() => {});
-
-
 
     this.getProducts(-1);
     this.setupFormValueChanges();
@@ -313,7 +310,9 @@ export class AddPriceDiscountsComponent {
   //     return discountPct <= 100 ? null : { maxDiscountPct: true };
   //   };
   // }
-
+  // checkHoveredValue() {
+  //   console.log('isHovered value:', this.isHovered);
+  // }
   setupFormValueChanges() {
     const form = this.addPriceDiscountForm;
     const priceControl = form.get('price');
@@ -621,9 +620,7 @@ export class AddPriceDiscountsComponent {
     this.updateFormValidators();
     console.log('product', product);
 
-
     this.getProductData(product.productGroupID);
-
 
     this.populateForm(product);
     this.currentProductPrice = product;
@@ -638,7 +635,7 @@ export class AddPriceDiscountsComponent {
     console.log(product, 'populate form.. ');
 
     console.log('Product ID:', product.productName);
-    console.log(this.products, "products all");
+    console.log(this.products, 'products all');
 
     const isDefaultDate = (date: string) =>
       date.startsWith('0001-01-01T00:00:00');
@@ -662,7 +659,7 @@ export class AddPriceDiscountsComponent {
     this.existingImagePath = product.imagepath;
     this.selectedUnitName = product.unitName;
     this.groupSelect.nativeElement.value = product.productGroupID;
-    this.productSelect.nativeElement.value = product.productId
+    this.productSelect.nativeElement.value = product.productId;
 
     console.log(product.unitName, this.selectedUnitName, 'unit name::');
   }
