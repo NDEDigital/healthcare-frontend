@@ -50,7 +50,7 @@
     <!-- TABLE header -->
     <div class="row headerRow sticky-top fw-bolder">
       <div class="col tableHeader">Index</div>
-      <div class="col tableHeader">Product ID</div>
+     
       <div class="col tableHeader">Product Name</div>
       <div class="col tableHeader">Product Image</div>
       <div class="col tableHeader">Product price</div>
@@ -75,12 +75,7 @@
       >
         #{{ i + 1 }}
       </div>
-      <div
-        class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductPriceId ||isHovered===i }"
-      >
-        {{ product.productId }}
-      </div>
+     
       <div
         class="col tableBody"
         [ngClass]="{ 'active-row': product.productId === activeProductPriceId ||isHovered===i }"
