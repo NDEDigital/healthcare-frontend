@@ -25,10 +25,11 @@ interface ProductType {
 })
 export class SellerOrdersComponent {
   @ViewChild('closeModalButton') closeModalButton!: ElementRef;
-
+  @ViewChild('productStatusModalBTN') productStatusModalBTN!: ElementRef;
   @ViewChild('closeBTN') closeBTN!: ElementRef;
   orderSection: boolean = true;
   activeNav: string = '';
+  alertMsg = '';
   pageNum = 1;
   rowCount = 10;
   toShipCount = 0;
@@ -237,21 +238,32 @@ export class SellerOrdersComponent {
     if (this.btnIndex === -1) {
       if (stat === 'Rejected') {
         status = 'Rejected';
+        this.alertMsg = `Order status is ${status}!`;
       } else {
         status = 'Processing';
+        this.alertMsg = `Order status is ${status}!`;
+        this.productStatusModalBTN.nativeElement.click();
       }
     }
     if (this.btnIndex === 3) {
+      this.productStatusModalBTN.nativeElement.click();
       status = 'ReadyToShip';
+      this.alertMsg = `Order status is ${status}!`;
     }
     if (this.btnIndex === 4) {
+      this.productStatusModalBTN.nativeElement.click();
       status = 'ToDeliver';
+      this.alertMsg = `Order status is ${status}!`;
     }
     if (this.btnIndex === 5) {
+      this.productStatusModalBTN.nativeElement.click();
       status = 'Delivered';
+      this.alertMsg = `Order status is ${status}!`;
     }
     if (this.btnIndex === 8) {
+      this.productStatusModalBTN.nativeElement.click();
       status = 'Returned';
+      this.alertMsg = `Order status is ${status}!`;
     }
     console.log(order.orderDetailsListForSeller);
 
@@ -342,24 +354,36 @@ export class SellerOrdersComponent {
           //   this.getData('Rejected');
           // }
           if (status === 'Rejected') {
-            this.btnIndex = 2;
+            //this.btnIndex = -1;
+            this.getData('Approved');
+            this.productStatusModalBTN.nativeElement.click();
           } else if (status === 'Processing') {
             // Set btnIndex to the appropriate value for Processing
-            this.btnIndex = 3;
+            // this.btnIndex = 2;
+            this.getData('Approved');
+            this.productStatusModalBTN.nativeElement.click();
           } else if (status === 'ReadyToShip') {
-            this.btnIndex = 4;
+            //this.btnIndex = 3;
+            this.getData('Processing');
+            this.productStatusModalBTN.nativeElement.click();
           } else if (status === 'ToDeliver') {
-            this.btnIndex = 5;
+            //this.btnIndex = 4;
+            this.getData('ReadyToShip');
+            this.productStatusModalBTN.nativeElement.click();
           } else if (status === 'Delivered') {
-            this.btnIndex = 6;
+            // this.btnIndex = 5;
+            this.getData('ToDeliver');
+            this.productStatusModalBTN.nativeElement.click();
           } else if (status === 'Returned') {
-            this.btnIndex = 9;
+            //this.btnIndex = 6;
+            this.getData('Delivered');
+            this.productStatusModalBTN.nativeElement.click();
           } else {
             // Handle other status values as needed
             // You may want to set a default value for btnIndex or handle unknown status
             // this.btnIndex = ???;
           }
-          this.getData(status);
+          // this.getData(status);
         },
         error: (error: any) => {
           //console.log(error);
