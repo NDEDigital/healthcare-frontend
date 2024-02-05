@@ -246,7 +246,6 @@ export class AddGroupsComponent {
     }
     this.AddGroupModalCenterG.nativeElement.click();
   }
-  
 
   updateIsActive(isActive: any, groupId: any) {
     console.log(isActive, 'isActive', groupId, 'groupId');
@@ -257,6 +256,10 @@ export class AddGroupsComponent {
           console.log(response);
           this.getProductGroup(isActive);
           this.btnIndex = isActive;
+          this.UserExistModalBTN.nativeElement.click();
+          this.alertMsg = isActive
+            ? 'Group is  Approved!'
+            : 'Group is Rejected!';
         },
         error: (error: any) => {
           //console.log(error);

@@ -131,7 +131,6 @@ export class AddProductsComponent implements OnInit {
       for (let pair of (formData as any).entries()) {
         //console.log(`${pair[0]}: `, pair[1]);
       }
-      
       if (!this.isEditMode) {
         this.productService.createProductList(formData).subscribe({
           next: (response: any) => {
@@ -248,8 +247,8 @@ export class AddProductsComponent implements OnInit {
       unitId: product.unitId,
     });
 
-    this.displayImage(product.imagePath);
-    this.existingImagePath = product.imagePath;
+    this.displayImage(product.imagepath);
+    this.existingImagePath = product.imagepath;
   }
 
   displayImage(imagePath: string): void {
@@ -273,6 +272,10 @@ export class AddProductsComponent implements OnInit {
         console.log(response);
         this.getProducts(isActive);
         this.btnIndex = isActive;
+        this.PrdouctExistModalBTN.nativeElement.click();
+        this.alertMsg = isActive
+          ? 'Product is  Approved!'
+          : 'Product is Rejected!';
       },
       error: (error: any) => {
         //console.log(error);

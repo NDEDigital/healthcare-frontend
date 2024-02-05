@@ -63,13 +63,17 @@
 
     <section
       class="row tablebodyRow fw-semibold"
-      *ngFor="let group of groupList; let i = index" (mouseover)="isHovered = i;"
+      *ngFor="let group of groupList; let i = index"
+      (mouseover)="isHovered = i"
       (mouseout)="isHovered = null"
       (dblclick)="openModalWithData(group)"
     >
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
+        [ngClass]="{
+          'active-row':
+            group.productGroupID === activeGroupId || isHovered === i
+        }"
       >
         #{{ i + 1 }}
       </div>
@@ -81,7 +85,10 @@
       </div> -->
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
+        [ngClass]="{
+          'active-row':
+            group.productGroupID === activeGroupId || isHovered === i
+        }"
       >
         <img
           #groupImage
@@ -94,37 +101,56 @@
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
+        [ngClass]="{
+          'active-row':
+            group.productGroupID === activeGroupId || isHovered === i
+        }"
       >
         {{ group.productGroupCode }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
+        [ngClass]="{
+          'active-row':
+            group.productGroupID === activeGroupId || isHovered === i
+        }"
       >
         {{ group.productGroupName }}
       </div>
 
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
+        [ngClass]="{
+          'active-row':
+            group.productGroupID === activeGroupId || isHovered === i
+        }"
       >
         {{ group.productGroupPrefix }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
+        [ngClass]="{
+          'active-row':
+            group.productGroupID === activeGroupId || isHovered === i
+        }"
       >
         {{ group.productGroupDetails }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': group.productGroupID === activeGroupId || isHovered===i}"
+        [ngClass]="{
+          'active-row':
+            group.productGroupID === activeGroupId || isHovered === i
+        }"
       >
         {{ group.dateAdded | date : "dd MMM yyyy" }}
       </div>
 
-      <div class="col tableBody" *ngIf="btnIndex != -1" [ngClass]="{ 'active-row': isHovered===i}">
+      <div
+        class="col tableBody"
+        *ngIf="btnIndex != -1"
+        [ngClass]="{ 'active-row': isHovered === i }"
+      >
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button
@@ -226,7 +252,7 @@
               >
             </div>
             <div *ngIf="isEditMode" class="image-preview">
-              <label > Group Image Preview </label>
+              <label> Group Image Preview </label>
               <img
                 [src]="imagePathPreview"
                 alt="Product Group Image"
@@ -242,7 +268,7 @@
                 class="form-control"
                 id="productGroupImage"
                 formControlName="productGroupImage"
-                accept="image/jpeg, image/jpg, image/png,image/webp"
+                accept="image/jpeg, image/jpg, image/png, image/webp"
                 [class.error]="
                   isFieldInvalid('productGroupImage') && !isEditMode
                 "
@@ -327,7 +353,12 @@
         ></button>
       </div>
       <div class="modal-body">
-        <p>{{ alertMsg }}</p>
+        <p
+          class="fs-5 fw-bolder"
+          [ngStyle]="{ color: alertMsg.includes('Rejected') ? 'red' : 'green' }"
+        >
+          {{ alertMsg }}
+        </p>
       </div>
       <div class="modal-footer">
         <button type="button" class="btn btn-primary" data-bs-dismiss="modal">

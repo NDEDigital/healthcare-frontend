@@ -67,13 +67,16 @@
 
     <section
       class="row tablebodyRow fw-semibold"
-      *ngFor="let product of productList; let i = index" (mouseover)="isHovered = i;"
+      *ngFor="let product of productList; let i = index"
+      (mouseover)="isHovered = i"
       (mouseout)="isHovered = null"
       (dblclick)="openModalWithData(product)"
     >
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
+        [ngClass]="{
+          'active-row': product.productId === activeProductId || isHovered === i
+        }"
       >
         #{{ i + 1 }}
       </div>
@@ -87,38 +90,50 @@
 
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
+        [ngClass]="{
+          'active-row': product.productId === activeProductId || isHovered === i
+        }"
       >
         {{ product.productGroupName }}
       </div>
 
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
+        [ngClass]="{
+          'active-row': product.productId === activeProductId || isHovered === i
+        }"
       >
         {{ product.productName }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
+        [ngClass]="{
+          'active-row': product.productId === activeProductId || isHovered === i
+        }"
       >
         {{ product.productSubName }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
+        [ngClass]="{
+          'active-row': product.productId === activeProductId || isHovered === i
+        }"
       >
         {{ product.unit }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
+        [ngClass]="{
+          'active-row': product.productId === activeProductId || isHovered === i
+        }"
       >
         {{ product.specification }}
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
+        [ngClass]="{
+          'active-row': product.productId === activeProductId || isHovered === i
+        }"
       >
         <img
           class="product_image"
@@ -132,12 +147,18 @@
       </div>
       <div
         class="col tableBody"
-        [ngClass]="{ 'active-row': product.productId === activeProductId ||isHovered===i}"
+        [ngClass]="{
+          'active-row': product.productId === activeProductId || isHovered === i
+        }"
       >
         {{ product.addedDate | date : "dd MMM yyyy" }}
       </div>
 
-      <div class="col tableBody" *ngIf="btnIndex != -1" [ngClass]="{ 'active-row':isHovered===i}">
+      <div
+        class="col tableBody"
+        *ngIf="btnIndex != -1"
+        [ngClass]="{ 'active-row': isHovered === i }"
+      >
         <div class="d-flex justify-content-center align-items-center">
           <div>
             <button
@@ -349,7 +370,7 @@
             </div>
 
             <div *ngIf="isEditMode" class="image-preview">
-              <label > Product Image Preview </label>
+              <label> Product Image Preview </label>
               <img
                 [src]="imagePathPreview"
                 alt="Product Image"
@@ -358,7 +379,7 @@
             </div>
 
             <div class="form-group">
-              <label 
+              <label
                 ><span class="text-danger">*</span>Upload Product Image
               </label>
 
@@ -367,7 +388,7 @@
                 class="form-control"
                 id="productImage"
                 formControlName="productImage"
-                accept="image/jpeg, image/jpg, image/png,image/webp"
+                accept="image/jpeg, image/jpg, image/png, image/webp"
                 [class.error]="isFieldInvalid('productImage')"
                 #ProductImageInput
               />
@@ -422,9 +443,8 @@
       </div>
       <div class="modal-body">
         <p
-          class="fs-5 fw-semibold"
-          [class.text-success]="!isError"
-          [class.text-danger]="isError"
+          class="fs-5 fw-bolder"
+          [ngStyle]="{ color: alertMsg.includes('Rejected') ? 'red' : 'green' }"
         >
           {{ alertMsg }}
         </p>
