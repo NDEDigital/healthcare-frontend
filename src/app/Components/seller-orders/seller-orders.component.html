@@ -19,21 +19,21 @@
         NEW
       </button>
       <!-- <button
-        class="custom-btn"
-        [ngClass]="{ active: btnIndex === 1 }"
-        (click)="btnIndex = 1"
-        (click)="getData('Approved')"
-      >
-        Approved
-      </button>
-      <button
-        class="custom-btn"
-        [ngClass]="{ active: btnIndex === 0 }"
-        (click)="btnIndex = 0"
-        (click)="getData('Cancelled')"
-      >
-        Cancelled
-      </button> -->
+          class="custom-btn"
+          [ngClass]="{ active: btnIndex === 1 }"
+          (click)="btnIndex = 1"
+          (click)="getData('Approved')"
+        >
+          Approved
+        </button>
+        <button
+          class="custom-btn"
+          [ngClass]="{ active: btnIndex === 0 }"
+          (click)="btnIndex = 0"
+          (click)="getData('Cancelled')"
+        >
+          Cancelled
+        </button> -->
 
       <button
         class="custom-btn"
@@ -131,15 +131,15 @@
           <div class="d-flex fst-italic fw-semibold text-end">
             <!-- <Button class="pay-now-btn fst-italic">Manage</Button> -->
             <!-- <div>
-              SubTotal: <span>{{ order.totalPrice }}</span>
-            </div>
-            <div>
-              Total Delivery Charge:
-              <span>{{ order.totalDeliveryCharge }}</span>
-            </div>
-            <div>
-              Total Amount: : <span>{{ order.totalAmount }}</span>
-            </div> -->
+                SubTotal: <span>{{ order.totalPrice }}</span>
+              </div>
+              <div>
+                Total Delivery Charge:
+                <span>{{ order.totalDeliveryCharge }}</span>
+              </div>
+              <div>
+                Total Amount: : <span>{{ order.totalAmount }}</span>
+              </div> -->
 
             <div>
               <button
@@ -256,23 +256,23 @@
               >
               <span class="color-primary" *ngIf="btnIndex === 6">
                 <!-- <button
-                  class="p-2 p-lg-1 p-sm-1 process-btn review-bg"
-                  #reviewBTN
-                  data-bs-toggle="modal"
-                  data-bs-target="#staticBackdrop"
-                  (click)="setDetail(detail)"
-                >
-                  Add a review
-                </button>
-                <button
-                  type="button"
-                  class="p-2 p-lg-1 p-sm-1 process-btn return-button"
-                  data-bs-toggle="modal"
-                  data-bs-target="#exampleModal"
-                  (click)="toReturn(detail, order.orderNo)"
-                >
-                  To return
-                </button> -->
+                    class="p-2 p-lg-1 p-sm-1 process-btn review-bg"
+                    #reviewBTN
+                    data-bs-toggle="modal"
+                    data-bs-target="#staticBackdrop"
+                    (click)="setDetail(detail)"
+                  >
+                    Add a review
+                  </button>
+                  <button
+                    type="button"
+                    class="p-2 p-lg-1 p-sm-1 process-btn return-button"
+                    data-bs-toggle="modal"
+                    data-bs-target="#exampleModal"
+                    (click)="toReturn(detail, order.orderNo)"
+                  >
+                    To return
+                  </button> -->
               </span>
             </p>
           </div>
@@ -300,7 +300,9 @@
               <img
                 src="../../../assets/images/takaIcon.png"
                 class="taKa_icon"
-              /><span class="text-dark">{{ order.totalPrice + order.totalDeliveryCharge }}</span>
+              /><span class="text-dark">{{
+                order.totalPrice + order.totalDeliveryCharge
+              }}</span>
             </div>
           </div>
         </div>
@@ -321,3 +323,50 @@
     </app-pagination>
   </div>
 </section>
+
+<button
+  type="button"
+  class="btn btn-primary d-none"
+  data-bs-toggle="modal"
+  data-bs-target="#productGroupModal"
+  #productStatusModalBTN
+>
+  Launch demo modal
+</button>
+<!-- Modal -->
+<div
+  class="modal fade"
+  id="productGroupModal"
+  tabindex="-1"
+  aria-labelledby="productGroupModalLabel"
+  aria-hidden="true"
+>
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header modal-heading">
+        <h1 class="modal-title fs-5 text-light" id="productGroupModalLabel">
+          Order Status
+        </h1>
+        <button
+          type="button"
+          class="btn-close"
+          data-bs-dismiss="modal"
+          aria-label="Close"
+        ></button>
+      </div>
+      <div class="modal-body">
+        <!-- <p>{{ alertMsg }}</p> -->
+        <p class="fs-5 fw-bolder"
+          [ngStyle]="{ color: alertMsg.includes('Rejected') ? 'red' : 'green' }"
+        >
+          {{ alertMsg }}
+        </p>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-primary" data-bs-dismiss="modal">
+          OK
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
