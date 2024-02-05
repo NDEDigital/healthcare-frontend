@@ -228,6 +228,8 @@ if (this.modalButton) {
             // console.log(response);
        this.getPermission();
        this.menuSelected.nativeElement.value = null;
+      this.selectedMenuItems.length=0;
+
       //  console.log("selectedUser:",selectedSeller);
        this.getDashboarItem(selectedSeller);
       //  this.menuSelected.nativeElement.value = null;
