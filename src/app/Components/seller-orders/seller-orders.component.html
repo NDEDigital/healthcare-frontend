@@ -208,7 +208,7 @@
               alt=""
             />
           </div>
-          <div class="col-3" (click)="goToDetail(detail)">
+          <div class="col-2" (click)="goToDetail(detail)">
             {{ detail.productName }}
           </div>
           <div class="col-3 col-lg-2 col-sm-2">
@@ -224,13 +224,15 @@
               <span class="color-primary">{{ detail.price }}</span></span
             >
           </div>
-          <div class="col-2 col-lg-3 col-sm-3">
+          <div class="col-2">
             <button
               class="p-2 p-lg-1 p-sm-1 process-btn"
               [ngClass]="{
                 'gray-bg':
                   detail.status === 'Pending' || detail.status === 'Processing',
-                'yellow-bg': detail.status === 'Ready to Ship',
+                'yellow-bg':
+                  detail.status === 'Ready to Ship' ||
+                  detail.status === 'ToReturn',
                 'green-bg':
                   detail.status === 'Delivered' || detail.status === 'Shipped',
                 'red-bg': detail.status === 'Cancelled'
@@ -239,6 +241,14 @@
               <!-- {{ detail.status }} -->
               {{ btnIndex === -1 ? "New Order" : detail.status }}
             </button>
+          </div>
+          <div class="col-2 col-lg-2">
+            <span class="" *ngIf="btnIndex === 8">
+              Return Type:
+              <span class="color-primary fw-bold">{{
+                detail.returnTypeName
+              }}</span>
+            </span>
           </div>
           <div class="col-2 text-success fw-semibold">
             <p
@@ -356,7 +366,8 @@
       </div>
       <div class="modal-body">
         <!-- <p>{{ alertMsg }}</p> -->
-        <p class="fs-5 fw-bolder"
+        <p
+          class="fs-5 fw-bolder"
           [ngStyle]="{ color: alertMsg.includes('Rejected') ? 'red' : 'green' }"
         >
           {{ alertMsg }}
