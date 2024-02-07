@@ -2,20 +2,20 @@ body {
   background: white;
   /* background-color: red; */
 }
-.detail-img{
-     height: 12rem;
+.detail-img {
+  height: 12rem;
 }
-.title{
-    margin-bottom: 0;
+.title {
+  margin-bottom: 0;
 }
-.prime-color{
+.prime-color {
   color: var(--color-primary);
 }
-.type{
+.type {
   margin-bottom: 1px;
 }
-.second-color{
-    color: var(--color-gray);
+.second-color {
+  color: var(--color-gray);
 }
 
 .detail-img {
@@ -32,7 +32,6 @@ body {
 }
 #footer {
   width: 100%;
-  
 }
 #content-wrap {
   flex: 1;

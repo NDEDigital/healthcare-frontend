@@ -193,7 +193,17 @@
             <p class="m-0 p-0">
               Placed on <span class="fw-semibold">{{ order.orderDate }}</span>
             </p>
+            <p class="m-0 p-0">
+              TotalPrice:
+              <span class="fw-semibold">
+                <img
+                  src="../../../assets/images/takaIcon.png"
+                  class="taKa_icon"
+                />{{ order.totalPrice }}</span
+              >
+            </p>
           </div>
+
           <!-- <div><Button class="pay-now-btn fst-italic">Manage</Button></div> -->
         </div>
 
@@ -215,16 +225,16 @@
               alt=""
             />
           </div>
-          <div class="col-1" (click)="goToDetail(detail)">
+          <div class="col-3" (click)="goToDetail(detail)">
             {{ detail.productName }}
           </div>
-          <div class="col-1 col-lg-2 col-sm-2">
+          <div class="col-3 col-lg-2 col-sm-2">
             <span class="qty-design">Qty: {{ detail.qty }}</span>
           </div>
-          <div class="col-1 col-lg-2 col-sm-2">
+          <div class="col- col-lg-2 col-sm-2">
             <span class="color-primary">Price: {{ detail.price }}</span>
           </div>
-          <div class="col-2 col-lg-2  col-sm-2 ">
+          <div class="col-2 col-lg-2 col-sm-2">
             <button
               class="p-2 p-lg-1 p-sm-1 process-btn"
               [ngClass]="{
@@ -239,7 +249,7 @@
               {{ detail.status }}
             </button>
           </div>
-          <div class="col-2 col-md-3 col-sm-3 text-success fw-semibold  ">
+          <div class="col-2 col-md-3 col-sm-3 text-success fw-semibold">
             <p
               [ngClass]="{
                 'gray-p':
@@ -254,7 +264,6 @@
                 {{ getStatusDescription(detail.status) }}</span
               >
               <span class="color-primary" *ngIf="btnIndex === 6">
-
                 <button
                   class="p-2 p-lg-1 p-sm-1 process-btn review-bg"
                   #reviewBTN
@@ -264,7 +273,6 @@
                 >
                   Add a review
                 </button>
-
                 <button
                   type="button"
                   class="p-2 p-lg-1 p-sm-1 process-btn return-button"
@@ -274,7 +282,6 @@
                 >
                   To return
                 </button>
-
               </span>
             </p>
           </div>
