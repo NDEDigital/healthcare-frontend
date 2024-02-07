@@ -291,7 +291,7 @@ export class BuyerOrderComponent {
           this.CloseReviewFormModalBTN.nativeElement.click();
           alert('Review added successfully');
           this.getData('Reviewed');
-          this.btnIndex=7;
+          this.btnIndex = 7;
         },
         error: (error) => {
           console.error('Error during submission:', error);
@@ -418,7 +418,7 @@ export class BuyerOrderComponent {
 
   SaveReturnData() {
     this.formData = new FormData();
-    
+
     //console.log(' type', this.returnForm.value.typeId);
     if (this.returnForm.value.typeId != null) {
       //console.log(' RETURN fORM ', this.returnForm.value);
@@ -450,17 +450,15 @@ export class BuyerOrderComponent {
               alert(Response.message);
               this.returnForm.reset();
             }, 100);
-
           },
           error: (error: any) => {
             console.log(error);
             alert(error);
           },
         });
-    } 
-    else {
+    } else {
       // this.returnType = true;
-      alert("Please Select a return type.")
+      alert('Please Select a return type.');
     }
   }
   // Create a helper function to convert FormData to a plain object
@@ -470,5 +468,18 @@ export class BuyerOrderComponent {
       object[key] = value;
     });
     return object;
+  }
+
+  calculateTotalPrice(orderDetails: any) {
+    let totalPrice = 0;
+    let count = 0;
+
+    for (let i = 0; i < orderDetails.length; i++) {
+      let detail = orderDetails[i];
+      totalPrice += detail.price;
+      count++;
+    }
+
+    return totalPrice + (count*100);
   }
 }
