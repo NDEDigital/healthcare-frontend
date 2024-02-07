@@ -1,7 +1,7 @@
 <app-header [cartCount]="cartCount"></app-header>
 
 <section id="page-container" class="cart-detail">
-  <div  id="content-wrap" class="d-flex m-3">
+  <div id="content-wrap" class="d-flex m-3">
     <div class="full-detail">
       <div class="container-fluid cart-product">
         <div class="ps-3 pt-3">
@@ -55,7 +55,16 @@
           <hr *ngIf="i !== cartDataDetail.size - 1" />
         </ng-container>
 
-        <div *ngIf="cartDataDetail.size === 0" class="text-center py-5">
+        <div
+          *ngIf="cartDataDetail.size === 0"
+          class="text-center py-5 d-flex justify-content-center align-items-center flex-column"
+        >
+          <div
+            class="fw-semibold fs-6 mb-1 mt-1 w-25 p-2 border border-danger rounded-2 bg-danger bg-opacity-25 text-danger d-flex justify-content-center"
+          >
+            No Products in Your Cart Yet!
+          </div>
+
           <button (click)="productPage()" class="btn btn-warning">
             Go to Product
           </button>
@@ -104,7 +113,11 @@
         <p class="subtotal-title">
           Subtotal ({{ this.cartCount }}): <b>৳{{ this.totalPrice }}</b>
         </p>
-        <button class="btn btn-warning mt-2 w-100" [disabled]="this.totalPrice === 0" (click)="procced()">
+        <button
+          class="btn btn-warning mt-2 w-100"
+          [disabled]="this.totalPrice === 0"
+          (click)="procced()"
+        >
           Proceed to checkout
         </button>
       </div>
