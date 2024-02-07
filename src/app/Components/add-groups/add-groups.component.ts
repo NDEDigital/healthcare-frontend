@@ -18,6 +18,8 @@ export class AddGroupsComponent {
   @ViewChild('productGroupImageInput') ProductImageInput!: ElementRef;
   @ViewChild('addGroupModalCenterG') AddGroupModalCenterG!: ElementRef;
   //@ViewChild('modalGroupImage') ModalGroupImage!: ElementRef;
+  @ViewChild('allselected', { static: true }) allSelectedCheckbox!: ElementRef<HTMLInputElement>;
+  
   @ViewChild('modalGroupImage') ModalGroupImage!: ElementRef<HTMLImageElement>;
   isHovered: any | null = null;
 
@@ -32,6 +34,7 @@ export class AddGroupsComponent {
   currentGroup: any = null;
   activeGroupId: number | null = null;
   imagePathPreview: string = '';
+  alertTitle: any;
 
   constructor(private addProductService: AddProductService) {}
 
@@ -184,6 +187,9 @@ export class AddGroupsComponent {
   }
 
   getProductGroup(status: any) {
+    this.allSelectedCheckbox.nativeElement.checked=false;
+    this.selectedProducts1.length=0;
+    this.selectAll=false;
     this.addProductService.GetProductGroupsListByStatus(status).subscribe({
       next: (response: any) => {
         console.log(response);
@@ -246,20 +252,24 @@ export class AddGroupsComponent {
     }
     this.AddGroupModalCenterG.nativeElement.click();
   }
-
-  updateIsActive(isActive: any, groupId: any) {
-    console.log(isActive, 'isActive', groupId, 'groupId');
+  updateIsActive(isActive: any, groupIds: any) {
+    console.log(isActive, 'isActive', groupIds, 'groupId');
     this.addProductService
-      .updateProductGroupStatus(groupId, isActive)
+      .updateProductGroupStatus(groupIds.toString(), isActive)
       .subscribe({
         next: (response: any) => {
           console.log(response);
+          isActive = isActive === true ? 0: 1;
+
           this.getProductGroup(isActive);
           this.btnIndex = isActive;
           this.UserExistModalBTN.nativeElement.click();
-          this.alertMsg = isActive
-            ? 'Group is  Approved!'
-            : 'Group is Rejected!';
+           this.alertMsg = isActive
+          ? 'Product is  Activated!'
+          : 'Product is Deactiveted!';
+        this.alertTitle = isActive
+          ? 'Activated!'
+          : 'Deactiveted!';
         },
         error: (error: any) => {
           //console.log(error);
@@ -267,4 +277,117 @@ export class AddGroupsComponent {
         },
       });
   }
+  
+
+  selectedProductIds: any[] = [];
+  selectedProducts1: any[] = [];
+  
+  selectAll = false;
+  toggleAllCheckboxes() {
+    console.log("all seelcted",)
+    // console.log('Selected Product IDs:', this.selectedProducts1);
+  // console.log("product id's areeeeee",this.selectedProducts1)
+
+    // Toggle the state of all checkboxes based on the "Select All" checkbox
+    console.log("group list are",this.groupList);
+    this.groupList.forEach(
+      (product: { isSelected: boolean, productGroupID: any }) => {
+        product.isSelected = this.selectAll;
+        
+        // Update the selectedProducts array based on the state of each checkbox
+        if (this.selectAll && !this.selectedProducts1.includes(product.productGroupID)) {
+          this.selectedProducts1.push(product.productGroupID);
+          
+        }
+        else if (!this.selectAll && this.selectedProducts1.includes(product.productGroupID)) {
+          // Remove the deselected product from the list
+          this.selectedProducts1 = this.selectedProducts1.filter(
+            (id) => id !== product.productGroupID
+          );
+          this.selectAll=false;
+        
+        }
+        
+      }
+    );
+   
+    
+    // console.log('Selected Product IDs:', this.selectedProducts1);
+    // console.log("this.selectedProducts1.length",this.selectedProducts1.length);
+    // console.log("this.selectedProducts1.length",this.productList.length);
+  
+  }
+
+  chageActiveInactive(isActive:any){
+    // console.log("hello ");
+    
+// console.log("get groupIds are ",this.selectedProducts1);
+// console.log("is active are",isActive);
+
+ 
+    if(this.selectedProducts1.length>0){
+      
+// console.log("selectedProducts1",this.selectedProducts1.toString());
+// console.log("selectedProducts1",isActive);
+
+      this.addProductService.updateProductGroupStatus(this.selectedProducts1.toString(),isActive).subscribe({
+        next: (response: any) => {
+      
+          console.log(response);
+          isActive = isActive === true ? 0 : 1;
+          this.getProductGroup(isActive);
+
+          this.btnIndex = isActive;
+          this.UserExistModalBTN.nativeElement.click();
+          this.alertMsg = isActive
+            ? 'Group is  Activated!'
+            : 'Group is Deactiveted!';
+            this.alertTitle = isActive
+            ? 'Activated!'
+            : 'Deactiveted!';
+           this.selectAll=false;
+           this.selectedProducts1.length=0;
+          // console.log("product id's are",this.selectedProductIds)
+        },
+        error: (error: any) => {
+          //console.log(error);
+          this.alertMsg = error.error.message;
+        },
+      });
+    }
+    else{
+      // this.PrdouctExistModalBTN.nativeElement.click();
+
+      this.alertMsg='No Product is selected'
+    }
+
+  }
+
+
+  
+  checkboxSelected(groupId: any, event: any) {
+    console.log("productId",groupId);
+    
+    const isSelected: boolean = event.target.checked;
+    console.log("event is",isSelected);
+// console.log(isSelected);
+    if (isSelected && !this.selectedProducts1.includes(groupId)) {
+      // Add the selected product to the list
+      this.selectedProducts1.push(groupId);
+    } else if (!isSelected && this.selectedProducts1.includes(groupId)) {
+      // Remove the deselected product from the list
+      this.selectedProducts1 = this.selectedProducts1.filter(
+        (id) => id !== groupId
+      );
+    }
+    this.allSelectedCheckbox.nativeElement.checked=false;
+    // Update the selectedProductIds array with the current list of selected product IDs
+    this.selectedProductIds = this.selectedProducts1.slice();
+  if(this.selectedProducts1.length===this.groupList.length){
+  this.allSelectedCheckbox.nativeElement.checked=true;
+
+}
+ console.log("selected areee",this.selectedProducts1);
+  }
+ 
 }

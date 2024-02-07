@@ -90,15 +90,9 @@ export class CompanyService {
 
 
 
-  UpdateSellerActiveInActive(companyDto: any) {
-   if(companyDto.Isactive == 1){
-    companyDto.Isactive=true
+  UpdateSellerActiveInActive(userIds: string, isActive: boolean) {
+    return this.http.put(`${this.URL}/updateSellerActive&Inactive?userIds=${userIds}&isActive=${isActive}`, {});
   }
-  else{
-    companyDto.Isactive=false;
-  }
-  return this.http.put(`${this.URL}/CompanySellerDetailsUpdateUserStatus/${companyDto.userId}/${companyDto.Isactive}`, null)
   
-
-  }
+  
 }

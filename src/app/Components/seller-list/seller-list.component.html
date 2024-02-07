@@ -166,7 +166,18 @@
 
   <div class="scrollable-table border border-1 bg-light">
     <!-- TABLE header -->
+
     <div class="row headerRow sticky-top fw-bolder">
+    
+      <div class="col tableHeader">
+        <input
+          type="checkbox"
+          [(ngModel)]="selectAll"
+          (ngModelChange)="toggleAllCheckboxes()"
+          #allselected
+        />
+        Select All
+      </div>
       <div class="col tableHeader">#</div>
       <div class="col tableHeader">Full Name</div>
       <div class="col tableHeader">Phone</div>
@@ -208,6 +219,19 @@
     >
     <div class="d-flex"  >
      
+      <div
+      class="col tableBody"
+      [ngClass]="{
+        'active-row': isHovered === i
+      }"
+    >
+    <input
+    type="checkbox"
+    [(ngModel)]="sl.isSelected"
+    (change)="checkboxSelected(sl.userId, $event)"
+  />
+  
+    </div>
     
       <!-- <div>{{UserId}}</div> -->
 <!-- <div>{{cmp.companyAdminId}}</div> -->
@@ -253,7 +277,7 @@
                 class="bi bi-check2 me-3"
                 viewBox="0 0 16 16"
                 (click)="
-                  UpdatedSellerBuyer(sl.userId, 1)
+                       UpdatedSellerBuyer(sl.userId, true)
                 "
               >
                 <path
@@ -267,7 +291,7 @@
               class="actionBtn"
               *ngIf="btnIndex === 1"
               (click)="
-                UpdatedSellerBuyer(sl.userId, 0)
+                     UpdatedSellerBuyer(sl.userId, false)
               "
             >
               <svg
@@ -325,7 +349,16 @@
     </div>
     </section>
   </div>
+  <div class="d-flex justify-content-end">
+    <button *ngIf="btnIndex === 0 || btnIndex === -1" class="custom-btn " (click)="chageActiveInactive(true)">
+      Active
+    </button>
+    <button *ngIf="btnIndex === 1 || btnIndex === -1" class="custom-btn" (click)="chageActiveInactive(false)">
+      Inactive
+    </button>
+  </div>
 </div>
+
 <button
   type="button"
   class="btn btn-primary d-none"

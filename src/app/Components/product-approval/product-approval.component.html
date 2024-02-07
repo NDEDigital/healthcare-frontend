@@ -35,7 +35,16 @@
   <div class="scrollable-table border border-1 bg-light">
     <!-- TABLE header -->
     <div class="row headerRow sticky-top fw-bolder">
-      <div class="col tableHeader"></div>
+      <div class="col tableHeader">
+        <input
+          type="checkbox"
+          [(ngModel)]="selectAll"
+          (ngModelChange)="toggleAllCheckboxes()"
+          #allselected
+        />
+        Select All
+      </div>
+      <div class="col tableHeader">Index</div>
       <div class="col tableHeader">Image</div>
       <div class="col tableHeader">Product Name</div>
       <div class="col tableHeader">Seller Name</div>
@@ -59,6 +68,20 @@
       *ngFor="let row of productsData; let i = index"  (mouseover)="isHovered = i;"
       (mouseout)="isHovered = null"
     >
+    <div
+    class="col tableBody"
+    [ngClass]="{
+      'active-row':  isHovered === i
+    }"
+  >
+    <input
+      type="checkbox"
+      [(ngModel)]="row.isSelected"
+      (change)="checkboxSelected(row.userId,row.companyCode, row.productId, $event)"
+    />
+
+  </div>
+    
       <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">#{{ i + 1 }}</div>
       <div class="col tableBody" [ngClass]="{ 'active-row':isHovered===i}">
         <!-- {{ row.imagePath }} -->
@@ -195,7 +218,14 @@
     </section>
   </div>
 </div>
-
+<div class="d-flex justify-content-end">
+  <button *ngIf="btnIndex === 0 || btnIndex === -1" class="custom-btn "  (click)="changeStatus('Approved')">
+    Approve
+  </button>
+  <button *ngIf="btnIndex === 1 || btnIndex === -1" class="custom-btn"  (click)="changeStatus('Rejected')">
+    Reject
+  </button>
+</div>
 <!-- Details Modal -->
 
 <div

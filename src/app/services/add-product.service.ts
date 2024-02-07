@@ -126,28 +126,36 @@ export class AddProductService {
   //     params: { productId, IsActive },
   //   });
   // }
-  updateProductStatus(productId: any, IsActive: any) {
+  updateProductStatus(productIds: number[], IsActive: any) {
+    // console.log("product Id's are",productIds);
+    // console.log("IsActive are",IsActive);
     // Convert IsActive to boolean
     const convertedIsActive = IsActive === 1 ? true : false;
 
-    console.log(productId, convertedIsActive, 'service product is active');
+    console.log(productIds, convertedIsActive, 'service product is active');
+
+    // Construct the URL with IsActive parameter
+    const url = `${this.updateProductStatusURL}?IsActive=${convertedIsActive}`;
 
     return this.http.put(
-      `${this.updateProductStatusURL}?productId=${productId}&IsActive=${convertedIsActive}`,
-      {}
+        url,
+        productIds // Pass productIds as the request body
     );
-  }
-  updateProductGroupStatus(groupId: any, IsActive: any) {
-    // Convert IsActive to boolean
-    const convertedIsActive = IsActive === 1 ? true : false;
+}
 
-    console.log(groupId, convertedIsActive, 'service product is active');
+updateProductGroupStatus(groupIds: any, IsActive: any) {
+  // Convert IsActive to boolean
+  // const convertedIsActive = IsActive === 1 ? true : false;
 
-    return this.http.put(
-      `${this.updateProductGroupStatusURL}?groupId=${groupId}&IsActive=${convertedIsActive}`,
-      {}
-    );
-  }
+  // console.log(groupIds, convertedIsActive, 'service product is active');
+  console.log("active are",IsActive);
+  console.log("group id's are ",groupIds)
+
+  return this.http.put(
+    `${this.updateProductGroupStatusURL}?groupIds=${groupIds}&IsActive=${IsActive}`,
+    {}
+  );
+}
   updateProductGroup(groupListData: any) {
     return this.http.put(this.updateProductGroupURL, groupListData);
   }
